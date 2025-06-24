@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living in the Shadows - Community and Connections</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        .lifestyle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .lifestyle-card {
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid;
+        }
+        
+        .lifestyle-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        
+        .lifestyle-street {
+            background: linear-gradient(135deg, #2c1810, #4a2c2c);
+            border-color: #8b4513;
+        }
+        
+        .lifestyle-low {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-color: #4a4a6a;
+        }
+        
+        .lifestyle-middle {
+            background: linear-gradient(135deg, #0f3460, #0a2e4a);
+            border-color: #2980b9;
+        }
+        
+        .lifestyle-high {
+            background: linear-gradient(135deg, #2d1b69, #11998e);
+            border-color: #00d4aa;
+        }
+        
+        .lifestyle-luxury {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border-color: #ffd700;
+            color: #000;
+        }
+        
+        .contact-network {
+            position: relative;
+            height: 500px;
+            background: radial-gradient(circle at center, rgba(0,255,255,0.1) 0%, transparent 70%);
+            border: 2px solid #00ffff;
+            border-radius: 20px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .contact-node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .contact-node:hover {
+            transform: scale(1.3);
+            z-index: 10;
+        }
+        
+        .player-node {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            top: 210px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            font-size: 14px;
+        }
+        
+        .fixer-node {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            top: 50px;
+            left: 45%;
+        }
+        
+        .contact-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffff, transparent, #00ffff);
+            transform-origin: left center;
+        }
+        
+        .rep-meter {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .rep-label {
+            width: 150px;
+            font-weight: bold;
+            color: #00ffff;
+        }
+        
+        .rep-bar {
+            flex: 1;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 15px;
+            border: 2px solid #555;
+        }
+        
+        .rep-fill {
+            height: 100%;
+            transition: width 2s ease;
+            border-radius: 8px;
+        }
+        
+        .social-layer {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border: 2px solid #8e44ad;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .shadow-economy {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .economy-card {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .survival-tip {
+            background: rgba(231, 76, 60, 0.2);
+            border-left: 5px solid #e74c3c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .connection-strength {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 5px;
+            border: 2px solid #fff;
+        }
+        
+        .loyalty-1 { background: #e74c3c; }
+        .loyalty-2 { background: #f39c12; }
+        .loyalty-3 { background: #f1c40f; }
+        .loyalty-4 { background: #2ecc71; }
+        .loyalty-5 { background: #3498db; }
+        .loyalty-6 { background: #9b59b6; }
+        
+        .lifestyle-costs {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .lifestyle-costs table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .lifestyle-costs th,
+        .lifestyle-costs td {
+            border: 1px solid #00ffff;
+            padding: 12px;
+            text-align: center;
+            color: white;
+        }
+        
+        .lifestyle-costs th {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #00ffff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Living in the Shadows</h1>
+        <p><em>Contacts, Lifestyle, and the Shadow Community</em></p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Beyond the Character Sheet: Your Social Ecosystem</h2>
+            <p>In the corporate-dominated Sixth World, survival isn't just about having the best cyberware or knowing the most potent spells. It's about <em>who you know</em>, <em>where you live</em>, and <em>how you fit into the shadow community</em>. Your character exists within a complex web of relationships, obligations, and social structures that can make the difference between a successful run and a one-way trip to a corporate black site.</p>
+            
+            <p>Think of it like this: if your attributes and skills are your character's <strong>hardware</strong>, then your contacts and lifestyle are their <strong>operating system</strong> - the environment that determines how effectively they can use their abilities.</p>
+        </section>
+
+        <section>
+            <h2>Lifestyle: More Than Just Where You Sleep</h2>
+            <p>In Shadowrun, lifestyle isn't just flavor text - it's a mechanical system that affects your character's capabilities, social standing, and survival. Your lifestyle represents your monthly overhead costs, living conditions, and the resources available to you between runs.</p>
+
+            <div class="lifestyle-grid">
+                <div class="lifestyle-card lifestyle-street">
+                    <h3 style="color: #cd853f;">Street Lifestyle</h3>
+                    <p><strong>Cost:</strong> 0¥ per month</p>
+                    <p><strong>The Reality:</strong> You're homeless, squatting in abandoned buildings, sleeping in doorways, or crashing on friends' couches. Every day is a struggle for basic survival.</p>
+                    
+                    <h4>Living Conditions</h4>
+                    <ul>
+                        <li>No permanent address</li>
+                        <li>Limited access to Matrix</li>
+                        <li>Constant security risks</li>
+                        <li>Social stigma</li>
+                        <li>Health deterioration over time</li>
+                    </ul>
+                    
+                    <h4>Real-World Analogy</h4>
+                    <p>Like living rough in any major city - vulnerable, constantly moving, relying on shelters and charity. You're invisible to the system, which can be both a curse and a blessing.</p>
+                </div>
+
+                <div class="lifestyle-card lifestyle-low">
+                    <h3 style="color: #87ceeb;">Low Lifestyle</h3>
+                    <p><strong>Cost:</strong> 2,000¥ per month</p>
+                    <p><strong>The Reality:</strong> A one-room apartment in the barrens or underground. Thin walls, unreliable utilities, and neighbors who mind their own business.</p>
+                    
+                    <h4>Living Conditions</h4>
+                    <ul>
+                        <li>Basic Matrix access</li>
+                        <li>Shared bathroom facilities</li>
+                        <li>Minimal security</li>
+                        <li>Working-class neighborhood</li>
+                        <li>Public transportation access</li>
+                    </ul>
+                    
+                    <h4>Real-World Analogy</h4>
+                    <p>Think studio apartment in a rough neighborhood - safe enough, but you don't walk alone at night. It's honest poverty, not destitution.</p>
+                </div>
+
+                <div class="lifestyle-card lifestyle-middle">
+                    <h3 style="color: #4fc3f7;">Middle Lifestyle</h3>
+                    <p><strong>Cost:</strong> 5,000¥ per month</p>
+                    <p><strong>The Reality:</strong> A decent apartment in a safe neighborhood. This is what most corporate wage slaves aspire to - comfort without luxury.</p>
+                    
+                    <h4>Living Conditions</h4>
+                    <ul>
+                        <li>Reliable utilities and Matrix</li>
+                        <li>Private bathroom and kitchen</li>
+                        <li>Building security</li>
+                        <li>Middle-class amenities</li>
+                        <li>Good public services</li>
+                    </ul>
+                    
+                    <h4>Real-World Analogy</h4>
+                    <p>Suburban apartment or small house - safe, comfortable, respectable. You can have friends over without embarrassment.</p>
+                </div>
+
+                <div class="lifestyle-card lifestyle-high">
+                    <h3 style="color: #26a69a;">High Lifestyle</h3>
+                    <p><strong>Cost:</strong> 10,000¥ per month</p>
+                    <p><strong>The Reality:</strong> A luxury apartment or small house in an upscale area. You have disposable income and social status.</p>
+                    
+                    <h4>Living Conditions</h4>
+                    <ul>
+                        <li>High-speed Matrix access</li>
+                        <li>Concierge services</li>
+                        <li>Professional security</li>
+                        <li>Exclusive amenities</li>
+                        <li>Social networking opportunities</li>
+                    </ul>
+                    
+                    <h4>Real-World Analogy</h4>
+                    <p>Penthouse apartment or gated community - you're clearly successful, with access to exclusive venues and influential people.</p>
+                </div>
+
+                <div class="lifestyle-card lifestyle-luxury">
+                    <h3>Luxury Lifestyle</h3>
+                    <p><strong>Cost:</strong> 100,000¥ per month</p>
+                    <p><strong>The Reality:</strong> Corporate executive level living. Multiple residences, personal staff, and influence that money can buy.</p>
+                    
+                    <h4>Living Conditions</h4>
+                    <ul>
+                        <li>Multiple properties</li>
+                        <li>Personal staff and security</li>
+                        <li>Exclusive social circles</li>
+                        <li>Corporate-level amenities</li>
+                        <li>Political influence</li>
+                    </ul>
+                    
+                    <h4>Real-World Analogy</h4>
+                    <p>Billionaire lifestyle - private jets, exclusive clubs, and the kind of wealth that opens any door.</p>
+                </div>
+            </div>
+
+            <div class="lifestyle-costs">
+                <h3>Lifestyle Impact on Gameplay</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lifestyle</th>
+                            <th>Social Dice Pool Modifier</th>
+                            <th>Matrix Access</th>
+                            <th>Medical Care</th>
+                            <th>Security Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Street</td>
+                            <td>-2 dice (most situations)</td>
+                            <td>Public terminals only</td>
+                            <td>Street docs/charity</td>
+                            <td>None</td>
+                        </tr>
+                        <tr>
+                            <td>Low</td>
+                            <td>-1 die (formal situations)</td>
+                            <td>Basic home access</td>
+                            <td>Walk-in clinics</td>
+                            <td>Minimal</td>
+                        </tr>
+                        <tr>
+                            <td>Middle</td>
+                            <td>No modifier</td>
+                            <td>Standard broadband</td>
+                            <td>DocWagon Basic</td>
+                            <td>Standard</td>
+                        </tr>
+                        <tr>
+                            <td>High</td>
+                            <td>+1 die (most situations)</td>
+                            <td>High-speed access</td>
+                            <td>DocWagon Gold</td>
+                            <td>Good</td>
+                        </tr>
+                        <tr>
+                            <td>Luxury</td>
+                            <td>+2 dice (all situations)</td>
+                            <td>Corporate-grade</td>
+                            <td>Private physicians</td>
+                            <td>Excellent</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Contact Network: Your Lifeline in the Shadows</h2>
+            <p>In Shadowrun, your contacts are arguably more valuable than your gear. They provide information, services, jobs, and sometimes your only way out of a bad situation. Think of your contact network as your character's social media, but where every "friend" could save your life or sell you out.</p>
+
+            <div class="contact-network">
+                <div class="contact-node player-node">YOU</div>
+                
+                <div class="contact-node fixer-node" style="background: linear-gradient(135deg, #f39c12, #e67e22); top: 50px; left: 40%;">
+                    FIXER<br><small>Jobs & Info</small>
+                </div>
+                
+                <div class="contact-node" style="background: linear-gradient(135deg, #e74c3c, #c0392b); top: 80px; right: 15%;">
+                    STREET<br>DOC<br><small>Medical</small>
+                </div>
+                
+                <div class="contact-node" style="background: linear-gradient(135deg, #27ae60, #2ecc71); top: 150px; left: 10%;">
+                    CORP<br>CONTACT<br><small>Inside Info</small>
+                </div>
+                
+                <div class="contact-node" style="background: linear-gradient(135deg, #8e44ad, #9b59b6); bottom: 150px; left: 15%;">
+                    TALISMONGER<br><small>Magic Gear</small>
+                </div>
+                
+                <div class="contact-node" style="background: linear-gradient(135deg, #34495e, #2c3e50); bottom: 100px; right: 20%;">
+                    FENCE<br><small>Hot Goods</small>
+                </div>
+                
+                <div class="contact-node" style="background: linear-gradient(135deg, #16a085, #1abc9c); top: 180px; right: 40%;">
+                    HACKER<br><small>Matrix Help</small>
+                </div>
+                
+                <div class="contact-node" style="background: linear-gradient(135deg, #d35400, #e67e22); bottom: 80px; left: 45%;">
+                    GANG<br>MEMBER<br><small>Muscle</small>
+                </div>
+
+                <!-- Connection lines -->
+                <div class="contact-line" style="top: 260px; left: 50%; width: 150px; transform: rotate(-25deg);"></div>
+                <div class="contact-line" style="top: 260px; left: 51%; width: 200px; transform: rotate(15deg);"></div>
+                <div class="contact-line" style="top: 260px; left: 25%; width: 200px; transform: rotate(-45deg);"></div>
+                <div class="contact-line" style="top: 300px; left: 35%; width: 150px; transform: rotate(35deg);"></div>
+                <div class="contact-line" style="top: 300px; left: 55%; width: 180px; transform: rotate(-35deg);"></div>
+                <div class="contact-line" style="top: 280px; left: 55%; width: 120px; transform: rotate(5deg);"></div>
+            </div>
+
+            <h3>Contact Ratings: Connection and Loyalty</h3>
+            <p>Every contact has two ratings that determine their usefulness and reliability:</p>
+
+            <div class="social-layer">
+                <h4>Connection Rating (1-6)</h4>
+                <p>How well-connected and influential your contact is:</p>
+                <ul>
+                    <li><strong>1-2:</strong> Street level - gangers, small-time dealers, wage slaves</li>
+                    <li><strong>3-4:</strong> Professional level - mid-management, specialists, established criminals</li>
+                    <li><strong>5-6:</strong> Elite level - corporate executives, crime bosses, government officials</li>
+                </ul>
+
+                <div class="rep-meter">
+                    <span class="rep-label">Street Ganger</span>
+                    <div class="rep-bar">
+                        <div class="rep-fill" style="width: 33%; background: linear-gradient(90deg, #e74c3c, #c0392b);"></div>
+                    </div>
+                    <span>Connection 2</span>
+                </div>
+
+                <div class="rep-meter">
+                    <span class="rep-label">Corporate Manager</span>
+                    <div class="rep-bar">
+                        <div class="rep-fill" style="width: 66%; background: linear-gradient(90deg, #f39c12, #e67e22);"></div>
+                    </div>
+                    <span>Connection 4</span>
+                </div>
+
+                <div class="rep-meter">
+                    <span class="rep-label">Mob Boss</span>
+                    <div class="rep-bar">
+                        <div class="rep-fill" style="width: 100%; background: linear-gradient(90deg, #8e44ad, #9b59b6);"></div>
+                    </div>
+                    <span>Connection 6</span>
+                </div>
+
+                <h4>Loyalty Rating (1-6)</h4>
+                <p>How much your contact trusts and likes you:</p>
+                <ul>
+                    <li><strong>1:</strong> Business only - they'll sell information, but won't stick their neck out</li>
+                    <li><strong>2-3:</strong> Professional relationship - reliable for standard services</li>
+                    <li><strong>4-5:</strong> Personal friendship - will take some risks for you</li>
+                    <li><strong>6:</strong> Family loyalty - would die for you</li>
+                </ul>
+
+                <p><strong>Loyalty Examples:</strong> 
+                <span class="connection-strength loyalty-1"></span> Reluctant cooperation
+                <span class="connection-strength loyalty-2"></span> Fair dealing
+                <span class="connection-strength loyalty-3"></span> Reliable service
+                <span class="connection-strength loyalty-4"></span> Personal favor
+                <span class="connection-strength loyalty-5"></span> Close friend
+                <span class="connection-strength loyalty-6"></span> Unconditional loyalty
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Essential Contact Types</h2>
+            <p>Every successful shadowrunner needs certain types of contacts to survive. Here are the archetypes you'll want in your network:</p>
+
+            <div class="mermaid">
+                mindmap
+                  root((Contact Network))
+                    [Information Brokers]
+                      Fixers
+                        Job opportunities
+                        Team coordination
+                        Market intelligence
+                      Journalists
+                        Corporate scandals
+                        Political movements
+                        Public records
+                      Bartenders
+                        Street rumors
+                        Local gossip
+                        Safe meeting places
+                    [Service Providers]
+                      Street Docs
+                        Medical treatment
+                        Cyber installation
+                        No questions asked
+                      Mechanics
+                        Vehicle repair
+                        Drone maintenance
+                        Gear modification
+                      Hackers
+                        Matrix support
+                        System penetration
+                        Data recovery
+                    [Suppliers]
+                      Fences
+                        Stolen goods
+                        Untraceable equipment
+                        Money laundering
+                      Weapon Dealers
+                        Firearms
+                        Ammunition
+                        Military hardware
+                      Talismongers
+                        Magical supplies
+                        Spell formulas
+                        Enchanted items
+                    [Insiders]
+                      Corporate Contacts
+                        Company secrets
+                        Security schedules
+                        Executive gossip
+                      Law Enforcement
+                        Investigation details
+                        Warrant warnings
+                        Legal loopholes
+                      Gang Members
+                        Territory information
+                        Muscle for hire
+                        Street protection
+            </div>
+
+            <h3>The Fixer: Your Gateway to the Shadows</h3>
+            <div class="survival-tip">
+                <h4>🔍 Spotlight: Understanding Fixers</h4>
+                <p>Fixers are the most important contacts for new shadowrunners. They're the middlemen who connect you to jobs while keeping clients and runners anonymous. Think of them as talent agents for criminals.</p>
+                
+                <p><strong>What Fixers Provide:</strong></p>
+                <ul>
+                    <li><strong>Job Opportunities:</strong> They know who needs work done</li>
+                    <li><strong>Team Assembly:</strong> They can recommend other runners</li>
+                    <li><strong>Market Intelligence:</strong> They know what services are in demand</li>
+                    <li><strong>Reputation Management:</strong> They spread word of your successes</li>
+                </ul>
+                
+                <p><strong>Building Fixer Loyalty:</strong> Be professional, complete jobs successfully, and never burn bridges. A happy fixer sends better jobs your way.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Shadow Economy</h2>
+            <p>The shadow community operates on its own economic principles, parallel to the legitimate corporate economy. Understanding these dynamics is crucial for survival:</p>
+
+            <div class="shadow-economy">
+                <div class="economy-card">
+                    <h4>Reputation Currency</h4>
+                    <p>Your rep is your credit rating. Success builds reputation, failure destroys it. A good rep gets you better jobs and better prices.</p>
+                </div>
+
+                <div class="economy-card">
+                    <h4>Favor Banking</h4>
+                    <p>Sometimes information or services are more valuable than money. Collecting favors creates a safety net for when cash can't solve your problems.</p>
+                </div>
+
+                <div class="economy-card">
+                    <h4>Information Economy</h4>
+                    <p>Knowledge is the ultimate commodity. Who's hiring, what security measures exist, which corps are vulnerable - information saves lives.</p>
+                </div>
+
+                <div class="economy-card">
+                    <h4>Deniability Premium</h4>
+                    <p>The more illegal or dangerous the job, the higher the pay. But also the higher the risk of not living to spend it.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Social Hierarchies in the Shadows</h2>
+            <p>The shadow community has its own pecking order. Understanding where you fit helps you navigate social situations and avoid fatal mistakes:</p>
+
+            <div class="mermaid">
+                graph TD
+                    A[Corporate Executives] --> B[Crime Bosses]
+                    A --> C[Government Officials]
+                    B --> D[Lieutenant/Underboss]
+                    C --> D
+                    D --> E[Established Fixers]
+                    E --> F[Veteran Shadowrunners]
+                    F --> G[New Shadowrunners]
+                    G --> H[Street Criminals]
+                    H --> I[Desperate/Burned Out]
+                    
+                    A --> J[Dragon CEOs]
+                    J --> A
+                    
+                    style J fill:#9b59b6,color:#fff
+                    style A fill:#3498db,color:#fff
+                    style B fill:#e74c3c,color:#fff
+                    style I fill:#95a5a6,color:#fff
+            </div>
+
+            <h3>Respect and Recognition</h3>
+            <ul>
+                <li><strong>Dragons:</strong> At the top of everything - corporate, magical, and criminal hierarchies</li>
+                <li><strong>Corporate Executives:</strong> Legitimate power with unlimited resources</li>
+                <li><strong>Crime Bosses:</strong> Illegitimate power with lethal enforcement</li>
+                <li><strong>Veteran Runners:</strong> Proven track record and established connections</li>
+                <li><strong>New Runners:</strong> Unproven but potentially valuable</li>
+                <li><strong>Street Level:</strong> Desperate, unreliable, expendable</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Building and Maintaining Relationships</h2>
+            <p>Your contact network requires constant maintenance. Relationships in the shadows are fragile and valuable:</p>
+
+            <div class="social-layer">
+                <h3>Growing Your Network</h3>
+                <ul>
+                    <li><strong>Start Small:</strong> Every connection begins with a single interaction</li>
+                    <li><strong>Deliver Value:</strong> Provide information, services, or favors before asking for help</li>
+                    <li><strong>Be Reliable:</strong> Keep promises and meet deadlines</li>
+                    <li><strong>Show Respect:</strong> Understand each contact's position and priorities</li>
+                    <li><strong>Diversify:</strong> Don't put all your eggs in one basket</li>
+                </ul>
+
+                <h3>Contact Maintenance</h3>
+                <ul>
+                    <li><strong>Regular Check-ins:</strong> Stay visible without being needy</li>
+                    <li><strong>Share Information:</strong> Provide useful intel without expecting immediate return</li>
+                    <li><strong>Social Occasions:</strong> Attend parties, funerals, and community events</li>
+                    <li><strong>Emergency Support:</strong> Help contacts when they're in trouble</li>
+                    <li><strong>Professional Growth:</strong> Help contacts advance their own goals</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Lifestyle and Social Integration</h2>
+            <p>Your lifestyle choice affects how others perceive you and which social circles you can access:</p>
+
+            <div class="survival-tip">
+                <h4>⚠️ Social Navigation Tips</h4>
+                <ul>
+                    <li><strong>Dress the Part:</strong> Your appearance should match your supposed lifestyle</li>
+                    <li><strong>Know the Language:</strong> Different social levels have different vocabularies and references</li>
+                    <li><strong>Understand Etiquette:</strong> Corporate boardrooms and gang territories have different rules</li>
+                    <li><strong>Have Appropriate Contacts:</strong> A luxury lifestyle character shouldn't only know street-level criminals</li>
+                    <li><strong>Maintain Cover Stories:</strong> Explain your wealth (or lack thereof) convincingly</li>
+                </ul>
+            </div>
+
+            <h3>Cross-Class Navigation</h3>
+            <p>Successful shadowrunners learn to move between social levels:</p>
+            <ul>
+                <li><strong>Code-Switching:</strong> Adapt your speech and behavior to your environment</li>
+                <li><strong>Cultural Literacy:</strong> Understand references and concerns of different social groups</li>
+                <li><strong>Intermediaries:</strong> Use contacts to bridge social gaps you can't cross directly</li>
+                <li><strong>Temporary Facades:</strong> Rent high-end clothes/transportation for specific occasions</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>The Danger of Isolation</h2>
+            <p>Lone wolves don't survive long in the shadows. The most dangerous thing you can be is unknown and friendless:</p>
+
+            <div class="mermaid">
+                flowchart TD
+                    A[Isolated Runner] --> B[No Early Warning]
+                    A --> C[No Backup Support]
+                    A --> D[Limited Job Access]
+                    A --> E[No Safe Houses]
+                    
+                    B --> F[Surprised by Threats]
+                    C --> G[Dies Alone]
+                    D --> H[Takes Desperate Jobs]
+                    E --> I[Nowhere to Hide]
+                    
+                    F --> J[Death or Capture]
+                    G --> J
+                    H --> J
+                    I --> J
+                    
+                    style A fill:#e74c3c,color:#fff
+                    style J fill:#8b0000,color:#fff
+            </div>
+        </section>
+
+        <section>
+            <h2>Practical Contact Management</h2>
+            <p>Here's how to actually use contacts in gameplay:</p>
+
+            <h3>Making Contact Rolls</h3>
+            <ul>
+                <li><strong>Dice Pool:</strong> Charisma + Etiquette + Loyalty Rating</li>
+                <li><strong>Threshold:</strong> Based on difficulty of the request</li>
+                <li><strong>Time:</strong> More hits = faster response</li>
+                <li><strong>Cost:</strong> Bigger favors require payment or reciprocal favors</li>
+            </ul>
+
+            <h3>Contact Services Examples</h3>
+            <ul>
+                <li><strong>Information:</strong> "What do you know about Aztechnology's new research facility?"</li>
+                <li><strong>Gear:</strong> "I need military-grade armor, no questions asked"</li>
+                <li><strong>Services:</strong> "Can you patch me up and keep quiet about it?"</li>
+                <li><strong>Introductions:</strong> "I need to meet someone who can get me inside Renraku"</li>
+                <li><strong>Warnings:</strong> "Knight Errant is asking about you"</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Your Next Steps</h2>
+            <p>You now understand how shadowrunners exist within the complex social ecosystem of the Sixth World. Your character isn't just a collection of stats and gear - they're a person with relationships, obligations, and a place in the shadow community.</p>
+
+            <p>In our next tutorial, we'll dive into the beating heart of Shadowrun: planning and executing shadowruns themselves. We'll explore how teams come together, plan operations, and navigate the deadly dance between runners and their targets.</p>
+
+            <p>Remember: In the shadows, your network is your net worth. Invest in relationships like your life depends on it - because it does.</p>
+        </section>
+
+        <footer>
+            <p><em>Trust is the only currency that matters when the chips are down, omae.</em></p>
+            <p style="text-align: center; margin-top: 40px;">
+                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next:<a href="/shadowrun/sr_planning.html">Planning and Executing Shadowruns</a> ◊</span>
+            </p>
+        </footer>
+    </main>
+</body>
+</html>

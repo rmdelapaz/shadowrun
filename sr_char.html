@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Shadow - Character Archetypes and Roles</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        .archetype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .archetype-card {
+            border: 2px solid;
+            border-radius: 10px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,20,0.9));
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .archetype-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,255,255,0.3);
+        }
+        .street-samurai { border-color: #ff4444; }
+        .decker { border-color: #00ff00; }
+        .mage { border-color: #8a2be2; }
+        .rigger { border-color: #ffa500; }
+        .face { border-color: #ff69b4; }
+        .adept { border-color: #ffff00; }
+        
+        .role-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .team-dynamics {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .skill-bar {
+            background: #333;
+            height: 20px;
+            border-radius: 10px;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+        
+        .skill-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 2s ease;
+        }
+        
+        .synergy-web {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: radial-gradient(circle at center, rgba(0,255,255,0.1) 0%, transparent 70%);
+            margin: 20px 0;
+        }
+        
+        .archetype-node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .archetype-node:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Choose Your Shadow</h1>
+        <p><em>Character Archetypes and Team Roles</em></p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Building Your Digital Persona</h2>
+            <p>Creating a shadowrunner is like assembling a Swiss Army knife for corporate warfare. Each archetype represents a specialized tool designed for specific aspects of shadowrunning. Think of it like forming a heist crew in <em>Ocean's Eleven</em> - you need different specialists for different parts of the job.</p>
+            
+            <p>But here's the beautiful complexity of Shadowrun: unlike traditional fantasy games where a "fighter" just fights and a "wizard" just casts spells, every shadowrunner archetype can potentially dabble in combat, magic, technology, and social manipulation. The archetypes represent your <strong>primary focus</strong>, not your only capability.</p>
+        </section>
+
+        <section>
+            <h2>The Core Archetypes</h2>
+            <p>Let's meet the essential members of any successful shadowrunning team:</p>
+
+            <div class="archetype-grid">
+                <div class="archetype-card street-samurai">
+                    <div class="role-icon" style="background: #ff4444; color: white;">⚔️</div>
+                    <h3>Street Samurai</h3>
+                    <p><strong>The Cyber-Enhanced Warrior</strong></p>
+                    <p>Imagine a medieval samurai who traded their katana for a smartgun and their training for cybernetic reflexes. Street samurai are the physical powerhouses of the shadow world, but they're not just muscle - they're precision instruments of violence.</p>
+                    
+                    <h4>Core Concept</h4>
+                    <p>The street samurai follows the way of the warrior adapted for corporate warfare. They enhance their natural abilities with cutting-edge bioware and cyberware, becoming living weapons. Think <em>Ghost in the Shell's</em> Major Kusanagi or <em>Neuromancer's</em> Molly Millions.</p>
+                    
+                    <h4>Typical Loadout</h4>
+                    <ul>
+                        <li><strong>Wired Reflexes:</strong> Neural acceleration for lightning-fast reactions</li>
+                        <li><strong>Smartgun System:</strong> Direct neural link to weapons for perfect accuracy</li>
+                        <li><strong>Dermal Plating:</strong> Subdermal armor that looks completely natural</li>
+                        <li><strong>Cybereyes:</strong> Enhanced vision with thermographic and low-light capabilities</li>
+                    </ul>
+                    
+                    <h4>Team Role</h4>
+                    <p>Primary combatant, physical security specialist, and often the team's "breach and clear" expert. They're your answer to security guards, hostile spirits, and rival shadowrunners.</p>
+                </div>
+
+                <div class="archetype-card decker">
+                    <div class="role-icon" style="background: #00ff00; color: black;">💻</div>
+                    <h3>Decker</h3>
+                    <p><strong>The Matrix Cowboy</strong></p>
+                    <p>In a world where information is the ultimate currency, deckers are the bank robbers of cyberspace. They're not just computer experts - they're digital shamans who navigate the Matrix like a parallel universe.</p>
+                    
+                    <h4>Core Concept</h4>
+                    <p>Deckers jack into the Matrix through neural interface, experiencing cyberspace as a tangible virtual reality. They hack systems not by typing code, but by literally fighting security programs in digital combat. Picture <em>Tron</em> meets <em>The Matrix</em> meets <em>Hackers</em>.</p>
+                    
+                    <h4>Matrix Mastery</h4>
+                    <ul>
+                        <li><strong>Cyberdeck:</strong> Their primary tool for Matrix access</li>
+                        <li><strong>Programs:</strong> Software tools that appear as weapons/utilities in VR</li>
+                        <li><strong>Persona:</strong> Their digital avatar representation</li>
+                        <li><strong>Data Havens:</strong> Hidden storage locations in cyberspace</li>
+                    </ul>
+                    
+                    <h4>Team Role</h4>
+                    <p>Information warfare specialist, security system neutralizer, and digital reconnaissance expert. They open electronic locks, disable cameras, steal paydata, and fight hostile hackers in cyberspace.</p>
+                </div>
+
+                <div class="archetype-card mage">
+                    <div class="role-icon" style="background: #8a2be2; color: white;">🔮</div>
+                    <h3>Mage</h3>
+                    <p><strong>The Awakened Manipulator</strong></p>
+                    <p>When magic returned to the world, it didn't come with instruction manuals. Mages are those who've learned to bend reality through will, knowledge, and connection to forces beyond the physical realm.</p>
+                    
+                    <h4>Core Concept</h4>
+                    <p>Mages manipulate mana (magical energy) to alter reality. Unlike fantasy wizards with spell books, Shadowrun mages understand magic as applied metaphysics. They might follow hermetic traditions (think scientific approach to magic) or shamanic paths (spiritual connection to nature/urban spirits).</p>
+                    
+                    <h4>Magical Arsenal</h4>
+                    <ul>
+                        <li><strong>Spellcasting:</strong> Direct manipulation of reality</li>
+                        <li><strong>Summoning:</strong> Calling spirits to aid them</li>
+                        <li><strong>Enchanting:</strong> Creating magical items</li>
+                        <li><strong>Astral Projection:</strong> Traveling in the spirit realm</li>
+                    </ul>
+                    
+                    <h4>Team Role</h4>
+                    <p>Mystical problem solver, astral reconnaissance, spirit combat specialist, and reality hacker. They handle magical security, provide healing, and deal with supernatural threats.</p>
+                </div>
+
+                <div class="archetype-card rigger">
+                    <div class="role-icon" style="background: #ffa500; color: black;">🚗</div>
+                    <h3>Rigger</h3>
+                    <p><strong>The Machine Whisperer</strong></p>
+                    <p>Riggers don't just drive vehicles - they <em>become</em> them. Through neural interface technology, they merge their consciousness with machines, experiencing the world through sensors and controlling devices as extensions of their own body.</p>
+                    
+                    <h4>Core Concept</h4>
+                    <p>Using a control rig implant, riggers can "jump into" any properly equipped vehicle or drone, controlling it with thought alone. Imagine being able to feel through a car's sensors, or simultaneously piloting multiple drones like extra limbs.</p>
+                    
+                    <h4>Machine Mastery</h4>
+                    <ul>
+                        <li><strong>Control Rig:</strong> Neural interface for vehicle control</li>
+                        <li><strong>Drone Network:</strong> Multiple autonomous/semi-autonomous units</li>
+                        <li><strong>Vehicle Modifications:</strong> Customized rides for specific missions</li>
+                        <li><strong>Autosofts:</strong> AI programs that help control multiple systems</li>
+                    </ul>
+                    
+                    <h4>Team Role</h4>
+                    <p>Transportation specialist, aerial reconnaissance, mobile fire support, and logistics coordinator. They provide getaway vehicles, scout with drones, and turn any machine into a team asset.</p>
+                </div>
+
+                <div class="archetype-card face">
+                    <div class="role-icon" style="background: #ff69b4; color: white;">🎭</div>
+                    <h3>Face</h3>
+                    <p><strong>The Social Infiltrator</strong></p>
+                    <p>In a world of corporate intrigue and social manipulation, the Face is your team's diplomat, spy, and con artist rolled into one charismatic package. They weaponize personality.</p>
+                    
+                    <h4>Core Concept</h4>
+                    <p>Faces understand that the most secure system often has a human operator who can be convinced, bribed, seduced, or intimidated. They're masters of social engineering, able to talk their way into (or out of) almost any situation.</p>
+                    
+                    <h4>Social Arsenal</h4>
+                    <ul>
+                        <li><strong>Contacts Network:</strong> Web of useful people across all social levels</li>
+                        <li><strong>Tailored Pheromones:</strong> Bioware that makes them naturally appealing</li>
+                        <li><strong>Voice Control:</strong> Cyberware for perfect vocal manipulation</li>
+                        <li><strong>Corporate Personas:</strong> Multiple false identities for different situations</li>
+                    </ul>
+                    
+                    <h4>Team Role</h4>
+                    <p>Social infiltration specialist, negotiator, information gatherer, and team spokesperson. They get the team through social barriers that no amount of firepower or hacking can breach.</p>
+                </div>
+
+                <div class="archetype-card adept">
+                    <div class="role-icon" style="background: #ffff00; color: black;">🥋</div>
+                    <h3>Physical Adept</h3>
+                    <p><strong>The Magic-Enhanced Human</strong></p>
+                    <p>Physical adepts channel magic internally, using it to push their natural human abilities to superhuman levels. They're the bridge between the purely mundane and the overtly magical.</p>
+                    
+                    <h4>Core Concept</h4>
+                    <p>Instead of casting external spells, adepts use magic to enhance their own physical and mental capabilities. Think of them as martial artists who've learned to use chi/ki as a literal force, or athletes who've transcended human limitations through magical discipline.</p>
+                    
+                    <h4>Enhanced Abilities</h4>
+                    <ul>
+                        <li><strong>Improved Reflexes:</strong> Supernatural speed without cyberware</li>
+                        <li><strong>Killing Hands:</strong> Unarmed attacks that can penetrate armor</li>
+                        <li><strong>Wall Running:</strong> Brief defiance of gravity</li>
+                        <li><strong>Combat Sense:</strong> Mystical awareness of danger</li>
+                    </ul>
+                    
+                    <h4>Team Role</h4>
+                    <p>Versatile combatant, infiltration specialist, and magical backup. They combine physical prowess with subtle magic use, often serving as scouts or backup muscle.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Team Synergy and Interactions</h2>
+            <div class="team-dynamics">
+                <h3>The Perfect Shadowrunning Team</h3>
+                <p>Each archetype covers different aspects of a typical shadowrun, but the magic happens in how they work together. Let's see how a balanced team tackles a typical corporate data theft:</p>
+
+                <div class="mermaid">
+                    graph LR
+                        A[Face] -->|Social Infiltration| B[Target Building]
+                        C[Rigger] -->|Drone Surveillance| B
+                        D[Decker] -->|Matrix Reconnaissance| B
+                        E[Mage] -->|Astral Scouting| B
+                        
+                        B --> F[Security Systems]
+                        F -->|Physical Security| G[Street Samurai]
+                        F -->|Electronic Security| D
+                        F -->|Magical Security| E
+                        F -->|Social Security| A
+                        
+                        G --> H[Secure Data]
+                        D --> H
+                        E --> H
+                        A --> H
+                        
+                        H -->|Extraction| I[Rigger's Getaway Vehicle]
+                        
+                        style A fill:#ff69b4
+                        style C fill:#ffa500
+                        style D fill:#00ff00
+                        style E fill:#8a2be2
+                        style G fill:#ff4444
+                        style I fill:#ffa500
+                </div>
+
+                <h4>Example Mission Flow</h4>
+                <ol>
+                    <li><strong>Planning Phase:</strong> Face uses contacts to gather intel, Decker does Matrix reconnaissance, Mage scouts astrally</li>
+                    <li><strong>Infiltration:</strong> Face talks team past lobby security while Rigger's drones watch for threats</li>
+                    <li><strong>Penetration:</strong> Decker hacks elevator controls, Mage deals with ward spells, Street Samurai handles physical resistance</li>
+                    <li><strong>Extraction:</strong> Team escapes in Rigger's modified vehicle while Decker covers their digital tracks</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>Archetype Specialization Paths</h2>
+            <p>Each archetype has multiple sub-specializations. Think of these as "builds" within each class:</p>
+
+            <h3>Street Samurai Variants</h3>
+            <ul>
+                <li><strong>Tank:</strong> Maximum armor and damage resistance, human fortress</li>
+                <li><strong>Ninja:</strong> Stealth-focused with infiltration gear and silent weapons</li>
+                <li><strong>Gunslinger:</strong> Ranged combat specialist with smartgun systems</li>
+                <li><strong>Razorboy:</strong> Melee specialist with retractable weapons and enhanced reflexes</li>
+            </ul>
+
+            <h3>Decker Specializations</h3>
+            <ul>
+                <li><strong>Data Thief:</strong> Specialists in stealing and analyzing information</li>
+                <li><strong>Spider:</strong> Defensive Matrix experts who protect systems</li>
+                <li><strong>Cybercombatant:</strong> Digital warriors who fight in virtual reality</li>
+                <li><strong>Technomancer:</strong> Matrix users who interface without cyberdecks</li>
+            </ul>
+
+            <h3>Magical Traditions</h3>
+            <ul>
+                <li><strong>Hermetic Mage:</strong> Academic approach, structured spellcasting</li>
+                <li><strong>Shamanic Mage:</strong> Spiritual connection, nature/urban spirit allies</li>
+                <li><strong>Chaos Mage:</strong> Unpredictable methods, reality-bending techniques</li>
+                <li><strong>Wujen:</strong> Eastern mysticism meets corporate espionage</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Choosing Your Path</h2>
+            <p>When selecting your archetype, consider these questions:</p>
+
+            <h3>Personality Questions</h3>
+            <ul>
+                <li><strong>"How do you solve problems?"</strong> - Violence (Samurai), Subterfuge (Face), Technology (Decker), Magic (Mage), etc.</li>
+                <li><strong>"What excites you about the setting?"</strong> - Cyberpunk tech, urban fantasy magic, social intrigue, vehicle chases?</li>
+                <li><strong>"How do you want to interact with the world?"</strong> - Direct confrontation, behind-the-scenes manipulation, digital warfare?</li>
+            </ul>
+
+            <h3>Practical Considerations</h3>
+            <ul>
+                <li><strong>Team Composition:</strong> What roles does your group need filled?</li>
+                <li><strong>Learning Curve:</strong> Magic and Matrix rules are more complex than shooting guns</li>
+                <li><strong>Character Development:</strong> Which archetype offers the growth story you want to tell?</li>
+            </ul>
+
+            <canvas id="archetypeWheel" width="400" height="400" style="display: block; margin: 20px auto; border: 2px solid #00ffff;"></canvas>
+            <script>
+                const canvas = document.getElementById('archetypeWheel');
+                const ctx = canvas.getContext('2d');
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = 150;
+
+                const archetypes = [
+                    {name: 'Samurai', color: '#ff4444', angle: 0},
+                    {name: 'Decker', color: '#00ff00', angle: Math.PI / 3},
+                    {name: 'Mage', color: '#8a2be2', angle: 2 * Math.PI / 3},
+                    {name: 'Rigger', color: '#ffa500', angle: Math.PI},
+                    {name: 'Face', color: '#ff69b4', angle: 4 * Math.PI / 3},
+                    {name: 'Adept', color: '#ffff00', angle: 5 * Math.PI / 3}
+                ];
+
+                // Draw wheel segments
+                archetypes.forEach((arch, index) => {
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.arc(centerX, centerY, radius, arch.angle - Math.PI/6, arch.angle + Math.PI/6);
+                    ctx.closePath();
+                    ctx.fillStyle = arch.color;
+                    ctx.fill();
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    // Add labels
+                    const labelX = centerX + Math.cos(arch.angle) * (radius - 30);
+                    const labelY = centerY + Math.sin(arch.angle) * (radius - 30);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(arch.name, labelX, labelY);
+                });
+
+                // Center circle
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 40, 0, 2 * Math.PI);
+                ctx.fillStyle = '#000000';
+                ctx.fill();
+                ctx.strokeStyle = '#00ffff';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.fillStyle = '#00ffff';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('YOUR', centerX, centerY - 5);
+                ctx.fillText('CHOICE', centerX, centerY + 10);
+            </script>
+        </section>
+
+        <section>
+            <h2>Real-World Analogies</h2>
+            <p>To help you understand each archetype's role, here are some real-world parallels:</p>
+
+            <div class="mermaid">
+                mindmap
+                  root((Shadowrun Team))
+                    [Street Samurai]
+                      Special Forces Operator
+                      Professional Bodyguard
+                      SWAT Team Member
+                      Mixed Martial Artist
+                    [Decker]
+                      Ethical Hacker
+                      Cyber Security Expert
+                      Anonymous Member
+                      Systems Administrator
+                    [Mage]
+                      Research Scientist
+                      Religious Leader
+                      Theoretical Physicist
+                      Emergency Paramedic
+                    [Rigger]
+                      Drone Pilot
+                      Professional Driver
+                      Air Traffic Controller
+                      Remote Operations Specialist
+                    [Face]
+                      Diplomat
+                      Sales Executive
+                      Undercover Agent
+                      Public Relations Manager
+                    [Adept]
+                      Olympic Athlete
+                      Parkour Expert
+                      Martial Arts Master
+                      Stunt Performer
+            </div>
+        </section>
+
+        <section>
+            <h2>Building Character Depth</h2>
+            <p>Remember: your archetype is your profession, not your personality. A Street Samurai might be a former corporate executive seeking revenge, a philosophical warrior following a code of honor, or a desperate parent trying to earn enough for their child's medical treatment.</p>
+
+            <h3>Character Background Elements</h3>
+            <ul>
+                <li><strong>Why did you become a shadowrunner?</strong> - Corporate betrayal, magical awakening, family debt, thrill-seeking?</li>
+                <li><strong>What's your relationship with technology?</strong> - Embrace it, fear it, see it as a tool, or view it as evolution?</li>
+                <li><strong>How do you view magic?</strong> - Natural force, divine gift, dangerous power, or academic subject?</li>
+                <li><strong>What are your connections?</strong> - Former colleagues, family members, criminal contacts, corporate assets?</li>
+            </ul>
+
+            <h3>Motivation Examples</h3>
+            <ul>
+                <li><strong>Street Samurai:</strong> "I lost my arm in corporate warfare. Now I'm stronger than before, and I'm going to make them pay."</li>
+                <li><strong>Decker:</strong> "Information wants to be free. I'm just helping it along."</li>
+                <li><strong>Mage:</strong> "Magic returned for a reason. I need to understand why."</li>
+                <li><strong>Rigger:</strong> "In the driver's seat, I'm in control. That's the only place I feel truly alive."</li>
+                <li><strong>Face:</strong> "Everyone has a price. I just need to figure out what it is."</li>
+                <li><strong>Adept:</strong> "The body is the perfect machine. I'm just unlocking its potential."</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Your Next Steps</h2>
+            <p>Now that you understand the core archetypes, you're ready to dive deeper into the specific mechanics of character creation. Each archetype has its own complex systems - cyberware for Street Samurai, Matrix rules for Deckers, magic theory for Mages, and so on.</p>
+
+            <p>In our next tutorial, we'll explore the fundamental game mechanics that bind all these archetypes together: the dice system, attributes, skills, and how to build a character that's both mechanically effective and narratively compelling.</p>
+
+            <p><strong>Think about this:</strong> Which archetype called to you? What kind of problems do you want to solve? How do you want to change the Sixth World? Your answers to these questions will guide everything that follows.</p>
+        </section>
+
+        <footer>
+            <p><em>The shadows need specialists, but legends need depth. Choose wisely, omae.</em></p>
+            <p style="text-align: center; margin-top: 40px;">
+                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next:<a href="/shadowrun/sr_mechanics.html">Game Mechanics and Character Creation</a> ◊</span>
+            </p>
+        </footer>
+    </main>
+</body>
+</html>

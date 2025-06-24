@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Shadows - Shadowrun RPG Introduction</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        .neon-text { 
+            color: #00ff00; 
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+        }
+        .cyber-grid {
+            background: linear-gradient(90deg, transparent 49%, #00ff00 50%, #00ff00 51%, transparent 52%),
+                        linear-gradient(transparent 49%, #00ff00 50%, #00ff00 51%, transparent 52%);
+            background-size: 20px 20px;
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .magic-glow {
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+        .duality-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .tech-side, .magic-side {
+            width: 45%;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .tech-side {
+            background: linear-gradient(135deg, #001122, #003366);
+            border: 2px solid #00ff00;
+        }
+        .magic-side {
+            background: linear-gradient(135deg, #220011, #660033);
+            border: 2px solid #ff00ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    
+    <header>
+        <h1 class="neon-text">Welcome to the Shadows</h1>
+        <p><em>Your First Steps into the Shadowrun Universe</em></p>
+    </header>
+
+    <main>
+        <section>
+            <h2>What is Shadowrun?</h2>
+            <p>Imagine a world where the cyberpunk dreams of the 1980s collided head-on with the fantasy epics of Tolkien. Picture corporate executives making deals with literal dragons, hackers casting spells through neural interfaces, and street samurai wielding both katanas and smartguns. This is Shadowrun - a tabletop role-playing game that masterfully blends high technology with high fantasy.</p>
+            
+            <p>Think of it like this: if <em>Blade Runner</em> had a wild night out with <em>Lord of the Rings</em>, and they decided to start a family in the year 2080, Shadowrun would be their brilliant, rebellious offspring.</p>
+        </section>
+
+        <section>
+            <h2>The Perfect Storm of Genres</h2>
+            <div class="duality-container">
+                <div class="tech-side">
+                    <h3 style="color: #00ff00;">Cyberpunk Foundation</h3>
+                    <ul>
+                        <li><strong>Megacorporations</strong> rule the world</li>
+                        <li><strong>Hackers</strong> dive into virtual reality</li>
+                        <li><strong>Cybernetic implants</strong> enhance human capabilities</li>
+                        <li><strong>Urban decay</strong> and neon-lit streets</li>
+                        <li><strong>Surveillance state</strong> technology</li>
+                    </ul>
+                </div>
+                <div class="magic-side">
+                    <h3 style="color: #ff00ff;">Fantasy Renaissance</h3>
+                    <div class="magic-glow" style="float: right; margin: -10px;"></div>
+                    <ul>
+                        <li><strong>Magic returned</strong> in 2011 (The Awakening)</li>
+                        <li><strong>Elves, dwarfs, orks, trolls</strong> emerged</li>
+                        <li><strong>Shamans and mages</strong> cast real spells</li>
+                        <li><strong>Dragons</strong> run corporations</li>
+                        <li><strong>Spirits</strong> inhabit both physical and digital realms</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>The World Timeline - How We Got Here</h2>
+            <div class="mermaid">
+                timeline
+                    title The Sixth World Awakening
+                    
+                    2011 : The Awakening Begins
+                         : Magic returns to the world
+                         : First goblinization events
+                         : Dragons emerge from hiding
+                    
+                    2021 : The Great Ghost Dance
+                         : Native American Nations reclaim territory
+                         : Massive magical ritual reshapes North America
+                    
+                    2029 : Crash of '29
+                         : First great computer virus
+                         : Economic collapse
+                         : Rise of corporate power
+                    
+                    2039 : Night of Rage
+                         : Anti-metahuman violence
+                         : Underground movement grows
+                    
+                    2057-2080 : Corporate Wars Era
+                              : Shadowrunners become essential
+                              : Matrix evolves into wireless world
+                              : Current game timeline
+            </div>
+        </section>
+
+        <section>
+            <h2>Understanding the Sixth World</h2>
+            <p>Shadowrun takes place in what's called the "Sixth World" - our world after magic returned. Think of human history in cycles:</p>
+            
+            <ul>
+                <li><strong>First World:</strong> Dawn of humanity and magic</li>
+                <li><strong>Second through Fourth Worlds:</strong> Lost civilizations with magic</li>
+                <li><strong>Fifth World:</strong> Our current mundane world (magic "asleep")</li>
+                <li><strong>Sixth World:</strong> Magic has awakened again (Shadowrun's setting)</li>
+            </ul>
+
+            <p>This is like discovering that all those "myths" about Atlantis, ancient magical civilizations, and legendary heroes weren't myths at all - they were just from the last time magic was active on Earth.</p>
+        </section>
+
+        <section>
+            <h2>The Corporate Hierarchy</h2>
+            <p>In 2080, nations still exist, but the real power lies with the <strong>AAA Megacorporations</strong>. These aren't just big businesses - they're sovereign entities with their own military forces, extraterritorial rights, and seats on the Corporate Court (think UN Security Council, but for corporations).</p>
+
+            <div class="mermaid">
+                graph TD
+                    A[Corporate Court] --> B[AAA Megacorps]
+                    B --> C[Ares Macrotechnology]
+                    B --> D[Aztechnology]
+                    B --> E[Evo Corporation]
+                    B --> F[Horizon Group]
+                    B --> G[Mitsuhama Computer Technologies]
+                    B --> H[NeoNET]
+                    B --> I[Renraku Computer Systems]
+                    B --> J[Saeder-Krupp]
+                    B --> K[Shiawase Corporation]
+                    B --> L[Wuxing Incorporated]
+                    
+                    C --> C1[Military Contractors]
+                    D --> D1[Blood Magic & Teocalli]
+                    J --> J1[Lofwyr the Dragon CEO]
+                    G --> G1[Japanese Traditionalism]
+                    
+                    style A fill:#ff6b6b
+                    style J1 fill:#9b59b6
+            </div>
+
+            <p><strong>Real-world analogy:</strong> Imagine if Amazon, Google, Apple, and Microsoft not only dominated their markets but also had their own armies, could declare war, issue passports, and were literally ruled by ancient dragons. That's the corporate landscape of Shadowrun.</p>
+        </section>
+
+        <section>
+            <h2>What Are Shadowrunners?</h2>
+            <p>You are <strong>shadowrunners</strong> - the freelance operatives who work in the gray areas between the corporate towers and the urban sprawl. Think of yourselves as a combination of:</p>
+
+            <ul>
+                <li><strong>Ocean's Eleven heist crew</strong> - planning elaborate jobs</li>
+                <li><strong>Cyberpunk hackers</strong> - infiltrating digital fortresses</li>
+                <li><strong>Fantasy adventurers</strong> - facing magical dangers</li>
+                <li><strong>Special forces operators</strong> - handling dangerous missions</li>
+            </ul>
+
+            <p>Shadowrunners exist because corporations need "deniable assets" - people who can do the dirty work without official corporate fingerprints. You're hired through intermediaries called "fixers" to steal data, eliminate threats, rescue assets, or sabotage competitors.</p>
+
+            <canvas id="shadowrunnerViz" width="600" height="200" style="border: 1px solid #00ff00; background: #000;"></canvas>
+            <script>
+                const canvas = document.getElementById('shadowrunnerViz');
+                const ctx = canvas.getContext('2d');
+                
+                // Draw corporate towers
+                ctx.fillStyle = '#333';
+                ctx.fillRect(50, 50, 40, 100);
+                ctx.fillRect(500, 50, 40, 100);
+                
+                // Corporate glow
+                ctx.fillStyle = '#ff0000';
+                ctx.fillRect(50, 40, 40, 10);
+                ctx.fillStyle = '#0000ff';
+                ctx.fillRect(500, 40, 40, 10);
+                
+                // Shadowrunner in the middle
+                ctx.fillStyle = '#00ff00';
+                ctx.beginPath();
+                ctx.arc(300, 100, 15, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Connection lines (data flow)
+                ctx.strokeStyle = '#ffff00';
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(90, 100);
+                ctx.lineTo(285, 100);
+                ctx.moveTo(315, 100);
+                ctx.lineTo(500, 100);
+                ctx.stroke();
+                
+                // Labels
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '12px monospace';
+                ctx.fillText('Corp A', 45, 170);
+                ctx.fillText('Runner', 285, 170);
+                ctx.fillText('Corp B', 505, 170);
+                ctx.fillText('Deniable Asset', 250, 185);
+            </script>
+        </section>
+
+        <section>
+            <h2>The Magic-Technology Synthesis</h2>
+            <p>What makes Shadowrun unique is how magic and technology don't just coexist - they actively interact and enhance each other:</p>
+
+            <h3>Technomancers</h3>
+            <p>Some individuals can interface with the Matrix (Shadowrun's internet) using only their minds - no cyberdeck needed. They're essentially "digital mages" who cast spells in cyberspace. Imagine being able to hack into any computer system just by thinking about it.</p>
+
+            <h3>Awakened Hackers</h3>
+            <p>Mages who also understand technology can ward their equipment against hostile spirits, enchant their gear for better performance, or even summon spirits to help with Matrix runs.</p>
+
+            <h3>Cyber-Shamans</h3>
+            <p>Street shamans who embrace both urban spirits and cutting-edge augmentation, finding power in the marriage of flesh, steel, and spirit.</p>
+        </section>
+
+        <section>
+            <h2>Your Character's Place in This World</h2>
+            <p>As a new shadowrunner, you're starting at the bottom of a very dangerous food chain. But that's where the best stories begin. Your character might be:</p>
+
+            <ul>
+                <li><strong>A former corporate wage slave</strong> who discovered their employer's dark secrets</li>
+                <li><strong>A street kid</strong> who awakened to magical powers and needs to survive</li>
+                <li><strong>A military veteran</strong> discarded after their usefulness ended</li>
+                <li><strong>A hacker</strong> who accessed the wrong database and became a target</li>
+                <li><strong>A tribal shaman</strong> trying to protect their people from corporate expansion</li>
+            </ul>
+
+            <p>The beauty of Shadowrun is that your character's background directly influences how they interact with this complex world. A former Renraku programmer will have different contacts, enemies, and knowledge than a troll gang member from the Seattle Underground.</p>
+        </section>
+
+        <section>
+            <h2>Why Shadowrun Matters</h2>
+            <p>Shadowrun isn't just about the cool factor of elves with assault rifles (though that is pretty cool). The game explores themes that are incredibly relevant today:</p>
+
+            <ul>
+                <li><strong>Corporate power vs. individual freedom</strong></li>
+                <li><strong>Surveillance and privacy in digital age</strong></li>
+                <li><strong>Environmental destruction and its consequences</strong></li>
+                <li><strong>Social inequality and marginalized communities</strong></li>
+                <li><strong>The intersection of technology and humanity</strong></li>
+                <li><strong>Cultural identity in a globalized world</strong></li>
+            </ul>
+
+            <p>When you play a troll struggling against systemic discrimination, or a hacker fighting corporate data monopolies, or a shaman trying to heal poisoned land, you're not just rolling dice - you're exploring real issues through the lens of speculative fiction.</p>
+        </section>
+
+        <section>
+            <h2>Getting Started - Your Next Steps</h2>
+            <p>Now that you understand the world, you're ready to dive deeper. The Shadowrun universe is vast and detailed, with decades of published material, but don't let that intimidate you. Every legendary shadowrunner started with their first milk run (easy job).</p>
+
+            <p>In our next tutorial, we'll explore the different character archetypes and help you decide what kind of shadowrunner you want to be. Whether you're drawn to the neon-lit world of the decker, the mystical paths of the awakened, or the chrome-enhanced capabilities of the street samurai, there's a place for you in the shadows.</p>
+
+            <p><strong>Remember:</strong> In the Sixth World, the only way to survive is to adapt, evolve, and always watch your back. The shadows are dangerous, but they're also where legends are born.</p>
+        </section>
+
+        <footer>
+            <p><em>Stay frosty, choom. The shadows are calling.</em></p>
+            <p style="text-align: center; margin-top: 40px;">
+                <span class="neon-text">◊ Next: Character Archetypes and Roles ◊</span>
+            </p>
+        </footer>
+    </main>
+</body>
+</html>

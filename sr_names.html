@@ -1,0 +1,2057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow Registry - Names for the Sixth World</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <style>
+        .names-background {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .names-section {
+            background: linear-gradient(135deg, rgba(52, 73, 94, 0.8), rgba(44, 62, 80, 0.9));
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            color: white;
+        }
+        
+        .male-section { border-color: #3498db; }
+        .female-section { border-color: #e74c3c; }
+        .neutral-section { border-color: #f39c12; }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            text-shadow: 0 0 10px currentColor;
+            margin-bottom: 10px;
+        }
+        
+        .male-title { color: #3498db; }
+        .female-title { color: #e74c3c; }
+        .neutral-title { color: #f39c12; }
+        
+        .names-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .name-card {
+            background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(20,20,20,0.7));
+            border: 2px solid;
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .name-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        
+        .male-card { border-color: #3498db; }
+        .female-card { border-color: #e74c3c; }
+        .neutral-card { border-color: #f39c12; }
+        
+        .name-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .name-main {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ecf0f1;
+        }
+        
+        .name-code {
+            font-size: 14px;
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        .name-details {
+            font-size: 12px;
+            color: #bdc3c7;
+            line-height: 1.4;
+        }
+        
+        .ethnicity {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        
+        .profession {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .specialty {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .search-box {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #00ffff;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 20px 0;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .search-box::placeholder {
+            color: #95a5a6;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .filter-btn:hover {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border-color: #e74c3c;
+        }
+        
+        .stats-panel {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ffff;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #95a5a6;
+        }
+        
+        .random-generator {
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.3), rgba(142, 68, 173, 0.4));
+            border: 2px solid #9b59b6;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .generator-btn {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .generator-btn:hover {
+            background: linear-gradient(135deg, #8e44ad, #7d3c98);
+            transform: translateY(-2px);
+        }
+        
+        .generated-result {
+            background: rgba(0,0,0,0.6);
+            border: 2px solid #9b59b6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 18px;
+            color: #ecf0f1;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .usage-tips {
+            background: rgba(46, 204, 113, 0.2);
+            border-left: 5px solid #2ecc71;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="names-background"></div>
+    
+    <header>
+        <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Shadow Registry</h1>
+        <p><em>Names for the Sixth World - 150 Runners Ready for Action</em></p>
+    </header>
+
+    <main>
+        <div class="stats-panel">
+            <h3 style="color: #00ffff; margin-bottom: 15px;">Name Collection Statistics</h3>
+            <div class="stat-row">
+                <div class="stat-item">
+                    <div class="stat-number">50</div>
+                    <div class="stat-label">Male Names</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50</div>
+                    <div class="stat-label">Female Names</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50</div>
+                    <div class="stat-label">Gender Neutral</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">150</div>
+                    <div class="stat-label">Total Names</div>
+                </div>
+            </div>
+        </div>
+
+        <input type="text" class="search-box" id="searchBox" placeholder="Search names by ethnicity, profession, specialty, or name...">
+        
+        <div class="filter-buttons">
+            <div class="filter-btn active" onclick="filterCards('all')">All Names</div>
+            <div class="filter-btn" onclick="filterCards('male')">Male</div>
+            <div class="filter-btn" onclick="filterCards('female')">Female</div>
+            <div class="filter-btn" onclick="filterCards('neutral')">Gender Neutral</div>
+            <div class="filter-btn" onclick="filterCards('street-samurai')">Street Samurai</div>
+            <div class="filter-btn" onclick="filterCards('decker')">Decker</div>
+            <div class="filter-btn" onclick="filterCards('mage')">Mage</div>
+            <div class="filter-btn" onclick="filterCards('face')">Face</div>
+        </div>
+
+        <div class="random-generator">
+            <h3 style="color: #9b59b6; margin-bottom: 15px;">Random Name Generator</h3>
+            <button class="generator-btn" onclick="generateRandom('all')">Random Any</button>
+            <button class="generator-btn" onclick="generateRandom('male')">Random Male</button>
+            <button class="generator-btn" onclick="generateRandom('female')">Random Female</button>
+            <button class="generator-btn" onclick="generateRandom('neutral')">Random Neutral</button>
+            <div class="generated-result" id="randomResult">Click a button to generate a random name</div>
+        </div>
+
+        <!-- Male Names Section -->
+        <div class="names-section male-section">
+            <div class="section-header">
+                <div class="section-title male-title">Male Shadowrunners</div>
+                <p>Professional operators from diverse backgrounds and specialties</p>
+            </div>
+            
+            <div class="names-grid">
+                <div class="name-card male-card" data-category="male street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Marcus "Razor" Chen</div>
+                        <div class="name-code">#SR-M001</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Chinese-American</span> • <span class="profession">Ex-Corporate Security</span><br>
+                        <span class="specialty">Street Samurai</span> • Cybernetic enhancement specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male decker">
+                    <div class="name-header">
+                        <div class="name-main">Dmitri "Ghost" Volkov</div>
+                        <div class="name-code">#SR-M002</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian</span> • <span class="profession">Former Military Hacker</span><br>
+                        <span class="specialty">Decker</span> • Matrix warfare expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male mage">
+                    <div class="name-header">
+                        <div class="name-main">Joseph "Thunderhawk" Crow Dog</div>
+                        <div class="name-code">#SR-M003</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Lakota</span> • <span class="profession">Tribal Shaman</span><br>
+                        <span class="specialty">Hermetic Mage</span> • Traditional spirit caller
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male face">
+                    <div class="name-header">
+                        <div class="name-main">Alessandro "Silk" Romano</div>
+                        <div class="name-code">#SR-M004</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Italian</span> • <span class="profession">Former Diplomat</span><br>
+                        <span class="specialty">Face</span> • High society infiltrator
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male rigger">
+                    <div class="name-header">
+                        <div class="name-main">Kenji "Gearhead" Tanaka</div>
+                        <div class="name-code">#SR-M005</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese</span> • <span class="profession">Racing Engineer</span><br>
+                        <span class="specialty">Rigger</span> • Vehicle modification expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male adept">
+                    <div class="name-header">
+                        <div class="name-main">Rajesh "Flow" Patel</div>
+                        <div class="name-code">#SR-M006</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Indian</span> • <span class="profession">Former Yoga Instructor</span><br>
+                        <span class="specialty">Physical Adept</span> • Martial arts master
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Olumide "Iron" Adebayo</div>
+                        <div class="name-code">#SR-M007</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Nigerian</span> • <span class="profession">Former Boxer</span><br>
+                        <span class="specialty">Street Samurai</span> • Close combat specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male decker">
+                    <div class="name-header">
+                        <div class="name-main">Erik "Phantom" Lindqvist</div>
+                        <div class="name-code">#SR-M008</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Swedish</span> • <span class="profession">Software Engineer</span><br>
+                        <span class="specialty">Decker</span> • Encryption specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male mage">
+                    <div class="name-header">
+                        <div class="name-main">Hassan "Mirage" Al-Rashid</div>
+                        <div class="name-code">#SR-M009</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Lebanese</span> • <span class="profession">Former Professor</span><br>
+                        <span class="specialty">Hermetic Mage</span> • Illusion magic expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male face">
+                    <div class="name-header">
+                        <div class="name-main">Gabriel "Smooth" Santos</div>
+                        <div class="name-code">#SR-M010</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Brazilian</span> • <span class="profession">Former TV Host</span><br>
+                        <span class="specialty">Face</span> • Media manipulation expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male rigger">
+                    <div class="name-header">
+                        <div class="name-main">Yuki "Snowfall" Matsumoto</div>
+                        <div class="name-code">#SR-M011</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese</span> • <span class="profession">Former Pilot</span><br>
+                        <span class="specialty">Rigger</span> • Aircraft specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male adept">
+                    <div class="name-header">
+                        <div class="name-main">Malik "Shadow" Washington</div>
+                        <div class="name-code">#SR-M012</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American</span> • <span class="profession">Former Thief</span><br>
+                        <span class="specialty">Physical Adept</span> • Stealth infiltrator
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Viktor "Hammer" Petrov</div>
+                        <div class="name-code">#SR-M013</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian</span> • <span class="profession">Former Spetsnaz</span><br>
+                        <span class="specialty">Street Samurai</span> • Heavy weapons expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male decker">
+                    <div class="name-header">
+                        <div class="name-main">Liam "Circuit" O'Brien</div>
+                        <div class="name-code">#SR-M014</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Irish</span> • <span class="profession">Former Telecom Worker</span><br>
+                        <span class="specialty">Decker</span> • Network infrastructure expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male mage">
+                    <div class="name-header">
+                        <div class="name-main">Amara "Stormcaller" Okafor</div>
+                        <div class="name-code">#SR-M015</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Igbo</span> • <span class="profession">Traditional Healer</span><br>
+                        <span class="specialty">Shaman</span> • Weather magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male face">
+                    <div class="name-header">
+                        <div class="name-main">Jean-Pierre "Charme" Dubois</div>
+                        <div class="name-code">#SR-M016</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">French</span> • <span class="profession">Former Sommelier</span><br>
+                        <span class="specialty">Face</span> • Luxury market specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male rigger">
+                    <div class="name-header">
+                        <div class="name-main">Diego "Convoy" Morales</div>
+                        <div class="name-code">#SR-M017</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Mexican</span> • <span class="profession">Truck Driver</span><br>
+                        <span class="specialty">Rigger</span> • Ground transport expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male adept">
+                    <div class="name-header">
+                        <div class="name-main">Kai "Breaker" Nakamura</div>
+                        <div class="name-code">#SR-M018</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese-Hawaiian</span> • <span class="profession">Professional Surfer</span><br>
+                        <span class="specialty">Physical Adept</span> • Water specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Aleksandr "Blade" Kozlov</div>
+                        <div class="name-code">#SR-M019</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Ukrainian</span> • <span class="profession">Former Fencer</span><br>
+                        <span class="specialty">Street Samurai</span> • Melee weapons master
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male decker">
+                    <div class="name-header">
+                        <div class="name-main">Achmed "Cipher" Hassan</div>
+                        <div class="name-code">#SR-M020</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Egyptian</span> • <span class="profession">Cryptographer</span><br>
+                        <span class="specialty">Decker</span> • Data encryption expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male mage">
+                    <div class="name-header">
+                        <div class="name-main">Tomás "Serpent" Villareal</div>
+                        <div class="name-code">#SR-M021</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Aztlan</span> • <span class="profession">Former Priest</span><br>
+                        <span class="specialty">Aztec Mage</span> • Blood magic practitioner
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male face">
+                    <div class="name-header">
+                        <div class="name-main">Heinrich "Silver" Mueller</div>
+                        <div class="name-code">#SR-M022</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">German</span> • <span class="profession">Investment Banker</span><br>
+                        <span class="specialty">Face</span> • Financial manipulation expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male rigger">
+                    <div class="name-header">
+                        <div class="name-main">Kwame "Spider" Asante</div>
+                        <div class="name-code">#SR-M023</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Ghanaian</span> • <span class="profession">Drone Engineer</span><br>
+                        <span class="specialty">Rigger</span> • Micro-drone specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male adept">
+                    <div class="name-header">
+                        <div class="name-main">Hiro "Zen" Yamamoto</div>
+                        <div class="name-code">#SR-M024</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese</span> • <span class="profession">Zen Monk</span><br>
+                        <span class="specialty">Physical Adept</span> • Meditation master
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Vasily "Titan" Volga</div>
+                        <div class="name-code">#SR-M025</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian</span> • <span class="profession">Former Strongman</span><br>
+                        <span class="specialty">Street Samurai</span> • Strength augmentation specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male decker">
+                    <div class="name-header">
+                        <div class="name-main">Pradeep "Logic" Sharma</div>
+                        <div class="name-code">#SR-M026</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Indian</span> • <span class="profession">Algorithm Designer</span><br>
+                        <span class="specialty">Decker</span> • AI systems expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male mage">
+                    <div class="name-header">
+                        <div class="name-main">Kofi "Ancestor" Mensah</div>
+                        <div class="name-code">#SR-M027</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Akan</span> • <span class="profession">Tribal Elder</span><br>
+                        <span class="specialty">Ancestor Shaman</span> • Spirit communication expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male face">
+                    <div class="name-header">
+                        <div class="name-main">Antonio "Velvet" Ricci</div>
+                        <div class="name-code">#SR-M028</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Italian</span> • <span class="profession">Fashion Designer</span><br>
+                        <span class="specialty">Face</span> • Style and trend expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male rigger">
+                    <div class="name-header">
+                        <div class="name-main">Bjorn "Navigator" Eriksen</div>
+                        <div class="name-code">#SR-M029</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Norwegian</span> • <span class="profession">Ship Captain</span><br>
+                        <span class="specialty">Rigger</span> • Maritime operations expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male adept">
+                    <div class="name-header">
+                        <div class="name-main">Carlos "Quickstep" Mendez</div>
+                        <div class="name-code">#SR-M030</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Colombian</span> • <span class="profession">Professional Dancer</span><br>
+                        <span class="specialty">Physical Adept</span> • Movement enhancement specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Pavel "Wraith" Novak</div>
+                        <div class="name-code">#SR-M031</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Czech</span> • <span class="profession">Former Police</span><br>
+                        <span class="specialty">Street Samurai</span> • Urban warfare specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male decker">
+                    <div class="name-header">
+                        <div class="name-main">Omar "Firewall" Al-Zahra</div>
+                        <div class="name-code">#SR-M032</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Moroccan</span> • <span class="profession">Security Analyst</span><br>
+                        <span class="specialty">Decker</span> • Network defense expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male mage">
+                    <div class="name-header">
+                        <div class="name-main">Finnegan "Druid" O'Sullivan</div>
+                        <div class="name-code">#SR-M033</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Irish</span> • <span class="profession">Environmental Scientist</span><br>
+                        <span class="specialty">Nature Mage</span> • Ecological magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male face">
+                    <div class="name-header">
+                        <div class="name-main">Thabo "Diamond" Mthembu</div>
+                        <div class="name-code">#SR-M034</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Zulu</span> • <span class="profession">Gem Trader</span><br>
+                        <span class="specialty">Face</span> • Luxury goods expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male rigger">
+                    <div class="name-header">
+                        <div class="name-main">Min-jun "Circuit" Park</div>
+                        <div class="name-code">#SR-M035</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Korean</span> • <span class="profession">Electronics Technician</span><br>
+                        <span class="specialty">Rigger</span> • Cybernetics interface expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male adept">
+                    <div class="name-header">
+                        <div class="name-main">Stefan "Echo" Popov</div>
+                        <div class="name-code">#SR-M036</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Bulgarian</span> • <span class="profession">Sound Engineer</span><br>
+                        <span class="specialty">Physical Adept</span> • Acoustic enhancement specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Rodrigo "Steel" Vargas</div>
+                        <div class="name-code">#SR-M037</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Chilean</span> • <span class="profession">Metal Worker</span><br>
+                        <span class="specialty">Street Samurai</span> • Industrial combat specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male decker">
+                    <div class="name-header">
+                        <div class="name-main">Yusuf "Node" Ibrahim</div>
+                        <div class="name-code">#SR-M038</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Somali</span> • <span class="profession">Network Administrator</span><br>
+                        <span class="specialty">Decker</span> • Grid maintenance expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male mage">
+                    <div class="name-header">
+                        <div class="name-main">Dimitrios "Oracle" Papadakis</div>
+                        <div class="name-code">#SR-M039</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Greek</span> • <span class="profession">Philosophy Professor</span><br>
+                        <span class="specialty">Hermetic Mage</span> • Divination specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male face">
+                    <div class="name-header">
+                        <div class="name-main">Ravi "Silk Road" Chopra</div>
+                        <div class="name-code">#SR-M040</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Punjabi</span> • <span class="profession">Import/Export Trader</span><br>
+                        <span class="specialty">Face</span> • International commerce expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male rigger">
+                    <div class="name-header">
+                        <div class="name-main">Takeshi "Drift" Sato</div>
+                        <div class="name-code">#SR-M041</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese</span> • <span class="profession">Street Racer</span><br>
+                        <span class="specialty">Rigger</span> • High-speed vehicle specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male adept">
+                    <div class="name-header">
+                        <div class="name-main">Magnus "Stone" Andersson</div>
+                        <div class="name-code">#SR-M042</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Swedish</span> • <span class="profession">Rock Climber</span><br>
+                        <span class="specialty">Physical Adept</span> • Endurance specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Jamal "Thunder" Washington</div>
+                        <div class="name-code">#SR-M043</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American</span> • <span class="profession">Former Marine</span><br>
+                        <span class="specialty">Street Samurai</span> • Explosives specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male decker">
+                    <div class="name-header">
+                        <div class="name-main">Ferenc "Matrix" Kovacs</div>
+                        <div class="name-code">#SR-M044</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Hungarian</span> • <span class="profession">Game Developer</span><br>
+                        <span class="specialty">Decker</span> • Virtual reality expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male mage">
+                    <div class="name-header">
+                        <div class="name-main">Eduardo "Condor" Quispe</div>
+                        <div class="name-code">#SR-M045</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Quechua</span> • <span class="profession">Mountain Guide</span><br>
+                        <span class="specialty">Animal Shaman</span> • High altitude specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male face">
+                    <div class="name-header">
+                        <div class="name-main">Mikhail "Velvet" Petrov</div>
+                        <div class="name-code">#SR-M046</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian</span> • <span class="profession">Opera Singer</span><br>
+                        <span class="specialty">Face</span> • Performing arts specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male rigger">
+                    <div class="name-header">
+                        <div class="name-main">Tariq "Sandstorm" Al-Mansouri</div>
+                        <div class="name-code">#SR-M047</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Emirati</span> • <span class="profession">Desert Guide</span><br>
+                        <span class="specialty">Rigger</span> • All-terrain vehicle expert
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male adept">
+                    <div class="name-header">
+                        <div class="name-main">Nikos "Hermes" Stavros</div>
+                        <div class="name-code">#SR-M048</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Greek</span> • <span class="profession">Courier</span><br>
+                        <span class="specialty">Physical Adept</span> • Speed enhancement specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Leroy "Vanguard" Jackson</div>
+                        <div class="name-code">#SR-M049</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American</span> • <span class="profession">Community Organizer</span><br>
+                        <span class="specialty">Street Samurai</span> • Crowd control specialist
+                    </div>
+                </div>
+
+                <div class="name-card male-card" data-category="male decker">
+                    <div class="name-header">
+                        <div class="name-main">Wei "Binary" Zhou</div>
+                        <div class="name-code">#SR-M050</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Chinese</span> • <span class="profession">Quantum Researcher</span><br>
+                        <span class="specialty">Decker</span> • Advanced computing specialist
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Female Names Section -->
+        <div class="names-section female-section">
+            <div class="section-header">
+                <div class="section-title female-title">Female Shadowrunners</div>
+                <p>Elite operatives breaking barriers and building legends</p>
+            </div>
+            
+            <div class="names-grid">
+                <div class="name-card female-card" data-category="female street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Elena "Viper" Rodriguez</div>
+                        <div class="name-code">#SR-F001</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Spanish</span> • <span class="profession">Former Assassin</span><br>
+                        <span class="specialty">Street Samurai</span> • Stealth combat specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female decker">
+                    <div class="name-header">
+                        <div class="name-main">Zara "Ghost Protocol" Khan</div>
+                        <div class="name-code">#SR-F002</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Pakistani</span> • <span class="profession">Cyber Security Expert</span><br>
+                        <span class="specialty">Decker</span> • Penetration testing specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female mage">
+                    <div class="name-header">
+                        <div class="name-main">Aiyana "Moonweaver" Crow Feather</div>
+                        <div class="name-code">#SR-F003</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Cherokee</span> • <span class="profession">Traditional Healer</span><br>
+                        <span class="specialty">Shamanic Mage</span> • Lunar magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female face">
+                    <div class="name-header">
+                        <div class="name-main">Isabella "Diamond" Rossi</div>
+                        <div class="name-code">#SR-F004</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Italian</span> • <span class="profession">Art Gallery Owner</span><br>
+                        <span class="specialty">Face</span> • High culture infiltrator
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female rigger">
+                    <div class="name-header">
+                        <div class="name-main">Yuki "Ice Queen" Tanaka</div>
+                        <div class="name-code">#SR-F005</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese</span> • <span class="profession">Formula Racing Driver</span><br>
+                        <span class="specialty">Rigger</span> • Precision driving expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female adept">
+                    <div class="name-header">
+                        <div class="name-main">Priya "Lotus" Sharma</div>
+                        <div class="name-code">#SR-F006</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Indian</span> • <span class="profession">Classical Dancer</span><br>
+                        <span class="specialty">Physical Adept</span> • Grace and balance specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Keisha "Bulldozer" Williams</div>
+                        <div class="name-code">#SR-F007</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American</span> • <span class="profession">Former Bodybuilder</span><br>
+                        <span class="specialty">Street Samurai</span> • Heavy weapons specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female decker">
+                    <div class="name-header">
+                        <div class="name-main">Astrid "Valkyrie" Larsson</div>
+                        <div class="name-code">#SR-F008</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Swedish</span> • <span class="profession">Quantum Programmer</span><br>
+                        <span class="specialty">Decker</span> • Next-gen computing expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female mage">
+                    <div class="name-header">
+                        <div class="name-main">Fatima "Desert Rose" Al-Zahra</div>
+                        <div class="name-code">#SR-F009</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Moroccan</span> • <span class="profession">Archaeologist</span><br>
+                        <span class="specialty">Hermetic Mage</span> • Ancient magic researcher
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female face">
+                    <div class="name-header">
+                        <div class="name-main">Camila "Siren" Santos</div>
+                        <div class="name-code">#SR-F010</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Brazilian</span> • <span class="profession">Telenovela Actress</span><br>
+                        <span class="specialty">Face</span> • Entertainment industry expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female rigger">
+                    <div class="name-header">
+                        <div class="name-main">Akiko "Dragonfly" Watanabe</div>
+                        <div class="name-code">#SR-F011</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese</span> • <span class="profession">Drone Designer</span><br>
+                        <span class="specialty">Rigger</span> • Micro-drone swarm expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female adept">
+                    <div class="name-header">
+                        <div class="name-main">Amara "Whisper" Johnson</div>
+                        <div class="name-code">#SR-F012</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American</span> • <span class="profession">Professional Gymnast</span><br>
+                        <span class="specialty">Physical Adept</span> • Acrobatic specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Natasha "Red Storm" Volkov</div>
+                        <div class="name-code">#SR-F013</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian</span> • <span class="profession">Former Ballet Dancer</span><br>
+                        <span class="specialty">Street Samurai</span> • Graceful combat specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female decker">
+                    <div class="name-header">
+                        <div class="name-main">Niamh "Binary Banshee" O'Connor</div>
+                        <div class="name-code">#SR-F014</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Irish</span> • <span class="profession">Acoustic Engineer</span><br>
+                        <span class="specialty">Decker</span> • Audio-based hacking expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female mage">
+                    <div class="name-header">
+                        <div class="name-main">Kemi "Thunderbird" Adebayo</div>
+                        <div class="name-code">#SR-F015</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Yoruba</span> • <span class="profession">Weather Scientist</span><br>
+                        <span class="specialty">Storm Shaman</span> • Weather control specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female face">
+                    <div class="name-header">
+                        <div class="name-main">Brigitte "Velour" Moreau</div>
+                        <div class="name-code">#SR-F016</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">French</span> • <span class="profession">Fashion Model</span><br>
+                        <span class="specialty">Face</span> • Fashion industry insider
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female rigger">
+                    <div class="name-header">
+                        <div class="name-main">Maria "Highway" Gonzalez</div>
+                        <div class="name-code">#SR-F017</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Mexican</span> • <span class="profession">Long-haul Trucker</span><br>
+                        <span class="specialty">Rigger</span> • Cross-country transport expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female adept">
+                    <div class="name-header">
+                        <div class="name-main">Leilani "Wave Rider" Nakamura</div>
+                        <div class="name-code">#SR-F018</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Native Hawaiian</span> • <span class="profession">Professional Surfer</span><br>
+                        <span class="specialty">Physical Adept</span> • Aquatic movement expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Oksana "Icepick" Bondarenko</div>
+                        <div class="name-code">#SR-F019</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Ukrainian</span> • <span class="profession">Former Figure Skater</span><br>
+                        <span class="specialty">Street Samurai</span> • Precision blade specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female decker">
+                    <div class="name-header">
+                        <div class="name-main">Layla "Cipher Queen" Hassan</div>
+                        <div class="name-code">#SR-F020</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Lebanese</span> • <span class="profession">Mathematics Professor</span><br>
+                        <span class="specialty">Decker</span> • Encryption mathematics expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female mage">
+                    <div class="name-header">
+                        <div class="name-main">Carmen "Jaguar" Villareal</div>
+                        <div class="name-code">#SR-F021</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Aztlan</span> • <span class="profession">Jungle Guide</span><br>
+                        <span class="specialty">Jaguar Shaman</span> • Predator magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female face">
+                    <div class="name-header">
+                        <div class="name-main">Greta "Golden Voice" Hoffman</div>
+                        <div class="name-code">#SR-F022</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">German</span> • <span class="profession">News Anchor</span><br>
+                        <span class="specialty">Face</span> • Media manipulation expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female rigger">
+                    <div class="name-header">
+                        <div class="name-main">Asha "Spider Web" Okafor</div>
+                        <div class="name-code">#SR-F023</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Nigerian</span> • <span class="profession">Network Engineer</span><br>
+                        <span class="specialty">Rigger</span> • Distributed systems expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female adept">
+                    <div class="name-header">
+                        <div class="name-main">Sakura "Petal Dance" Yamamoto</div>
+                        <div class="name-code">#SR-F024</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese</span> • <span class="profession">Tea Ceremony Master</span><br>
+                        <span class="specialty">Physical Adept</span> • Meditation and focus expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Vera "Iron Maiden" Petrov</div>
+                        <div class="name-code">#SR-F025</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian</span> • <span class="profession">Former Weightlifter</span><br>
+                        <span class="specialty">Street Samurai</span> • Strength enhancement specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female decker">
+                    <div class="name-header">
+                        <div class="name-main">Ananya "Logic Gate" Patel</div>
+                        <div class="name-code">#SR-F026</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Indian</span> • <span class="profession">Chip Designer</span><br>
+                        <span class="specialty">Decker</span> • Hardware architecture expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female mage">
+                    <div class="name-header">
+                        <div class="name-main">Nkem "Earth Mother" Igwe</div>
+                        <div class="name-code">#SR-F027</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Igbo</span> • <span class="profession">Agricultural Scientist</span><br>
+                        <span class="specialty">Earth Shaman</span> • Fertility magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female face">
+                    <div class="name-header">
+                        <div class="name-main">Francesca "Silk" Romano</div>
+                        <div class="name-code">#SR-F028</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Italian</span> • <span class="profession">Luxury Boutique Owner</span><br>
+                        <span class="specialty">Face</span> • High-end retail expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female rigger">
+                    <div class="name-header">
+                        <div class="name-main">Ingrid "Aurora" Hansen</div>
+                        <div class="name-code">#SR-F029</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Norwegian</span> • <span class="profession">Arctic Explorer</span><br>
+                        <span class="specialty">Rigger</span> • Extreme environment specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female adept">
+                    <div class="name-header">
+                        <div class="name-main">Lucia "Tango" Mendez</div>
+                        <div class="name-code">#SR-F030</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Argentinian</span> • <span class="profession">Professional Dancer</span><br>
+                        <span class="specialty">Physical Adept</span> • Rhythmic movement expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Jana "Scorpion" Novakova</div>
+                        <div class="name-code">#SR-F031</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Czech</span> • <span class="profession">Former Police Detective</span><br>
+                        <span class="specialty">Street Samurai</span> • Investigation combat specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female decker">
+                    <div class="name-header">
+                        <div class="name-main">Amina "Firewall" Benali</div>
+                        <div class="name-code">#SR-F032</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Algerian</span> • <span class="profession">Information Security Analyst</span><br>
+                        <span class="specialty">Decker</span> • Defensive systems expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female mage">
+                    <div class="name-header">
+                        <div class="name-main">Siobhan "Mist Walker" Murphy</div>
+                        <div class="name-code">#SR-F033</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Irish</span> • <span class="profession">Marine Biologist</span><br>
+                        <span class="specialty">Water Shaman</span> • Ocean magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female face">
+                    <div class="name-header">
+                        <div class="name-main">Nomsa "Golden Tongue" Mthembu</div>
+                        <div class="name-code">#SR-F034</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Zulu</span> • <span class="profession">Cultural Attaché</span><br>
+                        <span class="specialty">Face</span> • Diplomatic protocol expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female rigger">
+                    <div class="name-header">
+                        <div class="name-main">So-young "Circuit Breaker" Kim</div>
+                        <div class="name-code">#SR-F035</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Korean</span> • <span class="profession">Electrical Engineer</span><br>
+                        <span class="specialty">Rigger</span> • Power systems specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female adept">
+                    <div class="name-header">
+                        <div class="name-main">Milena "Echo" Dimitrov</div>
+                        <div class="name-code">#SR-F036</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Bulgarian</span> • <span class="profession">Opera Singer</span><br>
+                        <span class="specialty">Physical Adept</span> • Vocal enhancement specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Esperanza "Phoenix" Vargas</div>
+                        <div class="name-code">#SR-F037</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Chilean</span> • <span class="profession">Former Firefighter</span><br>
+                        <span class="specialty">Street Samurai</span> • Fire suppression specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female decker">
+                    <div class="name-header">
+                        <div class="name-main">Halima "Data Stream" Mohamed</div>
+                        <div class="name-code">#SR-F038</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Somali</span> • <span class="profession">Database Administrator</span><br>
+                        <span class="specialty">Decker</span> • Big data specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female mage">
+                    <div class="name-header">
+                        <div class="name-main">Elektra "Storm Bringer" Papadakis</div>
+                        <div class="name-code">#SR-F039</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Greek</span> • <span class="profession">Meteorologist</span><br>
+                        <span class="specialty">Storm Mage</span> • Atmospheric manipulation expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female face">
+                    <div class="name-header">
+                        <div class="name-main">Meera "Silk Route" Chopra</div>
+                        <div class="name-code">#SR-F040</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Punjabi</span> • <span class="profession">Textile Merchant</span><br>
+                        <span class="specialty">Face</span> • International trade expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female rigger">
+                    <div class="name-header">
+                        <div class="name-main">Rei "Velocity" Sato</div>
+                        <div class="name-code">#SR-F041</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese</span> • <span class="profession">Motorcycle Courier</span><br>
+                        <span class="specialty">Rigger</span> • Urban navigation expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female adept">
+                    <div class="name-header">
+                        <div class="name-main">Astrid "Glacier" Andersson</div>
+                        <div class="name-code">#SR-F042</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Swedish</span> • <span class="profession">Ice Sculptor</span><br>
+                        <span class="specialty">Physical Adept</span> • Cold environment specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Alicia "Lightning" Washington</div>
+                        <div class="name-code">#SR-F043</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American</span> • <span class="profession">Former Track Athlete</span><br>
+                        <span class="specialty">Street Samurai</span> • Speed enhancement specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female decker">
+                    <div class="name-header">
+                        <div class="name-main">Zsofia "Quantum" Kovacs</div>
+                        <div class="name-code">#SR-F044</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Hungarian</span> • <span class="profession">Physics Researcher</span><br>
+                        <span class="specialty">Decker</span> • Quantum computing expert
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female mage">
+                    <div class="name-header">
+                        <div class="name-main">Paloma "Sky Dancer" Quispe</div>
+                        <div class="name-code">#SR-F045</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Quechua</span> • <span class="profession">High-altitude Researcher</span><br>
+                        <span class="specialty">Air Shaman</span> • Wind magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female face">
+                    <div class="name-header">
+                        <div class="name-main">Anya "Nightingale" Volkov</div>
+                        <div class="name-code">#SR-F046</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian</span> • <span class="profession">Classical Musician</span><br>
+                        <span class="specialty">Face</span> • High culture specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female rigger">
+                    <div class="name-header">
+                        <div class="name-main">Zahra "Desert Fox" Al-Mansouri</div>
+                        <div class="name-code">#SR-F047</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Emirati</span> • <span class="profession">Geological Surveyor</span><br>
+                        <span class="specialty">Rigger</span> • Harsh terrain specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female adept">
+                    <div class="name-header">
+                        <div class="name-main">Thalia "Mercury" Stavros</div>
+                        <div class="name-code">#SR-F048</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Greek</span> • <span class="profession">Olympic Sprinter</span><br>
+                        <span class="specialty">Physical Adept</span> • Maximum velocity specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Shanice "Sentinel" Jackson</div>
+                        <div class="name-code">#SR-F049</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American</span> • <span class="profession">Former Social Worker</span><br>
+                        <span class="specialty">Street Samurai</span> • Community protection specialist
+                    </div>
+                </div>
+
+                <div class="name-card female-card" data-category="female decker">
+                    <div class="name-header">
+                        <div class="name-main">Li "Neural Net" Zhou</div>
+                        <div class="name-code">#SR-F050</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Chinese</span> • <span class="profession">AI Researcher</span><br>
+                        <span class="specialty">Decker</span> • Machine learning expert
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gender Neutral Names Section -->
+        <div class="names-section neutral-section">
+            <div class="section-header">
+                <div class="section-title neutral-title">Gender Neutral Shadowrunners</div>
+                <p>Diverse operators transcending traditional categories</p>
+            </div>
+            
+            <div class="names-grid">
+                <div class="name-card neutral-card" data-category="neutral street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">River "Blade Storm" Chen</div>
+                        <div class="name-code">#SR-N001</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Chinese-Canadian</span> • <span class="profession">Former Security Consultant</span><br>
+                        <span class="specialty">Street Samurai</span> • Multi-weapon specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral decker">
+                    <div class="name-header">
+                        <div class="name-main">Phoenix "Zero Day" Volkov</div>
+                        <div class="name-code">#SR-N002</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian-German</span> • <span class="profession">Exploit Developer</span><br>
+                        <span class="specialty">Decker</span> • Zero-day vulnerability expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral mage">
+                    <div class="name-header">
+                        <div class="name-main">Sage "Void Walker" Crow</div>
+                        <div class="name-code">#SR-N003</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Mixed Heritage</span> • <span class="profession">Philosophy Student</span><br>
+                        <span class="specialty">Chaos Mage</span> • Reality paradigm specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral face">
+                    <div class="name-header">
+                        <div class="name-main">Quinn "Chameleon" Romano</div>
+                        <div class="name-code">#SR-N004</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Italian-Irish</span> • <span class="profession">Method Actor</span><br>
+                        <span class="specialty">Face</span> • Identity transformation expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral rigger">
+                    <div class="name-header">
+                        <div class="name-main">Storm "Grid Runner" Tanaka</div>
+                        <div class="name-code">#SR-N005</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese-Scandinavian</span> • <span class="profession">Urban Planner</span><br>
+                        <span class="specialty">Rigger</span> • City infrastructure expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral adept">
+                    <div class="name-header">
+                        <div class="name-main">Echo "Harmony" Patel</div>
+                        <div class="name-code">#SR-N006</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Indian-British</span> • <span class="profession">Music Therapist</span><br>
+                        <span class="specialty">Physical Adept</span> • Harmonic resonance specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Raven "Night Shift" Adebayo</div>
+                        <div class="name-code">#SR-N007</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Nigerian-Scottish</span> • <span class="profession">Security Systems Analyst</span><br>
+                        <span class="specialty">Street Samurai</span> • Nocturnal operations specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral decker">
+                    <div class="name-header">
+                        <div class="name-main">Nyx "Dark Web" Lindqvist</div>
+                        <div class="name-code">#SR-N008</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Swedish-Estonian</span> • <span class="profession">Digital Forensics Expert</span><br>
+                        <span class="specialty">Decker</span> • Deep web navigation specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral mage">
+                    <div class="name-header">
+                        <div class="name-main">Rowan "Crossroads" Al-Rashid</div>
+                        <div class="name-code">#SR-N009</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Lebanese-Welsh</span> • <span class="profession">Comparative Religion Scholar</span><br>
+                        <span class="specialty">Hermetic Mage</span> • Multi-tradition synthesist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral face">
+                    <div class="name-header">
+                        <div class="name-main">Azure "Mirror" Santos</div>
+                        <div class="name-code">#SR-N010</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Brazilian-Portuguese</span> • <span class="profession">Social Media Influencer</span><br>
+                        <span class="specialty">Face</span> • Digital personality specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral rigger">
+                    <div class="name-header">
+                        <div class="name-main">Zephyr "Wind Rider" Matsumoto</div>
+                        <div class="name-code">#SR-N011</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese-Hawaiian</span> • <span class="profession">Atmospheric Researcher</span><br>
+                        <span class="specialty">Rigger</span> • Aerial dynamics specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral adept">
+                    <div class="name-header">
+                        <div class="name-main">Kai "Flow State" Washington</div>
+                        <div class="name-code">#SR-N012</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American-Korean</span> • <span class="profession">Parkour Instructor</span><br>
+                        <span class="specialty">Physical Adept</span> • Urban movement specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Frost "Ice Breaker" Petrov</div>
+                        <div class="name-code">#SR-N013</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian-Inuit</span> • <span class="profession">Arctic Survival Expert</span><br>
+                        <span class="specialty">Street Samurai</span> • Cold weather combat specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral decker">
+                    <div class="name-header">
+                        <div class="name-main">Cipher "Code Poet" O'Brien</div>
+                        <div class="name-code">#SR-N014</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Irish-Filipino</span> • <span class="profession">Creative Coding Artist</span><br>
+                        <span class="specialty">Decker</span> • Artistic algorithm specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral mage">
+                    <div class="name-header">
+                        <div class="name-main">Ember "Soul Fire" Okafor</div>
+                        <div class="name-code">#SR-N015</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Igbo-Aboriginal</span> • <span class="profession">Cultural Anthropologist</span><br>
+                        <span class="specialty">Spirit Shaman</span> • Cross-cultural magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral face">
+                    <div class="name-header">
+                        <div class="name-main">Sage "Golden Tongue" Dubois</div>
+                        <div class="name-code">#SR-N016</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">French-Senegalese</span> • <span class="profession">Diplomatic Translator</span><br>
+                        <span class="specialty">Face</span> • Multi-lingual negotiation expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral rigger">
+                    <div class="name-header">
+                        <div class="name-main">Nova "Signal Boost" Morales</div>
+                        <div class="name-code">#SR-N017</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Mexican-Czech</span> • <span class="profession">Radio Astronomer</span><br>
+                        <span class="specialty">Rigger</span> • Signal processing specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral adept">
+                    <div class="name-header">
+                        <div class="name-main">Jules "Perfect Balance" Nakamura</div>
+                        <div class="name-code">#SR-N018</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese-French</span> • <span class="profession">Equilibrium Specialist</span><br>
+                        <span class="specialty">Physical Adept</span> • Balance and coordination expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Soren "Steel Symphony" Kozlov</div>
+                        <div class="name-code">#SR-N019</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Ukrainian-Danish</span> • <span class="profession">Percussion Specialist</span><br>
+                        <span class="specialty">Street Samurai</span> • Rhythmic combat specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral decker">
+                    <div class="name-header">
+                        <div class="name-main">Pulse "Data Weaver" Hassan</div>
+                        <div class="name-code">#SR-N020</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Egyptian-Turkish</span> • <span class="profession">Information Architecture Designer</span><br>
+                        <span class="specialty">Decker</span> • Data structure specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral mage">
+                    <div class="name-header">
+                        <div class="name-main">Willow "Dream Walker" Villareal</div>
+                        <div class="name-code">#SR-N021</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Aztlan-Celtic</span> • <span class="profession">Sleep Researcher</span><br>
+                        <span class="specialty">Dream Shaman</span> • Consciousness exploration specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral face">
+                    <div class="name-header">
+                        <div class="name-main">Indigo "Shape Shifter" Mueller</div>
+                        <div class="name-code">#SR-N022</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">German-Thai</span> • <span class="profession">Corporate Consultant</span><br>
+                        <span class="specialty">Face</span> • Organizational transformation expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral rigger">
+                    <div class="name-header">
+                        <div class="name-main">Orbit "Satellite" Asante</div>
+                        <div class="name-code">#SR-N023</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Ghanaian-Dutch</span> • <span class="profession">Satellite Communications Engineer</span><br>
+                        <span class="specialty">Rigger</span> • Orbital systems specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral adept">
+                    <div class="name-header">
+                        <div class="name-main">Harmony "Wavelength" Yamamoto</div>
+                        <div class="name-code">#SR-N024</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese-Brazilian</span> • <span class="profession">Bioacoustics Researcher</span><br>
+                        <span class="specialty">Physical Adept</span> • Frequency manipulation specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Onyx "Shadow Strike" Volga</div>
+                        <div class="name-code">#SR-N025</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian-Mongolian</span> • <span class="profession">Tactical Analysis Expert</span><br>
+                        <span class="specialty">Street Samurai</span> • Stealth assault specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral decker">
+                    <div class="name-header">
+                        <div class="name-main">Logic "Neural Path" Sharma</div>
+                        <div class="name-code">#SR-N026</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Indian-Canadian</span> • <span class="profession">Cognitive Science Researcher</span><br>
+                        <span class="specialty">Decker</span> • Brain-computer interface expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral mage">
+                    <div class="name-header">
+                        <div class="name-main">Cedar "Root System" Mensah</div>
+                        <div class="name-code">#SR-N027</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Akan-Native American</span> • <span class="profession">Mycologist</span><br>
+                        <span class="specialty">Plant Shaman</span> • Fungal network specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral face">
+                    <div class="name-header">
+                        <div class="name-main">Velvet "Smooth Operator" Ricci</div>
+                        <div class="name-code">#SR-N028</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Italian-Moroccan</span> • <span class="profession">Luxury Experience Designer</span><br>
+                        <span class="specialty">Face</span> • Sensory persuasion specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral rigger">
+                    <div class="name-header">
+                        <div class="name-main">Compass "True North" Eriksen</div>
+                        <div class="name-code">#SR-N029</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Norwegian-Sami</span> • <span class="profession">Navigation Systems Designer</span><br>
+                        <span class="specialty">Rigger</span> • Precision guidance specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral adept">
+                    <div class="name-header">
+                        <div class="name-main">Rhythm "Beat Master" Mendez</div>
+                        <div class="name-code">#SR-N030</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Colombian-Nigerian</span> • <span class="profession">Music Producer</span><br>
+                        <span class="specialty">Physical Adept</span> • Rhythmic enhancement specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Steel "Forge Heart" Novak</div>
+                        <div class="name-code">#SR-N031</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Czech-Romanian</span> • <span class="profession">Metallurgical Engineer</span><br>
+                        <span class="specialty">Street Samurai</span> • Materials enhancement specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral decker">
+                    <div class="name-header">
+                        <div class="name-main">Vector "Path Finder" Al-Zahra</div>
+                        <div class="name-code">#SR-N032</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Moroccan-Spanish</span> • <span class="profession">Algorithm Optimization Specialist</span><br>
+                        <span class="specialty">Decker</span> • Pathfinding algorithm expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral mage">
+                    <div class="name-header">
+                        <div class="name-main">Moss "Green Circuit" O'Sullivan</div>
+                        <div class="name-code">#SR-N033</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Irish-Japanese</span> • <span class="profession">Bioinformatics Researcher</span><br>
+                        <span class="specialty">Technomancer-Shaman</span> • Bio-digital interface specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral face">
+                    <div class="name-header">
+                        <div class="name-main">Crystal "Clarity" Mthembu</div>
+                        <div class="name-code">#SR-N034</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Zulu-Portuguese</span> • <span class="profession">Conflict Resolution Specialist</span><br>
+                        <span class="specialty">Face</span> • Mediation and clarity expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral rigger">
+                    <div class="name-header">
+                        <div class="name-main">Circuit "Live Wire" Park</div>
+                        <div class="name-code">#SR-N035</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Korean-Argentinian</span> • <span class="profession">Electrical Grid Analyst</span><br>
+                        <span class="specialty">Rigger</span> • Power distribution specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral adept">
+                    <div class="name-header">
+                        <div class="name-main">Resonance "Tuning Fork" Popov</div>
+                        <div class="name-code">#SR-N036</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Bulgarian-Finnish</span> • <span class="profession">Acoustic Engineer</span><br>
+                        <span class="specialty">Physical Adept</span> • Vibrational harmony specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Blade "Edge Walker" Vargas</div>
+                        <div class="name-code">#SR-N037</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Chilean-Basque</span> • <span class="profession">Precision Manufacturing Specialist</span><br>
+                        <span class="specialty">Street Samurai</span> • Cutting-edge weapons expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral decker">
+                    <div class="name-header">
+                        <div class="name-main">Hex "Code Spinner" Ibrahim</div>
+                        <div class="name-code">#SR-N038</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Somali-Swedish</span> • <span class="profession">Compiler Design Expert</span><br>
+                        <span class="specialty">Decker</span> • Programming language specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral mage">
+                    <div class="name-header">
+                        <div class="name-main">Cosmos "Star Reader" Papadakis</div>
+                        <div class="name-code">#SR-N039</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Greek-Armenian</span> • <span class="profession">Astrophysicist</span><br>
+                        <span class="specialty">Cosmic Mage</span> • Stellar magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral face">
+                    <div class="name-header">
+                        <div class="name-main">Silk "Web Weaver" Chopra</div>
+                        <div class="name-code">#SR-N040</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Punjabi-Italian</span> • <span class="profession">Network Theory Researcher</span><br>
+                        <span class="specialty">Face</span> • Relationship mapping specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral rigger">
+                    <div class="name-header">
+                        <div class="name-main">Drift "Current Rider" Sato</div>
+                        <div class="name-code">#SR-N041</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Japanese-Polynesian</span> • <span class="profession">Ocean Current Analyst</span><br>
+                        <span class="specialty">Rigger</span> • Marine navigation specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral adept">
+                    <div class="name-header">
+                        <div class="name-main">Stone "Mountain Heart" Andersson</div>
+                        <div class="name-code">#SR-N042</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Swedish-Tibetan</span> • <span class="profession">Geological Stability Expert</span><br>
+                        <span class="specialty">Physical Adept</span> • Structural integrity specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Storm "Thunder Strike" Washington</div>
+                        <div class="name-code">#SR-N043</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American-Irish</span> • <span class="profession">Atmospheric Physicist</span><br>
+                        <span class="specialty">Street Samurai</span> • Weather warfare specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral decker">
+                    <div class="name-header">
+                        <div class="name-main">Mesh "Network Node" Kovacs</div>
+                        <div class="name-code">#SR-N044</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Hungarian-Vietnamese</span> • <span class="profession">Distributed Systems Architect</span><br>
+                        <span class="specialty">Decker</span> • Mesh networking specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral mage">
+                    <div class="name-header">
+                        <div class="name-main">Feather "Wind Song" Quispe</div>
+                        <div class="name-code">#SR-N045</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Quechua-Celtic</span> • <span class="profession">Ethnomusicologist</span><br>
+                        <span class="specialty">Song Shaman</span> • Musical magic specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral face">
+                    <div class="name-header">
+                        <div class="name-main">Prism "Light Bender" Petrov</div>
+                        <div class="name-code">#SR-N046</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Russian-Indian</span> • <span class="profession">Optical Engineer</span><br>
+                        <span class="specialty">Face</span> • Perception manipulation specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral rigger">
+                    <div class="name-header">
+                        <div class="name-main">Flux "Signal Flow" Al-Mansouri</div>
+                        <div class="name-code">#SR-N047</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Emirati-German</span> • <span class="profession">Telecommunications Engineer</span><br>
+                        <span class="specialty">Rigger</span> • Signal optimization specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral adept">
+                    <div class="name-header">
+                        <div class="name-main">Grace "Perfect Form" Stavros</div>
+                        <div class="name-code">#SR-N048</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Greek-Ethiopian</span> • <span class="profession">Biomechanics Researcher</span><br>
+                        <span class="specialty">Physical Adept</span> • Movement optimization specialist
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral street-samurai">
+                    <div class="name-header">
+                        <div class="name-main">Unity "One Force" Jackson</div>
+                        <div class="name-code">#SR-N049</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">African-American-Korean</span> • <span class="profession">Systems Integration Specialist</span><br>
+                        <span class="specialty">Street Samurai</span> • Unified combat systems expert
+                    </div>
+                </div>
+
+                <div class="name-card neutral-card" data-category="neutral decker">
+                    <div class="name-header">
+                        <div class="name-main">Quantum "Probability" Zhou</div>
+                        <div class="name-code">#SR-N050</div>
+                    </div>
+                    <div class="name-details">
+                        <span class="ethnicity">Chinese-Brazilian</span> • <span class="profession">Quantum Information Scientist</span><br>
+                        <span class="specialty">Decker</span> • Quantum probability specialist
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="usage-tips">
+            <h3>💡 Using These Names in Your Campaign</h3>
+            <ul>
+                <li><strong>Player Characters:</strong> Use as inspiration or directly as pre-generated characters</li>
+                <li><strong>NPCs:</strong> Perfect for contacts, rivals, team members, or random encounters</li>
+                <li><strong>Name Generation:</strong> Mix and match elements to create entirely new characters</li>
+                <li><strong>Cultural Diversity:</strong> Examples show how different backgrounds influence shadowrunner specialties</li>
+                <li><strong>Team Building:</strong> Combine different archetypes and backgrounds for interesting team dynamics</li>
+                <li><strong>Story Hooks:</strong> Each character's background suggests potential storylines and motivations</li>
+            </ul>
+        </div>
+
+        <script>
+            // Search functionality
+            document.getElementById('searchBox').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('.name-card');
+                
+                cards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+
+            // Filter functionality
+            function filterCards(category) {
+                const cards = document.querySelectorAll('.name-card');
+                const buttons = document.querySelectorAll('.filter-btn');
+                
+                // Update active button
+                buttons.forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+                
+                cards.forEach(card => {
+                    if (category === 'all' || card.dataset.category.includes(category)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // Random name generator
+            function generateRandom(type) {
+                const cards = document.querySelectorAll('.name-card');
+                let filteredCards = [];
+                
+                if (type === 'all') {
+                    filteredCards = Array.from(cards);
+                } else {
+                    filteredCards = Array.from(cards).filter(card => 
+                        card.dataset.category.includes(type)
+                    );
+                }
+                
+                if (filteredCards.length > 0) {
+                    const randomCard = filteredCards[Math.floor(Math.random() * filteredCards.length)];
+                    const name = randomCard.querySelector('.name-main').textContent;
+                    const details = randomCard.querySelector('.name-details').textContent;
+                    
+                    document.getElementById('randomResult').innerHTML = 
+                        `<strong>${name}</strong><br><small>${details}</small>`;
+                } else {
+                    document.getElementById('randomResult').textContent = 'No names found for this category';
+                }
+            }
+
+            // Make functions globally available
+            window.filterCards = filterCards;
+            window.generateRandom = generateRandom;
+        </script>
+
+        <footer style="text-align: center; margin-top: 40px; color: #95a5a6;">
+            <p><em>150 names for 150 stories. Every runner has a history, every name carries weight. Choose wisely in the shadows.</em></p>
+        </footer>
+    </main>
+</body>
+</html>

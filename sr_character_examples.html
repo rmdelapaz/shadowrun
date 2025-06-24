@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content-width, initial-scale=1.0">
+    <title>Shadow Profiles - Character Examples</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        .character-showcase {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .character-card {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,20,0.9));
+            border: 3px solid;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            color: white;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+        
+        .street-samurai { border-color: #e74c3c; }
+        .decker { border-color: #00ff00; }
+        .mage { border-color: #8a2be2; }
+        .face { border-color: #ff69b4; }
+        .rigger { border-color: #ffa500; }
+        .adept { border-color: #ffff00; }
+        
+        .character-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .character-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-right: 20px;
+            position: relative;
+        }
+        
+        .character-avatar::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 50%;
+            animation: characterPulse 3s infinite;
+        }
+        
+        @keyframes characterPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+            50% { box-shadow: 0 0 40px rgba(255,255,255,0.7); }
+        }
+        
+        .character-info h3 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .character-info p {
+            margin: 5px 0;
+            color: #bdc3c7;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .stat-block {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #95a5a6;
+        }
+        
+        .skills-section {
+            margin: 20px 0;
+        }
+        
+        .skill-bar {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        
+        .skill-name {
+            width: 100px;
+            font-size: 14px;
+            color: #ecf0f1;
+        }
+        
+        .skill-dots {
+            display: flex;
+            margin-left: 10px;
+        }
+        
+        .skill-dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #95a5a6;
+            border-radius: 50%;
+            margin: 0 2px;
+        }
+        
+        .skill-dot.filled {
+            background: #27ae60;
+            border-color: #27ae60;
+            box-shadow: 0 0 5px #27ae60;
+        }
+        
+        .gear-section {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .gear-category {
+            margin: 10px 0;
+        }
+        
+        .gear-category h5 {
+            color: #3498db;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        .gear-list {
+            font-size: 12px;
+            color: #bdc3c7;
+            line-height: 1.4;
+        }
+        
+        .background-story {
+            background: rgba(52, 152, 219, 0.2);
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .contacts-section {
+            background: rgba(46, 204, 113, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .contact-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        
+        .contact-name {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        
+        .contact-rating {
+            color: #f39c12;
+            font-size: 12px;
+        }
+        
+        .motivations {
+            background: rgba(231, 76, 60, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .motivation-item {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #ecf0f1;
+        }
+        
+        .augmentation-display {
+            background: rgba(155, 89, 182, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .aug-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            font-size: 13px;
+        }
+        
+        .aug-name {
+            color: #9b59b6;
+            font-weight: bold;
+        }
+        
+        .aug-effect {
+            color: #bdc3c7;
+            font-style: italic;
+        }
+        
+        .lifestyle-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .lifestyle-middle {
+            background: #3498db;
+            color: white;
+        }
+        
+        .lifestyle-low {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .lifestyle-high {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .team-role {
+            background: rgba(243, 156, 18, 0.3);
+            border: 2px solid #f39c12;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .role-title {
+            color: #f39c12;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .role-description {
+            font-size: 12px;
+            color: #ecf0f1;
+            margin-top: 5px;
+        }
+        
+        .character-relationships {
+            background: rgba(142, 68, 173, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .relationship-web {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .relationship-node {
+            background: rgba(142, 68, 173, 0.4);
+            border: 1px solid #8e44ad;
+            border-radius: 5px;
+            padding: 8px;
+            text-align: center;
+            font-size: 11px;
+        }
+        
+        .progression-tracker {
+            background: rgba(241, 196, 15, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .progression-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 13px;
+        }
+        
+        .progression-goal {
+            color: #f1c40f;
+        }
+        
+        .progression-status {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="character-showcase"></div>
+    
+    <header>
+        <h1 style="color: #3498db; text-shadow: 0 0 20px #3498db;">Shadow Profiles</h1>
+        <p><em>Character Examples from the Sixth World</em></p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Meet the Team</h2>
+            <p>These characters represent different approaches to life in the shadows, showcasing how the archetypes, mechanics, and storytelling elements from our tutorial series come together to create compelling, three-dimensional personas. Each character demonstrates different aspects of character creation, development, and integration into the shadow community.</p>
+        </section>
+
+        <div class="character-grid">
+            <!-- Street Samurai -->
+            <div class="character-card street-samurai">
+                <div class="character-header">
+                    <div class="character-avatar" style="background: #e74c3c; border-color: #e74c3c;">⚔️</div>
+                    <div class="character-info">
+                        <h3>"Razorback" Chen</h3>
+                        <p>Ork Street Samurai</p>
+                        <p>Former Corporate Security</p>
+                        <div class="lifestyle-indicator lifestyle-middle">Middle Lifestyle</div>
+                    </div>
+                </div>
+
+                <div class="team-role">
+                    <div class="role-title">Heavy Assault Specialist</div>
+                    <div class="role-description">Primary combatant and team protector</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-block">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Body</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Agility</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Reaction</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Strength</div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <h4 style="color: #e74c3c;">Combat Skills</h4>
+                    <div class="skill-bar">
+                        <span class="skill-name">Firearms</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Blades</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Intimidation</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="augmentation-display">
+                    <h5 style="color: #9b59b6;">Cyberware</h5>
+                    <div class="aug-item">
+                        <span class="aug-name">Wired Reflexes 2</span>
+                        <span class="aug-effect">+2 Reaction, +2d6 Initiative</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Smartgun System</span>
+                        <span class="aug-effect">+2 Accuracy with smartguns</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Dermal Plating</span>
+                        <span class="aug-effect">+2 Armor (undetectable)</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Cybereyes Rating 3</span>
+                        <span class="aug-effect">Thermographic, Low-light, Smartlink</span>
+                    </div>
+                </div>
+
+                <div class="gear-section">
+                    <div class="gear-category">
+                        <h5>Primary Weapons</h5>
+                        <div class="gear-list">
+                            • Ares Alpha Assault Rifle (smartgun, grenade launcher)<br>
+                            • Monofilament Katana (heirloom from his sensei)<br>
+                            • Fichetti Security 600 (backup/concealed carry)
+                        </div>
+                    </div>
+                    <div class="gear-category">
+                        <h5>Protection</h5>
+                        <div class="gear-list">
+                            • Armor Jacket (12 Armor + 2 from dermal plating)<br>
+                            • Ballistic Mask (intimidation factor)<br>
+                            • Combat Helmet (for serious business)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="background-story">
+                    <h5 style="color: #3498db;">Background</h5>
+                    <p>Former Knight Errant security officer who discovered his unit was being used to eliminate witnesses to corporate crimes. When he refused to participate in the execution of a family, he was marked for termination. He escaped with help from a shadowrunner team, but his partner and mentor didn't make it out. Now he uses his corporate security training to protect people the system has abandoned.</p>
+                </div>
+
+                <div class="contacts-section">
+                    <h5 style="color: #2ecc71;">Key Contacts</h5>
+                    <div class="contact-entry">
+                        <span class="contact-name">Master Yato</span>
+                        <span class="contact-rating">Connection 2, Loyalty 4</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Dr. Kim (Street Doc)</span>
+                        <span class="contact-rating">Connection 3, Loyalty 3</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Detective Sarah Mills</span>
+                        <span class="contact-rating">Connection 4, Loyalty 2</span>
+                    </div>
+                </div>
+
+                <div class="motivations">
+                    <h5 style="color: #e74c3c;">Motivations & Goals</h5>
+                    <div class="motivation-item">• Protect the innocent from corporate oppression</div>
+                    <div class="motivation-item">• Find evidence to clear his partner's name</div>
+                    <div class="motivation-item">• Perfect the way of the cyber-samurai</div>
+                    <div class="motivation-item">• Never let a teammate die on his watch</div>
+                </div>
+            </div>
+
+            <!-- Decker -->
+            <div class="character-card decker">
+                <div class="character-header">
+                    <div class="character-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">💻</div>
+                    <div class="character-info">
+                        <h3>"Ghost" Martinez</h3>
+                        <p>Human Decker</p>
+                        <p>Former Corporate Programmer</p>
+                        <div class="lifestyle-indicator lifestyle-low">Low Lifestyle</div>
+                    </div>
+                </div>
+
+                <div class="team-role">
+                    <div class="role-title">Matrix Operations Specialist</div>
+                    <div class="role-description">Digital infiltration and electronic warfare</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-block">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Logic</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Intuition</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Willpower</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Charisma</div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <h4 style="color: #00ff00;">Matrix Skills</h4>
+                    <div class="skill-bar">
+                        <span class="skill-name">Hacking</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Computer</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Cybercombat</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Electronics</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gear-section">
+                    <div class="gear-category">
+                        <h5>Matrix Gear</h5>
+                        <div class="gear-list">
+                            • Fairlight Caliban Cyberdeck (heavily modified)<br>
+                            • Attack 6, Sleaze 5, Data Processing 4, Firewall 3<br>
+                            • Agent, Armor, Biofeedback Filter, Hammer, Stealth programs<br>
+                            • Cyberjack (direct neural interface)
+                        </div>
+                    </div>
+                    <div class="gear-category">
+                        <h5>Physical Gear</h5>
+                        <div class="gear-list">
+                            • Renraku Sensei commlink (backup system)<br>
+                            • Electronics toolkit (rating 6)<br>
+                            • Ares Light Fire 70 (personal protection)<br>
+                            • Armor vest (discrete protection)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="background-story">
+                    <h5 style="color: #3498db;">Background</h5>
+                    <p>Brilliant programmer who worked for Renraku's Matrix security division until she discovered the corp was using her code to spy on its own employees' families. When she tried to blow the whistle, they framed her for corporate espionage. She went underground and now uses her insider knowledge to help other corporate victims while staying one step ahead of her former employers.</p>
+                </div>
+
+                <div class="contacts-section">
+                    <h5 style="color: #2ecc71;">Key Contacts</h5>
+                    <div class="contact-entry">
+                        <span class="contact-name">FastJack (Hacker Legend)</span>
+                        <span class="contact-rating">Connection 5, Loyalty 2</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Angela Chen (Fence)</span>
+                        <span class="contact-rating">Connection 3, Loyalty 3</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Marco (Data Haven Operator)</span>
+                        <span class="contact-rating">Connection 4, Loyalty 2</span>
+                    </div>
+                </div>
+
+                <div class="motivations">
+                    <h5 style="color: #e74c3c;">Motivations & Goals</h5>
+                    <div class="motivation-item">• Expose Renraku's illegal surveillance programs</div>
+                    <div class="motivation-item">• Protect privacy rights in the digital age</div>
+                    <div class="motivation-item">• Build the perfect untraceable persona</div>
+                    <div class="motivation-item">• Find her missing sister (another Renraku victim)</div>
+                </div>
+
+                <div class="progression-tracker">
+                    <h5 style="color: #f1c40f;">Character Development</h5>
+                    <div class="progression-item">
+                        <span class="progression-goal">Upgrade Cyberdeck</span>
+                        <span class="progression-status">75% Complete</span>
+                    </div>
+                    <div class="progression-item">
+                        <span class="progression-goal">Learn Technomancer Techniques</span>
+                        <span class="progression-status">Planning Phase</span>
+                    </div>
+                    <div class="progression-item">
+                        <span class="progression-goal">Establish Data Haven</span>
+                        <span class="progression-status">50% Complete</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mage -->
+            <div class="character-card mage">
+                <div class="character-header">
+                    <div class="character-avatar" style="background: #8a2be2; border-color: #8a2be2;">🔮</div>
+                    <div class="character-info">
+                        <h3>Elena "Moonbeam" Crow Feather</h3>
+                        <p>Elf Shaman</p>
+                        <p>Urban Mystic</p>
+                        <div class="lifestyle-indicator lifestyle-middle">Middle Lifestyle</div>
+                    </div>
+                </div>
+
+                <div class="team-role">
+                    <div class="role-title">Magical Support & Healer</div>
+                    <div class="role-description">Spellcasting, spirit summoning, and astral reconnaissance</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-block">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Magic</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Willpower</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Intuition</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Charisma</div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <h4 style="color: #8a2be2;">Magical Arts</h4>
+                    <div class="skill-bar">
+                        <span class="skill-name">Spellcasting</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Summoning</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Assensing</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Medicine</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gear-section">
+                    <div class="gear-category">
+                        <h5>Spells Known</h5>
+                        <div class="gear-list">
+                            • Heal (Health magic for team support)<br>
+                            • Invisibility (Infiltration assistance)<br>
+                            • Detect Life (Reconnaissance)<br>
+                            • Stunbolt (Non-lethal takedowns)<br>
+                            • Physical Mask (Disguise magic)<br>
+                            • Cleanse (Environmental healing)
+                        </div>
+                    </div>
+                    <div class="gear-category">
+                        <h5>Magical Equipment</h5>
+                        <div class="gear-list">
+                            • Medicine Bag (Power Focus Rating 2)<br>
+                            • Grandmother's Dreamcatcher (Sustaining Focus)<br>
+                            • Urban Totem Items (subway tokens, street art)<br>
+                            • Medicinal herbs and reagents
+                        </div>
+                    </div>
+                </div>
+
+                <div class="background-story">
+                    <h5 style="color: #3498db;">Background</h5>
+                    <p>Grew up on the Salish-Shidhe reservation before moving to Seattle for university. She was studying environmental science when she awakened during a toxic spill cleanup. Her shamanic mentor taught her to find spirits in the urban environment - the city spirits, traffic flow spirits, and neon totems that make up the modern magical landscape. She runs to fund her community clinic in the Barrens.</p>
+                </div>
+
+                <div class="contacts-section">
+                    <h5 style="color: #2ecc71;">Key Contacts</h5>
+                    <div class="contact-entry">
+                        <span class="contact-name">Joseph Crow Dog (Shaman Mentor)</span>
+                        <span class="contact-rating">Connection 4, Loyalty 5</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Maria Santos (Community Leader)</span>
+                        <span class="contact-rating">Connection 3, Loyalty 4</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Starlight (Talismonger)</span>
+                        <span class="contact-rating">Connection 3, Loyalty 2</span>
+                    </div>
+                </div>
+
+                <div class="motivations">
+                    <h5 style="color: #e74c3c;">Motivations & Goals</h5>
+                    <div class="motivation-item">• Heal the spiritual wounds of the urban environment</div>
+                    <div class="motivation-item">• Fund and expand her free clinic</div>
+                    <div class="motivation-item">• Bridge traditional shamanism with city life</div>
+                    <div class="motivation-item">• Protect the Barrens communities from exploitation</div>
+                </div>
+
+                <div class="character-relationships">
+                    <h5 style="color: #8e44ad;">Spirit Allies</h5>
+                    <div class="relationship-web">
+                        <div class="relationship-node">City Spirit (Seattle)</div>
+                        <div class="relationship-node">Raven (Mentor Spirit)</div>
+                        <div class="relationship-node">Bound Heal Spirit</div>
+                        <div class="relationship-node">Traffic Flow Spirit</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Face -->
+            <div class="character-card face">
+                <div class="character-header">
+                    <div class="character-avatar" style="background: #ff69b4; border-color: #ff69b4;">🎭</div>
+                    <div class="character-info">
+                        <h3>Marcus "Silvertongue" Webb</h3>
+                        <p>Human Face</p>
+                        <p>Former Corporate Negotiator</p>
+                        <div class="lifestyle-indicator lifestyle-high">High Lifestyle</div>
+                    </div>
+                </div>
+
+                <div class="team-role">
+                    <div class="role-title">Social Infiltration Expert</div>
+                    <div class="role-description">Negotiation, information gathering, and team coordination</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-block">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Charisma</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Intuition</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Logic</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Willpower</div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <h4 style="color: #ff69b4;">Social Arts</h4>
+                    <div class="skill-bar">
+                        <span class="skill-name">Negotiation</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Con</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Etiquette</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Leadership</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="augmentation-display">
+                    <h5 style="color: #9b59b6;">Bioware</h5>
+                    <div class="aug-item">
+                        <span class="aug-name">Tailored Pheromones 2</span>
+                        <span class="aug-effect">+2 dice to social tests</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Voice Control</span>
+                        <span class="aug-effect">Perfect vocal mimicry</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Mnemonic Enhancer 2</span>
+                        <span class="aug-effect">Perfect memory recall</span>
+                    </div>
+                </div>
+
+                <div class="gear-section">
+                    <div class="gear-category">
+                        <h5>Social Tools</h5>
+                        <div class="gear-list">
+                            • Multiple high-quality fake SINs (Rating 4)<br>
+                            • Designer clothing for any social situation<br>
+                            • Expensive jewelry and accessories<br>
+                            • High-end commlink with social analysis software
+                        </div>
+                    </div>
+                    <div class="gear-category">
+                        <h5>Defensive Gear</h5>
+                        <div class="gear-list">
+                            • Armored business suit (discrete protection)<br>
+                            • Fichetti Tiffani Needler (holdout pistol)<br>
+                            • Subdermal armor (invisible protection)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="background-story">
+                    <h5 style="color: #3498db;">Background</h5>
+                    <p>Former Horizon corporate negotiator who specialized in hostile takeovers and damage control. He left the corp life when he discovered his team had been manipulating him with BTL addiction to ensure loyalty. Now clean and independent, he uses his corporate contacts and social skills to give the little people a voice in negotiations with the powerful.</p>
+                </div>
+
+                <div class="contacts-section">
+                    <h5 style="color: #2ecc71;">Key Contacts</h5>
+                    <div class="contact-entry">
+                        <span class="contact-name">Victoria Sterling (Corporate Executive)</span>
+                        <span class="contact-rating">Connection 5, Loyalty 2</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Jimmy "The Finn" O'Malley (Fixer)</span>
+                        <span class="contact-rating">Connection 4, Loyalty 3</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Senator Patricia Liu</span>
+                        <span class="contact-rating">Connection 6, Loyalty 1</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Dr. Amanda Cross (Addiction Counselor)</span>
+                        <span class="contact-rating">Connection 2, Loyalty 4</span>
+                    </div>
+                </div>
+
+                <div class="motivations">
+                    <h5 style="color: #e74c3c;">Motivations & Goals</h5>
+                    <div class="motivation-item">• Maintain sobriety and help other addicts</div>
+                    <div class="motivation-item">• Use corporate connections for shadow community benefit</div>
+                    <div class="motivation-item">• Expose Horizon's BTL manipulation programs</div>
+                    <div class="motivation-item">• Build bridges between street and corporate levels</div>
+                </div>
+
+                <div class="progression-tracker">
+                    <h5 style="color: #f1c40f;">Relationship Network</h5>
+                    <div class="progression-item">
+                        <span class="progression-goal">Corporate Contacts</span>
+                        <span class="progression-status">Strong</span>
+                    </div>
+                    <div class="progression-item">
+                        <span class="progression-goal">Government Connections</span>
+                        <span class="progression-status">Developing</span>
+                    </div>
+                    <div class="progression-item">
+                        <span class="progression-goal">Street Reputation</span>
+                        <span class="progression-status">Building</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rigger -->
+            <div class="character-card rigger">
+                <div class="character-header">
+                    <div class="character-avatar" style="background: #ffa500; border-color: #ffa500; color: #000;">🚗</div>
+                    <div class="character-info">
+                        <h3>"Gearhead" Thompson</h3>
+                        <p>Dwarf Rigger</p>
+                        <p>Former DocWagon Pilot</p>
+                        <div class="lifestyle-indicator lifestyle-middle">Middle Lifestyle</div>
+                    </div>
+                </div>
+
+                <div class="team-role">
+                    <div class="role-title">Transportation & Drone Support</div>
+                    <div class="role-description">Vehicle operations, surveillance, and mobile fire support</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-block">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Reaction</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Logic</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Intuition</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Body</div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <h4 style="color: #ffa500;">Technical Skills</h4>
+                    <div class="skill-bar">
+                        <span class="skill-name">Pilot Aircraft</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Pilot Ground</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Gunnery</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Electronics</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="augmentation-display">
+                    <h5 style="color: #9b59b6;">Rigging Gear</h5>
+                    <div class="aug-item">
+                        <span class="aug-name">Control Rig Rating 2</span>
+                        <span class="aug-effect">+2 dice for jumped-in vehicle control</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Sim Module (Hot-Sim)</span>
+                        <span class="aug-effect">+2 dice, but dangerous feedback</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Vehicle Empathy</span>
+                        <span class="aug-effect">Feel vehicle condition</span>
+                    </div>
+                </div>
+
+                <div class="gear-section">
+                    <div class="gear-category">
+                        <h5>Vehicle Fleet</h5>
+                        <div class="gear-list">
+                            • GMC Bulldog Step-Van (team transport, mobile base)<br>
+                            • Yamaha Rapier (stealth infiltration bike)<br>
+                            • Azura Viper (extraction/combat helicopter)<br>
+                            • Modified DocWagon ambulance (medical support)
+                        </div>
+                    </div>
+                    <div class="gear-category">
+                        <h5>Drone Squadron</h5>
+                        <div class="gear-list">
+                            • 3x Ares Duelist (combat/escort drones)<br>
+                            • 2x Horizon Flying Eye (surveillance)<br>
+                            • 1x Evo Proletarian (heavy support)<br>
+                            • Multiple spy/micro-drones for reconnaissance
+                        </div>
+                    </div>
+                </div>
+
+                <div class="background-story">
+                    <h5 style="color: #3498db;">Background</h5>
+                    <p>Former DocWagon emergency pilot who lost her job after refusing to abandon a pickup in gang territory. The corp claimed it was "economically unfeasible" to risk company assets for a low-value customer. She kept the ambulance when she left and now provides medical transport for the shadow community. Her military father taught her that you never leave anyone behind.</p>
+                </div>
+
+                <div class="contacts-section">
+                    <h5 style="color: #2ecc71;">Key Contacts</h5>
+                    <div class="contact-entry">
+                        <span class="contact-name">Chief Mechanic Rodriguez</span>
+                        <span class="contact-rating">Connection 4, Loyalty 4</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Pilot "Maverick" Johnson</span>
+                        <span class="contact-rating">Connection 3, Loyalty 3</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Parts Dealer "Scrap" Yamamoto</span>
+                        <span class="contact-rating">Connection 3, Loyalty 2</span>
+                    </div>
+                </div>
+
+                <div class="motivations">
+                    <h5 style="color: #e74c3c;">Motivations & Goals</h5>
+                    <div class="motivation-item">• Provide emergency medical transport for all</div>
+                    <div class="motivation-item">• Never abandon a team member in the field</div>
+                    <div class="motivation-item">• Build the ultimate rescue vehicle</div>
+                    <div class="motivation-item">• Train new riggers in proper emergency protocols</div>
+                </div>
+
+                <div class="character-relationships">
+                    <h5 style="color: #8e44ad;">Vehicle Relationships</h5>
+                    <div class="relationship-web">
+                        <div class="relationship-node">"Bertha" (Bulldog Van)</div>
+                        <div class="relationship-node">"Whisper" (Stealth Bike)</div>
+                        <div class="relationship-node">"Angel" (Medical Chopper)</div>
+                        <div class="relationship-node">"Pack" (Drone Squadron)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Physical Adept -->
+            <div class="character-card adept">
+                <div class="character-header">
+                    <div class="character-avatar" style="background: #ffff00; border-color: #ffff00; color: #000;">🥋</div>
+                    <div class="character-info">
+                        <h3>Jin "Quicksilver" Watanabe</h3>
+                        <p>Human Physical Adept</p>
+                        <p>Former Corporate Courier</p>
+                        <div class="lifestyle-indicator lifestyle-low">Low Lifestyle</div>
+                    </div>
+                </div>
+
+                <div class="team-role">
+                    <div class="role-title">Infiltration & Reconnaissance</div>
+                    <div class="role-description">Stealth operations, rapid deployment, and information gathering</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-block">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Agility</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Reaction</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Magic</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Intuition</div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <h4 style="color: #ffff00;">Physical Arts</h4>
+                    <div class="skill-bar">
+                        <span class="skill-name">Infiltration</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Athletics</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Perception</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span class="skill-name">Unarmed Combat</span>
+                        <div class="skill-dots">
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot filled"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="augmentation-display">
+                    <h5 style="color: #9b59b6;">Adept Powers</h5>
+                    <div class="aug-item">
+                        <span class="aug-name">Improved Reflexes 2</span>
+                        <span class="aug-effect">+2 Reaction, +2d6 Initiative</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Wall Running</span>
+                        <span class="aug-effect">Run on walls for (Magic) meters</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Astral Perception</span>
+                        <span class="aug-effect">See into astral plane</span>
+                    </div>
+                    <div class="aug-item">
+                        <span class="aug-name">Combat Sense</span>
+                        <span class="aug-effect">+1 Reaction for defense</span>
+                    </div>
+                </div>
+
+                <div class="gear-section">
+                    <div class="gear-category">
+                        <h5>Infiltration Gear</h5>
+                        <div class="gear-list">
+                            • Form-fitting body armor (invisible protection)<br>
+                            • Climbing gear and rappelling equipment<br>
+                            • Lockpicking tools and electronics kit<br>
+                            • Stealth suit with thermal dampening
+                        </div>
+                    </div>
+                    <div class="gear-category">
+                        <h5>Weapons</h5>
+                        <div class="gear-list">
+                            • Personalized martial arts (Aikido/Parkour hybrid)<br>
+                            • Shuriken and throwing knives<br>
+                            • Shock gloves (non-lethal takedowns)<br>
+                            • Collapsible staff (concealable reach weapon)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="background-story">
+                    <h5 style="color: #3498db;">Background</h5>
+                    <p>Former data courier for Mitsuhama who awakened during a high-speed chase through downtown Seattle. His newfound abilities helped him escape, but MCT branded him a security risk. Now he uses his courier knowledge of corporate buildings and his enhanced physical capabilities to help shadowrunners infiltrate the places he once protected. He follows the "Way of the Invisible" - strike from the shadows, leave no trace.</p>
+                </div>
+
+                <div class="contacts-section">
+                    <h5 style="color: #2ecc71;">Key Contacts</h5>
+                    <div class="contact-entry">
+                        <span class="contact-name">Sensei Takeshi (Martial Arts Master)</span>
+                        <span class="contact-rating">Connection 3, Loyalty 4</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">Lisa Park (Former MCT Colleague)</span>
+                        <span class="contact-rating">Connection 4, Loyalty 2</span>
+                    </div>
+                    <div class="contact-entry">
+                        <span class="contact-name">"Ninja" (Adept Community Elder)</span>
+                        <span class="contact-rating">Connection 4, Loyalty 3</span>
+                    </div>
+                </div>
+
+                <div class="motivations">
+                    <h5 style="color: #e74c3c;">Motivations & Goals</h5>
+                <div class="motivation-item">• Perfect the integration of magic and martial arts</div>
+                    <div class="motivation-item">• Help other corporate refugees find new purpose</div>
+                    <div class="motivation-item">• Discover why he awakened during that specific moment</div>
+                    <div class="motivation-item">• Master the Way of the Invisible philosophy</div>
+                </div>
+
+                <div class="progression-tracker">
+                    <h5 style="color: #f1c40f;">Advancement Goals</h5>
+                    <div class="progression-item">
+                        <span class="progression-goal">Learn Traceless Walk</span>
+                        <span class="progression-status">Training</span>
+                    </div>
+                    <div class="progression-item">
+                        <span class="progression-goal">Increase Magic Rating</span>
+                        <span class="progression-status">Meditating</span>
+                    </div>
+                    <div class="progression-item">
+                        <span class="progression-goal">Establish Dojo</span>
+                        <span class="progression-status">Planning</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section>
+            <h2>Building Your Own Characters</h2>
+            <p>These examples showcase how the mechanical elements from our tutorial series combine with rich backstories and clear motivations to create compelling characters. Notice how each character:</p>
+
+            <ul>
+                <li><strong>Has clear personal stakes:</strong> Each character has reasons beyond money for their shadowrunning</li>
+                <li><strong>Represents their archetype:</strong> While fitting the mechanical role, each has unique personality and approach</li>
+                <li><strong>Connects to the setting:</strong> Their backgrounds tie into Shadowrun's corporate world and social issues</li>
+                <li><strong>Has room to grow:</strong> Each character has advancement goals and relationship development opportunities</li>
+                <li><strong>Fits team dynamics:</strong> Their skills complement each other while their personalities create interesting interactions</li>
+            </ul>
+
+            <h3>Character Creation Tips</h3>
+            <ul>
+                <li><strong>Start with motivation:</strong> Why does this person risk their life for money?</li>
+                <li><strong>Connect to the world:</strong> How has the Sixth World shaped their life experiences?</li>
+                <li><strong>Balance competence and vulnerability:</strong> Great characters are good at some things and struggle with others</li>
+                <li><strong>Plan for growth:</strong> Where do you want this character to be in 20 sessions?</li>
+                <li><strong>Create relationships:</strong> Contacts aren't just resources - they're people who matter to your character</li>
+            </ul>
+
+            <p>Remember: The best Shadowrun characters are shaped by the unique combination of high technology and ancient magic, corporate power and street-level desperation, that defines the Sixth World. Let these contradictions create interesting internal conflicts and external challenges for your characters.</p>
+        </section>
+
+        <footer>
+            <p><em>Every legend starts with a choice to step into the shadows. What story will your character write?</em></p>
+        </footer>
+    </main>
+</body>
+</html>

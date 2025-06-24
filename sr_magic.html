@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Awakened Arts - Magic in the Sixth World</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        .magical-background {
+            background: radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(75, 0, 130, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(148, 0, 211, 0.2) 0%, transparent 50%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            animation: magicalShimmer 8s ease-in-out infinite;
+        }
+        
+        @keyframes magicalShimmer {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        .tradition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .tradition-card {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.3));
+            border: 3px solid;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            color: white;
+        }
+        
+        .tradition-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(138, 43, 226, 0.4);
+        }
+        
+        .hermetic { border-color: #3498db; }
+        .shamanic { border-color: #27ae60; }
+        .chaos { border-color: #e74c3c; }
+        .wuxing { border-color: #f39c12; }
+        
+        .tradition-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+            border: 4px solid white;
+            position: relative;
+        }
+        
+        .tradition-icon::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            animation: magicalPulse 3s infinite;
+        }
+        
+        @keyframes magicalPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(138, 43, 226, 1); }
+        }
+        
+        .spell-school {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border: 2px solid #8e44ad;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .spell-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .spell-card {
+            background: linear-gradient(135deg, #2c1810, #4a2c2c);
+            border: 2px solid;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .spell-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        
+        .combat-spell { border-color: #e74c3c; }
+        .detection-spell { border-color: #3498db; }
+        .health-spell { border-color: #27ae60; }
+        .illusion-spell { border-color: #9b59b6; }
+        .manipulation-spell { border-color: #f39c12; }
+        
+        .astral-plane {
+            background: linear-gradient(45deg, #2d1b69, #11998e, #2d1b69);
+            border: 3px solid #00d4aa;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .astral-entity {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            animation: astralFloat 4s ease-in-out infinite;
+        }
+        
+        @keyframes astralFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .spirit-summoning {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #2ecc71;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .spirit-circle {
+            width: 200px;
+            height: 200px;
+            border: 3px solid #2ecc71;
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: summoningRitual 6s linear infinite;
+        }
+        
+        @keyframes summoningRitual {
+            0% { transform: rotate(0deg); border-color: #2ecc71; }
+            25% { border-color: #3498db; }
+            50% { transform: rotate(180deg); border-color: #e74c3c; }
+            75% { border-color: #f39c12; }
+            100% { transform: rotate(360deg); border-color: #2ecc71; }
+        }
+        
+        .mana-flow {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #8e44ad, transparent);
+            animation: manaStream 3s linear infinite;
+        }
+        
+        @keyframes manaStream {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .drain-meter {
+            background: #000;
+            border: 2px solid #e74c3c;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .drain-bar {
+            width: 100%;
+            height: 25px;
+            background: #333;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 10px 0;
+            border: 2px solid #e74c3c;
+        }
+        
+        .drain-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 2s ease;
+            position: relative;
+        }
+        
+        .drain-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: drainPulse 1s infinite;
+        }
+        
+        @keyframes drainPulse {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .adept-powers {
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            border: 3px solid #e67e22;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            color: #000;
+        }
+        
+        .power-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .power-card {
+            background: rgba(0,0,0,0.7);
+            border: 2px solid #f39c12;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+        
+        .magical-theory {
+            background: rgba(52, 152, 219, 0.2);
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .ward-visualization {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+            border: 3px solid #8e44ad;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(142, 68, 173, 0.3) 0%, transparent 70%);
+            animation: wardPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes wardPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(142, 68, 173, 0.5); }
+            50% { box-shadow: 0 0 60px rgba(142, 68, 173, 1); }
+        }
+        
+        .ward-layer {
+            position: absolute;
+            border: 2px solid rgba(142, 68, 173, 0.7);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .enchantment-lab {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border: 3px solid #9b59b6;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .focus-types {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+        
+        .focus-item {
+            text-align: center;
+            margin: 10px;
+            padding: 15px;
+            border: 2px solid #9b59b6;
+            border-radius: 10px;
+            background: rgba(155, 89, 182, 0.2);
+            min-width: 120px;
+        }
+        
+        .metamagic-tree {
+            background: linear-gradient(45deg, #8b0000, #dc143c);
+            border: 3px solid #ff4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            color: white;
+        }
+        
+        .interaction-matrix {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .interaction-matrix table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .interaction-matrix th,
+        .interaction-matrix td {
+            border: 1px solid #00ffff;
+            padding: 12px;
+            text-align: center;
+            color: white;
+        }
+        
+        .interaction-matrix th {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #00ffff;
+        }
+        
+        .synergy { background: rgba(46, 204, 113, 0.3); }
+        .conflict { background: rgba(231, 76, 60, 0.3); }
+        .neutral { background: rgba(149, 165, 166, 0.3); }
+    </style>
+</head>
+<body>
+    <div class="magical-background"></div>
+    
+    <header>
+        <h1 style="color: #8e44ad; text-shadow: 0 0 20px #8e44ad;">The Awakened Arts</h1>
+        <p><em>Magic and Mystery in the Sixth World</em></p>
+    </header>
+
+    <main>
+        <section>
+            <h2>The Return of Wonder</h2>
+            <p>On December 24, 2011, the world changed forever. Magic - real, undeniable, reality-altering magic - returned to Earth after millennia of absence. This event, known as the "Awakening," didn't just add fantasy elements to a cyberpunk world; it fundamentally transformed human understanding of reality itself.</p>
+            
+            <p>Imagine waking up one morning to discover that physics has new rules, that ancient myths are walking the streets, and that some people can literally reshape reality with their thoughts. This isn't Harry Potter with smartphones - this is magic that follows scientific principles, operates within established laws, and integrates seamlessly with cutting-edge technology.</p>
+
+            <div class="mana-flow" style="top: 20%;"></div>
+            <div class="mana-flow" style="top: 40%; animation-delay: 1s;"></div>
+            <div class="mana-flow" style="top: 60%; animation-delay: 2s;"></div>
+        </section>
+
+        <section>
+            <h2>Understanding Mana: The Fuel of Magic</h2>
+            <div class="magical-theory">
+                <h3>🔮 Magical Theory 101</h3>
+                <p><strong>Mana</strong> is the fundamental force that powers all magic in Shadowrun. Think of it as the "electricity" of the magical world - a form of energy that flows through everything but can only be manipulated by those with the right "wiring" (magical ability).</p>
+                
+                <h4>Key Principles:</h4>
+                <ul>
+                    <li><strong>Mana is everywhere:</strong> It permeates all living things and many objects</li>
+                    <li><strong>Varying density:</strong> Some areas have more mana than others</li>
+                    <li><strong>Manipulation requires talent:</strong> Only Awakened individuals can consciously use it</li>
+                    <li><strong>Technology interaction:</strong> Mana and high technology don't always play nice</li>
+                </ul>
+                
+                <h4>Background Count</h4>
+                <p>Areas can have positive or negative background counts that affect magical operations:</p>
+                <ul>
+                    <li><strong>Positive:</strong> Places of natural beauty, sacred sites, areas of strong emotion</li>
+                    <li><strong>Negative:</strong> Polluted zones, sites of violence, technologically saturated areas</li>
+                    <li><strong>Aspected:</strong> Areas aligned with specific magical traditions or emotions</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Magical Traditions: Paths to Power</h2>
+            <p>Magic isn't a single unified force - it's understood and channeled through different philosophical and cultural frameworks called "traditions." Your tradition shapes how you view magic, what spirits you can summon, and how you cast spells:</p>
+
+            <div class="tradition-grid">
+                <div class="tradition-card hermetic">
+                    <div class="tradition-icon" style="background: #3498db;">🔬</div>
+                    <h3>Hermetic Tradition</h3>
+                    <p><strong>The Scientific Approach:</strong> Magic as applied metaphysics, studied like any other science through rigorous research and experimentation.</p>
+                    
+                    <h4>Core Philosophy</h4>
+                    <p>Hermetic mages view magic as a natural force that can be understood, catalogued, and systematically applied. They use ritual circles, precise formulae, and extensive study to achieve their effects.</p>
+                    
+                    <h4>Characteristics</h4>
+                    <ul>
+                        <li><strong>Spirits:</strong> Elementals (Fire, Earth, Air, Water, Man)</li>
+                        <li><strong>Focus:</strong> Intellectual understanding and precise control</li>
+                        <li><strong>Tools:</strong> Spell formulae, ritual circles, laboratory equipment</li>
+                        <li><strong>Advancement:</strong> Through study, experimentation, and academic progression</li>
+                    </ul>
+                    
+                    <h4>Real-World Analogy</h4>
+                    <p>Think PhD researcher meets wizard - they approach magic like nuclear physics, with careful theories, controlled experiments, and peer review.</p>
+                </div>
+
+                <div class="tradition-card shamanic">
+                    <div class="tradition-icon" style="background: #27ae60;">🐺</div>
+                    <h3>Shamanic Tradition</h3>
+                    <p><strong>The Spiritual Connection:</strong> Magic as communion with the spirit world, accessed through personal relationships and natural harmony.</p>
+                    
+                    <h4>Core Philosophy</h4>
+                    <p>Shamanic practitioners see magic as part of the natural world's spiritual ecosystem. They work with spirit allies, respect natural cycles, and view themselves as mediators between the physical and spirit realms.</p>
+                    
+                    <h4>Characteristics</h4>
+                    <ul>
+                        <li><strong>Spirits:</strong> Nature spirits (Beast, Earth, Air, Fire, Water, Plant, Guidance)</li>
+                        <li><strong>Focus:</strong> Intuitive understanding and spiritual relationship</li>
+                        <li><strong>Tools:</strong> Totems, sacred objects, natural materials</li>
+                        <li><strong>Advancement:</strong> Through vision quests, spiritual growth, mentor guidance</li>
+                    </ul>
+                    
+                    <h4>Modern Adaptation</h4>
+                    <p>Urban shamans find spirits in city ecosystems - pigeon spirits, concrete elementals, neon totems. They adapt ancient wisdom to modern environments.</p>
+                </div>
+
+                <div class="tradition-card chaos">
+                    <div class="tradition-icon" style="background: #e74c3c;">⚡</div>
+                    <h3>Chaos Magic</h3>
+                    <p><strong>The Paradigm Hacker:</strong> Magic as reality programming, where belief shapes reality and contradictions create power.</p>
+                    
+                    <h4>Core Philosophy</h4>
+                    <p>Chaos mages reject fixed traditions, instead believing that all magical systems are equally valid tools. They adopt different paradigms as needed, mixing and matching techniques from various sources.</p>
+                    
+                    <h4>Characteristics</h4>
+                    <ul>
+                        <li><strong>Spirits:</strong> Whatever fits the current paradigm</li>
+                        <li><strong>Focus:</strong> Adaptability and paradigm shifting</li>
+                        <li><strong>Tools:</strong> Anything that reinforces current belief system</li>
+                        <li><strong>Advancement:</strong> Through paradigm breaks and reality hacking</li>
+                    </ul>
+                    
+                    <h4>Practical Application</h4>
+                    <p>A chaos mage might cast a fireball using hermetic formulae in the morning, summon a nature spirit through shamanic ritual at noon, and hack reality like a technomancer by evening.</p>
+                </div>
+
+                <div class="tradition-card wuxing">
+                    <div class="tradition-icon" style="background: #f39c12;">☯️</div>
+                    <h3>Wuxing Tradition</h3>
+                    <p><strong>The Balanced Path:</strong> Magic as harmony between opposing forces, following ancient Eastern principles of balance and flow.</p>
+                    
+                    <h4>Core Philosophy</h4>
+                    <p>Wuxing practitioners understand magic through the interaction of five elements (Wood, Fire, Earth, Metal, Water) and the balance of yin and yang. Magic flows naturally when these forces are in harmony.</p>
+                    
+                    <h4>Characteristics</h4>
+                    <ul>
+                        <li><strong>Spirits:</strong> Elemental spirits of the five elements</li>
+                        <li><strong>Focus:</strong> Balance, harmony, and natural flow</li>
+                        <li><strong>Tools:</strong> I Ching, feng shui principles, elemental focuses</li>
+                        <li><strong>Advancement:</strong> Through meditation, balance, and understanding of cycles</li>
+                    </ul>
+                    
+                    <h4>Corporate Integration</h4>
+                    <p>Many Wuxing mages work for corporations, applying magical principles to business strategy, architecture, and even stock market analysis.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Schools of Magic</h2>
+            <p>Regardless of tradition, all spells fall into five broad categories or "schools." Understanding these helps you grasp what magic can and cannot accomplish:</p>
+
+            <div class="spell-school">
+                <h3>Spell Schools Overview</h3>
+                <div class="mermaid">
+                    mindmap
+                      root((Magic Schools))
+                        [Combat]
+                          Direct Damage
+                            Manabolt
+                            Powerbolt
+                            Stunbolt
+                          Area Effect
+                            Fireball
+                            Lightning Bolt
+                            Acid Stream
+                        [Detection]
+                          Sight Enhancement
+                            Detect Life
+                            Detect Magic
+                            Astral Window
+                          Information Gathering
+                            Mind Probe
+                            Psychometry
+                            Clairvoyance
+                        [Health]
+                          Healing
+                            Heal
+                            Treat
+                            Antidote
+                          Enhancement
+                            Increase Reflexes
+                            Increase Attribute
+                            Detox
+                        [Illusion]
+                          Mental Illusions
+                            Confusion
+                            Invisibility
+                            Phantasm
+                          Physical Illusions
+                            Physical Mask
+                            Improved Invisibility
+                            Trid Phantasm
+                        [Manipulation]
+                          Physical Control
+                            Levitate
+                            Poltergeist
+                            Control Actions
+                          Mental Control
+                            Control Thoughts
+                            Mob Mind
+                            Mass Confusion
+                </div>
+            </div>
+
+            <div class="spell-showcase">
+                <div class="spell-card combat-spell">
+                    <h4>Combat Magic</h4>
+                    <p><strong>Purpose:</strong> Inflicting damage and controlling battlefield conditions</p>
+                    <p><strong>Examples:</strong> Manabolt (pure magical damage), Fireball (elemental area effect), Stunbolt (non-lethal force)</p>
+                    <p><strong>Drain:</strong> Generally high - magic demands a price for violence</p>
+                    <p><strong>Tactics:</strong> Often the last resort for professional mages</p>
+                </div>
+
+                <div class="spell-card detection-spell">
+                    <h4>Detection Magic</h4>
+                    <p><strong>Purpose:</strong> Gathering information and enhancing perception</p>
+                    <p><strong>Examples:</strong> Detect Life (sensing living beings), Mind Probe (reading thoughts), Astral Window (seeing into astral space)</p>
+                    <p><strong>Drain:</strong> Usually low - the universe likes to share information</p>
+                    <p><strong>Tactics:</strong> Essential for reconnaissance and investigation</p>
+                </div>
+
+                <div class="spell-card health-spell">
+                    <h4>Health Magic</h4>
+                    <p><strong>Purpose:</strong> Healing injuries and enhancing physical capabilities</p>
+                    <p><strong>Examples:</strong> Heal (repairing physical damage), Increase Reflexes (enhanced speed), Detox (removing toxins)</p>
+                    <p><strong>Drain:</strong> Moderate - healing is natural but taxing</p>
+                    <p><strong>Tactics:</strong> Support magic that keeps the team operational</p>
+                </div>
+
+                <div class="spell-card illusion-spell">
+                    <h4>Illusion Magic</h4>
+                    <p><strong>Purpose:</strong> Deceiving senses and altering perceptions</p>
+                    <p><strong>Examples:</strong> Invisibility (hiding from sight), Physical Mask (changing appearance), Confusion (mental disorientation)</p>
+                    <p><strong>Drain:</strong> Low to moderate - illusion flows easily</p>
+                    <p><strong>Tactics:</strong> Perfect for infiltration and misdirection</p>
+                </div>
+
+                <div class="spell-card manipulation-spell">
+                    <h4>Manipulation Magic</h4>
+                    <p><strong>Purpose:</strong> Controlling physical objects and mental states</p>
+                    <p><strong>Examples:</strong> Levitate (moving objects), Control Thoughts (mental domination), Poltergeist (chaotic telekinesis)</p>
+                    <p><strong>Drain:</strong> High - forcing change against nature's will</p>
+                    <p><strong>Tactics:</strong> Powerful but expensive, use sparingly</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Drain: The Price of Power</h2>
+            <p>Magic isn't free. Every spell exacts a cost called "Drain" - the physical and mental exhaustion that comes from channeling supernatural forces through a mortal mind and body:</p>
+
+            <div class="drain-meter">
+                <h3>Drain Resistance Simulation</h3>
+                <p style="color: #00ff00;">> Casting Fireball (Force 6)</p>
+                <p style="color: #ffff00;">> Calculating Drain Value: Force ÷ 2 = 3 Drain</p>
+                <p style="color: #fff;">> Rolling Willpower + Magic: 5 hits</p>
+                <p style="color: #00ffff;">> Drain Resistance: 5 hits vs 3 Drain</p>
+                <p style="color: #00ff00;">> Result: No damage taken - resistance successful</p>
+                
+                <div class="drain-bar">
+                    <div class="drain-fill" style="width: 20%; background: linear-gradient(90deg, #27ae60, #2ecc71);" id="drainLevel"></div>
+                </div>
+                <p style="text-align: center; color: #27ae60;">Mage Condition: Excellent</p>
+                
+                <p style="color: #ff4444;">> Attempting Force 10 Lightning Bolt...</p>
+                <p style="color: #fff;">> Drain Value: 5, Rolling resistance...</p>
+                <p style="color: #ff4444;">> Only 2 hits! Taking 3 Stun damage</p>
+                
+                <script>
+                    setTimeout(function() {
+                        document.getElementById('drainLevel').style.width = '60%';
+                        document.getElementById('drainLevel').style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                        document.querySelector('.drain-meter p:last-of-type').innerHTML = '<p style="text-align: center; color: #f39c12;">Mage Condition: Fatigued</p>';
+                    }, 5000);
+                </script>
+            </div>
+
+            <h3>Understanding Drain</h3>
+            <ul>
+                <li><strong>Stun Drain:</strong> Mental exhaustion, headaches, nosebleeds</li>
+                <li><strong>Physical Drain:</strong> Actual bodily harm from magical overexertion</li>
+                <li><strong>Resistance:</strong> Willpower + Magic rating to reduce drain</li>
+                <li><strong>Consequences:</strong> Accumulates and can knock out or kill careless mages</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>The Astral Plane: The Spirit World</h2>
+            <p>Parallel to our physical reality exists the astral plane - a dimension where thoughts have substance, emotions create landscapes, and spirits dwell naturally. Awakened individuals can perceive and even project into this realm:</p>
+
+            <div class="astral-plane">
+                <h3>Astral Space Visualization</h3>
+                
+                <!-- Astral entities floating around -->
+                <div class="astral-entity" style="background: linear-gradient(135deg, #27ae60, #2ecc71); top: 20%; left: 10%; animation-delay: 0s;">
+                    NATURE<br>SPIRIT
+                </div>
+                
+                <div class="astral-entity" style="background: linear-gradient(135deg, #e74c3c, #c0392b); top: 60%; right: 15%; animation-delay: 1s;">
+                    TOXIC<br>SPIRIT
+                </div>
+                
+                <div class="astral-entity" style="background: linear-gradient(135deg, #3498db, #2980b9); bottom: 30%; left: 20%; animation-delay: 2s;">
+                    MAGE<br>AURA
+                </div>
+                
+                <div class="astral-entity" style="background: linear-gradient(135deg, #9b59b6, #8e44ad); top: 40%; right: 40%; animation-delay: 1.5s;">
+                    WARD<br>ANCHOR
+                </div>
+                
+                <div class="astral-entity" style="background: linear-gradient(135deg, #f39c12, #e67e22); bottom: 20%; right: 25%; animation-delay: 0.5s;">
+                    EMOTIONAL<br>IMPRINT
+                </div>
+
+                <h4>What You See in Astral Space</h4>
+                <ul>
+                    <li><strong>Living Auras:</strong> Every living being glows with their emotional and magical state</li>
+                    <li><strong>Magical Effects:</strong> Spells, wards, and enchantments appear as visible constructs</li>
+                    <li><strong>Spirits:</strong> Native astral beings that exist naturally in this realm</li>
+                    <li><strong>Emotional Imprints:</strong> Psychic residue from strong emotions or traumatic events</li>
+                    <li><strong>Mana Lines:</strong> Flows of magical energy connecting power sites</li>
+                </ul>
+            </div>
+
+            <h3>Astral Projection vs Astral Perception</h3>
+            <ul>
+                <li><strong>Astral Perception:</strong> Seeing both physical and astral simultaneously - like magical "x-ray vision"</li>
+                <li><strong>Astral Projection:</strong> Leaving your physical body behind to travel in pure spirit form</li>
+                <li><strong>Risks:</strong> Projected mages are vulnerable to astral threats and their body lies defenseless</li>
+                <li><strong>Benefits:</strong> Astral travel ignores physical barriers and distance</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Spirit Summoning: Calling Otherworldly Allies</h2>
+            <p>One of magic's most powerful applications is summoning spirits - intelligent entities from the astral plane who can provide services, information, and supernatural assistance:</p>
+
+            <div class="spirit-summoning">
+                <h3>Summoning Ritual</h3>
+                <div class="spirit-circle">
+                    <div style="color: #2ecc71; font-weight: bold; text-align: center;">
+                        SPIRIT<br>MANIFESTATION<br>CIRCLE
+                    </div>
+                </div>
+
+                <h4>The Summoning Process</h4>
+                <ol>
+                    <li><strong>Ritual Preparation:</strong> Create appropriate space and gather necessary materials</li>
+                    <li><strong>Spirit Calling:</strong> Use tradition-specific methods to contact desired spirit type</li>
+                    <li><strong>Negotiation:</strong> Bargain for services - spirits aren't slaves</li>
+                    <li><strong>Binding (Optional):</strong> Create longer-term service agreements</li>
+                    <li><strong>Service Period:</strong> Spirit performs agreed-upon tasks</li>
+                    <li><strong>Dismissal:</strong> Properly release the spirit when done</li>
+                </ol>
+
+                <h4>Spirit Types and Services</h4>
+                <ul>
+                    <li><strong>Combat Spirits:</strong> Magical muscle for dangerous situations</li>
+                    <li><strong>Detection Spirits:</strong> Scouts and information gatherers</li>
+                    <li><strong>Manipulation Spirits:</strong> Telekinetic assistants</li>
+                    <li><strong>Guardian Spirits:</strong> Protectors and watchers</li>
+                    <li><strong>Task Spirits:</strong> Specialists for specific jobs</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Physical Adepts: Magic Made Flesh</h2>
+            <p>While mages project magic outward, physical adepts turn it inward, using magical energy to enhance their natural human capabilities to superhuman levels:</p>
+
+            <div class="adept-powers">
+                <h3>Adept Power Examples</h3>
+                <div class="power-grid">
+                    <div class="power-card">
+                        <h4>Improved Reflexes</h4>
+                        <p>Supernatural speed and reaction time</p>
+                    </div>
+                    
+                    <div class="power-card">
+                        <h4>Killing Hands</h4>
+                        <p>Unarmed attacks that penetrate armor</p>
+                    </div>
+                    
+                    <div class="power-card">
+                        <h4>Wall Running</h4>
+                        <p>Brief defiance of gravity</p>
+                    </div>
+                    
+                    <div class="power-card">
+                        <h4>Combat Sense</h4>
+                        <p>Mystical danger awareness</p>
+                    </div>
+                    
+                    <div class="power-card">
+                        <h4>Astral Perception</h4>
+                        <p>See into the spirit world</p>
+                    </div>
+                    
+                    <div class="power-card">
+                        <h4>Magic Fingers</h4>
+                        <p>Telekinetic manipulation</p>
+                    </div>
+                </div>
+
+                <h4>Adept Philosophy</h4>
+                <p>Physical adepts follow various martial and philosophical traditions that shape how they develop their powers:</p>
+                <ul>
+                    <li><strong>Way of the Warrior:</strong> Combat-focused development</li>
+                    <li><strong>Way of the Invisible:</strong> Stealth and infiltration powers</li>
+                    <li><strong>Way of the Artist:</strong> Creative and social enhancement</li>
+                    <li><strong>Way of the Athlete:</strong> Physical perfection and competition</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Magical Security and Countermeasures</h2>
+            <p>In 2080, corporate security includes magical defenses just as sophisticated as their electronic and physical systems:</p>
+
+            <div class="ward-visualization">
+                <div class="ward-layer" style="width: 80%; height: 80;"></div>
+                <div class="ward-layer" style="width: 60%; height: 60%;"></div>
+                <div class="ward-layer" style="width: 40%; height: 40%;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; text-align: center;">
+                    PROTECTED<br>FACILITY
+                </div>
+            </div>
+
+            <h3>Magical Security Systems</h3>
+            <ul>
+                <li><strong>Ward Spells:</strong> Magical barriers that block astral projection and enemy magic</li>
+                <li><strong>Watchers:</strong> Simple spirits that patrol and report intrusions</li>
+                <li><strong>Bound Spirits:</strong> Powerful entities providing active defense</li>
+                <li><strong>Mage Security:</strong> Human magic users on staff</li>
+                <li><strong>Magical Alarms:</strong> Spells that trigger on magical intrusion</li>
+                <li><strong>Astral Barriers:</strong> Walls that exist only in the spirit world</li>
+            </ul>
+
+            <h3>Countering Magical Security</h3>
+            <ul>
+                <li><strong>Dispelling:</strong> Destroying enemy magic with targeted spells</li>
+                <li><strong>Spirit Negotiation:</strong> Convincing guard spirits to look the other way</li>
+                <li><strong>Masking:</strong> Hiding magical signatures and auras</li>
+                <li><strong>Astral Combat:</strong> Fighting security spirits on their home turf</li>
+                <li><strong>Ward Breaching:</strong> Creating temporary gaps in magical barriers</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Enchanting and Magical Items</h2>
+            <p>Magic can be stored, programmed, and built into physical objects, creating a whole industry of magical crafting and enhancement:</p>
+
+            <div class="enchantment-lab">
+                <h3>Magical Item Creation</h3>
+                
+                <div class="focus-types">
+                    <div class="focus-item">
+                        <h4>Spell Focus</h4>
+                        <p>Enhances specific spells</p>
+                    </div>
+                    
+                    <div class="focus-item">
+                        <h4>Power Focus</h4>
+                        <p>Increases overall magical ability</p>
+                    </div>
+                    
+                    <div class="focus-item">
+                        <h4>Weapon Focus</h4>
+                        <p>Magically enhanced weapons</p>
+                    </div>
+                    
+                    <div class="focus-item">
+                        <h4>Sustaining Focus</h4>
+                        <p>Maintains spells automatically</p>
+                    </div>
+                </div>
+
+                <h4>Enchanting Process</h4>
+                <ol>
+                    <li><strong>Design Phase:</strong> Plan the item's magical properties</li>
+                    <li><strong>Material Preparation:</strong> Gather appropriate magical reagents</li>
+                    <li><strong>Ritual Creation:</strong> Perform extended magical working</li>
+                    <li><strong>Binding:</strong> Link the enchantment to the physical object</li>
+                    <li><strong>Testing:</strong> Verify the item works as intended</li>
+                </ol>
+
+                <h4>Types of Magical Items</h4>
+                <ul>
+                    <li><strong>Foci:</strong> Items that enhance magical abilities</li>
+                    <li><strong>Fetishes:</strong> Objects that reduce spell drain</li>
+                    <li><strong>Talismans:</strong> Protective items with passive effects</li>
+                    <li><strong>Spell Locks:</strong> Items containing pre-cast spells</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Magic and Technology Integration</h2>
+            <p>One of Shadowrun's unique aspects is how magic and technology don't just coexist - they actively interact, sometimes harmoniously, sometimes catastrophically:</p>
+
+            <div class="interaction-matrix">
+                <h3>Magic-Technology Interaction Matrix</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Technology Level</th>
+                            <th>Magical Effect</th>
+                            <th>Result</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="synergy">
+                            <td>Low Tech</td>
+                            <td>Enhancement Magic</td>
+                            <td>Synergy</td>
+                            <td>Magically sharpened sword</td>
+                        </tr>
+                        <tr class="neutral">
+                            <td>Basic Electronics</td>
+                            <td>Detection Spells</td>
+                            <td>Neutral</td>
+                            <td>Scanning electronic devices</td>
+                        </tr>
+                        <tr class="conflict">
+                            <td>Cyberware</td>
+                            <td>Healing Magic</td>
+                            <td>Reduced Effect</td>
+                            <td>Cyberware interferes with magical healing</td>
+                        </tr>
+                        <tr class="conflict">
+                            <td>Heavy Cyber</td>
+                            <td>Any Magic</td>
+                            <td>Major Interference</td>
+                            <td>Street samurai struggles with magic</td>
+                        </tr>
+                        <tr class="synergy">
+                            <td>Awakened Tech</td>
+                            <td>Technomancy</td>
+                            <td>Enhanced Synergy</td>
+                            <td>Magic-responsive systems</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Practical Implications</h3>
+            <ul>
+                <li><strong>Cyberware Penalty:</strong> Heavy cyber implants reduce magical ability</li>
+                <li><strong>Spell Resistance:</strong> Some technology actively resists magical effects</li>
+                <li><strong>Magical Devices:</strong> Technology designed to work with magic</li>
+                <li><strong>Hybrid Systems:</strong> Combinations of magical and technological effects</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Advanced Magical Concepts</h2>
+            <div class="metamagic-tree">
+                <h3>Metamagic: Magic About Magic</h3>
+                <p>As mages advance, they learn to manipulate the fundamental nature of magic itself through metamagic techniques:</p>
+
+                <div class="mermaid">
+                    graph TD
+                        A[Basic Magic User] --> B[Initiation Grade 1]
+                        B --> C{Choose Metamagic}
+                        C --> D[Centering]
+                        C --> E[Shielding]
+                        C --> F[Invoking]
+                        C --> G[Reflecting]
+                        D --> H[Advanced Centering]
+                        E --> I[Spell Shaping]
+                        F --> J[Power Projection]
+                        G --> K[Anchoring]
+                        
+                        style A fill:#8e44ad
+                        style B fill:#e74c3c
+                        style C fill:#f39c12
+                </div>
+
+                <h4>Metamagic Examples</h4>
+                <ul>
+                    <li><strong>Centering:</strong> Meditation techniques that reduce spell drain</li>
+                    <li><strong>Shielding:</strong> Creating magical defenses against enemy spells</li>
+                    <li><strong>Invoking:</strong> Channeling great form spirits for enhanced power</li>
+                    <li><strong>Spell Shaping:</strong> Modifying spell effects in real-time</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Playing Awakened Characters</h2>
+            <p>Playing a magical character in Shadowrun requires understanding both the mechanical systems and the narrative implications of wielding supernatural power:</p>
+
+            <h3>Mage Considerations</h3>
+            <ul>
+                <li><strong>Versatility vs Specialization:</strong> Broad spell knowledge or deep expertise?</li>
+                <li><strong>Drain Management:</strong> Balancing power with personal safety</li>
+                <li><strong>Spirit Relationships:</strong> Building alliances in the astral realm</li>
+                <li><strong>Magical Security:</strong> You're vulnerable to astral threats</li>
+                <li><strong>Social Implications:</strong> How does society view your abilities?</li>
+            </ul>
+
+            <h3>Adept Considerations</h3>
+            <ul>
+                <li><strong>Power Focus:</strong> Combat, stealth, social, or utility abilities?</li>
+                <li><strong>Martial Training:</strong> Which fighting style shapes your development?</li>
+                <li><strong>Magic Rating:</strong> Limited power points require careful allocation</li>
+                <li><strong>Mundane Integration:</strong> How do you hide superhuman abilities?</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Your Magical Journey Ahead</h2>
+            <p>Magic in Shadowrun isn't just a game mechanic - it's a fundamental force that shapes society, politics, economics, and personal identity. Whether you're a corporate wage-mage casting marketing spells, a street shaman protecting your community, or a shadowrunning spellslinger using fireballs to make ends meet, magic opens up endless possibilities for character development and storytelling.</p>
+
+            <p>In our next tutorial, we'll explore the gritty streets where most shadowrunning actually happens - the urban environment of 2080, where gleaming corporate arcologies tower over sprawling slums, and every neighborhood has its own dangers, opportunities, and secrets.</p>
+
+            <p>Remember: With great power comes great drain resistance. Magic is a tool, but wisdom is knowing when not to use it.</p>
+        </section>
+
+        <footer>
+            <p><em>May your spells fly true and your drain stay low, choom. The awakened world is full of wonders and terrors in equal measure.</em></p>
+            <p style="text-align: center; margin-top: 40px;">
+                <span style="color: #8e44ad; text-shadow: 0 0 10px #8e44ad;">◊ Next:<a href="/shadowrun/sr_urban.html">Urban Sprawl and Street Life</a> ◊</span>
+            </p>
+        </footer>
+    </main>
+</body>
+</html>

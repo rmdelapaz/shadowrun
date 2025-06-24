@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jacking In - The Matrix and Digital Warfare</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        .matrix-grid {
+            background: 
+                linear-gradient(90deg, transparent 49%, #00ff00 50%, #00ff00 51%, transparent 52%),
+                linear-gradient(transparent 49%, #00ff00 50%, #00ff00 51%, transparent 52%);
+            background-size: 20px 20px;
+            opacity: 0.3;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            animation: matrixFlow 10s linear infinite;
+        }
+        
+        @keyframes matrixFlow {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(20px) translateX(20px); }
+        }
+        
+        .cyberdeck-simulator {
+            background: linear-gradient(135deg, #000428, #004e92);
+            border: 3px solid #00ffff;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cyberdeck-screen {
+            background: #000;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            min-height: 200px;
+            position: relative;
+        }
+        
+        .matrix-personas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .persona-card {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 3px solid;
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .persona-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        
+        .decker-persona { border-color: #00ff00; }
+        .technomancer-persona { border-color: #ff00ff; }
+        .spider-persona { border-color: #ff4444; }
+        .ic-persona { border-color: #ffa500; }
+        
+        .virtual-reality {
+            background: radial-gradient(circle at center, rgba(0,255,255,0.2) 0%, transparent 70%);
+            border: 2px solid #00ffff;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .data-stream {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(180deg, transparent, #00ff00, transparent);
+            animation: dataFlow 3s linear infinite;
+        }
+        
+        @keyframes dataFlow {
+            0% { transform: translateY(-100px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(200px); opacity: 0; }
+        }
+        
+        .ic-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .ic-type {
+            background: linear-gradient(135deg, #8b0000, #dc143c);
+            border: 2px solid #ff4444;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ic-type::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: icScan 2s infinite;
+        }
+        
+        @keyframes icScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .matrix-layers {
+            background: linear-gradient(45deg, #2d1b69, #11998e);
+            border: 2px solid #00d4aa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .hacking-sequence {
+            background: rgba(0,0,0,0.9);
+            border: 3px solid #ff4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: #333;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 2px solid #00ffff;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 3s ease;
+            position: relative;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressScan 1.5s infinite;
+        }
+        
+        @keyframes progressScan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .cybercombat-arena {
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+            border: 3px solid #e74c3c;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .combat-participant {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            animation: digitalPulse 2s infinite;
+        }
+        
+        @keyframes digitalPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0,255,255,0.5); }
+            50% { box-shadow: 0 0 40px rgba(0,255,255,1); }
+        }
+        
+        .decker-avatar {
+            background: linear-gradient(135deg, #00ff00, #008800);
+            border-color: #00ff00;
+        }
+        
+        .ic-avatar {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            border-color: #ff4444;
+        }
+        
+        .matrix-topology {
+            position: relative;
+            height: 400px;
+            background: radial-gradient(circle at center, rgba(0,255,255,0.1) 0%, transparent 70%);
+            border: 2px solid #00ffff;
+            border-radius: 20px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .node:hover {
+            transform: scale(1.3);
+            z-index: 10;
+        }
+        
+        .connection-line {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, #00ffff, transparent, #00ffff);
+            transform-origin: left center;
+        }
+        
+        .security-rating {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .security-pip {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 3px;
+            border: 2px solid #fff;
+        }
+        
+        .rating-green { background: #27ae60; }
+        .rating-yellow { background: #f1c40f; }
+        .rating-orange { background: #e67e22; }
+        .rating-red { background: #e74c3c; }
+        .rating-black { background: #2c3e50; }
+        
+        .matrix-action-menu {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .action-button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin: 5px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .action-button:hover {
+            background: linear-gradient(135deg, #2980b9, #1f4e79);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .technomancer-highlight {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            border: 2px solid #9b59b6;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            color: white;
+        }
+        
+        .resonance-effect {
+            animation: resonancePulse 3s infinite;
+        }
+        
+        @keyframes resonancePulse {
+            0%, 100% { filter: hue-rotate(0deg); }
+            33% { filter: hue-rotate(120deg); }
+            66% { filter: hue-rotate(240deg); }
+        }
+        
+        .matrix-tips {
+            background: rgba(46, 204, 113, 0.2);
+            border-left: 5px solid #2ecc71;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-grid"></div>
+    
+    <header>
+        <h1 style="color: #00ff00; text-shadow: 0 0 20px #00ff00;">Jacking In</h1>
+        <p><em>The Matrix and Digital Warfare</em></p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Welcome to the Matrix</h2>
+            <p>In the Sixth World, the internet isn't just a network - it's a <strong>parallel universe</strong>. The Matrix is a globally distributed virtual reality where information takes physical form, programs appear as people or creatures, and digital warfare is fought with the intensity of physical combat.</p>
+            
+            <p>Imagine if the entire internet was rendered as a massive, immersive 3D environment that you could navigate as if it were a real place. Now imagine that environment is inhabited by AI security programs that can literally kill you through your neural interface. That's the Matrix - where <em>Tron</em> meets <em>Neuromancer</em> meets <em>The Matrix</em>, but with the very real possibility of flatly.</p>
+
+            <div class="data-stream" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="data-stream" style="left: 30%; animation-delay: 1s;"></div>
+            <div class="data-stream" style="left: 50%; animation-delay: 2s;"></div>
+            <div class="data-stream" style="left: 70%; animation-delay: 0.5s;"></div>
+            <div class="data-stream" style="left: 90%; animation-delay: 1.5s;"></div>
+        </section>
+
+        <section>
+            <h2>Matrix Architecture: The Digital Ecosystem</h2>
+            <p>The Matrix isn't chaotic - it has structure, geography, and rules. Understanding this architecture is crucial for navigation and survival:</p>
+
+            <div class="matrix-topology">
+                <!-- Public Grid Nodes -->
+                <div class="node" style="background: linear-gradient(135deg, #27ae60, #2ecc71); top: 50px; left: 100px;">
+                    PUBLIC<br>GRID
+                </div>
+                
+                <!-- Corporate Hosts -->
+                <div class="node" style="background: linear-gradient(135deg, #3498db, #2980b9); top: 100px; right: 100px;">
+                    CORP<br>HOST
+                </div>
+                
+                <!-- Government Systems -->
+                <div class="node" style="background: linear-gradient(135deg, #e74c3c, #c0392b); top: 200px; left: 50px;">
+                    GOV<br>SYSTEM
+                </div>
+                
+                <!-- Data Havens -->
+                <div class="node" style="background: linear-gradient(135deg, #9b59b6, #8e44ad); bottom: 100px; right: 150px;">
+                    DATA<br>HAVEN
+                </div>
+                
+                <!-- Black IC -->
+                <div class="node" style="background: linear-gradient(135deg, #2c3e50, #34495e); top: 300px; left: 300px;">
+                    BLACK<br>IC
+                </div>
+                
+                <!-- Resonance Wells -->
+                <div class="node resonance-effect" style="background: linear-gradient(135deg, #f39c12, #e67e22); bottom: 50px; left: 200px;">
+                    RESONANCE<br>WELL
+                </div>
+
+                <!-- Connection lines -->
+                <div class="connection-line" style="top: 80px; left: 160px; width: 280px; transform: rotate(15deg);"></div>
+                <div class="connection-line" style="top: 230px; left: 110px; width: 200px; transform: rotate(45deg);"></div>
+                <div class="connection-line" style="top: 330px; left: 300px; width: 150px; transform: rotate(-30deg);"></div>
+                <div class="connection-line" style="bottom: 100px; left: 260px; width: 200px; transform: rotate(-15deg);"></div>
+            </div>
+
+            <div class="matrix-layers">
+                <h3>Matrix Layers and Regions</h3>
+                <div class="mermaid">
+                    graph TD
+                        A[Public Grid] --> B[Corporate Hosts]
+                        A --> C[Government Systems]
+                        A --> D[Personal Area Networks]
+                        B --> E[Secure Subnets]
+                        C --> F[Classified Networks]
+                        D --> G[Private Data]
+                        E --> H[Black IC Zones]
+                        F --> I[Military Networks]
+                        
+                        J[Data Havens] --> K[Pirate Broadcasts]
+                        J --> L[Anonymous Markets]
+                        
+                        M[Resonance Wells] --> N[Technomancer Realms]
+                        M --> O[Living Code]
+                        
+                        style A fill:#27ae60
+                        style B fill:#3498db
+                        style C fill:#e74c3c
+                        style H fill:#2c3e50
+                        style J fill:#9b59b6
+                        style M fill:#f39c12
+                </div>
+
+                <h4>Key Matrix Regions</h4>
+                <ul>
+                    <li><strong>Public Grid:</strong> The "surface web" - accessible to everyone, lightly secured</li>
+                    <li><strong>Corporate Hosts:</strong> Private company networks with serious security</li>
+                    <li><strong>Government Systems:</strong> Official databases with military-grade protection</li>
+                    <li><strong>Data Havens:</strong> Neutral zones where information brokers operate</li>
+                    <li><strong>Deep Nodes:</strong> Hidden systems requiring special access methods</li>
+                    <li><strong>Resonance Wells:</strong> Areas where technomancers draw power</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Digital Personas: Who You Are in Cyberspace</h2>
+            <p>In the Matrix, everyone appears as a digital avatar called a "persona." Your persona is more than just appearance - it reflects your capabilities, intentions, and sometimes your very soul:</p>
+
+            <div class="matrix-personas">
+                <div class="persona-card decker-persona">
+                    <h3 style="color: #00ff00;">Decker Persona</h3>
+                    <p><strong>The Digital Warrior:</strong> Crafted for functionality and intimidation. Often resembles futuristic soldiers, cybernetic ninjas, or iconic hacker archetypes.</p>
+                    
+                    <h4>Characteristics:</h4>
+                    <ul>
+                        <li>Highly customizable appearance</li>
+                        <li>Tool-focused design elements</li>
+                        <li>Combat-ready accessories</li>
+                        <li>Status displays and HUDs</li>
+                    </ul>
+                    
+                    <h4>Common Forms:</h4>
+                    <ul>
+                        <li>Cyber-samurai with data-katanas</li>
+                        <li>Tactical operator with digital weapons</li>
+                        <li>Abstract geometric constructs</li>
+                        <li>Classical hackers with terminal interfaces</li>
+                    </ul>
+                </div>
+
+                <div class="persona-card technomancer-persona">
+                    <h3 style="color: #ff00ff;">Technomancer Persona</h3>
+                    <p><strong>The Living Code:</strong> Organic, flowing, often incorporating elements that seem to breathe and grow. These personas reflect their users' magical nature.</p>
+                    
+                    <h4>Characteristics:</h4>
+                    <ul>
+                        <li>Organic, flowing designs</li>
+                        <li>Constantly shifting elements</li>
+                        <li>Bio-digital integration</li>
+                        <li>Resonance energy displays</li>
+                    </ul>
+                    
+                    <h4>Common Forms:</h4>
+                    <ul>
+                        <li>Bio-mechanical angels</li>
+                        <li>Evolving digital organisms</li>
+                        <li>Energy beings with living auras</li>
+                        <li>Shamanic totems with tech integration</li>
+                    </ul>
+                </div>
+
+                <div class="persona-card spider-persona">
+                    <h3 style="color: #ff4444;">Spider Persona</h3>
+                    <p><strong>The Digital Sentinel:</strong> Corporate security specialists with personas designed for system defense and counterintrusion operations.</p>
+                    
+                    <h4>Characteristics:</h4>
+                    <ul>
+                        <li>Authoritative, intimidating design</li>
+                        <li>Corporate branding elements</li>
+                        <li>Multi-armed or multi-eyed features</li>
+                        <li>Defensive posturing</li>
+                    </ul>
+                    
+                    <h4>Common Forms:</h4>
+                    <ul>
+                        <li>Multi-armed corporate enforcers</li>
+                        <li>Digital spiders with company logos</li>
+                        <li>Armored security officers</li>
+                        <li>Abstract corporate symbols</li>
+                    </ul>
+                </div>
+
+                <div class="persona-card ic-persona">
+                    <h3 style="color: #ffa500;">IC Persona</h3>
+                    <p><strong>The Autonomous Hunter:</strong> Intrusion Countermeasures appear as various threatening entities designed to identify, track, and eliminate unauthorized users.</p>
+                    
+                    <h4>Characteristics:</h4>
+                    <ul>
+                        <li>Threatening, non-human appearance</li>
+                        <li>Functionality-based design</li>
+                        <li>Predatory behavior patterns</li>
+                        <li>System integration elements</li>
+                    </ul>
+                    
+                    <h4>Common Forms:</h4>
+                    <ul>
+                        <li>Digital bloodhounds for tracking</li>
+                        <li>Armored warriors for combat</li>
+                        <li>Viral clouds for system damage</li>
+                        <li>Abstract geometric threats</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Intrusion Countermeasures (IC): The Digital Immune System</h2>
+            <p>Every secured system deploys IC - autonomous programs designed to detect and eliminate unauthorized users. Think of IC as the Matrix's immune system, and you'll understand why corporate security is so deadly:</p>
+
+            <div class="ic-showcase">
+                <div class="ic-type">
+                    <h4>Patrol IC</h4>
+                    <p>Surveillance programs that scan for unauthorized personas. They're the digital equivalent of security cameras with brains.</p>
+                    <div class="security-rating">
+                        <div class="security-pip rating-green"></div>
+                        <div class="security-pip rating-green"></div>
+                        <div class="security-pip"></div>
+                        <div class="security-pip"></div>
+                        <div class="security-pip"></div>
+                    </div>
+                </div>
+
+                <div class="ic-type">
+                    <h4>Tar Baby IC</h4>
+                    <p>Sticky programs that slow down and trap intruders, like digital quicksand that alerts security.</p>
+                    <div class="security-rating">
+                        <div class="security-pip rating-yellow"></div>
+                        <div class="security-pip rating-yellow"></div>
+                        <div class="security-pip rating-yellow"></div>
+                        <div class="security-pip"></div>
+                        <div class="security-pip"></div>
+                    </div>
+                </div>
+
+                <div class="ic-type">
+                    <h4>Attack IC</h4>
+                    <p>Combat programs designed to damage personas and force disconnection through neural feedback.</p>
+                    <div class="security-rating">
+                        <div class="security-pip rating-orange"></div>
+                        <div class="security-pip rating-orange"></div>
+                        <div class="security-pip rating-orange"></div>
+                        <div class="security-pip rating-orange"></div>
+                        <div class="security-pip"></div>
+                    </div>
+                </div>
+
+                <div class="ic-type">
+                    <h4>Black IC</h4>
+                    <p>Lethal programs that can cause permanent brain damage or death. These are the digital death penalty.</p>
+                    <div class="security-rating">
+                        <div class="security-pip rating-black"></div>
+                        <div class="security-pip rating-black"></div>
+                        <div class="security-pip rating-black"></div>
+                        <div class="security-pip rating-black"></div>
+                        <div class="security-pip rating-black"></div>
+                    </div>
+                </div>
+
+                <div class="ic-type">
+                    <h4>Trace IC</h4>
+                    <p>Hunter programs that follow data trails back to their source, identifying real-world locations.</p>
+                    <div class="security-rating">
+                        <div class="security-pip rating-red"></div>
+                        <div class="security-pip rating-red"></div>
+                        <div class="security-pip rating-red"></div>
+                        <div class="security-pip"></div>
+                        <div class="security-pip"></div>
+                    </div>
+                </div>
+
+                <div class="ic-type">
+                    <h4>Blaster IC</h4>
+                    <p>Direct-damage programs that assault personas with concentrated data attacks.</p>
+                    <div class="security-rating">
+                        <div class="security-pip rating-orange"></div>
+                        <div class="security-pip rating-orange"></div>
+                        <div class="security-pip rating-orange"></div>
+                        <div class="security-pip rating-orange"></div>
+                        <div class="security-pip"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Cyberdeck: Your Gateway to Digital Warfare</h2>
+            <p>A cyberdeck isn't just a computer - it's a specialized neural interface system that translates your thoughts into Matrix commands and renders virtual reality directly into your brain:</p>
+
+            <div class="cyberdeck-simulator">
+                <h3>Interactive Cyberdeck Interface</h3>
+                <div class="cyberdeck-screen">
+                    <div id="deckOutput">
+                        > FAIRLIGHT CALIBAN CYBERDECK v4.2.1
+                        > Neural interface... CONNECTED
+                        > Persona initialization... COMPLETE
+                        > Matrix access... ESTABLISHED
+                        > 
+                        > READY FOR COMMAND INPUT
+                        > Type 'help' for available commands
+                        > _
+                    </div>
+                </div>
+                
+                <div class="matrix-action-menu">
+                    <h4>Matrix Actions</h4>
+                    <div class="action-button" onclick="executeCommand('scan')">Scan Node</div>
+                    <div class="action-button" onclick="executeCommand('hack')">Hack on the Fly</div>
+                    <div class="action-button" onclick="executeCommand('attack')">Attack IC</div>
+                    <div class="action-button" onclick="executeCommand('sneak')">Stealth Mode</div>
+                    <div class="action-button" onclick="executeCommand('jack_out')">Emergency Jack Out</div>
+                </div>
+            </div>
+
+            <script>
+                function executeCommand(cmd) {
+                    const output = document.getElementById('deckOutput');
+                    const commands = {
+                        'scan': '> Scanning node...\n> 3 IC programs detected\n> 2 data files found\n> Security rating: Orange',
+                        'hack': '> Initiating hack on the fly...\n> Rolling Logic + Hacking...\n> 4 hits! Access granted\n> You have 3 combat turns before trace',
+                        'attack': '> Targeting Attack IC...\n> Rolling Cybercombat + Logic...\n> 5 hits! IC takes 3 boxes damage\n> IC retaliates for 2 stun damage',
+                        'sneak': '> Activating Stealth program...\n> Running silent... persona fading\n> +4 dice to avoid detection',
+                        'jack_out': '> EMERGENCY JACK OUT INITIATED\n> WARNING: IC may follow link\n> Disconnecting... 3... 2... 1...\n> CONNECTION TERMINATED'
+                    };
+                    
+                    output.innerHTML += '\n> ' + cmd + '\n' + commands[cmd] + '\n> _';
+                    output.scrollTop = output.scrollHeight;
+                }
+            </script>
+
+            <h3>Cyberdeck Components</h3>
+            <ul>
+                <li><strong>Processor:</strong> The deck's "brain" that handles Matrix operations</li>
+                <li><strong>ASIST Interface:</strong> Neural connection that translates thoughts to commands</li>
+                <li><strong>Persona Generator:</strong> Creates and maintains your Matrix avatar</li>
+                <li><strong>Program Suite:</strong> Software tools for hacking, combat, and stealth</li>
+                <li><strong>Memory Banks:</strong> Storage for stolen data and backup programs</li>
+                <li><strong>Hardening:</strong> Protection against IC attacks and neural feedback</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Technomancers: The Matrix Mages</h2>
+            <div class="technomancer-highlight">
+                <h3>Living in the Code</h3>
+                <p>Technomancers represent one of the most revolutionary concepts in Shadowrun - individuals who can interface with the Matrix using only their minds, no cyberdeck required. They're not just using the Matrix; they <em>are</em> part of it.</p>
+
+                <h4>The Resonance</h4>
+                <p>Where deckers use technology and mages use magic, technomancers tap into the "Resonance" - a force that binds all digital information together. Think of it as the Matrix's equivalent of mana, but instead of manipulating physical reality, it manipulates digital reality.</p>
+
+                <h4>Complex Forms vs Programs</h4>
+                <ul>
+                    <li><strong>Programs:</strong> Static code written by programmers</li>
+                    <li><strong>Complex Forms:</strong> Living, evolving digital entities created by pure thought</li>
+                    <li><strong>Threading:</strong> Real-time modification of complex forms during use</li>
+                    <li><strong>Sprites:</strong> Digital spirits that technomancers can summon and bind</li>
+                </ul>
+
+                <div class="virtual-reality">
+                    <h4>Technomancer Abilities</h4>
+                    <div class="mermaid">
+                        mindmap
+                          root((Technomancer))
+                            [Complex Forms]
+                              Attack Forms
+                              Stealth Forms
+                              Analysis Forms
+                              Control Forms
+                            [Sprite Powers]
+                              Data Sprite
+                                File manipulation
+                                Data recovery
+                              Machine Sprite
+                                Device control
+                                Diagnostics
+                              Fault Sprite
+                                System disruption
+                                Error generation
+                            [Resonance Abilities]
+                              Living Persona
+                              Submersion
+                              Echo development
+                              Reality hacking
+                    </div>
+                </div>
+
+                <h4>The Double-Edged Sword</h4>
+                <p>Technomancers are incredibly powerful but also incredibly vulnerable. Their direct neural connection to the Matrix means:</p>
+                <ul>
+                    <li><strong>No hardware dependencies:</strong> Can't be disarmed of their "deck"</li>
+                    <li><strong>Unlimited customization:</strong> Can modify their abilities in real-time</li>
+                    <li><strong>Sprite assistance:</strong> Can call digital spirits for help</li>
+                    <li><strong>But also:</strong> Direct vulnerability to IC attacks on their brain</li>
+                    <li><strong>Corporate interest:</strong> Megacorps want to study and control them</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Matrix Combat: Digital Warfare</h2>
+            <p>Combat in the Matrix follows the same basic principles as physical combat, but with digital weapons, virtual terrain, and the constant threat of brain death:</p>
+
+            <div class="cybercombat-arena">
+                <h3>Digital Battlefield Simulation</h3>
+                <div style="text-align: center; margin: 30px 0;">
+                    <div class="combat-participant decker-avatar">
+                        DECKER
+                    </div>
+                    <span style="color: #fff; font-size: 24px; margin: 0 20px;">VS</span>
+                    <div class="combat-participant ic-avatar">
+                        BLACK IC
+                    </div>
+                </div>
+
+                <h4>Combat Sequence</h4>
+                <div class="hacking-sequence">
+                    <div style="color: #00ff00;">> Initiative Phase: Decker (15) vs Black IC (12)</div>
+                    <div style="color: #fff;">> Decker Action: Attack with Sword program</div>
+                    <div style="color: #ffff00;">> Rolling Cybercombat + Logic: 6 hits</div>
+                    <div style="color: #ff4444;">> Black IC Defense: 3 hits</div>
+                    <div style="color: #00ff00;">> Net hits: 3 - IC takes damage</div>
+                    <div style="color: #fff;">> IC Action: Lethal attack on persona</div>
+                    <div style="color: #ff4444;">> Rolling Attack + Sleaze: 8 hits!</div>
+                    <div style="color: #ffff00;">> Decker Defense: 4 hits</div>
+                    <div style="color: #ff0000;">> Net hits: 4 - Decker takes 4 boxes damage</div>
+                    <div style="color: #ff0000;">> WARNING: Persona integrity critical!</div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 25%; background: linear-gradient(90deg, #e74c3c, #c0392b);" id="deckerHealth"></div>
+                </div>
+                <p style="text-align: center; color: #fff;">Decker Persona Integrity</p>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%; background: linear-gradient(90deg, #f39c12, #e67e22);" id="icHealth"></div>
+                </div>
+                <p style="text-align: center; color: #fff;">Black IC Stability</p>
+            </div>
+
+            <h3>Matrix Combat Principles</h3>
+            <ul>
+                <li><strong>Initiative:</strong> Reaction + Data Processing determines action order</li>
+                <li><strong>Attack Programs:</strong> Sword, Hammer, and specialized combat forms</li>
+                <li><strong>Defense Programs:</strong> Armor and Firewall provide protection</li>
+                <li><strong>Damage Types:</strong> Matrix damage can cause stun or physical harm</li>
+                <li><strong>Link-lock:</strong> IC can prevent emergency disconnection</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Hacking Methodology: The Art of Digital Intrusion</h2>
+            <p>Professional hacking isn't about randomly trying passwords - it's a systematic approach to understanding, penetrating, and controlling target systems:</p>
+
+            <div class="mermaid">
+                flowchart TD
+                    A[Matrix Perception] --> B[Analyze Target]
+                    B --> C[Choose Attack Vector]
+                    C --> D{Stealth or Noise?}
+                    D -->|Stealth| E[Hack on the Fly]
+                    D -->|Noise| F[Brute Force]
+                    E --> G[Gain Access]
+                    F --> G
+                    G --> H[Avoid IC Detection]
+                    H --> I[Execute Objective]
+                    I --> J[Cover Tracks]
+                    J --> K[Extract Safely]
+                    
+                    H --> L{Detected?}
+                    L -->|Yes| M[Combat IC]
+                    L -->|No| I
+                    M --> N{Win Combat?}
+                    N -->|Yes| I
+                    N -->|No| O[Emergency Jack Out]
+                    
+                    style A fill:#27ae60
+                    style G fill:#3498db
+                    style O fill:#e74c3c
+            </div>
+
+            <h3>Core Hacking Actions</h3>
+            <div class="matrix-tips">
+                <h4>💡 Professional Hacking Tips</h4>
+                <ul>
+                    <li><strong>Matrix Perception:</strong> Always scan before you hack - knowledge saves lives</li>
+                    <li><strong>Hack on the Fly:</strong> Quick, stealthy access with time limits</li>
+                    <li><strong>Brute Force:</strong> Loud but reliable, guaranteed to trigger alarms</li>
+                    <li><strong>Sleaze:</strong> Silent intrusion that avoids detection</li>
+                    <li><strong>Data Spike:</strong> Combat action for destroying IC</li>
+                    <li><strong>Jack Out:</strong> Emergency disconnection when things go wrong</li>
+                </ul>
+            </div>
+
+            <h3>The Three Pillars of Matrix Security</h3>
+            <ul>
+                <li><strong>Attack:</strong> Your ability to damage IC and crack encryption</li>
+                <li><strong>Sleaze:</strong> Your stealth rating for avoiding detection</li>
+                <li><strong>Data Processing:</strong> Your speed and multitasking ability</li>
+                <li><strong>Firewall:</strong> Your defense against IC attacks and traces</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Data: The Ultimate Currency</h2>
+            <p>In the corporate wars of 2080, information is more valuable than gold, diamonds, or military hardware. Understanding what data to target can make the difference between a milk run and a retirement score:</p>
+
+            <h3>Types of Valuable Data</h3>
+            <ul>
+                <li><strong>Paydata:</strong> Information that clients specifically want to buy</li>
+                <li><strong>Corporate Secrets:</strong> Research data, financial records, strategic plans</li>
+                <li><strong>Personal Information:</strong> Blackmail material, private communications</li>
+                <li><strong>Access Codes:</strong> Passwords, biometric data, security protocols</li>
+                <li><strong>Financial Data:</strong> Account numbers, transaction records, audit trails</li>
+                <li><strong>Technical Specifications:</strong> Product designs, manufacturing processes</li>
+            </ul>
+
+            <h3>Data Security Measures</h3>
+            <ul>
+                <li><strong>Encryption:</strong> Mathematical locks requiring specific keys</li>
+                <li><strong>Data Bombs:</strong> Destructive programs that trigger on unauthorized access</li>
+                <li><strong>Scramble IC:</strong> Programs that corrupt data during illegal copying</li>
+                <li><strong>Biometric Locks:</strong> Security requiring specific user identity</li>
+                <li><strong>Temporal Locks:</strong> Data that self-destructs after time limits</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Matrix Threats Beyond IC</h2>
+            <p>The Matrix isn't just defended by programs - it's populated by hostile entities that make corporate security look friendly:</p>
+
+            <h3>AI Entities</h3>
+            <ul>
+                <li><strong>Free Spirits:</strong> Magical beings that inhabit electronic systems</li>
+                <li><strong>Otaku:</strong> Human-machine hybrids with Matrix integration</li>
+                <li><strong>Dissonance Entities:</strong> Corrupted technomancer spirits</li>
+                <li><strong>Rogue AIs:</strong> Artificial intelligences pursuing their own agendas</li>
+                <li><strong>Corporate Spiders:</strong> Human security specialists defending their turf</li>
+            </ul>
+
+            <h3>Environmental Hazards</h3>
+            <ul>
+                <li><strong>Resonance Storms:</strong> Chaotic areas that damage personas</li>
+                <li><strong>Data Havens in Flux:</strong> Unstable regions with shifting reality</li>
+                <li><strong>Viral Zones:</strong> Areas infected with self-replicating malware</li>
+                <li><strong>Dead Zones:</strong> Matrix regions with no connectivity</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Matrix Etiquette and Shadow Community</h2>
+            <p>The Matrix has its own social rules and underground communities. Understanding these can mean the difference between finding allies and making enemies:</p>
+
+            <h3>Hacker Culture</h3>
+            <ul>
+                <li><strong>Handle Respect:</strong> Your Matrix name is your reputation</li>
+                <li><strong>Information Sharing:</strong> Trading intel builds relationships</li>
+                <li><strong>Corp Hatred:</strong> United opposition to corporate control</li>
+                <li><strong>Artistic Expression:</strong> Elegant hacks are valued as art</li>
+                <li><strong>No Snitching:</strong> Never reveal another hacker's identity</li>
+            </ul>
+
+            <h3>Underground Resources</h3>
+            <ul>
+                <li><strong>Hacker BBSs:</strong> Hidden forums for information exchange</li>
+                <li><strong>Pirate Data Havens:</strong> Neutral territories for data storage</li>
+                <li><strong>Shadow Markets:</strong> Black markets for programs and data</li>
+                <li><strong>Training Grounds:</strong> Safe spaces to practice hacking skills</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Your Next Steps</h2>
+            <p>You now understand the Matrix as both a parallel universe and a battlefield. Digital warfare in Shadowrun isn't just about typing commands - it's about navigating a living, breathing virtual world where information has physical form and thinking machines hunt intruders with lethal intent.</p>
+
+            <p>In our next tutorial, we'll explore the mystical side of the Sixth World - magic and the awakened arts. We'll discover how spells work, what it means to astrally project, and how shamans and mages wield forces that corporate security can barely comprehend.</p>
+
+            <p>Remember: In the Matrix, you're not just visiting cyberspace - you're literally putting your mind on the line. Jack smart, jack safe, and always have an exit strategy.</p>
+        </section>
+
+        <footer>
+            <p><em>The Matrix rewards the bold, punishes the careless, and never forgives the unprepared. Stay frosty in cyberspace, console cowboy.</em></p>
+            <p style="text-align: center; margin-top: 40px;">
+                <span style="color: #00ff00; text-shadow: 0 0 10px #00ff00;">◊ Next:<a href="/shadowrun/sr_magic.html"> Magic and the Awakened Arts</a> ◊</span>
+            </p>
+        </footer>
+    </main>
+</body>
+</html>

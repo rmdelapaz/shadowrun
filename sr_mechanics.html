@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolling with the Punches - Shadowrun Game Mechanics</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        .dice-container {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .die {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border: 2px solid #fff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            animation: roll 2s infinite;
+        }
+        .die:hover {
+            transform: scale(1.1);
+        }
+        .die.hit {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            box-shadow: 0 0 20px #4ecdc4;
+        }
+        .die.miss {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            opacity: 0.6;
+        }
+        @keyframes roll {
+            0%, 100% { transform: rotateX(0deg) rotateY(0deg); }
+            25% { transform: rotateX(90deg) rotateY(0deg); }
+            50% { transform: rotateX(180deg) rotateY(90deg); }
+            75% { transform: rotateX(270deg) rotateY(180deg); }
+        }
+        
+        .attribute-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .attribute-card {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+        }
+        .attribute-card h4 {
+            margin: 0 0 10px 0;
+            color: #ecf0f1;
+            text-shadow: 0 0 10px #3498db;
+        }
+        
+        .skill-tree {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border: 2px solid #e74c3c;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .priority-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(0,0,0,0.8);
+        }
+        .priority-table th,
+        .priority-table td {
+            border: 1px solid #00ffff;
+            padding: 12px;
+            text-align: center;
+            color: white;
+        }
+        .priority-table th {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #00ffff;
+            font-weight: bold;
+        }
+        .priority-a { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .priority-b { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .priority-c { background: linear-gradient(135deg, #f1c40f, #f39c12); }
+        .priority-d { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        .priority-e { background: linear-gradient(135deg, #3498db, #2980b9); }
+        
+        .dice-pool-calculator {
+            background: rgba(0,255,255,0.1);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-bar {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .stat-label {
+            width: 120px;
+            font-weight: bold;
+        }
+        .stat-visual {
+            flex: 1;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .stat-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+        
+        .character-sheet-preview {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border: 3px solid #e74c3c;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            color: white;
+        }
+        
+        .advancement-track {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(90deg, #1a1a2e, #16213e, #0f3460);
+            border-radius: 10px;
+            border: 2px solid #00ffff;
+        }
+        
+        .advancement-node {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border: 3px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            position: relative;
+        }
+        
+        .advancement-arrow {
+            width: 0;
+            height: 0;
+            border-left: 15px solid #00ffff;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="color: #e74c3c; text-shadow: 0 0 20px #e74c3c;">Rolling with the Punches</h1>
+        <p><em>Game Mechanics and Character Creation</em></p>
+    </header>
+
+    <main>
+        <section>
+            <h2>The Heart of Shadowrun: Dice Pools</h2>
+            <p>Shadowrun uses a unique dice system that's both elegant and realistic. Instead of rolling a single die and adding modifiers, you build a "dice pool" - a handful of six-sided dice that represent your combined natural talent, training, and equipment. Think of it like assembling a team for a specific task: the more qualified people you bring, the better your chances of success.</p>
+            
+            <div class="dice-pool-calculator">
+                <h3>Interactive Dice Pool Example</h3>
+                <p><strong>Scenario:</strong> Your Street Samurai is shooting at a corporate security guard</p>
+                
+                <div id="dicePoolBuilder">
+                    <div class="stat-bar">
+                        <span class="stat-label">Agility:</span>
+                        <div class="stat-visual">
+                            <div class="stat-fill" style="width: 60%; background: #3498db;" id="agilityFill"></div>
+                        </div>
+                        <span id="agilityValue">6 dice</span>
+                    </div>
+                    
+                    <div class="stat-bar">
+                        <span class="stat-label">Firearms Skill:</span>
+                        <div class="stat-visual">
+                            <div class="stat-fill" style="width: 50%; background: #2ecc71;" id="skillFill"></div>
+                        </div>
+                        <span id="skillValue">5 dice</span>
+                    </div>
+                    
+                    <div class="stat-bar">
+                        <span class="stat-label">Smartgun:</span>
+                        <div class="stat-visual">
+                            <div class="stat-fill" style="width: 20%; background: #f39c12;" id="gearFill"></div>
+                        </div>
+                        <span id="gearValue">2 dice</span>
+                    </div>
+                    
+                    <div class="stat-bar">
+                        <span class="stat-label"><strong>Total Pool:</strong></span>
+                        <div class="stat-visual">
+                            <div class="stat-fill" style="width: 100%; background: #e74c3c;" id="totalFill"></div>
+                        </div>
+                        <span id="totalValue">13 dice</span>
+                    </div>
+                </div>
+                
+                <div class="dice-container" id="diceDisplay">
+                    <!-- Dice will be generated here -->
+                </div>
+                
+                <button onclick="rollDicePool()" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">Roll the Pool!</button>
+                <div id="rollResult" style="margin-top: 15px; font-size: 18px; font-weight: bold;"></div>
+            </div>
+
+            <script>
+                function generateDicePool() {
+                    const diceDisplay = document.getElementById('diceDisplay');
+                    diceDisplay.innerHTML = '';
+                    
+                    for (let i = 0; i < 13; i++) {
+                        const die = document.createElement('div');
+                        die.className = 'die';
+                        die.textContent = '?';
+                        die.id = `die-${i}`;
+                        diceDisplay.appendChild(die);
+                    }
+                }
+                
+                function rollDicePool() {
+                    const dice = document.querySelectorAll('.die');
+                    let hits = 0;
+                    let ones = 0;
+                    
+                    dice.forEach((die, index) => {
+                        const roll = Math.floor(Math.random() * 6) + 1;
+                        die.textContent = roll;
+                        die.className = 'die';
+                        
+                        if (roll >= 5) {
+                            hits++;
+                            die.classList.add('hit');
+                        } else {
+                            die.classList.add('miss');
+                        }
+                        
+                        if (roll === 1) {
+                            ones++;
+                        }
+                    });
+                    
+                    let result = `<span style="color: #4ecdc4;">${hits} hits!</span>`;
+                    if (ones >= hits && hits > 0) {
+                        result += ` <span style="color: #e74c3c;">(Critical Glitch!)</span>`;
+                    } else if (ones >= hits / 2) {
+                        result += ` <span style="color: #f39c12;">(Glitch)</span>`;
+                    }
+                    
+                    document.getElementById('rollResult').innerHTML = result;
+                }
+                
+                // Initialize dice display
+                generateDicePool();
+            </script>
+        </section>
+
+        <section>
+            <h2>Success and Failure: The Hit System</h2>
+            <p>In Shadowrun, each die that shows 5 or 6 is a "hit." You need a certain number of hits to succeed at different tasks:</p>
+
+            <div class="mermaid">
+                graph TD
+                    A[Roll Dice Pool] --> B{Count Hits}
+                    B --> C[5s and 6s = Hits]
+                    C --> D{Compare to Threshold}
+                    D -->|Hits ≥ Threshold| E[Success!]
+                    D -->|Hits < Threshold| F[Failure]
+                    C --> G{Check for 1s}
+                    G -->|Half or more 1s| H[Glitch!]
+                    G -->|More 1s than hits| I[Critical Glitch!]
+                    
+                    style E fill:#4ecdc4
+                    style F fill:#e74c3c
+                    style H fill:#f39c12
+                    style I fill:#8b0000
+            </div>
+
+            <h3>Difficulty Examples</h3>
+            <ul>
+                <li><strong>1 Hit:</strong> Simple tasks (picking a basic lock, driving in normal traffic)</li>
+                <li><strong>2 Hits:</strong> Moderate challenges (hacking a standard system, smooth-talking a guard)</li>
+                <li><strong>3 Hits:</strong> Difficult actions (disarming a bomb, casting a complex spell)</li>
+                <li><strong>4+ Hits:</strong> Extreme challenges (breaking military encryption, performing surgery under fire)</li>
+            </ul>
+
+            <h3>The Beauty of Extra Hits</h3>
+            <p>Unlike many RPGs where you either succeed or fail, Shadowrun rewards excellence. Extra hits beyond the threshold represent degrees of success:</p>
+            <ul>
+                <li><strong>Shooting:</strong> Extra hits increase damage</li>
+                <li><strong>Hacking:</strong> Extra hits provide additional access or stealth</li>
+                <li><strong>Social:</strong> Extra hits give more information or better deals</li>
+                <li><strong>Magic:</strong> Extra hits increase spell effectiveness</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Character Attributes: Your Natural Talents</h2>
+            <p>Every character has eight core attributes that represent their basic capabilities. Think of these as your character's hardware specifications:</p>
+
+            <div class="attribute-grid">
+                <div class="attribute-card">
+                    <h4>Body</h4>
+                    <p><strong>Physical Structure:</strong> Health, muscle mass, and physical resilience. Determines how much damage you can take and how much you can lift.</p>
+                    <p><em>Example:</em> A Body 6 troll can shrug off gunfire that would drop a Body 2 elf.</p>
+                </div>
+
+                <div class="attribute-card">
+                    <h4>Agility</h4>
+                    <p><strong>Physical Coordination:</strong> Hand-eye coordination, balance, and fine motor control. Used for shooting, sneaking, and acrobatics.</p>
+                    <p><em>Example:</em> High Agility lets you thread a needle or thread a bullet through a crowd.</p>
+                </div>
+
+                <div class="attribute-card">
+                    <h4>Reaction</h4>
+                    <p><strong>Combat Reflexes:</strong> How quickly you respond to danger. Determines initiative in combat and reaction to surprises.</p>
+                    <p><em>Example:</em> High Reaction means you draw first and dodge bullets like Neo.</p>
+                </div>
+
+                <div class="attribute-card">
+                    <h4>Strength</h4>
+                    <p><strong>Raw Power:</strong> Muscle strength and physical force. Used for melee damage, lifting, and breaking things.</p>
+                    <p><em>Example:</em> A Strength 8 troll can punch through a brick wall.</p>
+                </div>
+
+                <div class="attribute-card">
+                    <h4>Willpower</h4>
+                    <p><strong>Mental Fortitude:</strong> Determination, self-control, and resistance to mental influence. Your mental armor.</p>
+                    <p><em>Example:</em> High Willpower resists mind control spells and intimidation.</p>
+                </div>
+
+                <div class="attribute-card">
+                    <h4>Logic</h4>
+                    <p><strong>Analytical Thinking:</strong> Problem-solving, pattern recognition, and systematic reasoning. The foundation of hacking and technical skills.</p>
+                    <p><em>Example:</em> Logic helps you crack codes and diagnose technical problems.</p>
+                </div>
+
+                <div class="attribute-card">
+                    <h4>Intuition</h4>
+                    <p><strong>Gut Instincts:</strong> Situational awareness, empathy, and subconscious processing. Your "spider sense" for danger.</p>
+                    <p><em>Example:</em> Intuition tells you when someone's lying or when you're being watched.</p>
+                </div>
+
+                <div class="attribute-card">
+                    <h4>Charisma</h4>
+                    <p><strong>Personal Magnetism:</strong> Social presence, leadership ability, and force of personality. Your social operating system.</p>
+                    <p><em>Example:</em> High Charisma makes people want to help you or follow your lead.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Skills: Your Learned Abilities</h2>
+            <div class="skill-tree">
+                <h3>The Skill System</h3>
+                <p>Skills represent training and experience. When you attempt an action, you combine the relevant Attribute + Skill to form your dice pool. Think of attributes as your natural talent and skills as your training:</p>
+
+                <div class="mermaid">
+                    mindmap
+                      root((Skills))
+                        [Combat Skills]
+                          Firearms
+                          Blades
+                          Clubs
+                          Unarmed Combat
+                          Throwing Weapons
+                        [Physical Skills]
+                          Athletics
+                          Gymnastics
+                          Infiltration
+                          Palming
+                          Perception
+                        [Social Skills]
+                          Con
+                          Etiquette
+                          Intimidation
+                          Leadership
+                          Negotiation
+                        [Technical Skills]
+                          Computer
+                          Cybercombat
+                          Electronic Warfare
+                          Hacking
+                          Hardware
+                        [Vehicle Skills]
+                          Pilot Aircraft
+                          Pilot Ground Craft
+                          Pilot Watercraft
+                          Gunnery
+                        [Magic Skills]
+                          Spellcasting
+                          Summoning
+                          Binding
+                          Enchanting
+                          Ritual Spellcasting
+                </div>
+
+                <h4>Skill Rating Scale</h4>
+                <ul>
+                    <li><strong>0:</strong> Untrained (use attribute only, often with penalties)</li>
+                    <li><strong>1-2:</strong> Novice (basic training, amateur level)</li>
+                    <li><strong>3-4:</strong> Professional (career-level competence)</li>
+                    <li><strong>5-6:</strong> Expert (among the best in your field)</li>
+                    <li><strong>7+:</strong> Legendary (world-class mastery)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Character Creation: The Priority System</h2>
+            <p>Creating a Shadowrun character is like allocating a limited budget across five crucial areas. You assign priorities A through E to determine what your character excels at and what they sacrifice:</p>
+
+            <table class="priority-table">
+                <thead>
+                    <tr>
+                        <th>Priority</th>
+                        <th>Metatype</th>
+                        <th>Attributes</th>
+                        <th>Magic/Resonance</th>
+                        <th>Skills</th>
+                        <th>Resources</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="priority-a">
+                        <td><strong>A</strong></td>
+                        <td>Elf (8)</td>
+                        <td>24 points</td>
+                        <td>Magician/Mystic Adept</td>
+                        <td>46/10</td>
+                        <td>450,000¥</td>
+                    </tr>
+                    <tr class="priority-b">
+                        <td><strong>B</strong></td>
+                        <td>Human (7)<br>Dwarf/Ork (4)</td>
+                        <td>20 points</td>
+                        <td>Adept/Aspected</td>
+                        <td>36/5</td>
+                        <td>275,000¥</td>
+                    </tr>
+                    <tr class="priority-c">
+                        <td><strong>C</strong></td>
+                        <td>Human (5)<br>Dwarf/Ork (0)</td>
+                        <td>16 points</td>
+                        <td>Technomancer</td>
+                        <td>28/2</td>
+                        <td>140,000¥</td>
+                    </tr>
+                    <tr class="priority-d">
+                        <td><strong>D</strong></td>
+                        <td>Human (3)<br>Troll (0)</td>
+                        <td>14 points</td>
+                        <td>Adept/Aspected</td>
+                        <td>22/0</td>
+                        <td>50,000¥</td>
+                    </tr>
+                    <tr class="priority-e">
+                        <td><strong>E</strong></td>
+                        <td>Human (1)</td>
+                        <td>12 points</td>
+                        <td>Mundane</td>
+                        <td>18/0</td>
+                        <td>6,000¥</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Priority Decision Examples</h3>
+            <div class="character-sheet-preview">
+                <h4>Street Samurai Build Example</h4>
+                <ul>
+                    <li><strong>A - Resources:</strong> Need expensive cyberware and weapons</li>
+                    <li><strong>B - Attributes:</strong> Physical stats are crucial for combat</li>
+                    <li><strong>C - Skills:</strong> Focus on combat and infiltration skills</li>
+                    <li><strong>D - Metatype:</strong> Human works fine for this role</li>
+                    <li><strong>E - Magic:</strong> No magical ability (mundane)</li>
+                </ul>
+                <p><em>This creates a chrome-enhanced human killing machine with top-tier gear.</em></p>
+            </div>
+
+            <div class="character-sheet-preview">
+                <h4>Mage Build Example</h4>
+                <ul>
+                    <li><strong>A - Magic:</strong> Full spellcasting ability is essential</li>
+                    <li><strong>B - Attributes:</strong> Need high mental stats for magic</li>
+                    <li><strong>C - Skills:</strong> Magic skills plus some mundane abilities</li>
+                    <li><strong>D - Metatype:</strong> Human or pick an advantageous metatype</li>
+                    <li><strong>E - Resources:</strong> Magic doesn't require expensive gear</li>
+                </ul>
+                <p><em>This creates a powerful mage who relies on spells over equipment.</em></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Character Advancement</h2>
+            <p>Unlike many RPGs with level-based advancement, Shadowrun uses a point-buy system where you improve individual aspects of your character using Karma (experience points).</p>
+
+            <div class="advancement-track">
+                <div class="advancement-node">START</div>
+                <div class="advancement-arrow"></div>
+                <div class="advancement-node">+5<br>Karma</div>
+                <div class="advancement-arrow"></div>
+                <div class="advancement-node">SKILL<br>UP</div>
+                <div class="advancement-arrow"></div>
+                <div class="advancement-node">+10<br>Karma</div>
+                <div class="advancement-arrow"></div>
+                <div class="advancement-node">NEW<br>GEAR</div>
+            </div>
+
+            <h3>Karma Costs</h3>
+            <ul>
+                <li><strong>New Skill (Rating 1):</strong> 2 Karma</li>
+                <li><strong>Improve Skill:</strong> New Rating × 2 Karma</li>
+                <li><strong>Improve Attribute:</strong> New Rating × 5 Karma</li>
+                <li><strong>New Spell/Complex Form:</strong> 5 Karma</li>
+                <li><strong>Specialization:</strong> 7 Karma</li>
+            </ul>
+
+            <h3>Natural Progression</h3>
+            <p>Your character grows organically based on what they do in-game:</p>
+            <ul>
+                <li><strong>Use it or lose it:</strong> You improve skills you actually use</li>
+                <li><strong>Contacts matter:</strong> NPCs can teach you new abilities</li>
+                <li><strong>Gear upgrades:</strong> Better equipment as you earn more nuyen</li>
+                <li><strong>Reputation:</strong> Success brings better job offers</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Putting It All Together</h2>
+            <p>Here's a step-by-step walkthrough of creating your first character:</p>
+
+            <div class="mermaid">
+                flowchart TD
+                    A[Choose Concept] --> B[Assign Priorities]
+                    B --> C[Select Metatype]
+                    C --> D[Buy Attributes]
+                    D --> E[Buy Skills]
+                    E --> F[Choose Magic/Tech]
+                    F --> G[Buy Gear]
+                    G --> H[Add Details]
+                    H --> I[Calculate Derived Stats]
+                    I --> J[Ready to Play!]
+                    
+                    style A fill:#e74c3c
+                    style J fill:#4ecdc4
+            </div>
+
+            <h3>Character Creation Checklist</h3>
+            <ol>
+                <li><strong>Concept First:</strong> What's your character's story and role?</li>
+                <li><strong>Priority Selection:</strong> What does your concept need most?</li>
+                <li><strong>Metatype Choice:</strong> Which race fits your vision?</li>
+                <li><strong>Attribute Distribution:</strong> Build your foundation</li>
+                <li><strong>Skill Selection:</strong> What can your character do?</li>
+                <li><strong>Magic/Resonance:</strong> Special abilities if applicable</li>
+                <li><strong>Gear Purchase:</strong> Equipment within budget</li>
+                <li><strong>Background Details:</strong> Contacts, lifestyle, backstory</li>
+                <li><strong>Final Calculations:</strong> Derived attributes and limits</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Common Newbie Mistakes</h2>
+            <div style="background: rgba(231, 76, 60, 0.2); border: 2px solid #e74c3c; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                <h3>Avoid These Pitfalls</h3>
+                <ul>
+                    <li><strong>The "Do Everything" Character:</strong> Spreading points too thin makes you mediocre at everything</li>
+                    <li><strong>Ignoring Social Skills:</strong> Many problems can't be solved with bullets or code</li>
+                    <li><strong>Forgetting Basic Gear:</strong> Don't spend all your money on one amazing item</li>
+                    <li><strong>Stat Obsession:</strong> Remember that roleplay is more important than perfect numbers</li>
+                    <li><strong>Solo Mindset:</strong> Build for teamwork, not individual glory</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Your Character Sheet as Dashboard</h2>
+            <p>Think of your character sheet as the control panel for your shadowrunner. Every number tells a story about who your character is and what they can do. A high Firearms skill suggests a military background. Expensive cyberware implies corporate connections or successful runs. Low Resources but high Magic might mean a street shaman who awakened recently.</p>
+
+            <p>The beautiful thing about Shadowrun's system is that it encourages specialization while allowing flexibility. Your street samurai can learn some basic hacking. Your mage can pick up social skills. Your face can get combat training. The system grows with your character's story.</p>
+        </section>
+
+        <section>
+            <h2>Next Steps</h2>
+            <p>Now you understand the core mechanics and character creation process. You're ready to build your first shadowrunner and start thinking about how they'll survive in the Sixth World. But mechanics are just the foundation - next we'll explore how to bring your character to life through roleplay, contacts, and the intricate web of relationships that make the shadow community so compelling.</p>
+
+            <p>Remember: The dice tell you what happens, but <em>you</em> decide what it means.</p>
+        </section>
+
+        <footer>
+            <p><em>The numbers define capability, but the story defines the character. Roll well, omae.</em></p>
+            <p style="text-align: center; margin-top: 40px;">
+                <span style="color: #e74c3c; text-shadow: 0 0 10px #e74c3c;">◊ Next:<a href="/shadowrun/sr_contacts.html">Contacts, Lifestyle, and the Shadow Community</a> ◊</span>
+            </p>
+        </footer>
+    </main>
+</body>
+</html>

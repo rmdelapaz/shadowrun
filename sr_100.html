@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Shadow Registry - 100+ Shadowrunners</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <style>
+        .registry-background {
+            background: linear-gradient(135deg, #0c0c0c, #1a1a1a, #2d2d2d);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .team-section {
+            background: linear-gradient(135deg, rgba(52, 73, 94, 0.8), rgba(44, 62, 80, 0.9));
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .team-header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #ecf0f1;
+        }
+        
+        .team-name {
+            font-size: 28px;
+            color: #3498db;
+            text-shadow: 0 0 10px #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .team-description {
+            font-style: italic;
+            color: #bdc3c7;
+            margin-bottom: 15px;
+        }
+        
+        .team-reputation {
+            background: rgba(52, 152, 219, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .character-mini {
+            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(20,20,20,0.8));
+            border: 2px solid;
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .character-mini:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .samurai { border-color: #e74c3c; }
+        .decker { border-color: #00ff00; }
+        .mage { border-color: #8a2be2; }
+        .face { border-color: #ff69b4; }
+        .rigger { border-color: #ffa500; }
+        .adept { border-color: #ffff00; }
+        .infiltrator { border-color: #95a5a6; }
+        .technomancer { border-color: #ff00ff; }
+        .gunslinger { border-color: #dc143c; }
+        .shaman { border-color: #228b22; }
+        
+        .char-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .char-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .char-info h4 {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.2;
+        }
+        
+        .char-info p {
+            margin: 2px 0;
+            font-size: 12px;
+            color: #bdc3c7;
+        }
+        
+        .char-role {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 11px;
+            margin: 8px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .char-specialty {
+            font-size: 11px;
+            color: #f39c12;
+            margin: 5px 0;
+        }
+        
+        .char-background {
+            font-size: 10px;
+            color: #95a5a6;
+            line-height: 1.3;
+            margin-top: 8px;
+        }
+        
+        .solo-section {
+            background: linear-gradient(135deg, rgba(142, 68, 173, 0.3), rgba(155, 89, 182, 0.4));
+            border: 2px solid #9b59b6;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .section-title {
+            color: #9b59b6;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #9b59b6;
+        }
+        
+        .specialty-teams {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.3), rgba(192, 57, 43, 0.4));
+            border: 2px solid #e74c3c;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .stats-mini {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 8px 0;
+            font-size: 10px;
+        }
+        
+        .stat-mini {
+            text-align: center;
+            background: rgba(52, 152, 219, 0.2);
+            border-radius: 4px;
+            padding: 4px 2px;
+        }
+        
+        .stat-value-mini {
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .gear-mini {
+            font-size: 9px;
+            color: #7f8c8d;
+            margin-top: 5px;
+            line-height: 1.2;
+        }
+        
+        .team-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            z-index: 100;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+            font-size: 12px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+            border: 1px solid white;
+        }
+        
+        .npc-section {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.3), rgba(243, 156, 18, 0.4));
+            border: 2px solid #f39c12;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .enemy-section {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.5), rgba(220, 20, 60, 0.4));
+            border: 2px solid #8b0000;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="registry-background"></div>
+    <div class="team-counter" id="characterCounter">Characters: 0</div>
+    
+    <header>
+        <h1 style="color: #3498db; text-shadow: 0 0 20px #3498db;">The Shadow Registry</h1>
+        <p><em>100+ Shadowrunners Ready for Action</em></p>
+        
+        <div class="legend-grid">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e74c3c;"></div>
+                <span>Street Samurai</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #00ff00;"></div>
+                <span>Decker</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #8a2be2;"></div>
+                <span>Mage</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff69b4;"></div>
+                <span>Face</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ffa500;"></div>
+                <span>Rigger</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ffff00;"></div>
+                <span>Adept</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #95a5a6;"></div>
+                <span>Infiltrator</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff00ff;"></div>
+                <span>Technomancer</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Team 1: The Night Shift -->
+        <div class="team-section">
+            <div class="team-header">
+                <div class="team-name">The Night Shift</div>
+                <div class="team-description">Elite extraction specialists who operate exclusively after midnight</div>
+                <div class="team-reputation">Reputation: Professional extraction team with 94% success rate</div>
+            </div>
+            
+            <div class="character-grid">
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">⚔️</div>
+                        <div class="char-info">
+                            <h4>"Midnight" Kane</h4>
+                            <p>Ork Street Samurai</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Team Leader / Heavy Assault</div>
+                    <div class="char-specialty">Specialty: Night operations, corporate security</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">8</div>Body</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Str</div>
+                    </div>
+                    <div class="gear-mini">Ares Alpha, Katana, Wired Reflexes, Night Vision</div>
+                    <div class="char-background">Former Lone Star SWAT who turned after witnessing corporate corruption. Specializes in violent extractions and hostile environments.</div>
+                </div>
+
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">💻</div>
+                        <div class="char-info">
+                            <h4>"Phantom" Liu</h4>
+                            <p>Human Decker</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Matrix Specialist</div>
+                    <div class="char-specialty">Specialty: Ice breaking, security systems</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Wil</div>
+                        <div class="stat-mini"><div class="stat-value-mini">3</div>Cha</div>
+                    </div>
+                    <div class="gear-mini">Fairlight Excalibur, Attack 6, Stealth 5, custom ICE</div>
+                    <div class="char-background">Child prodigy who hacked her first corp at age 12. Now uses her skills to expose corporate crimes and free wrongly imprisoned executives.</div>
+                </div>
+
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8a2be2; border-color: #8a2be2;">🌙</div>
+                        <div class="char-info">
+                            <h4>"Shadowmoon" Rivera</h4>
+                            <p>Elf Hermetic Mage</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Magical Support</div>
+                    <div class="char-specialty">Specialty: Illusion magic, spirit binding</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Mag</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Wil</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Cha</div>
+                    </div>
+                    <div class="gear-mini">Invisibility, Silence, Mind Probe, Bound Spirits</div>
+                    <div class="char-background">Former university professor of thaumaturgical theory who left academia to practice magic in the real world. Specializes in subtle, undetectable operations.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">🎭</div>
+                        <div class="char-info">
+                            <h4>"Silk" Nakamura</h4>
+                            <p>Human Face</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Social Infiltration</div>
+                    <div class="char-specialty">Specialty: Corporate impersonation, negotiation</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Cha</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Wil</div>
+                    </div>
+                    <div class="gear-mini">Multiple SINs, Designer clothes, Pheromones, Voice Control</div>
+                    <div class="char-background">Former Horizon media executive who discovered the corporation's mind control programs. Now uses her corporate knowledge to help others escape similar situations.</div>
+                </div>
+
+                <div class="character-mini rigger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffa500; border-color: #ffa500; color: #000;">🚁</div>
+                        <div class="char-info">
+                            <h4>"Ghost Rider" Kowalski</h4>
+                            <p>Dwarf Rigger</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Extraction Transport</div>
+                    <div class="char-specialty">Specialty: Stealth aircraft, silent running</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Bod</div>
+                    </div>
+                    <div class="gear-mini">Stealth Helicopter, Silent Drones, Control Rig 2</div>
+                    <div class="char-background">Former military pilot who went AWOL rather than bomb civilian targets. Now provides extraction services for political refugees and corporate whistleblowers.</div>
+                </div>
+
+                <div class="character-mini adept">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffff00; border-color: #ffff00; color: #000;">👤</div>
+                        <div class="char-info">
+                            <h4>"Whisper" Chen</h4>
+                            <p>Human Physical Adept</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Infiltration Specialist</div>
+                    <div class="char-specialty">Specialty: Silent entry, reconnaissance</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Mag</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                    </div>
+                    <div class="gear-mini">Silence, Traceless Walk, Wall Running, Astral Perception</div>
+                    <div class="char-background">Former corporate spy who awakened during a deep cover mission. Uses magical abilities to infiltrate places that technology cannot reach.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team 2: The Data Devils -->
+        <div class="team-section">
+            <div class="team-header">
+                <div class="team-name">The Data Devils</div>
+                <div class="team-description">Matrix specialists who steal information and sell it to the highest bidder</div>
+                <div class="team-reputation">Reputation: Premier data theft specialists, enemies of all major corps</div>
+            </div>
+            
+            <div class="character-grid">
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">🖥️</div>
+                        <div class="char-info">
+                            <h4>"Daemon" Volkov</h4>
+                            <p>Human Decker</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Lead Matrix Operative</div>
+                    <div class="char-specialty">Specialty: Black IC combat, data fortresses</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">8</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Wil</div>
+                        <div class="stat-mini"><div class="stat-value-mini">3</div>Cha</div>
+                    </div>
+                    <div class="gear-mini">Military Cyberdeck, Attack 8, Armor 6, Black Hammer</div>
+                    <div class="char-background">Former Eastern European military cyber-warfare specialist. Defected when ordered to crash civilian infrastructure. Now wages personal war against corporate data monopolies.</div>
+                </div>
+
+                <div class="character-mini technomancer">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff00ff; border-color: #ff00ff;">🧠</div>
+                        <div class="char-info">
+                            <h4>"Pulse" Martinez</h4>
+                            <p>Human Technomancer</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Living Matrix Interface</div>
+                    <div class="char-specialty">Specialty: Sprite summoning, complex forms</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Res</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Wil</div>
+                    </div>
+                    <div class="gear-mini">Data Sprites, Machine Sprites, Stealth Complex Form</div>
+                    <div class="char-background">Awakened during a massive Matrix crash at age 16. Corporate researchers tried to study her abilities, but she escaped. Now seeks to understand technomancer origins.</div>
+                </div>
+
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">⚡</div>
+                        <div class="char-info">
+                            <h4>"Circuit" Kim</h4>
+                            <p>Elf Decker</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Hardware Specialist</div>
+                    <div class="char-specialty">Specialty: Custom hardware, cyberdeck modification</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">3</div>Bod</div>
+                    </div>
+                    <div class="gear-mini">Modified Renraku Tsurugi, Custom Programs, Electronics 6</div>
+                    <div class="char-background">Brilliant electronics engineer who builds impossible hardware modifications. Each cyberdeck is a work of art that pushes the boundaries of Matrix technology.</div>
+                </div>
+
+                <div class="character-mini infiltrator">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #95a5a6; border-color: #95a5a6;">👻</div>
+                        <div class="char-info">
+                            <h4>"Smoke" Tanaka</h4>
+                            <p>Ork Infiltrator</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Physical Breach Specialist</div>
+                    <div class="char-specialty">Specialty: Server room infiltration, data theft</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Bod</div>
+                    </div>
+                    <div class="gear-mini">Stealth Suit, Lock picks, Electronics kit, Optical Camouflage</div>
+                    <div class="char-background">Former corporate facility maintenance worker who knows every service tunnel and access point in the corporate district. Provides physical access where Matrix intrusion fails.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team 3: The Urban Shamans -->
+        <div class="team-section">
+            <div class="team-header">
+                <div class="team-name">The Urban Shamans</div>
+                <div class="team-description">Magical practitioners who protect the awakened community from corporate exploitation</div>
+                <div class="team-reputation">Reputation: Defenders of the magical community, enemies of corporate magical research</div>
+            </div>
+            
+            <div class="character-grid">
+                <div class="character-mini shaman">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #228b22; border-color: #228b22;">🐺</div>
+                        <div class="char-info">
+                            <h4>"Wolfpack" Jackson</h4>
+                            <p>Human Urban Shaman</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Team Spiritual Leader</div>
+                    <div class="char-specialty">Specialty: City spirits, pack tactics</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Mag</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Cha</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Wil</div>
+                    </div>
+                    <div class="gear-mini">Wolf Totem, Pack spirits, Heal, Combat spells</div>
+                    <div class="char-background">Former gang leader who awakened during a territorial war. Now leads a family of urban shamans who protect the magical community from corporate predators.</div>
+                </div>
+
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8a2be2; border-color: #8a2be2;">🔬</div>
+                        <div class="char-info">
+                            <h4>"Catalyst" Wong</h4>
+                            <p>Human Hermetic Mage</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Magical Researcher</div>
+                    <div class="char-specialty">Specialty: Spell research, metamagic theory</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Mag</div>
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Wil</div>
+                    </div>
+                    <div class="gear-mini">Spell Library, Enchanting tools, Elemental spirits</div>
+                    <div class="char-background">Brilliant magical theorist who left MIT&T when they tried to weaponize her research. Now develops defensive magic to protect awakened communities from corporate exploitation.</div>
+                </div>
+
+                <div class="character-mini adept">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffff00; border-color: #ffff00; color: #000;">🗡️</div>
+                        <div class="char-info">
+                            <h4>"Blade" Crow Feather</h4>
+                            <p>Elf Mystic Adept</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Warrior-Mystic</div>
+                    <div class="char-specialty">Specialty: Weapon focus, astral combat</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Mag</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Str</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Cha</div>
+                    </div>
+                    <div class="gear-mini">Weapon Focus Sword, Improved Abilities, Counterspelling</div>
+                    <div class="char-background">Traditional warrior who bridges the gap between ancient shamanic traditions and modern magical practice. Protects sacred sites from corporate development.</div>
+                </div>
+
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8a2be2; border-color: #8a2be2;">🌿</div>
+                        <div class="char-info">
+                            <h4>"Greenthumb" Patel</h4>
+                            <p>Human Nature Mage</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Ecological Healer</div>
+                    <div class="char-specialty">Specialty: Environmental magic, toxic cleanup</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Mag</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Cha</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Wil</div>
+                    </div>
+                    <div class="gear-mini">Plant spirits, Purify spells, Cleanse, Heal</div>
+                    <div class="char-background">Environmental scientist who awakened while studying toxic waste sites. Uses magic to heal polluted areas and expose corporate environmental crimes.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">📺</div>
+                        <div class="char-info">
+                            <h4>"Voice" Thompson</h4>
+                            <p>Ork Face/Activist</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Community Organizer</div>
+                    <div class="char-specialty">Specialty: Media relations, political activism</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Cha</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Wil</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Bod</div>
+                    </div>
+                    <div class="gear-mini">Media contacts, Political connections, Rally crowds</div>
+                    <div class="char-background">Former corporate PR specialist who switched sides after witnessing corporate atrocities against metahumans. Now organizes resistance movements and exposes corporate crimes.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team 4: The Neon Knights -->
+        <div class="team-section">
+            <div class="team-header">
+                <div class="team-name">The Neon Knights</div>
+                <div class="team-description">Street-level heroes who protect the innocent and fight corporate oppression</div>
+                <div class="team-reputation">Reputation: Folk heroes in the Barrens, high-priority targets for corporations</div>
+            </div>
+            
+            <div class="character-grid">
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">🛡️</div>
+                        <div class="char-info">
+                            <h4>"Paladin" Rodriguez</h4>
+                            <p>Human Cyber-Knight</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Team Protector</div>
+                    <div class="char-specialty">Specialty: Defensive combat, crowd control</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Str</div>
+                    </div>
+                    <div class="gear-mini">Riot Shield, Shock Baton, Armor 18, Crowd Control</div>
+                    <div class="char-background">Former corporate security who refused to evict families from their homes. Now uses non-lethal methods to protect communities from corporate enforcement.</div>
+                </div>
+
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8a2be2; border-color: #8a2be2;">💊</div>
+                        <div class="char-info">
+                            <h4>"Angel" Kim</h4>
+                            <p>Elf Healer Mage</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Team Medic</div>
+                    <div class="char-specialty">Specialty: Healing magic, medical support</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Mag</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Cha</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Wil</div>
+                    </div>
+                    <div class="gear-mini">Heal, Detox, Antidote, Medical supplies</div>
+                    <div class="char-background">Former DocWagon medic who left when the corporation started denying service to SINless patients. Now provides free magical healing to anyone who needs it.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">📢</div>
+                        <div class="char-info">
+                            <h4>"Rally" Washington</h4>
+                            <p>Human Community Leader</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Spokesperson</div>
+                    <div class="char-specialty">Specialty: Crowd inspiration, media manipulation</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Cha</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Wil</div>
+                        <div class="stat-mini"><div class="stat-value-mini">3</div>Bod</div>
+                    </div>
+                    <div class="gear-mini">Media connections, Political contacts, Inspiring speeches</div>
+                    <div class="char-background">Charismatic civil rights leader who organizes peaceful resistance to corporate oppression. Uses media savvy to expose corporate crimes and rally public support.</div>
+                </div>
+
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">📡</div>
+                        <div class="char-info">
+                            <h4>"Broadcast" Chen</h4>
+                            <p>Human Media Hacker</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Information Warfare</div>
+                    <div class="char-specialty">Specialty: Pirate broadcasts, media hacking</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Cha</div>
+                        <div class="stat-mini"><div class="stat-value-mini">3</div>Wil</div>
+                    </div>
+                    <div class="gear-mini">Media Cyberdeck, Broadcast equipment, Edit programs</div>
+                    <div class="char-background">Former corporate media producer who was fired for refusing to suppress news stories about corporate crimes. Now runs underground news network exposing corporate corruption.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team 5: The Steel Wolves -->
+        <div class="team-section">
+            <div class="team-header">
+                <div class="team-name">The Steel Wolves</div>
+                <div class="team-description">Military veterans turned mercenaries specializing in high-risk combat operations</div>
+                <div class="team-reputation">Reputation: Elite military contractors, extremely dangerous in combat</div>
+            </div>
+            
+            <div class="character-grid">
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">🎖️</div>
+                        <div class="char-info">
+                            <h4>"Colonel" Smith</h4>
+                            <p>Human Ex-Military</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Unit Commander</div>
+                    <div class="char-specialty">Specialty: Tactics, leadership, assault rifles</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Cha</div>
+                    </div>
+                    <div class="gear-mini">AK-97, Military armor, Combat drugs, Tactical gear</div>
+                    <div class="char-background">Decorated special forces officer discharged for refusing illegal orders. Now leads a team of military outcasts who take jobs that require maximum violence.</div>
+                </div>
+
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">🎯</div>
+                        <div class="char-info">
+                            <h4>"Longshot" Kowalski</h4>
+                            <p>Elf Sniper</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Precision Marksman</div>
+                    <div class="char-specialty">Specialty: Long-range elimination, overwatch</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Int</div>
+                    </div>
+                    <div class="gear-mini">Ranger X, Thermographic scope, Ghillie suit</div>
+                    <div class="char-background">Former military sniper with over 200 confirmed kills. Discharged for questioning target selections. Now provides precision support for shadowrunning teams.</div>
+                </div>
+
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">💥</div>
+                        <div class="char-info">
+                            <h4>"Boomer" Murphy</h4>
+                            <p>Dwarf Demolitions</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Explosives Expert</div>
+                    <div class="char-specialty">Specialty: Breaching charges, heavy weapons</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">8</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Log</div>
+                    </div>
+                    <div class="gear-mini">Explosives, Grenade launcher, Heavy armor</div>
+                    <div class="char-background">Combat engineer who specialized in urban warfare demolitions. Left the military after accidentally killing civilians. Now uses explosives for surgical strikes only.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">📋</div>
+                        <div class="char-info">
+                            <h4>"Logistics" Carter</h4>
+                            <p>Human Ex-Intelligence</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Mission Coordinator</div>
+                    <div class="char-specialty">Specialty: Intelligence gathering, contract negotiation</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Cha</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Log</div>
+                    </div>
+                    <div class="gear-mini">Military contacts, Intelligence networks, Secure comms</div>
+                    <div class="char-background">Former military intelligence officer who was burned by her own agency. Now provides mission planning and intelligence support for military-style shadowrunning operations.</div>
+                </div>
+
+                <div class="character-mini rigger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffa500; border-color: #ffa500; color: #000;">🚐</div>
+                        <div class="char-info">
+                            <h4>"Convoy" Jackson</h4>
+                            <p>Ork Combat Rigger</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Mobile Support</div>
+                    <div class="char-specialty">Specialty: Armored vehicles, fire support</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Int</div>
+                    </div>
+                    <div class="gear-mini">LAV, Combat drones, Heavy weapons, Control rig</div>
+                    <div class="char-background">Former military vehicle commander who lost his unit to friendly fire. Now provides armored transport and heavy weapons support for high-risk operations.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Solo Operators Section -->
+        <div class="solo-section">
+            <div class="section-title">Elite Solo Operators</div>
+            <div class="character-grid">
+                <!-- Solo 1 -->
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">⚔️</div>
+                        <div class="char-info">
+                            <h4>"Ronin" Yamamoto</h4>
+                            <p>Human Cyber-Samurai</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Masterless Warrior</div>
+                    <div class="char-specialty">Specialty: Honorable combat, corporate assassination</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">8</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Str</div>
+                    </div>
+                    <div class="gear-mini">Monofilament katana, Wired reflexes 3, Armor vest</div>
+                    <div class="char-background">Former corporate executive protection specialist who lost his employer to corporate politics. Now follows the code of bushido while working as an independent operator.</div>
+                </div>
+
+                <!-- Solo 2 -->
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">👁️</div>
+                        <div class="char-info">
+                            <h4>"Oracle" Singh</h4>
+                            <p>Human Information Broker</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Data Merchant</div>
+                    <div class="char-specialty">Specialty: Information trading, data analysis</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">3</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">8</div>Log</div>
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Cha</div>
+                    </div>
+                    <div class="gear-mini">Custom cyberdeck, Data analysis software, Contact network</div>
+                    <div class="char-background">Brilliant data analyst who knows the value of information. Works independently, selling intelligence to the highest bidder while maintaining strict neutrality.</div>
+                </div>
+
+                <!-- Solo 3 -->
+                <div class="character-mini infiltrator">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #95a5a6; border-color: #95a5a6;">🕴️</div>
+                        <div class="char-info">
+                            <h4>"Shadow" Blake</h4>
+                            <p>Elf Professional Thief</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Master Thief</div>
+                    <div class="char-specialty">Specialty: High-security theft, art recovery</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">3</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">8</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Int</div>
+                    </div>
+                    <div class="gear-mini">Stealth suit, Climbing gear, Lock picks, Art expertise</div>
+                    <div class="char-background">Professional art thief who specializes in "liberating" cultural artifacts from corporate collections and returning them to their rightful cultures.</div>
+                </div>
+
+                <!-- Solo 4 -->
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8a2be2; border-color: #8a2be2;">🌟</div>
+                        <div class="char-info">
+                            <h4>"Starweaver" Moon</h4>
+                            <p>Elf Chaos Mage</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Reality Hacker</div>
+                    <div class="char-specialty">Specialty: Probability manipulation, chaos magic</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">3</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Mag</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Cha</div>
+                    </div>
+                    <div class="gear-mini">Chaos spells, Reality manipulation, Variable paradigms</div>
+                    <div class="char-background">Brilliant but unstable mage who believes reality is just badly written code. Uses chaos magic to "debug" the universe and expose corporate control systems.</div>
+                </div>
+
+                <!-- Solo 5 -->
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">💎</div>
+                        <div class="char-info">
+                            <h4>"Diamond" Volkov</h4>
+                            <p>Human High Society Infiltrator</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Social Elite</div>
+                    <div class="char-specialty">Specialty: High society infiltration, corporate espionage</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">3</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">8</div>Cha</div>
+                        <div class="stat-mini"><div class="stat-value-mini">6</div>Int</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Wil</div>
+                    </div>
+                    <div class="gear-mini">Designer everything, Multiple identities, Elite contacts</div>
+                    <div class="char-background">Former socialite whose family was destroyed by corporate machinations. Now uses her high society connections to gather intelligence and plan revenge.</div>
+                </div>
+
+                <!-- Solo 6 -->
+                <div class="character-mini rigger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffa500; border-color: #ffa500; color: #000;">🏍️</div>
+                        <div class="char-info">
+                            <h4>"Velocity" Cross</h4>
+                            <p>Human Speed Demon</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Elite Driver</div>
+                    <div class="char-specialty">Specialty: High-speed chases, precision driving</div>
+                    <div class="stats-mini">
+                        <div class="stat-mini"><div class="stat-value-mini">4</div>Bod</div>
+                        <div class="stat-mini"><div class="stat-value-mini">7</div>Agi</div>
+                        <div class="stat-mini"><div class="stat-value-mini">8</div>Rea</div>
+                        <div class="stat-mini"><div class="stat-value-mini">5</div>Int</div>
+                    </div>
+                    <div class="gear-mini">Custom racing bike, Vehicle empathy, Speed modifications</div>
+                    <div class="char-background">Professional racer who turned to shadowrunning after being blacklisted for refusing to throw races. Provides extraction services for runners who need speed over stealth.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Specialty Teams Section -->
+        <div class="specialty-teams">
+            <div class="section-title">Specialized Teams</div>
+
+            <!-- Ghost Protocol Team -->
+            <div class="team-section" style="background: linear-gradient(135deg, rgba(44, 62, 80, 0.6), rgba(52, 73, 94, 0.7)); border-color: #95a5a6;">
+                <div class="team-header">
+                    <div class="team-name">Ghost Protocol</div>
+                    <div class="team-description">Stealth infiltration specialists who leave no trace</div>
+                    <div class="team-reputation">Reputation: Phantom operatives, perfect operational security</div>
+                </div>
+                
+                <div class="character-grid">
+                    <div class="character-mini infiltrator">
+                        <div class="char-header">
+                            <div class="char-avatar" style="background: #95a5a6; border-color: #95a5a6;">👤</div>
+                            <div class="char-info">
+                                <h4>"Null" Zero</h4>
+                                <p>? Infiltrator</p>
+                            </div>
+                        </div>
+                        <div class="char-role">Team Leader</div>
+                        <div class="char-specialty">Specialty: Identity erasure, perfect infiltration</div>
+                        <div class="char-background">No confirmed background exists. May not be the same person from operation to operation. Perfect operational security maintained.</div>
+                    </div>
+
+                    <div class="character-mini decker">
+                        <div class="char-header">
+                            <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">⚫</div>
+                            <div class="char-info">
+                                <h4>"Void" N/A</h4>
+                                <p>Unknown Decker</p>
+                            </div>
+                        </div>
+                        <div class="char-role">Digital Ghost</div>
+                        <div class="char-specialty">Specialty: Trace elimination, data phantoms</div>
+                        <div class="char-background">Exists only in the Matrix. May be an AI, rogue program, or master hacker. Leaves absolutely no digital footprints.</div>
+                    </div>
+
+                    <div class="character-mini mage">
+                        <div class="char-header">
+                            <div class="char-avatar" style="background: #8a2be2; border-color: #8a2be2;">🌫️</div>
+                            <div class="char-info">
+                                <h4>"Mist" Phantom</h4>
+                                <p>? Illusion Mage</p>
+                            </div>
+                        </div>
+                        <div class="char-role">Reality Obscurer</div>
+                        <div class="char-specialty">Specialty: Memory editing, perception alteration</div>
+                        <div class="char-background">Specializes in making people forget they were ever there. Targets remember nothing about the team's presence or activities.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Cleaners -->
+            <div class="team-section" style="background: linear-gradient(135deg, rgba(139, 0, 0, 0.6), rgba(220, 20, 60, 0.7)); border-color: #8b0000;">
+                <div class="team-header">
+                    <div class="team-name">The Cleaners</div>
+                    <div class="team-description">Problem solvers who make corporate troubles disappear permanently</div>
+                    <div class="team-reputation">Reputation: Corporate wetwork specialists, feared by middle management</div>
+                </div>
+                
+                <div class="character-grid">
+                    <div class="character-mini samurai">
+                        <div class="char-header">
+                            <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">🧹</div>
+                            <div class="char-info">
+                                <h4>"Janitor" Smith</h4>
+                                <p>Human Assassin</p>
+                            </div>
+                        </div>
+                        <div class="char-role">Elimination Specialist</div>
+                        <div class="char-specialty">Specialty: Clean kills, evidence disposal</div>
+                        <div class="char-background">Former corporate maintenance worker who knows how to make problems disappear. Specializes in accidents that can't be traced back to employers.</div>
+                    </div>
+
+                    <div class="character-mini decker">
+                        <div class="char-header">
+                            <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">🗑️</div>
+                            <div class="char-info">
+                                <h4>"Delete" Morgan</h4>
+                                <p>Human Matrix Cleaner</p>
+                            </div>
+                        </div>
+                        <div class="char-role">Digital Evidence Disposal</div>
+                        <div class="char-specialty">Specialty: Data destruction, history rewriting</div>
+                        <div class="char-background">Expert at making digital records vanish without a trace. Can retroactively edit database entries to remove all evidence of corporate crimes.</div>
+                    </div>
+
+                    <div class="character-mini face">
+                        <div class="char-header">
+                            <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">🎪</div>
+                            <div class="char-info">
+                                <h4>"Spin" Doctor</h4>
+                                <p>Human Media Manipulator</p>
+                            </div>
+                        </div>
+                        <div class="char-role">Narrative Controller</div>
+                        <div class="char-specialty">Specialty: Media manipulation, public relations</div>
+                        <div class="char-background">Expert at creating alternative explanations for corporate problems. Can turn assassination victims into workplace accidents in the public mind.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NPC Section -->
+        <div class="npc-section">
+            <div class="section-title">Notable NPCs and Contacts</div>
+            <div class="character-grid">
+                <!-- Fixer -->
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #f39c12; border-color: #f39c12;">🤝</div>
+                        <div class="char-info">
+                            <h4>"Mr. Johnson" Williams</h4>
+                            <p>Human Corporate Liaison</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Fixer</div>
+                    <div class="char-specialty">Specialty: Corporate contracts, team assembly</div>
+                    <div class="char-background">Mid-level corporate executive who brokers contracts between megacorps and shadowrunning teams. Maintains plausible deniability while ensuring quality work.</div>
+                </div>
+
+                <!-- Street Doc -->
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #27ae60; border-color: #27ae60;">⚕️</div>
+                        <div class="char-info">
+                            <h4>Dr. "Patches" Martinez</h4>
+                            <p>Human Street Doc</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Underground Medic</div>
+                    <div class="char-specialty">Specialty: Trauma surgery, cyberware installation</div>
+                    <div class="char-background">Former ER surgeon who lost her license for treating SINless patients. Now runs an underground clinic providing medical care with no questions asked.</div>
+                </div>
+
+                <!-- Gang Leader -->
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8b0000; border-color: #8b0000;">👑</div>
+                        <div class="char-info">
+                            <h4>"King" Ramirez</h4>
+                            <p>Ork Gang Leader</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Territory Boss</div>
+                    <div class="char-specialty">Specialty: Street politics, protection rackets</div>
+                    <div class="char-background">Charismatic gang leader who controls several city blocks. Maintains uneasy truces with other gangs while protecting his community from corporate exploitation.</div>
+                </div>
+
+                <!-- Corporate Executive -->
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #2980b9; border-color: #2980b9;">💼</div>
+                        <div class="char-info">
+                            <h4>Victoria Sterling</h4>
+                            <p>Human Corp Executive</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Corporate Power Player</div>
+                    <div class="char-specialty">Specialty: Corporate politics, resource allocation</div>
+                    <div class="char-background">Ambitious Saeder-Krupp executive who uses shadowrunners for corporate espionage while maintaining complete plausible deniability.</div>
+                </div>
+
+                <!-- Talismonger -->
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #9b59b6; border-color: #9b59b6;">🔮</div>
+                        <div class="char-info">
+                            <h4>"Mystic" Rose Chen</h4>
+                            <p>Elf Talismonger</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Magical Supplier</div>
+                    <div class="char-specialty">Specialty: Magical items, spell components</div>
+                    <div class="char-background">Traditional magical craftsperson who creates and sells magical items to the awakened community. Maintains strict neutrality between competing factions.</div>
+                </div>
+
+                <!-- Information Broker -->
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #34495e; border-color: #34495e;">📊</div>
+                        <div class="char-info">
+                            <h4>"Database" Thompson</h4>
+                            <p>Human Info Broker</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Knowledge Dealer</div>
+                    <div class="char-specialty">Specialty: Information trading, data analysis</div>
+                    <div class="char-background">Former corporate researcher who now sells information to anyone who can afford it. Maintains extensive databases on corporate activities and personnel.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enemy Section -->
+        <div class="enemy-section">
+            <div class="section-title">Corporate Opposition & Enemies</div>
+            <div class="character-grid">
+                <!-- Corporate Spider -->
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8b0000; border-color: #8b0000;">🕷️</div>
+                        <div class="char-info">
+                            <h4>"Black Widow" Sato</h4>
+                            <p>Human Corporate Spider</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Matrix Security Chief</div>
+                    <div class="char-specialty">Specialty: IC deployment, hacker hunting</div>
+                    <div class="char-background">Elite Matrix security specialist who personally hunts shadowrunning deckers. Has a 78% capture rate and takes pride in breaking enemy hackers.</div>
+                </div>
+
+                <!-- Corporate Assassin -->
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #2c3e50; border-color: #2c3e50;">🗡️</div>
+                        <div class="char-info">
+                            <h4>"Scalpel" Winters</h4>
+                            <p>Human Corporate Assassin</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Wetwork Specialist</div>
+                    <div class="char-specialty">Specialty: Executive protection, problem elimination</div>
+                    <div class="char-background">Former special forces operator now working corporate security. Eliminates threats to corporate interests with surgical precision and no emotional attachment.</div>
+                </div>
+
+                <!-- Corporate Mage -->
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #4a235a; border-color: #4a235a;">⚡</div>
+                        <div class="char-info">
+                            <h4>"Mindbreak" Kozlov</h4>
+                            <p>Human Corporate Mage</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Magical Security</div>
+                    <div class="char-specialty">Specialty: Mind magic, spirit binding</div>
+                    <div class="char-background">Ruthless corporate mage who specializes in extracting information from captured shadowrunners. Uses mind control and memory editing without hesitation.</div>
+                </div>
+
+                <!-- Security Chief -->
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #1b4f72; border-color: #1b4f72;">🛡️</div>
+                        <div class="char-info">
+                            <h4>Commander Hayes</h4>
+                            <p>Human Security Chief</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Corporate Security</div>
+                    <div class="char-specialty">Specialty: Facility defense, tactical coordination</div>
+                    <div class="char-background">Professional security officer who views shadowrunners as terrorists threatening corporate stability. Coordinates multi-layered security responses.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Solo Operators -->
+        <div class="solo-section">
+            <div class="section-title">More Elite Operators</div>
+            <div class="character-grid">
+                <!-- Additional Solos 7-20 -->
+                <div class="character-mini technomancer">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff00ff; border-color: #ff00ff;">🌐</div>
+                        <div class="char-info">
+                            <h4>"Nexus" Park</h4>
+                            <p>Human Technomancer</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Matrix Mystic</div>
+                    <div class="char-specialty">Specialty: Sprite networking, data archaeology</div>
+                    <div class="char-background">Self-taught technomancer who discovered her abilities during a massive Matrix crash. Now explores the deepest levels of cyberspace seeking digital enlightenment.</div>
+                </div>
+
+                <div class="character-mini gunslinger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #dc143c; border-color: #dc143c;">🔫</div>
+                        <div class="char-info">
+                            <h4>"Quickdraw" McGill</h4>
+                            <p>Human Gunslinger</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Pistol Specialist</div>
+                    <div class="char-specialty">Specialty: Fast draw, trick shots</div>
+                    <div class="char-background">Former corporate dueling champion who turned to shadowrunning after being framed for cheating. Specializes in non-lethal precision shooting.</div>
+                </div>
+
+                <div class="character-mini shaman">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #228b22; border-color: #228b22;">🦅</div>
+                        <div class="char-info">
+                            <h4>"Skywalker" Eagle</h4>
+                            <p>Ork Tribal Shaman</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Tribal Guardian</div>
+                    <div class="char-specialty">Specialty: Weather magic, ancestor spirits</div>
+                    <div class="char-background">Traditional shaman who bridges the gap between ancient traditions and modern shadowrunning. Protects tribal lands from corporate encroachment.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">🎨</div>
+                        <div class="char-info">
+                            <h4>"Canvas" Delacroix</h4>
+                            <p>Elf Social Artist</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Cultural Infiltrator</div>
+                    <div class="char-specialty">Specialty: Art world connections, cultural espionage</div>
+                    <div class="char-background">Renowned artist who uses gallery openings and cultural events to gather intelligence and conduct social engineering operations.</div>
+                </div>
+
+                <div class="character-mini rigger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffa500; border-color: #ffa500; color: #000;">🤖</div>
+                        <div class="char-info">
+                            <h4>"Swarm" Rodriguez</h4>
+                            <p>Dwarf Drone Specialist</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Micro-Drone Commander</div>
+                    <div class="char-specialty">Specialty: Surveillance swarms, coordinated attacks</div>
+                    <div class="char-background">Former toy designer who creates custom micro-drones disguised as insects and small animals. Specializes in undetectable surveillance.</div>
+                </div>
+
+                <div class="character-mini adept">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffff00; border-color: #ffff00; color: #000;">🎭</div>
+                        <div class="char-info">
+                            <h4>"Mirage" Hassan</h4>
+                            <p>Human Social Adept</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Empathic Manipulator</div>
+                    <div class="char-specialty">Specialty: Emotion control, social enhancement</div>
+                    <div class="char-background">Former therapist who uses magical empathy to read and manipulate emotions. Provides psychological support and social engineering services.</div>
+                </div>
+
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">🏹</div>
+                        <div class="char-info">
+                            <h4>"Fletcher" Green</h4>
+                            <p>Elf Bow Specialist</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Silent Hunter</div>
+                    <div class="char-specialty">Specialty: Archery, wilderness survival</div>
+                    <div class="char-background">Traditional archer who refuses to use firearms. Specializes in silent takedowns and operations where gunfire would compromise the mission.</div>
+                </div>
+
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">📚</div>
+                        <div class="char-info">
+                            <h4>"Librarian" Wu</h4>
+                            <p>Human Data Archivist</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Information Historian</div>
+                    <div class="char-specialty">Specialty: Data recovery, historical research</div>
+                    <div class="char-background">Former corporate archivist who specializes in recovering deleted data and reconstructing lost information from fragmented databases.</div>
+                </div>
+
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8a2be2; border-color: #8a2be2;">⚗️</div>
+                        <div class="char-info">
+                            <h4>"Catalyst" Paige</h4>
+                            <p>Human Alchemist</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Magical Craftsperson</div>
+                    <div class="char-specialty">Specialty: Potion brewing, magical chemistry</div>
+                    <div class="char-background">Brilliant chemist who combines modern science with ancient alchemy. Creates magical compounds and preparations for specialized operations.</div>
+                </div>
+
+                <div class="character-mini infiltrator">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #95a5a6; border-color: #95a5a6;">🏢</div>
+                        <div class="char-info">
+                            <h4>"Insider" Jones</h4>
+                            <p>Human Corporate Mole</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Deep Cover Agent</div>
+                    <div class="char-specialty">Specialty: Long-term infiltration, corporate intelligence</div>
+                    <div class="char-background">Professional infiltrator who maintains multiple corporate identities. Can provide intelligence from within major corporations for years at a time.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">🍸</div>
+                        <div class="char-info">
+                            <h4>"Hostess" Yamada</h4>
+                            <p>Human Social Coordinator</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Event Planner</div>
+                    <div class="char-specialty">Specialty: Social events, networking coordination</div>
+                    <div class="char-background">Professional event coordinator who organizes high-society gatherings. Uses social events as cover for intelligence gathering and clandestine meetings.</div>
+                </div>
+
+                <div class="character-mini rigger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffa500; border-color: #ffa500; color: #000;">🚛</div>
+                        <div class="char-info">
+                            <h4>"Hauler" Morrison</h4>
+                            <p>Troll Logistics Specialist</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Supply Chain Manager</div>
+                    <div class="char-specialty">Specialty: Heavy transport, cargo security</div>
+                    <div class="char-background">Former corporate logistics coordinator who now provides secure transport for sensitive cargo. Specializes in moving large items without detection.</div>
+                </div>
+
+                <div class="character-mini adept">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffff00; border-color: #ffff00; color: #000;">🏃</div>
+                        <div class="char-info">
+                            <h4>"Marathon" Kim</h4>
+                            <p>Human Endurance Specialist</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Ultra-Distance Runner</div>
+                    <div class="char-specialty">Specialty: Extreme endurance, message running</div>
+                    <div class="char-background">Olympic athlete who uses magical enhancement to achieve superhuman endurance. Provides message delivery and courier services in hostile territory.</div>
+                </div>
+
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">🛡️</div>
+                        <div class="char-info">
+                            <h4>"Tank" Petrov</h4>
+                            <p>Troll Cyber-Soldier</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Mobile Fortress</div>
+                    <div class="char-specialty">Specialty: Heavy armor, defensive combat</div>
+                    <div class="char-background">Former military heavy weapons specialist with extensive cyberware modifications. Specializes in absorbing damage and protecting team members.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Large Team Example -->
+        <div class="team-section">
+            <div class="team-header">
+                <div class="team-name">The Crimson Syndicate</div>
+                <div class="team-description">Large criminal organization with multiple specialized cells</div>
+                <div class="team-reputation">Reputation: Multi-national crime syndicate, rivals to major corporations</div>
+            </div>
+            
+            <div class="character-grid">
+                <!-- Leadership Cell -->
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8b0000; border-color: #8b0000;">👑</div>
+                        <div class="char-info">
+                            <h4>"Don" Castellano</h4>
+                            <p>Human Crime Boss</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Syndicate Leader</div>
+                    <div class="char-specialty">Specialty: Strategic planning, resource coordination</div>
+                    <div class="char-background">Former corporate executive who built a criminal empire to rival the megacorps. Commands loyalty through fear and respect in equal measure.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #2c3e50; border-color: #2c3e50;">🕴️</div>
+                        <div class="char-info">
+                            <h4>"Counselor" Park</h4>
+                            <p>Elf Legal Advisor</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Syndicate Lawyer</div>
+                    <div class="char-specialty">Specialty: Legal manipulation, contract law</div>
+                    <div class="char-background">Brilliant legal mind who uses corporate law as a weapon. Ensures syndicate operations remain technically legal while maximizing profit.</div>
+                </div>
+
+                <!-- Enforcement Cell -->
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">💀</div>
+                        <div class="char-info">
+                            <h4>"Enforcer" Volkov</h4>
+                            <p>Ork Muscle</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Violence Specialist</div>
+                    <div class="char-specialty">Specialty: Intimidation, debt collection</div>
+                    <div class="char-background">Professional enforcer who handles syndicate discipline and territory disputes. Known for creative solutions to personnel problems.</div>
+                </div>
+
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">⚔️</div>
+                        <div class="char-info">
+                            <h4>"Blade" Tanaka</h4>
+                            <p>Human Assassin</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Elimination Expert</div>
+                    <div class="char-specialty">Specialty: Precision kills, clean operations</div>
+                    <div class="char-background">Former corporate assassin who switched to freelance work. Handles problems that require surgical removal rather than brute force.</div>
+                </div>
+
+                <!-- Intelligence Cell -->
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">🕵️</div>
+                        <div class="char-info">
+                            <h4>"Spider" Wong</h4>
+                            <p>Human Intelligence Chief</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Information Coordinator</div>
+                    <div class="char-specialty">Specialty: Intelligence networks, data analysis</div>
+                    <div class="char-background">Former corporate intelligence analyst who now runs the syndicate's information operations. Maintains extensive surveillance networks.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">💋</div>
+                        <div class="char-info">
+                            <h4>"Honey" Delacroix</h4>
+                            <p>Elf Social Engineer</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Human Intelligence</div>
+                    <div class="char-specialty">Specialty: Seduction, social manipulation</div>
+                    <div class="char-background">Master manipulator who extracts secrets through social engineering and romantic entanglement. Targets corporate executives and government officials.</div>
+                </div>
+
+                <!-- Operations Cell -->
+                <div class="character-mini rigger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffa500; border-color: #ffa500; color: #000;">🚚</div>
+                        <div class="char-info">
+                            <h4>"Convoy" Murphy</h4>
+                            <p>Dwarf Transportation Chief</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Logistics Coordinator</div>
+                    <div class="char-specialty">Specialty: Smuggling, secure transport</div>
+                    <div class="char-background">Former military logistics officer who manages the syndicate's transportation networks. Coordinates smuggling operations across multiple countries.</div>
+                </div>
+
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8a2be2; border-color: #8a2be2;">🔮</div>
+                        <div class="char-info">
+                            <h4>"Oracle" Singh</h4>
+                            <p>Human Divination Mage</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Strategic Advisor</div>
+                    <div class="char-specialty">Specialty: Divination, tactical prediction</div>
+                    <div class="char-background">Brilliant strategist who uses divination magic to predict corporate moves and law enforcement activities. Provides strategic guidance for major operations.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final batch of characters to reach 100+ -->
+        <div class="solo-section">
+            <div class="section-title">Diverse Specialists (Final Collection)</div>
+            <div class="character-grid">
+                <!-- Characters 95-110 to exceed 100 -->
+                <div class="character-mini technomancer">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff00ff; border-color: #ff00ff;">🧬</div>
+                        <div class="char-info">
+                            <h4>"Genesis" Cross</h4>
+                            <p>Human Bio-Technomancer</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Digital Biologist</div>
+                    <div class="char-specialty">Specialty: Bio-digital interface, genetic data</div>
+                    <div class="char-background">Unique technomancer who interfaces with biological systems through technological means. Specializes in genetic data manipulation and bio-system hacking.</div>
+                </div>
+
+                <div class="character-mini shaman">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #228b22; border-color: #228b22;">🌊</div>
+                        <div class="char-info">
+                            <h4>"Tsunami" Nakamura</h4>
+                            <p>Ork Water Shaman</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Elemental Master</div>
+                    <div class="char-specialty">Specialty: Water magic, weather control</div>
+                    <div class="char-background">Traditional water shaman who protects coastal communities from corporate pollution. Uses weather magic to disrupt corporate operations.</div>
+                </div>
+
+                <div class="character-mini gunslinger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #dc143c; border-color: #dc143c;">🤠</div>
+                        <div class="char-info">
+                            <h4>"Desperado" Cruz</h4>
+                            <p>Human Cyber-Cowboy</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Range Specialist</div>
+                    <div class="char-specialty">Specialty: Long-range sniping, wilderness survival</div>
+                    <div class="char-background">Former border patrol officer who went rogue after discovering corporate human trafficking. Now hunts corporate criminals in the wasteland.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">🎓</div>
+                        <div class="char-info">
+                            <h4>"Professor" Zhang</h4>
+                            <p>Human Academic</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Research Specialist</div>
+                    <div class="char-specialty">Specialty: Academic research, institutional access</div>
+                    <div class="char-background">University professor who uses academic conferences and research partnerships to gather corporate intelligence and expose academic corruption.</div>
+                </div>
+
+                <div class="character-mini infiltrator">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #95a5a6; border-color: #95a5a6;">🎪</div>
+                        <div class="char-info">
+                            <h4>"Jester" Bell</h4>
+                            <p>Elf Entertainment Spy</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Performance Artist</div>
+                    <div class="char-specialty">Specialty: Entertainment infiltration, crowd manipulation</div>
+                    <div class="char-background">Professional entertainer who uses performances and celebrity access to gather intelligence from high-society targets.</div>
+                </div>
+
+                <div class="character-mini rigger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffa500; border-color: #ffa500; color: #000;">🏗️</div>
+                        <div class="char-info">
+                            <h4>"Builder" Kowalski</h4>
+                            <p>Dwarf Construction Rigger</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Heavy Construction</div>
+                    <div class="char-specialty">Specialty: Industrial equipment, demolition</div>
+                    <div class="char-background">Former construction foreman who uses industrial equipment for shadowrunning operations. Specializes in creating and destroying infrastructure.</div>
+                </div>
+
+                <div class="character-mini adept">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffff00; border-color: #ffff00; color: #000;">🏥</div>
+                        <div class="char-info">
+                            <h4>"Healer" Rodriguez</h4>
+                            <p>Human Medical Adept</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Combat Medic</div>
+                    <div class="char-specialty">Specialty: Magical healing, field medicine</div>
+                    <div class="char-background">Former military medic who uses adept powers to enhance medical abilities. Provides emergency medical support during high-risk operations.</div>
+                </div>
+
+                <div class="character-mini mage">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #8a2be2; border-color: #8a2be2;">🌌</div>
+                        <div class="char-info">
+                            <h4>"Void" Petrov</h4>
+                            <p>Human Void Mage</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Entropy Specialist</div>
+                    <div class="char-specialty">Specialty: Void magic, reality manipulation</div>
+                    <div class="char-background">Dangerous mage who studies the spaces between reality. Uses void magic to create zones of non-existence and temporal distortion.</div>
+                </div>
+
+                <div class="character-mini samurai">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #e74c3c; border-color: #e74c3c;">🔧</div>
+                        <div class="char-info">
+                            <h4>"Wrench" Thompson</h4>
+                            <p>Troll Mechanic-Warrior</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Technical Fighter</div>
+                    <div class="char-specialty">Specialty: Improvised weapons, equipment repair</div>
+                    <div class="char-background">Brilliant mechanic who combines technical expertise with brutal combat effectiveness. Creates custom weapons from industrial equipment.</div>
+                </div>
+
+                <div class="character-mini decker">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #00ff00; border-color: #00ff00; color: #000;">🎵</div>
+                        <div class="char-info">
+                            <h4>"Remix" Park</h4>
+                            <p>Elf Audio-Visual Hacker</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Media Specialist</div>
+                    <div class="char-specialty">Specialty: Audio-visual manipulation, media piracy</div>
+                    <div class="char-background">Creative hacker who specializes in audio and visual media manipulation. Creates propaganda and disinformation campaigns against corporate interests.</div>
+                </div>
+
+                <div class="character-mini face">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff69b4; border-color: #ff69b4;">⚖️</div>
+                        <div class="char-info">
+                            <h4>"Justice" Morgan</h4>
+                            <p>Human Legal Advocate</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Shadow Lawyer</div>
+                    <div class="char-specialty">Specialty: Legal defense, corporate law</div>
+                    <div class="char-background">Idealistic lawyer who provides legal defense for shadowrunners and corporate victims. Uses legal system as a weapon against corporate oppression.</div>
+                </div>
+
+                <div class="character-mini infiltrator">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #95a5a6; border-color: #95a5a6;">🧹</div>
+                        <div class="char-info">
+                            <h4>"Dust" Williams</h4>
+                            <p>Human Service Worker</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Invisible Observer</div>
+                    <div class="char-specialty">Specialty: Service industry infiltration, social invisibility</div>
+                    <div class="char-background">Former corporate janitor who uses service worker invisibility to gather intelligence. People don't notice maintenance staff, making them perfect spies.</div>
+                </div>
+
+                <div class="character-mini technomancer">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ff00ff; border-color: #ff00ff;">🌐</div>
+                        <div class="char-info">
+                            <h4>"Network" Chen</h4>
+                            <p>Human Collective Technomancer</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Hive Mind Node</div>
+                    <div class="char-specialty">Specialty: Distributed processing, group coordination</div>
+                    <div class="char-background">Unique technomancer who can network with other awakened minds. Creates temporary hive-mind connections for enhanced team coordination.</div>
+                </div>
+
+                <div class="character-mini shaman">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #228b22; border-color: #228b22;">🔥</div>
+                        <div class="char-info">
+                            <h4>"Forge" Ironwood</h4>
+                            <p>Dwarf Industrial Shaman</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Machine Spirit Guide</div>
+                    <div class="char-specialty">Specialty: Machine spirits, industrial magic</div>
+                    <div class="char-background">Traditional dwarf shaman who works with the spirits of industrial machines. Bridges the gap between ancient shamanism and modern technology.</div>
+                </div>
+
+                <div class="character-mini gunslinger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #dc143c; border-color: #dc143c;">🎯</div>
+                        <div class="char-info">
+                            <h4>"Bullseye" Davis</h4>
+                            <p>Human Competition Shooter</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Precision Marksman</div>
+                    <div class="char-specialty">Specialty: Competition shooting, non-lethal precision</div>
+                    <div class="char-background">Professional competitive shooter who turned to shadowrunning to fund her training. Specializes in precise, non-lethal takedowns.</div>
+                </div>
+
+                <div class="character-mini rigger">
+                    <div class="char-header">
+                        <div class="char-avatar" style="background: #ffa500; border-color: #ffa500; color: #000;">🚢</div>
+                        <div class="char-info">
+                            <h4>"Captain" Storm</h4>
+                            <p>Ork Maritime Rigger</p>
+                        </div>
+                    </div>
+                    <div class="char-role">Naval Operations</div>
+                    <div class="char-specialty">Specialty: Marine vehicles, underwater operations</div>
+                    <div class="char-background">Former merchant marine captain who now provides maritime transport and underwater infiltration services for coastal operations.</div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Count characters and update counter
+            function updateCharacterCount() {
+                const characters = document.querySelectorAll('.character-mini');
+                const count = characters.length;
+                document.getElementById('characterCounter').textContent = `Characters: ${count}`;
+            }
+            
+            // Update count when page loads
+            document.addEventListener('DOMContentLoaded', updateCharacterCount);
+        </script>
+
+        <section style="margin-top: 50px; padding: 30px; background: rgba(52, 152, 219, 0.2); border-radius: 15px;">
+            <h2>Building Your Own Characters</h2>
+            <p>This collection of 100+ characters demonstrates the incredible diversity possible in Shadowrun. Each character shows how the core archetypes can be customized with unique backgrounds, specializations, and personal motivations. Use these examples as inspiration for creating your own runners, or drop them directly into your campaigns as NPCs, contacts, rivals, or pre-generated player characters.</p>
+            
+            <h3>Key Patterns to Notice:</h3>
+            <ul>
+                <li><strong>Background Drives Behavior:</strong> Each character's corporate, military, academic, or street background shapes their approach to shadowrunning</li>
+                <li><strong>Specialization Within Archetypes:</strong> Street Samurai can be snipers, brawlers, or defensive specialists</li>
+                <li><strong>Cross-Archetype Teams:</strong> Successful teams combine different skills and approaches</li>
+                <li><strong>Personal Stakes:</strong> The best characters have reasons beyond money for their shadowrunning</li>
+                <li><strong>Interconnected Stories:</strong> Characters with compatible or conflicting backgrounds create natural drama</li>
+            </ul>
+
+            <h3>Using This Collection:</h3>
+            <ul>
+                <li><strong>Player Characters:</strong> Pick any character as a starting point for player creation</li>
+                <li><strong>NPCs:</strong> Use as contacts, rivals, or supporting characters</li>
+                <li><strong>Team Templates:</strong> The complete teams provide ready-made opposition or allied groups</li>
+                <li><strong>Campaign Seeds:</strong> Each character's background suggests potential storylines</li>
+                <li><strong>Inspiration:</strong> Mix and match elements to create entirely new characters</li>
+            </ul>
+
+            <p>Remember: The best Shadowrun characters are shaped by the world's unique blend of cyberpunk technology and fantasy magic, corporate power and street-level desperation. Let these contradictions create interesting internal conflicts and external challenges for every character you create.</p>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; color: #95a5a6;">
+            <p><em>Every runner has a story. Every story changes the world. What legend will you create in the shadows?</em></p>
+        </footer>
+    </main>
+</body>
+</html>

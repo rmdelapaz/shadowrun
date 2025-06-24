@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Jungle - Urban Sprawl and Street Life</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        .city-skyline {
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 50%, #1a1a2e 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .building {
+            position: absolute;
+            background: linear-gradient(180deg, #34495e, #2c3e50);
+            border-top: 2px solid #e74c3c;
+        }
+        
+        .building::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(90deg, transparent 49%, rgba(255,255,0,0.8) 50%, rgba(255,255,0,0.8) 51%, transparent 52%),
+                linear-gradient(transparent 79%, rgba(255,255,0,0.8) 80%, rgba(255,255,0,0.8) 81%, transparent 82%);
+            background-size: 20px 15px;
+            animation: cityLights 4s infinite alternate;
+        }
+        
+        @keyframes cityLights {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        
+        .neon-rain {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(180deg, transparent, #00ffff, transparent);
+            animation: neonFall 3s linear infinite;
+        }
+        
+        @keyframes neonFall {
+            0% { transform: translateY(-100px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        
+        .district-map {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 15px;
+            height: 500px;
+            background: rgba(0,0,0,0.8);
+            border: 3px solid #00ffff;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .district {
+            border: 2px solid;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .district:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        
+        .corporate { background: linear-gradient(135deg, #3498db, #2980b9); border-color: #3498db; }
+        .middle-class { background: linear-gradient(135deg, #27ae60, #2ecc71); border-color: #27ae60; }
+        .barrens { background: linear-gradient(135deg, #e74c3c, #c0392b); border-color: #e74c3c; }
+        .underground { background: linear-gradient(135deg, #8e44ad, #9b59b6); border-color: #8e44ad; }
+        .industrial { background: linear-gradient(135deg, #95a5a6, #7f8c8d); border-color: #95a5a6; }
+        .sprawl { background: linear-gradient(135deg, #f39c12, #e67e22); border-color: #f39c12; }
+        
+        .street-level {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border: 2px solid #e74c3c;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .gang-territory {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .gang-card {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border: 2px solid;
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gang-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: gangSweep 3s infinite;
+        }
+        
+        @keyframes gangSweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .go-gangers { border-color: #e74c3c; }
+        .halloweeners { border-color: #ff6b35; }
+        .ancients { border-color: #27ae60; }
+        .humanis { border-color: #f39c12; }
+        
+        .social-strata {
+            background: linear-gradient(180deg, #f1c40f 0%, #f39c12 25%, #e67e22 50%, #d35400 75%, #2c3e50 100%);
+            border: 3px solid #00ffff;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .strata-layer {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .corporate-elite { background: rgba(241, 196, 15, 0.8); color: #000; }
+        .wage-slaves { background: rgba(243, 156, 18, 0.8); color: #000; }
+        .sinless { background: rgba(231, 76, 60, 0.8); color: #fff; }
+        .underground-dwellers { background: rgba(44, 62, 80, 0.8); color: #fff; }
+        
+        .security-zones {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .security-zone {
+            border: 3px solid;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .security-zone::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-size: 20px 20px;
+            background-image: 
+                linear-gradient(45deg, #000 25%, transparent 25%),
+                linear-gradient(-45deg, #000 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #000 75%),
+                linear-gradient(-45deg, transparent 75%, #000 75%);
+        }
+        
+        .aaa-zone { background: linear-gradient(135deg, #3498db, #2980b9); border-color: #3498db; color: white; }
+        .aa-zone { background: linear-gradient(135deg, #27ae60, #2ecc71); border-color: #27ae60; color: white; }
+        .a-zone { background: linear-gradient(135deg, #f39c12, #e67e22); border-color: #f39c12; color: white; }
+        .z-zone { background: linear-gradient(135deg, #e74c3c, #c0392b); border-color: #e74c3c; color: white; }
+        
+        .lifestyle-impact {
+            background: rgba(52, 152, 219, 0.2);
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .transport-network {
+            background: linear-gradient(45deg, #2d1b69, #11998e);
+            border: 2px solid #00d4aa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .crime-stats {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #e74c3c;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .crime-stats table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .crime-stats th,
+        .crime-stats td {
+            border: 1px solid #e74c3c;
+            padding: 12px;
+            text-align: center;
+            color: white;
+        }
+        
+        .crime-stats th {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .survival-guide {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .environmental-hazards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .hazard-card {
+            background: linear-gradient(135deg, #8b0000, #dc143c);
+            border: 2px solid #ff4444;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+        
+        .matrix-overlay {
+            position: relative;
+            background: rgba(0,255,0,0.1);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .data-node {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #00ff00;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            animation: dataNodePulse 2s infinite;
+        }
+        
+        @keyframes dataNodePulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .augmented-reality {
+            background: linear-gradient(135deg, rgba(0,255,255,0.2), rgba(255,0,255,0.2));
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .ar-element {
+            position: absolute;
+            padding: 5px 10px;
+            background: rgba(0,255,255,0.8);
+            color: #000;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: arFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes arFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="city-skyline">
+        <!-- City buildings -->
+        <div class="building" style="left: 5%; bottom: 0; width: 60px; height: 300px;"></div>
+        <div class="building" style="left: 12%; bottom: 0; width: 80px; height: 450px;"></div>
+        <div class="building" style="left: 22%; bottom: 0; width: 50px; height: 200px;"></div>
+        <div class="building" style="left: 30%; bottom: 0; width: 100px; height: 500px;"></div>
+        <div class="building" style="left: 45%; bottom: 0; width: 70px; height: 350px;"></div>
+        <div class="building" style="left: 55%; bottom: 0; width: 90px; height: 400px;"></div>
+        <div class="building" style="left: 70%; bottom: 0; width: 60px; height: 250px;"></div>
+        <div class="building" style="left: 80%; bottom: 0; width: 85px; height: 380px;"></div>
+        <div class="building" style="right: 5%; bottom: 0; width: 75px; height: 320px;"></div>
+        
+        <!-- Neon rain effects -->
+        <div class="neon-rain" style="left: 15%; animation-delay: 0s;"></div>
+        <div class="neon-rain" style="left: 35%; animation-delay: 1s;"></div>
+        <div class="neon-rain" style="left: 55%; animation-delay: 2s;"></div>
+        <div class="neon-rain" style="left: 75%; animation-delay: 0.5s;"></div>
+    </div>
+    
+    <header>
+        <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Concrete Jungle</h1>
+        <p><em>Urban Sprawl and Street Life in 2080</em></p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Welcome to the Megasprawl</h2>
+            <p>The cities of 2080 aren't just bigger versions of today's urban centers - they're completely reimagined ecosystems where millions of people live, work, and die in vertical communities that stretch from underground warrens to sky-scraping arcologies. These aren't cities anymore; they're <strong>megasprawls</strong> - urban organisms that have consumed entire regions and developed their own climates, economies, and rules of survival.</p>
+            
+            <p>Think of a megasprawl like a massive organism: the corporate towers are the brain, the industrial sectors are the muscles, the transportation networks are the circulatory system, and the streets are the nervous system where information, money, and violence flow in equal measure. Every shadowrunner needs to understand this urban ecosystem to survive, navigate, and profit within it.</p>
+        </section>
+
+        <section>
+            <h2>The Vertical City: From Depths to Heights</h2>
+            <p>Modern megasprawls are three-dimensional cities where your altitude determines your social status, security level, and life expectancy. Understanding the vertical geography is crucial for any urban operator:</p>
+
+            <div class="social-strata">
+                <h3>The Social Elevator</h3>
+                
+                <div class="strata-layer corporate-elite">
+                    <h4>Corporate Towers & Arcologies (200+ floors)</h4>
+                    <p><strong>The Ivory Towers:</strong> Executive suites, penthouse apartments, and exclusive corporate facilities. The air is literally cleaner here, filtered and climate-controlled. Security is absolute.</p>
+                    <ul>
+                        <li>AAA corporate executives and board members</li>
+                        <li>Dragon CEOs and their inner circles</li>
+                        <li>Government officials with real power</li>
+                        <li>Ultra-high net worth individuals</li>
+                    </ul>
+                </div>
+
+                <div class="strata-layer wage-slaves">
+                    <h4>Mid-Level Corporate Housing (50-200 floors)</h4>
+                    <p><strong>The Hamster Wheels:</strong> Where corporate middle management lives in company-provided housing. Comfortable but controlled, with corporate surveillance masquerading as convenience.</p>
+                    <ul>
+                        <li>Corporate middle management</li>
+                        <li>Skilled technical professionals</li>
+                        <li>Government bureaucrats</li>
+                        <li>Successful small business owners</li>
+                    </ul>
+                </div>
+
+                <div class="strata-layer sinless">
+                    <h4>Street Level (Ground to 10 floors)</h4>
+                    <p><strong>The Concrete Reality:</strong> Where most of the population lives, works, and dies. This is the real city - chaotic, dangerous, and alive with possibility. Pollution, crime, and corporate neglect are facts of life.</p>
+                    <ul>
+                        <li>Working class citizens</li>
+                        <li>Small-time criminals</li>
+                        <li>Shadow community members</li>
+                        <li>Street vendors and hustlers</li>
+                    </ul>
+                </div>
+
+                <div class="strata-layer underground-dwellers">
+                    <h4>Underground (Basements, Sewers, Abandoned Infrastructure)</h4>
+                    <p><strong>The Forgotten Realm:</strong> Beneath the official city lies another world entirely - homeless encampments, illegal clinics, hidden markets, and worse things that the surface world pretends don't exist.</p>
+                    <ul>
+                        <li>SINless individuals</li>
+                        <li>Escaped corporate experiments</li>
+                        <li>Underground communities</li>
+                        <li>Things that hunt in the dark</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>District Navigation: The Urban Ecosystem</h2>
+            <p>Every megasprawl is divided into districts, each with its own character, dangers, and opportunities. Understanding these neighborhoods is essential for planning routes, finding contacts, and avoiding fatal mistakes:</p>
+
+            <div class="district-map">
+                <div class="district corporate" onclick="showDistrictInfo('corporate')">
+                    <h4>Corporate Zone</h4>
+                    <p>Gleaming towers, perfect security, sterile perfection</p>
+                </div>
+
+                <div class="district middle-class" onclick="showDistrictInfo('middle')">
+                    <h4>Residential Sector</h4>
+                    <p>Suburban sprawl, wage slave housing, corporate surveillance</p>
+                </div>
+
+                <div class="district industrial" onclick="showDistrictInfo('industrial')">
+                    <h4>Industrial District</h4>
+                    <p>Factories, warehouses, heavy pollution, worker housing</p>
+                </div>
+
+                <div class="district sprawl" onclick="showDistrictInfo('sprawl')">
+                    <h4>Commercial Strip</h4>
+                    <p>Shopping centers, entertainment, middle-class amenities</p>
+                </div>
+
+                <div class="district barrens" onclick="showDistrictInfo('barrens')">
+                    <h4>The Barrens</h4>
+                    <p>Abandoned areas, gang territory, urban decay</p>
+                </div>
+
+                <div class="district underground" onclick="showDistrictInfo('underground')">
+                    <h4>Underground</h4>
+                    <p>Hidden communities, black markets, forgotten places</p>
+                </div>
+
+                <div class="district sprawl" onclick="showDistrictInfo('entertainment')">
+                    <h4>Entertainment District</h4>
+                    <p>Clubs, bars, vice, shadowrunner hangouts</p>
+                </div>
+
+                <div class="district middle-class" onclick="showDistrictInfo('transport')">
+                    <h4>Transport Hub</h4>
+                    <p>Mass transit, cargo handling, smuggling routes</p>
+                </div>
+
+                <div class="district corporate" onclick="showDistrictInfo('research')">
+                    <h4>Research Complex</h4>
+                    <p>Labs, universities, corporate R&D, heavy security</p>
+                </div>
+            </div>
+
+            <div id="districtInfo" style="margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.8); border-radius: 10px; color: white; display: none;">
+                <!-- District information will be populated here -->
+            </div>
+
+            <script>
+                function showDistrictInfo(district) {
+                    const info = document.getElementById('districtInfo');
+                    const districts = {
+                        'corporate': {
+                            title: 'Corporate Zone',
+                            description: 'The beating heart of capitalism made manifest in glass and steel.',
+                            features: [
+                                'AAA corporate headquarters and regional offices',
+                                'Executive housing and luxury amenities',
+                                'Matrix nodes with cutting-edge security',
+                                'Private security forces with military equipment',
+                                'Climate-controlled environments',
+                                'Exclusive shopping and dining establishments'
+                            ],
+                            dangers: [
+                                'Overwhelming security presence',
+                                'Corporate politics and espionage',
+                                'Social engineering opportunities',
+                                'High-value targets attract attention'
+                            ],
+                            opportunities: [
+                                'Corporate contracts and inside information',
+                                'High-tech equipment and data theft',
+                                'Executive kidnapping and extraction',
+                                'Industrial espionage operations'
+                            ]
+                        },
+                        'barrens': {
+                            title: 'The Barrens',
+                            description: 'Urban wastelands where civilization has retreated and only the strong survive.',
+                            features: [
+                                'Abandoned buildings and infrastructure',
+                                'Gang territories and tribal communities',
+                                'Illegal markets and underground economy',
+                                'Environmental hazards and pollution',
+                                'Minimal corporate or government presence',
+                                'Scavenger communities and urban nomads'
+                            ],
+                            dangers: [
+                                'Gang violence and territorial disputes',
+                                'Environmental toxins and radiation',
+                                'Feral creatures and urban predators',
+                                'Collapsing infrastructure',
+                                'Disease and malnutrition'
+                            ],
+                            opportunities: [
+                                'Cheap hideouts and safe houses',
+                                'Black market connections',
+                                'Recruitment of desperate muscle',
+                                'Underground medical facilities'
+                            ]
+                        }
+                    };
+                    
+                    const data = districts[district];
+                    if (data) {
+                        info.innerHTML = `
+                            <h3>${data.title}</h3>
+                            <p><em>${data.description}</em></p>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                                <div>
+                                    <h4 style="color: #3498db;">Key Features</h4>
+                                    <ul>${data.features.map(f => `<li>${f}</li>`).join('')}</ul>
+                                </div>
+                                <div>
+                                    <h4 style="color: #e74c3c;">Dangers</h4>
+                                    <ul>${data.dangers.map(d => `<li>${d}</li>`).join('')}</ul>
+                                </div>
+                                <div>
+                                    <h4 style="color: #27ae60;">Opportunities</h4>
+                                    <ul>${data.opportunities.map(o => `<li>${o}</li>`).join('')}</ul>
+                                </div>
+                            </div>
+                        `;
+                        info.style.display = 'block';
+                    }
+                }
+            </script>
+        </section>
+
+        <section>
+            <h2>Gang Territories: The Real Law of the Streets</h2>
+            <p>In the sprawl, corporate security only extends so far. Beyond their reach, the real power belongs to gangs - organized groups that control territory, run protection rackets, and provide their own brutal form of order:</p>
+
+            <div class="gang-territory">
+                <div class="gang-card go-gangers">
+                    <h4>Go-Gangers</h4>
+                    <p><strong>The Road Warriors:</strong> Motorcycle and vehicle enthusiasts who control highways and smuggling routes.</p>
+                    <ul>
+                        <li><strong>Territory:</strong> Industrial corridors and highway interchanges</li>
+                        <li><strong>Business:</strong> Vehicle theft, smuggling, protection rackets</li>
+                        <li><strong>Threat Level:</strong> High mobility, vehicular combat specialists</li>
+                        <li><strong>Interaction:</strong> Useful for transportation and cargo moving</li>
+                    </ul>
+                </div>
+
+                <div class="gang-card halloweeners">
+                    <h4>Halloweeners</h4>
+                    <p><strong>The Chaos Bringers:</strong> Pyromaniacs and thrill-seekers who use fear and destruction as tools.</p>
+                    <ul>
+                        <li><strong>Territory:</strong> Abandoned districts and entertainment areas</li>
+                        <li><strong>Business:</strong> Arson, demolition, terror contracts</li>
+                        <li><strong>Threat Level:</strong> Unpredictable, explosive specialists</li>
+                        <li><strong>Interaction:</strong> Dangerous but effective for distraction jobs</li>
+                    </ul>
+                </div>
+
+                <div class="gang-card ancients">
+                    <h4>The Ancients</h4>
+                    <p><strong>The Elven Supremacists:</strong> Motorcycle gang with elven pride and professional organization.</p>
+                    <ul>
+                        <li><strong>Territory:</strong> Elven communities and cultural districts</li>
+                        <li><strong>Business:</strong> Drug trafficking, weapons smuggling, bodyguard services</li>
+                        <li><strong>Threat Level:</strong> Well-organized, magically enhanced</li>
+                        <li><strong>Interaction:</strong> Professional if you show proper respect</li>
+                    </ul>
+                </div>
+
+                <div class="gang-card humanis">
+                    <h4>Humanis Policlub</h4>
+                    <p><strong>The Human Supremacists:</strong> Political organization with violent enforcement wings.</p>
+                    <ul>
+                        <li><strong>Territory:</strong> Human-majority neighborhoods</li>
+                        <li><strong>Business:</strong> Political violence, hate crimes, corporate backing</li>
+                        <li><strong>Threat Level:</strong> Corporate connections, political protection</li>
+                        <li><strong>Interaction:</strong> Extremely dangerous for metahumans</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="lifestyle-impact">
+                <h3>💡 Gang Interaction Tips</h3>
+                <ul>
+                    <li><strong>Respect Territory:</strong> Never enter gang turf without permission or protection</li>
+                    <li><strong>Know the Colors:</strong> Gang symbols and colors identify territory and allegiance</li>
+                    <li><strong>Pay the Toll:</strong> Moving through gang territory often requires payment or service</li>
+                    <li><strong>Neutral Ground:</strong> Some areas are gang-neutral by mutual agreement</li>
+                    <li><strong>Enemy of My Enemy:</strong> Gang conflicts create opportunities for shadowrunners</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Security Ratings: Know Your Threat Level</h2>
+            <p>The sprawl operates on a simple security classification system that determines response times, force levels, and corporate interest. Understanding these ratings can save your life:</p>
+
+            <div class="security-zones">
+                <div class="security-zone aaa-zone">
+                    <h4>AAA Zone</h4>
+                    <p><strong>Maximum Security</strong></p>
+                    <ul>
+                        <li>Corporate headquarters</li>
+                        <li>Government facilities</li>
+                        <li>Executive residential areas</li>
+                        <li>Research installations</li>
+                    </ul>
+                    <p><em>Response: Immediate, overwhelming force</em></p>
+                </div>
+
+                <div class="security-zone aa-zone">
+                    <h4>AA Zone</h4>
+                    <p><strong>High Security</strong></p>
+                    <ul>
+                        <li>Corporate subsidiaries</li>
+                        <li>Upscale commercial areas</li>
+                        <li>Middle management housing</li>
+                        <li>Important infrastructure</li>
+                    </ul>
+                    <p><em>Response: Professional security within minutes</em></p>
+                </div>
+
+                <div class="security-zone a-zone">
+                    <h4>A Zone</h4>
+                    <p><strong>Standard Security</strong></p>
+                    <ul>
+                        <li>Commercial districts</li>
+                        <li>Residential neighborhoods</li>
+                        <li>Public transportation hubs</li>
+                        <li>Entertainment venues</li>
+                    </ul>
+                    <p><em>Response: Basic security, 10-15 minutes</em></p>
+                </div>
+
+                <div class="security-zone z-zone">
+                    <h4>Z Zone</h4>
+                    <p><strong>No Security</strong></p>
+                    <ul>
+                        <li>The Barrens</li>
+                        <li>Abandoned districts</li>
+                        <li>Underground areas</li>
+                        <li>Gang territories</li>
+                    </ul>
+                    <p><em>Response: You're on your own</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Street Life: The Daily Grind</h2>
+            <p>Life on the streets of 2080 is a constant struggle between survival and opportunity. Understanding the rhythms, rituals, and unwritten rules of street life is essential for any shadowrunner:</p>
+
+            <div class="street-level">
+                <h3>The Urban Ecosystem</h3>
+                <div class="mermaid">
+                    graph TD
+                        A[Corporate Employment] --> B[Wage Slaves]
+                        B --> C[Consumer Economy]
+                        C --> D[Service Workers]
+                        D --> E[Street Economy]
+                        E --> F[Black Market]
+                        F --> G[Criminal Organizations]
+                        G --> H[Shadowrunners]
+                        H --> A
+                        
+                        I[SINless Population] --> J[Survival Economy]
+                        J --> K[Scavenging]
+                        J --> L[Illegal Services]
+                        L --> F
+                        K --> E
+                        
+                        M[Corporate Rejects] --> I
+                        N[Economic Refugees] --> I
+                        O[Political Dissidents] --> I
+                        
+                        style A fill:#3498db
+                        style G fill:#e74c3c
+                        style H fill:#f39c12
+                        style I fill:#8e44ad
+                </div>
+
+                <h4>Daily Survival Challenges</h4>
+                <ul>
+                    <li><strong>Food Security:</strong> Real food is expensive; most eat processed soy and krill</li>
+                    <li><strong>Clean Water:</strong> Municipal water is questionable; bottled water is a luxury</li>
+                    <li><strong>Air Quality:</strong> Pollution levels require masks or filters in many areas</li>
+                    <li><strong>Personal Safety:</strong> Violence is common; security is personal responsibility</li>
+                    <li><strong>Medical Care:</strong> Corporate healthcare for citizens; street docs for everyone else</li>
+                    <li><strong>Information Access:</strong> Matrix access varies wildly by location and social status</li>
+                </ul>
+            </div>
+
+            <div class="crime-stats">
+                <h3>Street Crime Statistics (Per 100,000 Population)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Crime Type</th>
+                            <th>Corporate Zone</th>
+                            <th>Residential</th>
+                            <th>Commercial</th>
+                            <th>Barrens</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Violent Crime</td>
+                            <td>0.1</td>
+                            <td>2.3</td>
+                            <td>15.7</td>
+                            <td>89.4</td>
+                        </tr>
+                        <tr>
+                            <td>Property Crime</td>
+                            <td>0.0</td>
+                            <td>8.9</td>
+                            <td>45.2</td>
+                            <td>156.8</td>
+                        </tr>
+                        <tr>
+                            <td>Drug Offenses</td>
+                            <td>0.0</td>
+                            <td>1.2</td>
+                            <td>23.6</td>
+                            <td>78.3</td>
+                        </tr>
+                        <tr>
+                            <td>Corporate Crime</td>
+                            <td>847.2</td>
+                            <td>34.5</td>
+                            <td>12.1</td>
+                            <td>0.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><em>Note: Corporate crime statistics reflect legal corporate activities that would be criminal if performed by individuals.</em></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Transportation Networks: Moving Through the Sprawl</h2>
+            <p>Getting around a megasprawl requires understanding the complex transportation ecosystem - from corporate-controlled mass transit to illegal smuggling routes:</p>
+
+            <div class="transport-network">
+                <h3>Transportation Infrastructure</h3>
+                <div class="mermaid">
+                    mindmap
+                      root((Urban Transit))
+                        [Public Transportation]
+                          Monorail Systems
+                            Corporate-controlled routes
+                            Limited station access
+                            Surveillance heavy
+                          Subway Networks
+                            Underground connections
+                            Gang-controlled sectors
+                            Service tunnels
+                          Bus Systems
+                            Street-level coverage
+                            Frequent stops
+                            Security minimal
+                        [Private Transportation]
+                          Personal Vehicles
+                            GridGuide integration
+                            Autonomous systems
+                            Traffic management
+                          Corporate Shuttles
+                            Executive transport
+                            Secure routing
+                            Armed escorts
+                          Taxi Services
+                            Licensed operations
+                            Background checks
+                            Tracking enabled
+                        [Alternative Routes]
+                          Smuggling Tunnels
+                            Underground networks
+                            Criminal operations
+                            Unmonitored access
+                          Maintenance Passages
+                            Infrastructure access
+                            Security gaps
+                            Emergency routes
+                          Rooftop Networks
+                            Building connections
+                            Gang territories
+                            Parkour routes
+                </div>
+
+                <h4>Navigation Considerations</h4>
+                <ul>
+                    <li><strong>GridGuide System:</strong> Automated traffic control that tracks all registered vehicles</li>
+                    <li><strong>SIN Requirements:</strong> Most legal transport requires valid identification</li>
+                    <li><strong>Corporate Restrictions:</strong> Some routes are limited to corporate employees</li>
+                    <li><strong>Gang Tolls:</strong> Unofficial taxes for passage through gang territory</li>
+                    <li><strong>Time Factors:</strong> Rush hours create both cover and complications</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Environmental Hazards: The Price of Progress</h2>
+            <p>The sprawl isn't just dangerous because of people - decades of industrial pollution, magical contamination, and urban decay have created environmental threats that can kill the unprepared:</p>
+
+            <div class="environmental-hazards">
+                <div class="hazard-card">
+                    <h4>Air Pollution</h4>
+                    <p>Toxic smog requires filtration masks or respirators in many areas</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h4>Water Contamination</h4>
+                    <p>Industrial runoff and magical pollution make water sources dangerous</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h4>Toxic Zones</h4>
+                    <p>Areas of extreme contamination that cause immediate health effects</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h4>Magical Background</h4>
+                    <p>Negative magical environments that interfere with spellcasting</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h4>Structural Collapse</h4>
+                    <p>Aging infrastructure and poor maintenance create physical dangers</p>
+                </div>
+
+                <div class="hazard-card">
+                    <h4>Radiation Zones</h4>
+                    <p>Legacy contamination from industrial accidents and wars</p>
+                </div>
+            </div>
+
+            <div class="survival-guide">
+                <h3>⚠️ Urban Survival Guide</h3>
+                <ul>
+                    <li><strong>Know Your Routes:</strong> Always have multiple paths to your destination</li>
+                    <li><strong>Respect the Locals:</strong> Gang territory, corporate zones, and tribal areas have rules</li>
+                    <li><strong>Carry Protection:</strong> Environmental and personal protection is essential</li>
+                    <li><strong>Watch the Weather:</strong> Acid rain and toxic storms are real threats</li>
+                    <li><strong>Trust Your Instincts:</strong> If an area feels wrong, it probably is</li>
+                    <li><strong>Have Backup Plans:</strong> Emergency routes and safe houses save lives</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Digital Overlay: The Matrix in Physical Space</h2>
+            <p>The physical and digital worlds aren't separate in 2080 - they're layered together through augmented reality, creating a hybrid environment where information and reality blend:</p>
+
+            <div class="matrix-overlay">
+                <h3>AR Integration in Urban Life</h3>
+                <div class="data-node" style="top: 20%; left: 10%;"></div>
+                <div class="data-node" style="top: 40%; right: 15%;"></div>
+                <div class="data-node" style="bottom: 30%; left: 30%;"></div>
+                <div class="data-node" style="top: 60%; right: 40%;"></div>
+
+                <h4>Augmented Reality Elements</h4>
+                <ul>
+                    <li><strong>Navigation Overlays:</strong> Real-time directions and route optimization</li>
+                    <li><strong>Identity Markers:</strong> AR tags showing people's public information</li>
+                    <li><strong>Commercial Advertising:</strong> Location-based marketing and promotion</li>
+                    <li><strong>Security Warnings:</strong> Threat assessments and danger zones</li>
+                    <li><strong>Social Networks:</strong> Digital communities overlaid on physical spaces</li>
+                    <li><strong>Gang Tags:</strong> Digital graffiti marking territory and allegiance</li>
+                </ul>
+            </div>
+
+            <div class="augmented-reality">
+                <h3>AR Interface Simulation</h3>
+                <div class="ar-element" style="top: 20%; left: 15%;">STUFFER SHACK - OPEN 24/7</div>
+                <div class="ar-element" style="top: 40%; right: 20%;">ANCIENTS TERRITORY - PROCEED WITH CAUTION</div>
+                <div class="ar-element" style="bottom: 30%; left: 25%;">TOXIC ZONE - RESPIRATOR REQUIRED</div>
+                <div class="ar-element" style="top: 60%; right: 35%;">KNIGHT ERRANT PATROL - 2 MIN ETA</div>
+                <div class="ar-element" style="bottom: 20%; right: 15%;">MATRIX NODE - HIGH SECURITY</div>
+
+                <h4>Digital Divide</h4>
+                <p>Access to AR overlays depends heavily on your economic status and social position:</p>
+                <ul>
+                    <li><strong>Corporate Citizens:</strong> Full AR integration with premium services</li>
+                    <li><strong>Middle Class:</strong> Standard AR with advertising and basic services</li>
+                    <li><strong>Working Poor:</strong> Limited AR access, heavy advertising</li>
+                    <li><strong>SINless:</strong> No legal AR access, must rely on hacked systems</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Urban Wildlife: What Lurks in the Shadows</h2>
+            <p>The sprawl isn't just home to humans and metahumans - magical awakening and industrial pollution have created an ecosystem of creatures adapted to urban environments:</p>
+
+            <div class="mermaid">
+                mindmap
+                  root((Urban Creatures))
+                    [Awakened Animals]
+                      Barghests
+                        Wolf-like predators
+                        Pack hunters
+                        Magical abilities
+                      Devil Rats
+                        Mutated rodents
+                        Disease carriers
+                        Swarm behavior
+                      Banshees
+                        Territorial spirits
+                        Sonic attacks
+                        Emotional feeding
+                    [Toxic Spirits]
+                      Sludge Spirits
+                        Pollution embodiment
+                        Corrosive touch
+                        Industrial sites
+                      Smog Spirits
+                        Air pollution spirits
+                        Respiratory attacks
+                        Urban atmosphere
+                    [Corporate Experiments]
+                      Escaped Subjects
+                        Genetic modifications
+                        Cybernetic enhancement
+                        Unknown capabilities
+                      Prototype Drones
+                        Autonomous security
+                        Combat programming
+                        Abandoned facilities
+                    [Street Predators]
+                      Ghoul Communities
+                        Infected humans
+                        Cannibalistic tendencies
+                        Underground dwellers
+                      Vampire Covens
+                        Organized feeders
+                        Corporate infiltration
+                        Night activity
+            </div>
+
+            <h3>Encounter Protocols</h3>
+            <ul>
+                <li><strong>Avoid Confrontation:</strong> Most urban creatures are more dangerous than they appear</li>
+                <li><strong>Understand Territory:</strong> Many creatures are territorial and can be avoided</li>
+                <li><strong>Use Appropriate Weapons:</strong> Different creatures have different vulnerabilities</li>
+                <li><strong>Know the Signs:</strong> Learn to recognize creature presence before encounters</li>
+                <li><strong>Respect the Ecosystem:</strong> Some creatures provide services to local communities</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Your Urban Survival Toolkit</h2>
+            <p>Thriving in the megasprawl requires more than just combat skills and street smarts. You need to understand the complex web of relationships, territories, and unwritten rules that govern urban life. The city is a living organism, and successful shadowrunners learn to work with its rhythms rather than against them.</p>
+
+            <p>Remember: The street finds its own uses for things - including people. Stay flexible, stay informed, and always have an exit strategy. The sprawl rewards the adaptable and punishes the rigid.</p>
+
+            <h3>Essential Urban Skills</h3>
+            <ul>
+                <li><strong>Street Knowledge:</strong> Understanding local customs, gang territories, and safe routes</li>
+                <li><strong>Social Navigation:</strong> Reading situations and adapting your approach</li>
+                <li><strong>Resource Management:</strong> Making connections and trading favors</li>
+                <li><strong>Threat Assessment:</strong> Recognizing danger before it finds you</li>
+                <li><strong>Environmental Awareness:</strong> Understanding how the city's systems work</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Your Next Steps</h2>
+            <p>You now understand the complex urban environment where most shadowrunning takes place. The megasprawl isn't just a backdrop - it's an active participant in every story, with its own needs, rhythms, and dangers that can make or break any operation.</p>
+
+            <p>In our final tutorial, we'll tie everything together by exploring advanced campaign concepts and ongoing character development. We'll discuss how to create long-term stories, manage character growth, and build the kind of interconnected narratives that make Shadowrun truly legendary.</p>
+
+            <p>The sprawl is your classroom, your battlefield, and your home. Learn its lessons well, and it might just let you survive long enough to tell your story.</p>
+        </section>
+
+        <footer>
+            <p><em>The city never sleeps, and neither should your vigilance. Stay sharp in the concrete jungle, runner.</em></p>
+            <p style="text-align: center; margin-top: 40px;">
+                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next:<a href="/shadowrun/sr_adv.html">Advanced Campaigns and Character Development</a> ◊</span>
+            </p>
+        </footer>
+    </main>
+</body>
+</html>

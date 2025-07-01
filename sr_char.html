@@ -8,34 +8,138 @@
     <link rel="icon" href="/favicon.png" type="image/png">
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#f9f9f9',
+                primaryTextColor: '#333333',
+                primaryBorderColor: '#666666',
+                lineColor: '#666666',
+                secondaryColor: '#e8e8e8',
+                tertiaryColor: '#333333',
+                background: '#ffffff',
+                secondaryTextColor: '#333333',
+                // Mindmap specific colors
+                cScale0: '#e74c3c',  // Street Samurai - Red
+                cScale1: '#27ae60',  // Decker - Green  
+                cScale2: '#9b59b6',  // Mage - Purple
+                cScale3: '#f39c12',  // Rigger - Orange
+                cScale4: '#e91e63',  // Face - Pink
+                cScale5: '#3498db',  // Adept - Blue
+                pie1: '#e74c3c',
+                pie2: '#27ae60', 
+                pie3: '#9b59b6',
+                pie4: '#f39c12',
+                pie5: '#e91e63',
+                pie6: '#3498db'
+            }
+        });
     </script>
     <style>
+        /* Base styles with professional neutral colors */
+        body {
+            background: #f5f5f5;
+            color: #333333;
+      
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+        }
+
+        header h1 {
+            color: #ecf0f1;
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+
+        header p {
+            color: #bdc3c7;
+            margin: 0.5rem 0 0 0;
+            font-style: italic;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+
+
+
+
+
+        p, li {
+            color: #333333;
+        }
+
+        em {
+            color: #3498db;
+            font-style: italic;
+        }
+
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
         .archetype-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin: 20px 0;
         }
+
         .archetype-card {
             border: 2px solid;
             border-radius: 10px;
             padding: 20px;
-            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,20,0.9));
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
+            color: #333333;
         }
+
         .archetype-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,255,255,0.3);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
         }
-        .street-samurai { border-color: #ff4444; }
-        .decker { border-color: #00ff00; }
-        .mage { border-color: #8a2be2; }
-        .rigger { border-color: #ffa500; }
-        .face { border-color: #ff69b4; }
-        .adept { border-color: #ffff00; }
+
+        .archetype-card h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+
+        .archetype-card h4 {
+            color: #34495e;
+        }
+
+        .archetype-card p {
+            color: #333333;
+        }
+
+        .archetype-card li {
+            color: #333333;
+            margin: 0.5rem 0;
+        }
+
+        .street-samurai { border-color: #e74c3c; }
+        .decker { border-color: #27ae60; }
+        .mage { border-color: #9b59b6; }
+        .rigger { border-color: #f39c12; }
+        .face { border-color: #e91e63; }
+        .adept { border-color: #f1c40f; }
         
         .role-icon {
             width: 60px;
@@ -47,22 +151,44 @@
             justify-content: center;
             font-size: 24px;
             font-weight: bold;
+            color: #ffffff !important;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
         .team-dynamics {
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
-            border: 2px solid #00ffff;
+            background: #ffffff;
+            border: 2px solid #3498db;
             border-radius: 15px;
             padding: 25px;
             margin: 30px 0;
+            color: #333333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .team-dynamics h3 {
+            color: #2c3e50;
+        }
+
+        .team-dynamics h4 {
+            color: #34495e;
+        }
+
+        .team-dynamics p {
+            color: #333333;
+        }
+
+        .team-dynamics li {
+            color: #333333;
         }
         
         .skill-bar {
-            background: #333;
+            background: #ecf0f1;
             height: 20px;
             border-radius: 10px;
             margin: 5px 0;
             overflow: hidden;
+            border: 1px solid #bdc3c7;
         }
         
         .skill-fill {
@@ -75,7 +201,7 @@
             position: relative;
             width: 100%;
             height: 300px;
-            background: radial-gradient(circle at center, rgba(0,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
             margin: 20px 0;
         }
         
@@ -97,6 +223,94 @@
         .archetype-node:hover {
             transform: scale(1.2);
             z-index: 10;
+        }
+
+        /* Ensure all list items are readable */
+        ul li, ol li {
+            color: #333333;
+            margin: 0.5rem 0;
+        }
+
+        /* Mermaid diagram styling */
+        .mermaid {
+            background: #ffffff;
+            border: 1px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Canvas styling */
+        canvas {
+            background: #ffffff;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 3px solid #3498db;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+        }
+
+        footer p {
+            color: #ecf0f1;
+            margin: 1rem 0;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #5dade2;
+            text-decoration: underline;
+        }
+
+        /* Section styling */
+        section {
+            margin: 2rem 0;
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #bdc3c7;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Ensure strong text in lists is visible */
+        li strong {
+            color: #2c3e50;
+        }
+
+        /* Specific background fixes for role icons */
+        .street-samurai .role-icon {
+            background: #e74c3c;
+        }
+
+        .decker .role-icon {
+            background: #27ae60;
+        }
+
+        .mage .role-icon {
+            background: #9b59b6;
+        }
+
+        .rigger .role-icon {
+            background: #f39c12;
+        }
+
+        .face .role-icon {
+            background: #e91e63;
+        }
+
+        .adept .role-icon {
+            background: #f39c12;
+            color: #ffffff !important;
         }
     </style>
 </head>
@@ -141,7 +355,7 @@
                 </div>
 
                 <div class="archetype-card decker">
-                    <div class="role-icon" style="background: #00ff00; color: black;">💻</div>
+                    <div class="role-icon" style="background: #27ae60; color: white;">💻</div>
                     <h3>Decker</h3>
                     <p><strong>The Matrix Cowboy</strong></p>
                     <p>In a world where information is the ultimate currency, deckers are the bank robbers of cyberspace. They're not just computer experts - they're digital shamans who navigate the Matrix like a parallel universe.</p>
@@ -183,7 +397,7 @@
                 </div>
 
                 <div class="archetype-card rigger">
-                    <div class="role-icon" style="background: #ffa500; color: black;">🚗</div>
+                    <div class="role-icon" style="background: #f39c12; color: white;">🚗</div>
                     <h3>Rigger</h3>
                     <p><strong>The Machine Whisperer</strong></p>
                     <p>Riggers don't just drive vehicles - they <em>become</em> them. Through neural interface technology, they merge their consciousness with machines, experiencing the world through sensors and controlling devices as extensions of their own body.</p>
@@ -225,7 +439,7 @@
                 </div>
 
                 <div class="archetype-card adept">
-                    <div class="role-icon" style="background: #ffff00; color: black;">🥋</div>
+                    <div class="role-icon" style="background: #f39c12; color: white;">🥋</div>
                     <h3>Physical Adept</h3>
                     <p><strong>The Magic-Enhanced Human</strong></p>
                     <p>Physical adepts channel magic internally, using it to push their natural human abilities to superhuman levels. They're the bridge between the purely mundane and the overtly magical.</p>
@@ -400,32 +614,32 @@
             <div class="mermaid">
                 mindmap
                   root((Shadowrun Team))
-                    [Street Samurai]
+                    )Street Samurai(
                       Special Forces Operator
                       Professional Bodyguard
                       SWAT Team Member
                       Mixed Martial Artist
-                    [Decker]
+                    )Decker(
                       Ethical Hacker
                       Cyber Security Expert
                       Anonymous Member
                       Systems Administrator
-                    [Mage]
+                    )Mage(
                       Research Scientist
                       Religious Leader
                       Theoretical Physicist
                       Emergency Paramedic
-                    [Rigger]
+                    )Rigger(
                       Drone Pilot
                       Professional Driver
                       Air Traffic Controller
                       Remote Operations Specialist
-                    [Face]
+                    )Face(
                       Diplomat
                       Sales Executive
                       Undercover Agent
                       Public Relations Manager
-                    [Adept]
+                    )Adept(
                       Olympic Athlete
                       Parkour Expert
                       Martial Arts Master
@@ -468,7 +682,7 @@
         <footer>
             <p><em>The shadows need specialists, but legends need depth. Choose wisely, omae.</em></p>
             <p style="text-align: center; margin-top: 40px;">
-                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next:<a href="/shadowrun/sr_mechanics.html">Game Mechanics and Character Creation</a> ◊</span>
+                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next: <a href="/shadowrun/sr_mechanics.html">Game Mechanics and Character Creation</a> ◊</span>
             </p>
         </footer>
     </main>

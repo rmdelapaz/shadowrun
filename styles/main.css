@@ -124,7 +124,7 @@ q:after {
   content: none;
 }
 table, td, tr,th {
- border: 1px solid #333333;
+ border: 1px solid var(--border-color);
   border-spacing: 0;
  padding: 5px;
  text-align: center;
@@ -138,23 +138,24 @@ body {
     "Lucida Sans", Arial, sans-serif;
   font-size: medium;
   line-height: 110%;
-  background-color: rgb(248, 250, 252);
+  background-color: var(--bg);
   margin-left: 30px;
   margin-right: 40px;
   margin-bottom: 30px;
-  color: rgb(51, 65, 85);
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
 }
 h1,
 h2,
 h3, h4 {
   font-weight: bolder;
-  background-color: rgb(59, 130, 246);
-  color: white;
+  background-color: var(--heading-bg);
+  color: var(--heading-text);
   margin: 1rem;
   padding: 1rem;
   line-height: 120%;
 }
-strong {font-weight: bold;color: rgb(17, 24, 39);}
+strong {font-weight: bold;color: var(--strong-color);}
 h1 {
   font-size: 2rem;
   text-align: center;
@@ -178,6 +179,88 @@ h4 {margin-left: 35px;
 margin-right: 35px;}
 
 h5 {margin-left: 35px;}
+
+/* ===== Dark/Light Mode Variables ===== */
+:root {
+  --bg: rgb(248, 250, 252);
+  --text: rgb(51, 65, 85);
+  --heading-bg: rgb(59, 130, 246);
+  --heading-text: white;
+  --strong-color: rgb(17, 24, 39);
+  --code-bg: rgb(248, 250, 252);
+  --code-color: rgb(34, 139, 34);
+  --link-color: rgb(59, 130, 246);
+  --blockquote-bg: rgb(226, 232, 240);
+  --blockquote-text: rgb(51, 65, 85);
+  --border-color: #333333;
+  --mermaid-bg: rgb(255, 255, 255);
+  --mermaid-border: rgb(226, 232, 240);
+  --mermaid-node: rgb(248, 250, 252);
+  --mermaid-stroke: rgb(148, 163, 184);
+  --mermaid-edge: rgb(71, 85, 105);
+  --mermaid-label: rgb(51, 65, 85);
+  --mermaid-cluster: rgb(241, 245, 249);
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --text: #cbd5e1;
+  --heading-bg: #1e3a5f;
+  --heading-text: #e2e8f0;
+  --strong-color: #f1f5f9;
+  --code-bg: #1e293b;
+  --code-color: #4ade80;
+  --link-color: #60a5fa;
+  --blockquote-bg: #1e293b;
+  --blockquote-text: #94a3b8;
+  --border-color: #475569;
+  --mermaid-bg: #1e293b;
+  --mermaid-border: #334155;
+  --mermaid-node: #1e293b;
+  --mermaid-stroke: #475569;
+  --mermaid-edge: #94a3b8;
+  --mermaid-label: #e2e8f0;
+  --mermaid-cluster: #1e293b;
+}
+
+/* ===== Site Nav ===== */
+#site-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--heading-bg);
+  margin: 0 0 10px 0;
+  border-radius: 6px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#site-nav .nav-left { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+#site-nav a { color: var(--heading-text); text-decoration: none; font-size: 0.9rem; font-weight: bold; }
+#site-nav a:hover { text-decoration: underline; }
+#theme-toggle {
+  background: none; border: 1px solid var(--heading-text); color: var(--heading-text);
+  padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem;
+}
+#theme-toggle:hover { background: rgba(255,255,255,0.15); }
+
+.prev-next {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  margin: 30px 0 10px 0;
+  border-top: 2px solid var(--heading-bg);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pn-link {
+  color: var(--link-color) !important;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+.pn-link:hover { text-decoration: underline; }
 
 table {
   margin-left: 45px;
@@ -213,8 +296,8 @@ code, pre {
   margin-left: 40px;
   margin-right: 40px;
   font-family: "Courier New", Courier, monospace;
-  background-color: rgb(248, 250, 252);
-  color: rgb(34, 139, 34);
+  background-color: var(--code-bg);
+  color: var(--code-color);
 
   padding-top: 5px;
   padding-left: 2px;
@@ -234,7 +317,7 @@ ol li {
   list-style-type:decimal ;
 }
 
-a {color: rgb(59, 130, 246);}
+a {color: var(--link-color);}
 ul li {
   list-style-type: disc;
 }
@@ -263,8 +346,8 @@ text-align: center;}
 
 blockquote {margin-left: 150px;
 margin-right: 140px;
-background-color: rgb(226, 232, 240);
-color: rgb(51, 65, 85);
+background-color: var(--blockquote-bg);
+color: var(--blockquote-text);
 padding: 12px;}
 
 footer {padding-bottom: 20px;}
@@ -298,9 +381,9 @@ h3 a { color: white;}
         .mermaid_container, .mermaid-diagram, .mermaid {
             margin: 25px auto;
             padding: 20px;
-            background-color: rgb(255, 255, 255);
-            color: rgb(51, 65, 85);
-            border: 1px solid rgb(226, 232, 240);
+            background-color: var(--mermaid-bg);
+            color: var(--text);
+            border: 1px solid var(--mermaid-border);
             border-radius: 8px;
             max-width: 90%;
             text-align: center;

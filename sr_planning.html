@@ -6,10 +6,7 @@
     <title>The Art of the Run - Planning and Execution</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
-    </script>
+    <script type="module" src="/styles/mermaid-init.js"></script>
     <style>
         .run-phases {
             display: grid;
@@ -86,7 +83,7 @@
         }
         
         .approach-option {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.22), rgba(52, 152, 219, 0.13)), var(--sr-surface);
             border: 2px solid #3498db;
             border-radius: 10px;
             padding: 20px;
@@ -96,7 +93,7 @@
         }
         
         .approach-option:hover {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.22), rgba(41, 128, 185, 0.13)), var(--sr-surface);
             transform: translateX(10px);
         }
         
@@ -195,7 +192,7 @@
         }
         
         .contingency-tree {
-            background: linear-gradient(45deg, #2d1b69, #11998e);
+            background: linear-gradient(45deg, rgba(45, 27, 105, 0.22), rgba(17, 153, 142, 0.13)), var(--sr-surface);
             border: 2px solid #00d4aa;
             border-radius: 15px;
             padding: 25px;
@@ -245,17 +242,32 @@
         }
         
         .role-assignment {
-            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            background: linear-gradient(135deg, rgba(142, 68, 173, 0.22), rgba(155, 89, 182, 0.13)), var(--sr-surface);
             border: 2px solid #9b59b6;
             border-radius: 10px;
             padding: 15px;
             text-align: center;
             color: white;
         }
+        #facilityMap { max-width: 620px; width: 100%; height: auto; display: block; margin: 0 auto;
+            border: 1px solid var(--sr-line); border-radius: var(--sr-radius); }
+        #facilityMap .sr-zone { cursor: pointer; }
+        #facilityMap .sr-zone:hover rect { fill-opacity: 0.36; }
+        #facilityMap .sr-zone:focus { outline: none; }
+        #facilityMap .sr-zone:focus rect { stroke-width: 3; }
+        #facilityMap .sr-zone.is-active rect { fill-opacity: 0.46; stroke-width: 3; }
+        .facility-readout {
+            max-width: 620px; margin: 14px auto 0; padding: 16px 18px;
+            background: var(--sr-surface); border: 1px solid var(--sr-line);
+            border-left: 4px solid var(--sr-violet);
+            border-radius: 0 var(--sr-radius) var(--sr-radius) 0;
+            font-size: 0.95rem; line-height: 1.6;
+        }
+        .facility-readout strong { color: var(--sr-violet); }
     </style>
     <script src="/styles/site-nav.js" defer></script>
 </head>
-<body>
+<body class="lesson">
     <header>
         <h1 style="color: #e74c3c; text-shadow: 0 0 20px #e74c3c;">The Art of the Run</h1>
         <p><em>Planning and Executing Shadowruns</em></p>
@@ -395,10 +407,10 @@
                     C --> K[Corporate Analysis]
                     C --> L[Threat Assessment]
                     
-                    style A fill:#f39c12
-                    style G fill:#e74c3c
-                    style H fill:#27ae60
-                    style I fill:#95a5a6
+                    style A stroke:#f39c12,stroke-width:3px
+                    style G stroke:#e74c3c,stroke-width:3px
+                    style H stroke:#27ae60,stroke-width:3px
+                    style I stroke:#95a5a6,stroke-width:3px
             </div>
 
             <h3>Johnson Types and What They Mean</h3>
@@ -711,10 +723,10 @@
                         H -->|No| J[Salvage Mission]
                         I --> K[Abort and Escape]
                         
-                        style A fill:#27ae60
-                        style C fill:#f39c12
-                        style F fill:#e74c3c
-                        style I fill:#8b0000
+                        style A stroke:#27ae60,stroke-width:3px
+                        style C stroke:#f39c12,stroke-width:3px
+                        style F stroke:#e74c3c,stroke-width:3px
+                        style I stroke:#8b0000,stroke-width:3px
                 </div>
 
                 <h4>Common Contingency Scenarios</h4>
@@ -781,78 +793,65 @@
             <h2>Interactive Planning Exercise</h2>
             <p>Let's practice with a sample mission. Click on the building below to identify security challenges:</p>
 
-            <canvas id="facilityMap" width="600" height="400" class="plan-canvas"></canvas>
+            <svg id="facilityMap" viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Clickable floorplan of a target facility">
+                <rect width="620" height="420" fill="#0d0a1c"/>
+                <g stroke="rgba(160,107,255,0.07)" stroke-width="1">
+                    <path d="M31 0V420M62 0V420M93 0V420M124 0V420M155 0V420M186 0V420M217 0V420M248 0V420M279 0V420M310 0V420M341 0V420M372 0V420M403 0V420M434 0V420M465 0V420M496 0V420M527 0V420M558 0V420M589 0V420"/>
+                    <path d="M0 31H620M0 62H620M0 93H620M0 124H620M0 155H620M0 186H620M0 217H620M0 248H620M0 279H620M0 310H620M0 341H620M0 372H620M0 403H620"/>
+                </g>
+                <rect x="46" y="46" width="528" height="304" fill="rgba(160,107,255,0.04)" stroke="#6b5ca5" stroke-width="2"/>
+
+                <g class="sr-zone" data-zone="Security Office" tabindex="0" role="button" aria-label="Security Office">
+                    <rect x="66" y="66" width="118" height="76" rx="4" fill="#ffb700" fill-opacity="0.16" stroke="#ffb700" stroke-width="2"/>
+                    <text x="125" y="110" fill="#ffb700" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SECURITY</text>
+                </g>
+                <g class="sr-zone" data-zone="Executive Wing" tabindex="0" role="button" aria-label="Executive Wing">
+                    <rect x="214" y="66" width="182" height="76" rx="4" fill="#a06bff" fill-opacity="0.16" stroke="#a06bff" stroke-width="2"/>
+                    <text x="305" y="104" fill="#a06bff" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">EXECUTIVE</text>
+                    <text x="305" y="122" fill="#a06bff" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">WING</text>
+                </g>
+                <g class="sr-zone" data-zone="Server Room" tabindex="0" role="button" aria-label="Server Room">
+                    <rect x="440" y="196" width="112" height="98" rx="4" fill="#3fd18b" fill-opacity="0.18" stroke="#3fd18b" stroke-width="2"/>
+                    <text x="496" y="240" fill="#3fd18b" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SERVERS</text>
+                    <text x="496" y="258" fill="#3fd18b" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="middle">objective</text>
+                </g>
+                <g class="sr-zone" data-zone="Emergency Exit" tabindex="0" role="button" aria-label="Emergency Exit">
+                    <rect x="566" y="150" width="16" height="42" rx="2" fill="#3fd18b" fill-opacity="0.5" stroke="#3fd18b" stroke-width="2"/>
+                    <text x="558" y="142" fill="#3fd18b" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="end">emergency exit</text>
+                </g>
+                <g class="sr-zone" data-zone="Main Entrance" tabindex="0" role="button" aria-label="Main Entrance">
+                    <rect x="282" y="342" width="60" height="16" rx="2" fill="#ff4d6d" fill-opacity="0.5" stroke="#ff4d6d" stroke-width="2"/>
+                    <text x="312" y="378" fill="#ff4d6d" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="middle">main entrance</text>
+                </g>
+                <g class="sr-zone" data-zone="Parking Garage" tabindex="0" role="button" aria-label="Parking Garage">
+                    <rect x="70" y="342" width="54" height="16" rx="2" fill="#37c6e0" fill-opacity="0.5" stroke="#37c6e0" stroke-width="2"/>
+                    <text x="97" y="378" fill="#37c6e0" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="middle">garage</text>
+                </g>
+
+                <text x="46" y="406" fill="#7d739f" font-family="Share Tech Mono, monospace" font-size="11">Select an area to read the security assessment</text>
+            </svg>
+            <div id="facilityInfo" class="facility-readout" role="status" aria-live="polite">
+                <strong>Pick an area of the floorplan.</strong> Legwork is the part of a run you do before anyone is shooting at you — and the part that decides whether anyone will be.
+            </div>
             <script>
-                const canvas = document.getElementById('facilityMap');
-                const ctx = canvas.getContext('2d');
-                
-                // Draw facility layout
-                function drawFacility() {
-                    // Clear canvas
-                    ctx.fillStyle = '#000';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Building outline
-                    ctx.strokeStyle = '#00ffff';
-                    ctx.lineWidth = 3;
-                    ctx.strokeRect(50, 50, 500, 300);
-                    
-                    // Main entrance
-                    ctx.fillStyle = '#e74c3c';
-                    ctx.fillRect(280, 340, 40, 10);
-                    ctx.fillStyle = '#fff';
-                    ctx.font = '12px Arial';
-                    ctx.fillText('Main Entrance', 250, 370);
-                    
-                    // Security office
-                    ctx.strokeStyle = '#f39c12';
-                    ctx.strokeRect(70, 70, 80, 60);
-                    ctx.fillStyle = '#fff';
-                    ctx.fillText('Security', 85, 105);
-                    
-                    // Server room
-                    ctx.strokeStyle = '#27ae60';
-                    ctx.strokeRect(450, 200, 80, 80);
-                    ctx.fillStyle = '#fff';
-                    ctx.fillText('Servers', 470, 245);
-                    
-                    // Executive offices
-                    ctx.strokeStyle = '#9b59b6';
-                    ctx.strokeRect(200, 70, 150, 80);
-                    ctx.fillStyle = '#fff';
-                    ctx.fillText('Executive Wing', 240, 115);
-                    
-                    // Emergency exit
-                    ctx.fillStyle = '#27ae60';
-                    ctx.fillRect(540, 180, 10, 30);
-                    ctx.fillText('Emergency Exit', 455, 175);
-                    
-                    // Parking garage entrance
-                    ctx.fillStyle = '#3498db';
-                    ctx.fillRect(60, 340, 30, 10);
-                    ctx.fillText('Garage', 60, 370);
-                }
-                
-                canvas.addEventListener('click', function(event) {
-                    const rect = canvas.getBoundingClientRect();
-                    const x = event.clientX - rect.left;
-                    const y = event.clientY - rect.top;
-                    
-                    // Check what was clicked
-                    if (x >= 70 && x <= 150 && y >= 70 && y <= 130) {
-                        alert('Security Office: Armed guards, camera monitors, alarm controls. High priority target for infiltration.');
-                    } else if (x >= 450 && x <= 530 && y >= 200 && y <= 280) {
-                        alert('Server Room: Primary objective location. Matrix security, environmental sensors, biometric locks.');
-                    } else if (x >= 200 && x <= 350 && y >= 70 && y <= 150) {
-                        alert('Executive Wing: Social engineering opportunities, sensitive files, personal security.');
-                    } else if (x >= 280 && x <= 320 && y >= 340 && y <= 350) {
-                        alert('Main Entrance: Heavy security, metal detectors, reception desk, multiple guards.');
-                    } else if (x >= 540 && x <= 550 && y >= 180 && y <= 210) {
-                        alert('Emergency Exit: Alarmed door, emergency lighting, possible escape route.');
-                    }
-                });
-                
-                drawFacility();
+                (function () {
+                    var ZONES = {"Security Office": "Armed guards, camera monitors and the alarm panel all sit in one room. Taking it quietly buys you the whole building; taking it loudly costs you the run.", "Server Room": "The objective. Matrix security, environmental sensors and biometric locks — this is where your decker earns their share and where a mundane team stalls completely.", "Executive Wing": "Sensitive files and people worth talking to. The Face works here: a convincing badge and the right name gets you further than a maglock sequencer.", "Main Entrance": "Metal detectors, a reception desk and multiple guards. Almost never the answer, which is exactly why it is worth casing — everyone watches the front.", "Emergency Exit": "Alarmed from the inside, unlocked from within. Useless as a way in, but the difference between a hard extraction and a body bag on the way out.", "Parking Garage": "Vehicle access, thinner camera coverage and a legitimate reason for a van to be there. This is how most crews actually get in."};
+                    var out = document.getElementById('facilityInfo');
+                    var zones = document.querySelectorAll('#facilityMap .sr-zone');
+                    Array.prototype.forEach.call(zones, function (g) {
+                        function show() {
+                            var name = g.getAttribute('data-zone');
+                            Array.prototype.forEach.call(zones, function (o) {
+                                o.classList.toggle('is-active', o === g);
+                            });
+                            out.innerHTML = '<strong>' + name + '</strong><br>' + ZONES[name];
+                        }
+                        g.addEventListener('click', show);
+                        g.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(); }
+                        });
+                    });
+                })();
             </script>
             <p><em>Click on different areas of the facility to analyze security challenges and opportunities.</em></p>
         </section>
@@ -883,7 +882,7 @@
         <footer>
             <p><em>Plan like your life depends on it, because it does. Stay frosty, choom.</em></p>
             <p style="text-align: center; margin-top: 40px;">
-                <span style="color: #e74c3c; text-shadow: 0 0 10px #e74c3c;">◊ Next:<a href="/shadowrun/sr_matrix.html">The Matrix - Digital Warfare and Hacking</a> ◊</span>
+                <span style="color: #e74c3c; text-shadow: 0 0 10px #e74c3c;">◊ Next:<a href="/sr_matrix.html">The Matrix - Digital Warfare and Hacking</a> ◊</span>
             </p>
         </footer>
     </main>

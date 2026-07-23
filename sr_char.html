@@ -6,36 +6,7 @@
     <title>Choose Your Shadow - Character Archetypes and Roles</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ 
-            startOnLoad: true,
-            theme: 'base',
-            themeVariables: {
-                primaryColor: '#f9f9f9',
-                primaryTextColor: '#333333',
-                primaryBorderColor: '#666666',
-                lineColor: '#666666',
-                secondaryColor: '#e8e8e8',
-                tertiaryColor: '#333333',
-                background: '#ffffff',
-                secondaryTextColor: '#333333',
-                // Mindmap specific colors
-                cScale0: '#e74c3c',  // Street Samurai - Red
-                cScale1: '#27ae60',  // Decker - Green  
-                cScale2: '#9b59b6',  // Mage - Purple
-                cScale3: '#f39c12',  // Rigger - Orange
-                cScale4: '#e91e63',  // Face - Pink
-                cScale5: '#3498db',  // Adept - Blue
-                pie1: '#e74c3c',
-                pie2: '#27ae60', 
-                pie3: '#9b59b6',
-                pie4: '#f39c12',
-                pie5: '#e91e63',
-                pie6: '#3498db'
-            }
-        });
-    </script>
+    <script type="module" src="/styles/mermaid-init.js"></script>
     <style>
         /* Base styles with professional neutral colors */
         body {
@@ -315,7 +286,7 @@
     </style>
     <script src="/styles/site-nav.js" defer></script>
 </head>
-<body>
+<body class="lesson">
     <header>
         <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Choose Your Shadow</h1>
         <p><em>Character Archetypes and Team Roles</em></p>
@@ -488,12 +459,12 @@
                         
                         H -->|Extraction| I[Rigger's Getaway Vehicle]
                         
-                        style A fill:#ff69b4
-                        style C fill:#ffa500
-                        style D fill:#00ff00
-                        style E fill:#8a2be2
-                        style G fill:#ff4444
-                        style I fill:#ffa500
+                        style A stroke:#ff69b4,stroke-width:3px
+                        style C stroke:#ffa500,stroke-width:3px
+                        style D stroke:#00ff00,stroke-width:3px
+                        style E stroke:#8a2be2,stroke-width:3px
+                        style G stroke:#ff4444,stroke-width:3px
+                        style I stroke:#ffa500,stroke-width:3px
                 </div>
 
                 <h4>Example Mission Flow</h4>
@@ -553,59 +524,31 @@
                 <li><strong>Character Development:</strong> Which archetype offers the growth story you want to tell?</li>
             </ul>
 
-            <canvas id="archetypeWheel" width="400" height="400" style="display: block; margin: 20px auto; border: 2px solid #00ffff;"></canvas>
-            <script>
-                const canvas = document.getElementById('archetypeWheel');
-                const ctx = canvas.getContext('2d');
-                const centerX = canvas.width / 2;
-                const centerY = canvas.height / 2;
-                const radius = 150;
+            <figure>
+                <svg viewBox="0 0 940 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="arcTitle arcDesc">
+                    <title id="arcTitle">What each archetype actually covers</title>
+                    <desc id="arcDesc">A coverage grid of six archetypes against six job needs. Street Samurai owns Combat. Decker owns the Matrix. Mage owns Magic. Rigger owns Drones. Face owns Social. The Adept is broad but owns nothing outright. Matrix and Magic are the two columns most teams leave empty, and both are hard to cover any other way.</desc>
 
-                const archetypes = [
-                    {name: 'Samurai', color: '#ff4444', angle: 0},
-                    {name: 'Decker', color: '#00ff00', angle: Math.PI / 3},
-                    {name: 'Mage', color: '#8a2be2', angle: 2 * Math.PI / 3},
-                    {name: 'Rigger', color: '#ffa500', angle: Math.PI},
-                    {name: 'Face', color: '#ff69b4', angle: 4 * Math.PI / 3},
-                    {name: 'Adept', color: '#ffff00', angle: 5 * Math.PI / 3}
-                ];
+                    <text x="30" y="42" fill="#f3f0ff" font-family="Orbitron, sans-serif" font-size="15" font-weight="700" letter-spacing="1">WHAT YOUR TEAM CAN AND CANNOT DO</text>
+                    <text x="30" y="66" fill="#948cb5" font-family="Segoe UI, sans-serif" font-size="13">Read down the columns, not across the rows — the gaps are what kill runs.</text>
+                    <text x="268" y="94" fill="#948cb5" font-family="Orbitron, sans-serif" font-size="11" letter-spacing="1.5" text-anchor="middle">COMBAT</text><text x="376" y="94" fill="#948cb5" font-family="Orbitron, sans-serif" font-size="11" letter-spacing="1.5" text-anchor="middle">MATRIX</text><text x="484" y="94" fill="#948cb5" font-family="Orbitron, sans-serif" font-size="11" letter-spacing="1.5" text-anchor="middle">MAGIC</text><text x="592" y="94" fill="#948cb5" font-family="Orbitron, sans-serif" font-size="11" letter-spacing="1.5" text-anchor="middle">SOCIAL</text><text x="700" y="94" fill="#948cb5" font-family="Orbitron, sans-serif" font-size="11" letter-spacing="1.5" text-anchor="middle">DRONES</text><text x="808" y="94" fill="#948cb5" font-family="Orbitron, sans-serif" font-size="11" letter-spacing="1.5" text-anchor="middle">LEGWORK</text>
+                    <line x1="30" y1="104" x2="910" y2="104" stroke="#362b5e"/>
+                    <text x="30" y="133" fill="#37c6e0" font-family="Orbitron, sans-serif" font-size="14" font-weight="700">Street Samurai</text><circle cx="268" cy="128" r="10" fill="#37c6e0" stroke="#37c6e0" stroke-width="2"/><circle cx="376" cy="128" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="484" cy="128" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="592" cy="128" r="7" fill="#37c6e0" fill-opacity="0.22" stroke="#37c6e0" stroke-opacity="0.55"/><circle cx="700" cy="128" r="7" fill="#37c6e0" fill-opacity="0.22" stroke="#37c6e0" stroke-opacity="0.55"/><circle cx="808" cy="128" r="7" fill="#37c6e0" fill-opacity="0.22" stroke="#37c6e0" stroke-opacity="0.55"/><text x="30" y="179" fill="#3fd18b" font-family="Orbitron, sans-serif" font-size="14" font-weight="700">Decker</text><circle cx="268" cy="174" r="7" fill="#3fd18b" fill-opacity="0.22" stroke="#3fd18b" stroke-opacity="0.55"/><circle cx="376" cy="174" r="10" fill="#3fd18b" stroke="#3fd18b" stroke-width="2"/><circle cx="484" cy="174" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="592" cy="174" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="700" cy="174" r="7" fill="#3fd18b" fill-opacity="0.22" stroke="#3fd18b" stroke-opacity="0.55"/><circle cx="808" cy="174" r="8" fill="#3fd18b" fill-opacity="0.5" stroke="#3fd18b"/><text x="30" y="225" fill="#a06bff" font-family="Orbitron, sans-serif" font-size="14" font-weight="700">Mage</text><circle cx="268" cy="220" r="8" fill="#a06bff" fill-opacity="0.5" stroke="#a06bff"/><circle cx="376" cy="220" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="484" cy="220" r="10" fill="#a06bff" stroke="#a06bff" stroke-width="2"/><circle cx="592" cy="220" r="7" fill="#a06bff" fill-opacity="0.22" stroke="#a06bff" stroke-opacity="0.55"/><circle cx="700" cy="220" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="808" cy="220" r="8" fill="#a06bff" fill-opacity="0.5" stroke="#a06bff"/><text x="30" y="271" fill="#ffb700" font-family="Orbitron, sans-serif" font-size="14" font-weight="700">Rigger</text><circle cx="268" cy="266" r="7" fill="#ffb700" fill-opacity="0.22" stroke="#ffb700" stroke-opacity="0.55"/><circle cx="376" cy="266" r="7" fill="#ffb700" fill-opacity="0.22" stroke="#ffb700" stroke-opacity="0.55"/><circle cx="484" cy="266" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="592" cy="266" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="700" cy="266" r="10" fill="#ffb700" stroke="#ffb700" stroke-width="2"/><circle cx="808" cy="266" r="7" fill="#ffb700" fill-opacity="0.22" stroke="#ffb700" stroke-opacity="0.55"/><text x="30" y="317" fill="#ff4d6d" font-family="Orbitron, sans-serif" font-size="14" font-weight="700">Face</text><circle cx="268" cy="312" r="7" fill="#ff4d6d" fill-opacity="0.22" stroke="#ff4d6d" stroke-opacity="0.55"/><circle cx="376" cy="312" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="484" cy="312" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="592" cy="312" r="10" fill="#ff4d6d" stroke="#ff4d6d" stroke-width="2"/><circle cx="700" cy="312" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="808" cy="312" r="8" fill="#ff4d6d" fill-opacity="0.5" stroke="#ff4d6d"/><text x="30" y="363" fill="#37c6e0" font-family="Orbitron, sans-serif" font-size="14" font-weight="700">Adept</text><circle cx="268" cy="358" r="8" fill="#37c6e0" fill-opacity="0.5" stroke="#37c6e0"/><circle cx="376" cy="358" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="484" cy="358" r="7" fill="#37c6e0" fill-opacity="0.22" stroke="#37c6e0" stroke-opacity="0.55"/><circle cx="592" cy="358" r="7" fill="#37c6e0" fill-opacity="0.22" stroke="#37c6e0" stroke-opacity="0.55"/><circle cx="700" cy="358" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/><circle cx="808" cy="358" r="7" fill="#37c6e0" fill-opacity="0.22" stroke="#37c6e0" stroke-opacity="0.55"/>
+                    <line x1="30" y1="400" x2="910" y2="400" stroke="#362b5e"/>
 
-                // Draw wheel segments
-                archetypes.forEach((arch, index) => {
-                    ctx.beginPath();
-                    ctx.moveTo(centerX, centerY);
-                    ctx.arc(centerX, centerY, radius, arch.angle - Math.PI/6, arch.angle + Math.PI/6);
-                    ctx.closePath();
-                    ctx.fillStyle = arch.color;
-                    ctx.fill();
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
+                    <circle cx="42" cy="428" r="10" fill="#948cb5" stroke="#948cb5" stroke-width="2"/>
+                    <text x="60" y="433" fill="#cfc9e6" font-family="Segoe UI, sans-serif" font-size="13">owns it</text>
+                    <circle cx="150" cy="428" r="8" fill="#948cb5" fill-opacity="0.5" stroke="#948cb5"/>
+                    <text x="166" y="433" fill="#cfc9e6" font-family="Segoe UI, sans-serif" font-size="13">competent</text>
+                    <circle cx="285" cy="428" r="7" fill="#948cb5" fill-opacity="0.22" stroke="#948cb5" stroke-opacity="0.55"/>
+                    <text x="301" y="433" fill="#cfc9e6" font-family="Segoe UI, sans-serif" font-size="13">can help</text>
+                    <circle cx="405" cy="428" r="7" fill="none" stroke="#4a3f70" stroke-width="1.5"/>
+                    <text x="421" y="433" fill="#cfc9e6" font-family="Segoe UI, sans-serif" font-size="13">no</text>
 
-                    // Add labels
-                    const labelX = centerX + Math.cos(arch.angle) * (radius - 30);
-                    const labelY = centerY + Math.sin(arch.angle) * (radius - 30);
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = 'bold 12px Arial';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(arch.name, labelX, labelY);
-                });
-
-                // Center circle
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, 40, 0, 2 * Math.PI);
-                ctx.fillStyle = '#000000';
-                ctx.fill();
-                ctx.strokeStyle = '#00ffff';
-                ctx.lineWidth = 3;
-                ctx.stroke();
-
-                ctx.fillStyle = '#00ffff';
-                ctx.font = 'bold 14px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('YOUR', centerX, centerY - 5);
-                ctx.fillText('CHOICE', centerX, centerY + 10);
-            </script>
+                    <text x="910" y="433" fill="#948cb5" font-family="Share Tech Mono, monospace" font-size="12" text-anchor="end">The Adept owns no column — that is the trade for owning no weakness either.</text>
+                </svg>
+                <figcaption><strong>Figure — team composition is a covering problem, not a taste problem.</strong> Four of these columns can be improvised: a Street Samurai with a good Etiquette rating can pass for a Face, anyone can drive. The <em>Matrix</em> and <em>Magic</em> columns cannot. If nobody at the table took a Decker or a Technomancer, every locked door and every camera becomes a wall, and if nobody took an Awakened character your team is blind on the astral and helpless against spirits. Fill those two first, then argue about the rest.</figcaption>
+            </figure>
         </section>
 
         <section>
@@ -683,7 +626,7 @@
         <footer>
             <p><em>The shadows need specialists, but legends need depth. Choose wisely, omae.</em></p>
             <p style="text-align: center; margin-top: 40px;">
-                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next: <a href="/shadowrun/sr_mechanics.html">Game Mechanics and Character Creation</a> ◊</span>
+                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next: <a href="/sr_mechanics.html">Game Mechanics and Character Creation</a> ◊</span>
             </p>
         </footer>
     </main>

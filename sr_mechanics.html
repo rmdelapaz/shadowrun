@@ -6,10 +6,7 @@
     <title>Rolling with the Punches - Shadowrun Game Mechanics</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
-    </script>
+    <script type="module" src="/styles/mermaid-init.js"></script>
     <style>
         .dice-container {
             display: flex;
@@ -20,7 +17,7 @@
         .die {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.22), rgba(255, 142, 142, 0.13)), var(--sr-surface);
             border: 2px solid #fff;
             border-radius: 8px;
             display: flex;
@@ -37,11 +34,11 @@
             transform: scale(1.1);
         }
         .die.hit {
-            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.22), rgba(68, 160, 141, 0.13)), var(--sr-surface);
             box-shadow: 0 0 20px #4ecdc4;
         }
         .die.miss {
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.22), rgba(162, 155, 254, 0.13)), var(--sr-surface);
             opacity: 0.6;
         }
         @keyframes roll {
@@ -58,7 +55,7 @@
             margin: 20px 0;
         }
         .attribute-card {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.22), rgba(52, 152, 219, 0.13)), var(--sr-surface);
             border: 2px solid #3498db;
             border-radius: 10px;
             padding: 15px;
@@ -96,11 +93,11 @@
             color: #00ffff;
             font-weight: bold;
         }
-        .priority-a { background: linear-gradient(135deg, #e74c3c, #c0392b); }
-        .priority-b { background: linear-gradient(135deg, #f39c12, #e67e22); }
-        .priority-c { background: linear-gradient(135deg, #f1c40f, #f39c12); }
-        .priority-d { background: linear-gradient(135deg, #27ae60, #2ecc71); }
-        .priority-e { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .priority-a { background: linear-gradient(135deg, rgba(231, 76, 60, 0.22), rgba(192, 57, 43, 0.13)), var(--sr-surface); }
+        .priority-b { background: linear-gradient(135deg, rgba(243, 156, 18, 0.22), rgba(230, 126, 34, 0.13)), var(--sr-surface); }
+        .priority-c { background: linear-gradient(135deg, rgba(241, 196, 15, 0.22), rgba(243, 156, 18, 0.13)), var(--sr-surface); }
+        .priority-d { background: linear-gradient(135deg, rgba(39, 174, 96, 0.22), rgba(46, 204, 113, 0.13)), var(--sr-surface); }
+        .priority-e { background: linear-gradient(135deg, rgba(52, 152, 219, 0.22), rgba(41, 128, 185, 0.13)), var(--sr-surface); }
         
         .dice-pool-calculator {
             background: rgba(0,255,255,0.1);
@@ -174,10 +171,19 @@
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
         }
+        .table-caption {
+            caption-side: bottom;
+            padding: 12px 4px 0;
+            color: var(--sr-text-dim);
+            font-size: 0.84rem;
+            font-style: italic;
+            text-align: left;
+        }
+        .priority-table small { font-weight: 400; opacity: 0.75; font-size: 0.78em; }
     </style>
     <script src="/styles/site-nav.js" defer></script>
 </head>
-<body>
+<body class="lesson">
     <header>
         <h1 style="color: #e74c3c; text-shadow: 0 0 20px #e74c3c;">Rolling with the Punches</h1>
         <p><em>Game Mechanics and Character Creation</em></p>
@@ -300,10 +306,10 @@
                     G -->|Half or more 1s| H[Glitch!]
                     G -->|More 1s than hits| I[Critical Glitch!]
                     
-                    style E fill:#4ecdc4
-                    style F fill:#e74c3c
-                    style H fill:#f39c12
-                    style I fill:#8b0000
+                    style E stroke:#4ecdc4,stroke-width:3px
+                    style F stroke:#e74c3c,stroke-width:3px
+                    style H stroke:#f39c12,stroke-width:3px
+                    style I stroke:#8b0000,stroke-width:3px
             </div>
 
             <h3>Difficulty Examples</h3>
@@ -441,59 +447,71 @@
             <p>Creating a Shadowrun character is like allocating a limited budget across five crucial areas. You assign priorities A through E to determine what your character excels at and what they sacrifice:</p>
 
             <table class="priority-table">
+                <caption class="table-caption">Abridged. The full table — every metatype at every priority, and the exact Magic and Resonance ratings — is on p.&nbsp;65 of the core rulebook.</caption>
                 <thead>
                     <tr>
                         <th>Priority</th>
-                        <th>Metatype</th>
+                        <th>Metatype<br><small>(special attribute points)</small></th>
                         <th>Attributes</th>
-                        <th>Magic/Resonance</th>
-                        <th>Skills</th>
+                        <th>Magic / Resonance</th>
+                        <th>Skills<br><small>(individual / group)</small></th>
                         <th>Resources</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="priority-a">
                         <td><strong>A</strong></td>
-                        <td>Elf (8)</td>
+                        <td>Every metatype available,<br>including troll — with the<br>most special attribute points</td>
                         <td>24 points</td>
-                        <td>Magician/Mystic Adept</td>
-                        <td>46/10</td>
-                        <td>450,000¥</td>
+                        <td>Magician or Technomancer<br>at the highest rating</td>
+                        <td>46 / 10</td>
+                        <td>450,000&yen;</td>
                     </tr>
                     <tr class="priority-b">
                         <td><strong>B</strong></td>
-                        <td>Human (7)<br>Dwarf/Ork (4)</td>
+                        <td>Every metatype still available,<br>but troll drops to zero points</td>
                         <td>20 points</td>
-                        <td>Adept/Aspected</td>
-                        <td>36/5</td>
-                        <td>275,000¥</td>
+                        <td>Magician or Technomancer at a<br>lower rating; Adept or Aspected<br>at their best</td>
+                        <td>36 / 5</td>
+                        <td>275,000&yen;</td>
                     </tr>
                     <tr class="priority-c">
                         <td><strong>C</strong></td>
-                        <td>Human (5)<br>Dwarf/Ork (0)</td>
+                        <td>Troll no longer available;<br>the rest cost most or all<br>of their points</td>
                         <td>16 points</td>
-                        <td>Technomancer</td>
-                        <td>28/2</td>
-                        <td>140,000¥</td>
+                        <td>Magician or Technomancer at<br>the lowest usable rating;<br>Adept or Aspected</td>
+                        <td>28 / 2</td>
+                        <td>140,000&yen;</td>
                     </tr>
                     <tr class="priority-d">
                         <td><strong>D</strong></td>
-                        <td>Human (3)<br>Troll (0)</td>
+                        <td>Human and elf only</td>
                         <td>14 points</td>
-                        <td>Adept/Aspected</td>
-                        <td>22/0</td>
-                        <td>50,000¥</td>
+                        <td>Adept or Aspected Magician<br>only, at minimum rating</td>
+                        <td>22 / 0</td>
+                        <td>50,000&yen;</td>
                     </tr>
                     <tr class="priority-e">
                         <td><strong>E</strong></td>
-                        <td>Human (1)</td>
+                        <td>Human only, 1 point</td>
                         <td>12 points</td>
-                        <td>Mundane</td>
-                        <td>18/0</td>
-                        <td>6,000¥</td>
+                        <td>Mundane — no magic,<br>no resonance, ever</td>
+                        <td>18 / 0</td>
+                        <td>6,000&yen;</td>
                     </tr>
                 </tbody>
             </table>
+
+            <div class="callout callout-rule">
+                <span class="callout-title">The number in brackets is not your metatype's power level</span>
+                <p>It is your allowance of <strong>Special Attribute Points</strong>, and Special Attributes means exactly three things: <strong>Edge, Magic and Resonance</strong>. Nothing else.</p>
+                <p>This is the single most misread cell on the sheet. Taking troll at Priority A does not make you a better troll — trolls have the same racial modifiers whatever priority you bought them at. What the high priority buys is <em>points to spend on Edge</em>. And a mundane street samurai has nowhere to put those points except Edge, which is precisely why mundane characters at a high metatype priority end up so lucky.</p>
+            </div>
+
+            <div class="callout callout-warn">
+                <span class="callout-title">The rule that catches every new player</span>
+                <p>You must assign <strong>A, B, C, D and E exactly once each</strong> across the five columns. You cannot take two Bs. Every point of brilliance in one column is paid for by mediocrity in another — that constraint <em>is</em> the character creation minigame, and it is why Priority E Magic (mundane) is the most commonly taken cell in the game.</p>
+            </div>
 
             <h3>Priority Decision Examples</h3>
             <div class="character-sheet-preview">
@@ -572,8 +590,8 @@
                     H --> I[Calculate Derived Stats]
                     I --> J[Ready to Play!]
                     
-                    style A fill:#e74c3c
-                    style J fill:#4ecdc4
+                    style A stroke:#e74c3c,stroke-width:3px
+                    style J stroke:#4ecdc4,stroke-width:3px
             </div>
 
             <h3>Character Creation Checklist</h3>
@@ -621,7 +639,7 @@
         <footer>
             <p><em>The numbers define capability, but the story defines the character. Roll well, omae.</em></p>
             <p style="text-align: center; margin-top: 40px;">
-                <span style="color: #e74c3c; text-shadow: 0 0 10px #e74c3c;">◊ Next:<a href="/shadowrun/sr_contacts.html">Contacts, Lifestyle, and the Shadow Community</a> ◊</span>
+                <span style="color: #e74c3c; text-shadow: 0 0 10px #e74c3c;">◊ Next:<a href="/sr_contacts.html">Contacts, Lifestyle, and the Shadow Community</a> ◊</span>
             </p>
         </footer>
     </main>

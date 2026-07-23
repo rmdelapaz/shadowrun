@@ -6,10 +6,7 @@
     <title>Jacking In - The Matrix and Digital Warfare</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
-    </script>
+    <script type="module" src="/styles/mermaid-init.js"></script>
     <style>
         .matrix-grid {
             background: 
@@ -93,7 +90,7 @@
             position: absolute;
             width: 2px;
             height: 100px;
-            background: linear-gradient(180deg, transparent, #00ff00, transparent);
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 0, 0.22), transparent), var(--sr-surface);
             animation: dataFlow 3s linear infinite;
         }
         
@@ -138,7 +135,7 @@
         }
         
         .matrix-layers {
-            background: linear-gradient(45deg, #2d1b69, #11998e);
+            background: linear-gradient(45deg, rgba(45, 27, 105, 0.22), rgba(17, 153, 142, 0.13)), var(--sr-surface);
             border: 2px solid #00d4aa;
             border-radius: 15px;
             padding: 25px;
@@ -218,12 +215,12 @@
         }
         
         .decker-avatar {
-            background: linear-gradient(135deg, #00ff00, #008800);
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.22), rgba(0, 136, 0, 0.13)), var(--sr-surface);
             border-color: #00ff00;
         }
         
         .ic-avatar {
-            background: linear-gradient(135deg, #ff4444, #cc0000);
+            background: linear-gradient(135deg, rgba(255, 68, 68, 0.22), rgba(204, 0, 0, 0.13)), var(--sr-surface);
             border-color: #ff4444;
         }
         
@@ -294,7 +291,7 @@
         }
         
         .action-button {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.22), rgba(41, 128, 185, 0.13)), var(--sr-surface);
             border: 2px solid #3498db;
             border-radius: 8px;
             padding: 12px 20px;
@@ -306,13 +303,13 @@
         }
         
         .action-button:hover {
-            background: linear-gradient(135deg, #2980b9, #1f4e79);
+            background: linear-gradient(135deg, rgba(41, 128, 185, 0.22), rgba(31, 78, 121, 0.13)), var(--sr-surface);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
         .technomancer-highlight {
-            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            background: linear-gradient(135deg, rgba(142, 68, 173, 0.22), rgba(155, 89, 182, 0.13)), var(--sr-surface);
             border: 2px solid #9b59b6;
             border-radius: 15px;
             padding: 25px;
@@ -340,7 +337,7 @@
     </style>
     <script src="/styles/site-nav.js" defer></script>
 </head>
-<body>
+<body class="lesson">
     <div class="matrix-grid"></div>
     
     <header>
@@ -423,12 +420,12 @@
                         M[Resonance Wells] --> N[Technomancer Realms]
                         M --> O[Living Code]
                         
-                        style A fill:#27ae60
-                        style B fill:#3498db
-                        style C fill:#e74c3c
-                        style H fill:#2c3e50
-                        style J fill:#9b59b6
-                        style M fill:#f39c12
+                        style A stroke:#27ae60,stroke-width:3px
+                        style B stroke:#3498db,stroke-width:3px
+                        style C stroke:#e74c3c,stroke-width:3px
+                        style H stroke:#2c3e50,stroke-width:3px
+                        style J stroke:#9b59b6,stroke-width:3px
+                        style M stroke:#f39c12,stroke-width:3px
                 </div>
 
                 <h4>Key Matrix Regions</h4>
@@ -727,6 +724,85 @@
         </section>
 
         <section>
+            <h2>Marks and Overwatch: The Two Rules That Actually Govern a Run</h2>
+            <p>Everything above describes what the Matrix <em>is</em>. These two systems decide what happens to you in it, and a decker who does not understand both will get the team caught.</p>
+
+            <h3>Marks: the currency of access</h3>
+            <p>You do not "hack into" a system in Fifth Edition. You place <strong>marks</strong> on it — a mark is a token of access on a specific icon, and almost every worthwhile Matrix action requires you to already hold one, two, or three marks on the target.</p>
+
+            <table>
+                <thead>
+                    <tr><th>Getting a mark</th><th>Uses</th><th>Trade-off</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Hack on the Fly</strong></td>
+                        <td>Your Sleaze</td>
+                        <td>Quiet. If it fails, the target is alerted and your Overwatch Score climbs.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Brute Force</strong></td>
+                        <td>Your Attack</td>
+                        <td>Loud and reliable. Raises Overwatch Score whether it works or not.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>You can hold a maximum of <strong>three marks</strong> on any one icon. You may go for more than one in a single attempt, but it costs you: <strong>&minus;4</strong> dice to grab two at once, <strong>&minus;10</strong> to grab three.</p>
+
+            <div class="callout callout-tip">
+                <span class="callout-title">Why this matters at the table</span>
+                <p>The choice between Hack on the Fly and Brute Force is the decker's entire personality. Sleaze is slow and survivable; Attack is fast and expensive. Deckers who only ever Brute Force get the job done and get the team converged on — which brings us to the clock.</p>
+            </div>
+
+            <h3>Overwatch Score: the clock you cannot turn off</h3>
+            <p>The Grid Overwatch Division — <strong>GOD</strong> — is the Matrix's police force, and it is always looking. Every decker carries an <strong>Overwatch Score</strong> that only ever goes up during a run:</p>
+
+            <ul>
+                <li>Illegal actions — anything using your <strong>Attack</strong> or <strong>Sleaze</strong> attributes — add to it. Legal actions using Data Processing or Firewall do not.</li>
+                <li>It climbs on its own regardless: <strong>2d6 every 15 minutes</strong> you stay connected. Loitering is not free.</li>
+                <li>Nothing you do reduces it. The only reset is jacking out completely — and then you start the next intrusion from scratch.</li>
+            </ul>
+
+            <p>When the score hits the convergence threshold (<strong>40</strong> in the core rules), GOD arrives: your persona takes heavy Matrix damage, you are dumped offline, and — the part that ends runs — <strong>your physical location is traced and handed to the authorities</strong>.</p>
+
+            <div class="callout callout-warn">
+                <span class="callout-title">This is the Matrix's real timer</span>
+                <p>New deckers plan around IC. Experienced deckers plan around Overwatch. IC is a fight you can win; convergence is a clock you cannot stop, only outrun. It is why the correct answer to "can I take twenty minutes to look around the host?" is almost always no, and why a good decker jacks out and back in between objectives rather than staying resident.</p>
+                <p>It also quietly answers a question new players always ask — <em>why doesn't the decker just do everything from home, a week in advance?</em> Because the clock starts the moment they touch anything illegal, and it does not care how clever the plan was.</p>
+            </div>
+
+            <h3>How you connect changes everything</h3>
+            <table>
+                <thead>
+                    <tr><th>Mode</th><th>Initiative</th><th>Upside</th><th>Downside</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>AR</strong><br>overlay on your vision</td>
+                        <td>Your normal physical initiative</td>
+                        <td>You stay aware of the meat world and can walk, talk and shoot</td>
+                        <td>Slow in Matrix terms — you will lose every race</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cold-sim VR</strong></td>
+                        <td>Data Processing + Intuition, <strong>+3d6</strong></td>
+                        <td>Fast, and the simsense filters protect you</td>
+                        <td>Your body is lying there unattended</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hot-sim VR</strong></td>
+                        <td>Data Processing + Intuition, <strong>+4d6</strong></td>
+                        <td>Fastest, plus <strong>+2 dice to every Matrix action</strong></td>
+                        <td>Filters off — biofeedback damage becomes <strong>Physical</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Initiative dice cap at 5d6 no matter what you stack on top. And note what hot-sim really trades: not comfort, but the difference between waking up with a headache and waking up in a clinic.</p>
+        </section>
+
+        <section>
             <h2>Matrix Combat: Digital Warfare</h2>
             <p>Combat in the Matrix follows the same basic principles as physical combat, but with digital weapons, virtual terrain, and the constant threat of brain death:</p>
 
@@ -745,7 +821,7 @@
                 <h4>Combat Sequence</h4>
                 <div class="hacking-sequence">
                     <div style="color: #00ff00;">> Initiative Phase: Decker (15) vs Black IC (12)</div>
-                    <div style="color: #fff;">> Decker Action: Attack with Sword program</div>
+                    <div style="color: #fff;">&gt; Decker Action: Data Spike, boosted by the Hammer program</div>
                     <div style="color: #ffff00;">> Rolling Cybercombat + Logic: 6 hits</div>
                     <div style="color: #ff4444;">> Black IC Defense: 3 hits</div>
                     <div style="color: #00ff00;">> Net hits: 3 - IC takes damage</div>
@@ -769,8 +845,8 @@
 
             <h3>Matrix Combat Principles</h3>
             <ul>
-                <li><strong>Initiative:</strong> Reaction + Data Processing determines action order</li>
-                <li><strong>Attack Programs:</strong> Sword, Hammer, and specialized combat forms</li>
+                <li><strong>Initiative:</strong> depends entirely on how you are connected — see the table below. In VR it is <strong>Data Processing + Intuition</strong>, not Reaction</li>
+                <li><strong>Attack:</strong> the <em>Data Spike</em> action is how you do damage; programs like <em>Hammer</em> and <em>Mugger</em> make it hurt more</li>
                 <li><strong>Defense Programs:</strong> Armor and Firewall provide protection</li>
                 <li><strong>Damage Types:</strong> Matrix damage can cause stun or physical harm</li>
                 <li><strong>Link-lock:</strong> IC can prevent emergency disconnection</li>
@@ -802,9 +878,9 @@
                     N -->|Yes| I
                     N -->|No| O[Emergency Jack Out]
                     
-                    style A fill:#27ae60
-                    style G fill:#3498db
-                    style O fill:#e74c3c
+                    style A stroke:#27ae60,stroke-width:3px
+                    style G stroke:#3498db,stroke-width:3px
+                    style O stroke:#e74c3c,stroke-width:3px
             </div>
 
             <h3>Core Hacking Actions</h3>
@@ -860,7 +936,7 @@
             <h3>AI Entities</h3>
             <ul>
                 <li><strong>Free Spirits:</strong> Magical beings that inhabit electronic systems</li>
-                <li><strong>Otaku:</strong> Human-machine hybrids with Matrix integration</li>
+                <li><strong>Wild sprites and rogue AIs:</strong> Resonance beings and true artificial intelligences with agendas of their own <em>(note: “otaku” were the Third Edition version of this idea — by 2080 they have been superseded by technomancers)</em></li>
                 <li><strong>Dissonance Entities:</strong> Corrupted technomancer spirits</li>
                 <li><strong>Rogue AIs:</strong> Artificial intelligences pursuing their own agendas</li>
                 <li><strong>Corporate Spiders:</strong> Human security specialists defending their turf</li>
@@ -909,7 +985,7 @@
         <footer>
             <p><em>The Matrix rewards the bold, punishes the careless, and never forgives the unprepared. Stay frosty in cyberspace, console cowboy.</em></p>
             <p style="text-align: center; margin-top: 40px;">
-                <span style="color: #00ff00; text-shadow: 0 0 10px #00ff00;">◊ Next:<a href="/shadowrun/sr_magic.html"> Magic and the Awakened Arts</a> ◊</span>
+                <span style="color: #00ff00; text-shadow: 0 0 10px #00ff00;">◊ Next:<a href="/sr_magic.html"> Magic and the Awakened Arts</a> ◊</span>
             </p>
         </footer>
     </main>

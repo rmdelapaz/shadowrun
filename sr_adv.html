@@ -6,10 +6,7 @@
     <title>Living Legends - Advanced Campaigns and Character Development</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
-    </script>
+    <script type="module" src="/styles/mermaid-init.js"></script>
     <style>
         .legendary-background {
             background: 
@@ -59,7 +56,7 @@
         }
         
         .arc-stage {
-            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            background: linear-gradient(135deg, rgba(142, 68, 173, 0.22), rgba(155, 89, 182, 0.13)), var(--sr-surface);
             border: 3px solid #9b59b6;
             border-radius: 15px;
             padding: 25px;
@@ -193,7 +190,7 @@
         }
         
         .contact-evolution {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.22), rgba(46, 204, 113, 0.13)), var(--sr-surface);
             border: 3px solid #2ecc71;
             border-radius: 15px;
             padding: 25px;
@@ -281,7 +278,7 @@
         }
         
         .consequence-chain {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.22), rgba(230, 126, 34, 0.13)), var(--sr-surface);
             border: 3px solid #d35400;
             border-radius: 15px;
             padding: 25px;
@@ -315,7 +312,7 @@
         .world-consequences { background: #8e44ad; }
         
         .legacy-builder {
-            background: linear-gradient(135deg, #2d1b69, #11998e);
+            background: linear-gradient(135deg, rgba(45, 27, 105, 0.22), rgba(17, 153, 142, 0.13)), var(--sr-surface);
             border: 3px solid #00d4aa;
             border-radius: 20px;
             padding: 30px;
@@ -386,7 +383,7 @@
         .enemy { background: rgba(231, 76, 60, 0.3); border-color: #e74c3c; }
         
         .milestone-celebration {
-            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.22), rgba(243, 156, 18, 0.13)), var(--sr-surface);
             border: 3px solid #d35400;
             border-radius: 15px;
             padding: 25px;
@@ -422,7 +419,7 @@
     </style>
     <script src="/styles/site-nav.js" defer></script>
 </head>
-<body>
+<body class="lesson">
     <div class="legendary-background"></div>
     
     <header>
@@ -540,47 +537,41 @@
             <p>In the shadow community, reputation is more valuable than money. It determines what jobs you're offered, who will work with you, and whether you live long enough to enjoy your earnings:</p>
 
             <div class="reputation-tracker">
-                <h3>Reputation Categories</h3>
-                
-                <div class="rep-category">
-                    <span style="color: #3498db; font-weight: bold; width: 150px;">Professional:</span>
-                    <div class="rep-bar">
-                        <div class="rep-fill" style="width: 75%; background: linear-gradient(90deg, #3498db, #2980b9);"></div>
-                    </div>
-                    <span style="color: #fff;">Reliable</span>
-                </div>
+                <h3>The Three Reputation Tracks</h3>
+                <p style="color: #fff;">Shadowrun tracks reputation in exactly three numbers. They are not flavour — they modify dice pools, and two of them get you killed.</p>
 
                 <div class="rep-category">
-                    <span style="color: #27ae60; font-weight: bold; width: 150px;">Street Cred:</span>
+                    <span style="color: #3fd18b; font-weight: bold; width: 150px;">Street Cred:</span>
                     <div class="rep-bar">
-                        <div class="rep-fill" style="width: 60%; background: linear-gradient(90deg, #27ae60, #2ecc71);"></div>
+                        <div class="rep-fill" style="width: 60%; background: linear-gradient(90deg, #1c6b52, #3fd18b);"></div>
                     </div>
                     <span style="color: #fff;">Respected</span>
                 </div>
 
                 <div class="rep-category">
-                    <span style="color: #e74c3c; font-weight: bold; width: 150px;">Notoriety:</span>
+                    <span style="color: #ff4d6d; font-weight: bold; width: 150px;">Notoriety:</span>
                     <div class="rep-bar">
-                        <div class="rep-fill" style="width: 30%; background: linear-gradient(90deg, #e74c3c, #c0392b);"></div>
+                        <div class="rep-fill" style="width: 30%; background: linear-gradient(90deg, #7a2450, #ff4d6d);"></div>
                     </div>
                     <span style="color: #fff;">Manageable</span>
                 </div>
 
                 <div class="rep-category">
-                    <span style="color: #f39c12; font-weight: bold; width: 150px;">Corporate Heat:</span>
+                    <span style="color: #ffb700; font-weight: bold; width: 150px;">Public Awareness:</span>
                     <div class="rep-bar">
-                        <div class="rep-fill" style="width: 45%; background: linear-gradient(90deg, #f39c12, #e67e22);"></div>
+                        <div class="rep-fill" style="width: 45%; background: linear-gradient(90deg, #8a5a10, #ffb700);"></div>
                     </div>
-                    <span style="color: #fff;">Moderate</span>
+                    <span style="color: #fff;">Recognised in some circles</span>
                 </div>
 
-                <h4>Reputation Effects</h4>
+                <h4>What each one does</h4>
                 <ul style="color: #fff;">
-                    <li><strong>Professional Rep:</strong> Attracts better jobs and higher-quality contacts</li>
-                    <li><strong>Street Cred:</strong> Provides respect and protection in gang territories</li>
-                    <li><strong>Notoriety:</strong> Makes you famous but attracts unwanted attention</li>
-                    <li><strong>Corporate Heat:</strong> Determines how actively corporations pursue you</li>
+                    <li><strong>Street Cred</strong> — the shadow community's respect. It is not awarded arbitrarily: it is your <strong>total earned Karma divided by 10</strong>, so it grows automatically as you play. It adds dice to social tests with people who run in the same circles, and it is the currency you spend to bury Notoriety.</li>
+                    <li><strong>Notoriety</strong> — the reputation you did not want. Burning a Johnson, killing unnecessarily, being sloppy. It <em>subtracts</em> dice when dealing with professionals, because nobody wants to work with someone who is bad news. Unlike Street Cred it can be reduced — by spending Street Cred.</li>
+                    <li><strong>Public Awareness</strong> — how much the <em>straight</em> world knows your face: media, Lone Star, the general public. This is the dangerous one. Street Cred and Notoriety matter inside the shadows; Public Awareness means people outside the shadows can recognise you, which is the opposite of the entire job.</li>
                 </ul>
+
+                <p style="color: #cfc9e6;"><strong>The trap:</strong> new players chase Street Cred as though it were a score. It is, but it comes with a cost — the same deeds that build it tend to raise Public Awareness too, and a runner famous enough to be recognised has to retire, change faces, or start taking much worse jobs.</p>
             </div>
         </section>
 

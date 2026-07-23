@@ -1,461 +1,619 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
 
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-  display: block;
-}
-body {
-  line-height: 1;
-}
-ol,
-ul {
-  list-style: none;
-}
-blockquote,
-q {
-  quotes: none;
-}
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: "";
-  content: none;
-}
-table, td, tr,th {
- border: 1px solid var(--border-color);
-  border-spacing: 0;
- padding: 5px;
- text-align: center;
-}
-sup {font-size: x-small;
-vertical-align: super;}
-sub {font-size: x-small;
-vertical-align: sub;}
-body {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  font-size: medium;
-  line-height: 110%;
-  background-color: var(--bg);
-  margin-left: 30px;
-  margin-right: 40px;
-  margin-bottom: 30px;
-  color: var(--text);
-  transition: background-color 0.3s, color 0.3s;
-}
-h1,
-h2,
-h3, h4 {
-  font-weight: bolder;
-  background-color: var(--heading-bg);
-  color: var(--heading-text);
-  margin: 1rem;
-  padding: 1rem;
-  line-height: 120%;
-}
-strong {font-weight: bold;color: var(--strong-color);}
-h1 {
-  font-size: 2rem;
-  text-align: center;
-  border-bottom-width: 10px #333333 solid;
-  line-height: 120%;
-}
+/* ============================================================
+   SHADOWRUN — Sixth World shared stylesheet
+   ------------------------------------------------------------
+   1  Reset (Eric Meyer v2.0, public domain)
+   2  Design tokens — dark is the default, [data-theme="light"]
+      is the opt-in (site-nav.js sets the attribute explicitly)
+   3  Site chrome — top nav, prev/next, theme toggle
+   4  Lesson pages — scoped under body.lesson
+   5  Hub — index.html, scoped under body.hub
+   ============================================================ */
 
-h2 {
-  font-size: x-large;
-  margin-left: 20px;
-  margin-right: 20px;
+/* ===== 1. RESET ============================================ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, figure, figcaption,
+footer, header, hgroup, menu, nav, output, ruby, section,
+summary, time, mark, audio, video {
+  margin: 0; padding: 0; border: 0;
+  font-size: 100%; font: inherit; vertical-align: baseline;
 }
+article, aside, details, figcaption, figure, footer,
+header, hgroup, menu, nav, section { display: block; }
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after,
+q:before, q:after { content: ""; content: none; }
+sup { font-size: x-small; vertical-align: super; }
+sub { font-size: x-small; vertical-align: sub; }
 
-h3 {
-  font-size: large;
-  margin-left: 30px;
-  margin-right: 30px;
-}
-
-h4 {margin-left: 35px;
-margin-right: 35px;}
-
-h5 {margin-left: 35px;}
-
-/* ===== Dark/Light Mode Variables ===== */
+/* ===== 2. TOKENS =========================================== */
 :root {
-  --bg: rgb(248, 250, 252);
-  --text: rgb(51, 65, 85);
-  --heading-bg: rgb(59, 130, 246);
-  --heading-text: white;
-  --strong-color: rgb(17, 24, 39);
-  --code-bg: rgb(248, 250, 252);
-  --code-color: rgb(34, 139, 34);
-  --link-color: rgb(59, 130, 246);
-  --blockquote-bg: rgb(226, 232, 240);
-  --blockquote-text: rgb(51, 65, 85);
-  --border-color: #333333;
-  --mermaid-bg: rgb(255, 255, 255);
-  --mermaid-border: rgb(226, 232, 240);
-  --mermaid-node: rgb(248, 250, 252);
-  --mermaid-stroke: rgb(148, 163, 184);
-  --mermaid-edge: rgb(71, 85, 105);
-  --mermaid-label: rgb(51, 65, 85);
-  --mermaid-cluster: rgb(241, 245, 249);
+  /* surfaces — midnight indigo, the Sixth World after dark */
+  --sr-bg:        #0b0817;
+  --sr-bg-2:      #130f24;
+  --sr-surface:   #191333;
+  --sr-surface-2: #211a42;
+  --sr-line:      #362b5e;
+
+  /* ink */
+  --sr-text:      #cfc9e6;
+  --sr-text-dim:  #948cb5;
+  --sr-text-hi:   #f3f0ff;
+
+  /* the two poles of the setting: mana and the Matrix */
+  --sr-violet: #a06bff;   /* magic, the Awakened */
+  --sr-green:  #3fd18b;   /* the Matrix, deckers */
+  --sr-cyan:   #37c6e0;   /* chrome, augmentation */
+  --sr-red:    #ff4d6d;   /* danger, corps, wetwork */
+  --sr-amber:  #ffb700;   /* money, nuyen, warnings */
+
+  --sr-font-display: 'Orbitron', 'Segoe UI', sans-serif;
+  --sr-font-body: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --sr-font-mono: 'Share Tech Mono', 'Consolas', 'Courier New', monospace;
+
+  --sr-measure: 680px;   /* text column — headings and copy share it */
+  --sr-media: 1000px;    /* diagrams, tables and figures sit wider */
+  --sr-radius: 10px;
+
+  /* legacy names kept so site chrome and any stray page rules resolve */
+  --bg: var(--sr-bg);
+  --text: var(--sr-text);
+  --heading-bg: var(--sr-surface-2);
+  --heading-text: var(--sr-text-hi);
+  --strong-color: var(--sr-text-hi);
+  --code-bg: #0f0b1f;
+  --code-color: var(--sr-green);
+  --link-color: var(--sr-cyan);
+  --blockquote-bg: var(--sr-surface);
+  --blockquote-text: var(--sr-text);
+  --border-color: var(--sr-line);
 }
 
-[data-theme="dark"] {
-  --bg: #0f172a;
-  --text: #cbd5e1;
-  --heading-bg: #1e3a5f;
-  --heading-text: #e2e8f0;
-  --strong-color: #f1f5f9;
-  --code-bg: #1e293b;
-  --code-color: #4ade80;
-  --link-color: #60a5fa;
-  --blockquote-bg: #1e293b;
-  --blockquote-text: #94a3b8;
-  --border-color: #475569;
-  --mermaid-bg: #1e293b;
-  --mermaid-border: #334155;
-  --mermaid-node: #1e293b;
-  --mermaid-stroke: #475569;
-  --mermaid-edge: #94a3b8;
-  --mermaid-label: #e2e8f0;
-  --mermaid-cluster: #1e293b;
+[data-theme="light"] {
+  --sr-bg:        #f4f2fa;
+  --sr-bg-2:      #eae6f5;
+  --sr-surface:   #ffffff;
+  --sr-surface-2: #f2eefb;
+  --sr-line:      #d2c9e8;
+
+  --sr-text:      #2c2545;
+  --sr-text-dim:  #605779;
+  --sr-text-hi:   #150f2b;
+
+  --sr-violet: #6d34c8;
+  --sr-green:  #0f7a52;
+  --sr-cyan:   #10708a;
+  --sr-red:    #c22449;
+  --sr-amber:  #8f6100;
+
+  --code-bg: #f5f2fc;
 }
 
-/* ===== Site Nav ===== */
+/* ===== 3. SITE CHROME ====================================== */
 #site-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
-  background: var(--heading-bg);
-  margin: 0 0 10px 0;
-  border-radius: 6px;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
+  padding: 11px 20px;
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, var(--sr-surface), var(--sr-surface-2));
+  border-bottom: 1px solid var(--sr-line);
+  font-family: var(--sr-font-display);
 }
-#site-nav .nav-left { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-#site-nav a { color: var(--heading-text); text-decoration: none; font-size: 0.9rem; font-weight: bold; }
-#site-nav a:hover { text-decoration: underline; }
+#site-nav .nav-left { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+#site-nav a {
+  color: var(--sr-cyan);
+  text-decoration: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+#site-nav a:hover { color: var(--sr-violet); }
 #theme-toggle {
-  background: none; border: 1px solid var(--heading-text); color: var(--heading-text);
-  padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem;
+  background: rgba(160, 107, 255, 0.12);
+  border: 1px solid var(--sr-violet);
+  color: var(--sr-violet);
+  font-family: var(--sr-font-display);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: background 0.2s, box-shadow 0.2s;
 }
-#theme-toggle:hover { background: rgba(255,255,255,0.15); }
+#theme-toggle:hover { background: rgba(160, 107, 255, 0.24); box-shadow: 0 0 14px rgba(160, 107, 255, 0.3); }
 
 .prev-next {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  margin: 30px 0 10px 0;
-  border-top: 2px solid var(--heading-bg);
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
+  max-width: var(--sr-media);
+  margin: 56px auto 0;
+  padding: 20px 16px 0;
+  border-top: 1px solid var(--sr-line);
+  font-family: var(--sr-font-display);
 }
 .pn-link {
-  color: var(--link-color) !important;
+  color: var(--sr-cyan) !important;
   text-decoration: none;
-  font-weight: bold;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  padding: 9px 16px;
+  border: 1px solid rgba(55, 198, 224, 0.32);
+  border-radius: 6px;
+  background: rgba(55, 198, 224, 0.07);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.pn-link:hover {
+  background: rgba(55, 198, 224, 0.2);
+  box-shadow: 0 0 14px rgba(55, 198, 224, 0.25);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+.pn-home { font-weight: 700; }
+
+/* ===== 4. LESSON PAGES ===================================== */
+body.lesson {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -8%, rgba(160, 107, 255, 0.13), transparent 62%),
+    radial-gradient(ellipse 55% 40% at 92% 102%, rgba(63, 209, 139, 0.08), transparent 62%),
+    linear-gradient(180deg, var(--sr-bg) 0%, var(--sr-bg-2) 48%, var(--sr-bg) 100%);
+  background-attachment: fixed;
+  color: var(--sr-text);
+  font-family: var(--sr-font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  margin: 0;
+  padding: 0 0 50px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- header ----------------------------------------------- */
+body.lesson > header {
+  max-width: 1080px;
+  margin: 0 auto 46px;
+  padding: 50px 28px 40px;
+  text-align: center;
+  border-bottom: 1px solid var(--sr-line);
+  background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(160, 107, 255, 0.11), transparent 70%);
+}
+body.lesson > header .subtitle {
+  font-family: var(--sr-font-display);
   font-size: 0.95rem;
-}
-.pn-link:hover { text-decoration: underline; }
-
-table {
-  margin-left: 45px;
-}
-p {
-  margin-top: 10px;
-  margin-left: 45px;
-  margin-bottom: 5px;
-  margin-right: 40px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--sr-green);
+  margin: 0;
+  max-width: none;
 }
 
-h1 code {
-  margin-left: 0px;
-  margin-right: 0px;
+/* --- headings --------------------------------------------- */
+body.lesson h1, body.lesson h2, body.lesson h3,
+body.lesson h4, body.lesson h5 {
+  font-family: var(--sr-font-display);
+  color: var(--sr-text-hi);
+  line-height: 1.25;
+  font-weight: 700;
+  background: none;
+}
+body.lesson h1 {
+  font-size: clamp(1.9rem, 4.6vw, 2.9rem);
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sr-violet);
+  text-shadow: 0 0 18px rgba(160, 107, 255, 0.5), 0 0 44px rgba(160, 107, 255, 0.22);
+  margin-bottom: 14px;
+}
+body.lesson main h2 {
+  font-size: 1.68rem;
+  letter-spacing: 1px;
+  margin: 62px auto 22px;
+  padding: 0 0 12px 18px;
+  max-width: var(--sr-measure);
+  border-left: 4px solid var(--sr-violet);
+  border-bottom: 1px solid var(--sr-line);
+  color: var(--sr-violet);
+  text-shadow: 0 0 20px rgba(160, 107, 255, 0.28);
+}
+body.lesson main h3 {
+  font-size: 1.2rem;
+  margin: 38px auto 13px;
+  padding-left: 18px;
+  max-width: var(--sr-measure);
+  color: var(--sr-green);
+  border-left: 3px solid rgba(63, 209, 139, 0.45);
+}
+body.lesson main h4 {
+  font-size: 1.02rem;
+  letter-spacing: 0.5px;
+  margin: 26px auto 9px;
+  max-width: var(--sr-measure);
+  color: var(--sr-cyan);
+  text-transform: uppercase;
 }
 
-p code {
-  margin-left: 0px;
-  margin-right: 0px;
+/* --- copy ------------------------------------------------- */
+body.lesson p {
+  max-width: var(--sr-measure);
+  margin: 0 auto 20px;
+  color: var(--sr-text);
 }
-
-pre code {
-  margin-left: 0px;
-  margin-right: 0px;
+body.lesson strong { font-weight: 700; color: var(--sr-text-hi); }
+body.lesson em { font-style: italic; color: var(--sr-green); }
+body.lesson a {
+  color: var(--sr-cyan);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(55, 198, 224, 0.5);
+  transition: color 0.2s, border-color 0.2s;
 }
-h4 code { margin-left: 0px; margin-right: 0px;}
-h2 code { margin-left: 0px; margin-right: 0px;}
-h3 code { margin-left: 0px; margin-right: 0px;}
-li code { margin-left: 0px; margin-right: 0px;}
-code, pre {
-  
-  margin-top: 15px;
-  margin-left: 40px;
-  margin-right: 40px;
-  font-family: "Courier New", Courier, monospace;
-  background-color: var(--code-bg);
-  color: var(--code-color);
+body.lesson a:hover { color: var(--sr-violet); border-bottom-color: var(--sr-violet); }
 
-  padding-top: 5px;
-  padding-left: 2px;
-  line-height: 150%;
-
+/* --- lists ------------------------------------------------ */
+body.lesson main ul,
+body.lesson main ol,
+body.lesson main dl {
+  max-width: var(--sr-measure);
+  margin: 0 auto 22px;
+  padding-left: 4px;
 }
-
-p code {
- margin-right: 0;
+body.lesson main li { position: relative; padding: 5px 0 5px 26px; list-style: none; margin-left: 0; }
+body.lesson main ul > li::before {
+  content: '▸'; position: absolute; left: 4px; top: 5px; color: var(--sr-violet);
 }
+body.lesson main ol { counter-reset: sr-ol; }
+body.lesson main ol > li { counter-increment: sr-ol; }
+body.lesson main ol > li::before {
+  content: counter(sr-ol);
+  position: absolute; left: 0; top: 6px;
+  width: 19px; height: 19px; border-radius: 50%;
+  background: rgba(160, 107, 255, 0.14);
+  border: 1px solid rgba(160, 107, 255, 0.45);
+  color: var(--sr-violet);
+  font-family: var(--sr-font-mono);
+  font-size: 0.72rem; line-height: 19px; text-align: center;
+}
+body.lesson main li ul, body.lesson main li ol { margin: 6px 0 6px 8px; }
+body.lesson dt { font-weight: 700; color: var(--sr-text-hi); margin-top: 12px; }
+body.lesson dd { margin-left: 22px; padding-bottom: 10px; color: var(--sr-text-dim); }
 
-footer {
+/* --- boxed components ------------------------------------
+   Pages build cards out of plain <div>s inside a <section>;
+   their inner text must sit flush rather than be re-centred
+   into the page text column.                                */
+body.lesson main section > div:not(.mermaid):not(.mermaid_container) :is(h3, h4, h5, p, ul, ol, dl) {
+  max-width: none; margin-left: 0; margin-right: 0;
+}
+body.lesson main section > div:not(.mermaid):not(.mermaid_container) :is(h3, h4) {
+  padding-left: 0; border-left: 0; margin-top: 0;
+}
+body.lesson main section > div:not(.mermaid):not(.mermaid_container) > :last-child { margin-bottom: 0; }
+
+/* --- tables ----------------------------------------------- */
+body.lesson table {
+  max-width: var(--sr-media);
+  width: 100%;
+  margin: 26px auto;
+  border-collapse: collapse;
+  background: var(--sr-surface);
+  border: 1px solid var(--sr-line);
+  border-radius: var(--sr-radius);
+  overflow: hidden;
+  font-size: 0.94rem;
+}
+body.lesson th {
+  background: linear-gradient(180deg, var(--sr-surface-2), var(--sr-surface));
+  color: var(--sr-violet);
+  font-family: var(--sr-font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 13px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--sr-line);
   text-align: left;
 }
-ol li {
-  padding-top: 10px;
-  list-style-type:decimal ;
+body.lesson td {
+  padding: 11px 14px;
+  border: 0;
+  border-bottom: 1px solid rgba(54, 43, 94, 0.6);
+  text-align: left;
+  color: var(--sr-text);
 }
+body.lesson tbody tr:hover td { background: rgba(160, 107, 255, 0.06); }
+body.lesson tr:last-child td { border-bottom: 0; }
 
-a {color: var(--link-color);}
-ul li {
-  list-style-type: disc;
+/* --- code ------------------------------------------------- */
+body.lesson code, body.lesson pre {
+  font-family: var(--sr-font-mono);
+  color: var(--sr-green);
+  margin-left: 0; margin-right: 0;
 }
-dl, ol, ul, li {
-  margin-left: 45px;
-  padding-top: 5px;
+body.lesson p code, body.lesson li code, body.lesson td code {
+  background: rgba(63, 209, 139, 0.09);
+  border: 1px solid rgba(63, 209, 139, 0.24);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.92em;
 }
-
-ul li ul li {
-  margin-left: 0px;
-}
-
-dd
-{
- margin-left: 25px;
- padding-bottom: 10px;
-
-}
-img {background-color: white;
-width:100%}
-
-div img {width:45%;
-text-align: center;}
-
-.center {text-align: center;}
-
-blockquote {margin-left: 150px;
-margin-right: 140px;
-background-color: var(--blockquote-bg);
-color: var(--blockquote-text);
-padding: 12px;}
-
-footer {padding-bottom: 20px;}
-
-#sm-logo {width: 15%;
-height: 15%;}
-
-pre {
-
-  padding: 15px;
-  border-radius: 5px;
+body.lesson pre {
+  max-width: var(--sr-media);
+  margin: 22px auto;
+  padding: 18px 20px;
+  background: var(--code-bg);
+  border: 1px solid var(--sr-line);
+  border-left: 3px solid var(--sr-green);
+  border-radius: var(--sr-radius);
   overflow-x: auto;
+  line-height: 1.6;
+}
+body.lesson .code-comment { color: var(--sr-text-dim); font-style: italic; }
+
+/* --- blockquote ------------------------------------------- */
+body.lesson blockquote {
+  max-width: var(--sr-measure);
+  margin: 26px auto;
+  padding: 18px 24px;
+  background: linear-gradient(90deg, rgba(160, 107, 255, 0.1), rgba(160, 107, 255, 0.02));
+  border-left: 3px solid var(--sr-violet);
+  border-radius: 0 var(--sr-radius) var(--sr-radius) 0;
+  color: var(--sr-text);
+  font-style: italic;
 }
 
-h3 a { color: white;}
+/* --- figures ---------------------------------------------- */
+body.lesson figure {
+  max-width: var(--sr-media);
+  margin: 32px auto;
+  padding: 20px;
+  background: var(--sr-surface);
+  border: 1px solid var(--sr-line);
+  border-radius: var(--sr-radius);
+  text-align: center;
+}
+body.lesson figure svg, body.lesson figure img {
+  display: block; max-width: 100%; height: auto; margin: 0 auto;
+  background: none; border-radius: 6px; width: auto;
+}
+body.lesson figcaption {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--sr-line);
+  color: var(--sr-text-dim);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  text-align: left;
+}
+body.lesson figcaption strong { color: var(--sr-violet); }
 
-
-        .code-comment {
-            color: #0891b2;
-            font-style: italic;
-        }
-        .comment-block {
-  
-            border-left: 4px solid #1890ff;
-            padding: 10px 15px;
-            margin: 15px 0;
-            border-radius: 0 5px 5px 0;
-        }
-
-        /* Updated mermaid styling for light mode and centering */
-        .mermaid_container, .mermaid-diagram, .mermaid {
-            margin: 25px auto;
-            padding: 20px;
-            background-color: var(--mermaid-bg);
-            color: var(--text);
-            border: 1px solid var(--mermaid-border);
-            border-radius: 8px;
-            max-width: 90%;
-            text-align: center;
-            display: block;
-        }
-
-        /* Style for SVG elements within mermaid diagrams */
-        .mermaid svg {
-            margin: 0 auto;
-            display: block;
-        }
-
-        /* Light theme for mermaid diagram elements */
-        .mermaid .node rect, 
-        .mermaid .node circle, 
-        .mermaid .node ellipse, 
-        .mermaid .node polygon, 
-        .mermaid .node path {
-            fill: rgb(248, 250, 252);
-            stroke: rgb(148, 163, 184);
-        }
-
-        .mermaid .edgePath .path {
-            stroke: rgb(71, 85, 105);
-        }
-
-        .mermaid .label {
-            color: rgb(51, 65, 85);
-            fill: rgb(51, 65, 85);
-        }
-
-        .mermaid .cluster rect {
-            fill: rgb(241, 245, 249);
-            stroke: rgb(148, 163, 184);
-        }
-        
-        /* Ensure text labels are visible in light mode */
-        .mermaid .label text, 
-        .mermaid text {
-            fill: #1f2937 !important;
-        }
-
-        /* Specific styling for mindmap and flowchart text */
-        .mermaid .flowchart-label text,
-        .mermaid .mindmap-node text,
-        .mermaid .mindmap-node .nodeText,
-        .mermaid .nodeLabel {
-            fill: #1f2937 !important;
-            color: #1f2937 !important;
-        }
-
-svg {
+/* --- callouts --------------------------------------------- */
+body.lesson .callout {
+  max-width: var(--sr-measure);
+  margin: 24px auto;
+  padding: 18px 22px;
+  background: var(--sr-surface);
+  border: 1px solid var(--sr-line);
+  border-left: 4px solid var(--sr-violet);
+  border-radius: 0 var(--sr-radius) var(--sr-radius) 0;
+}
+body.lesson .callout p, body.lesson .callout ul, body.lesson .callout ol { max-width: none; }
+body.lesson .callout > *:last-child { margin-bottom: 0; }
+body.lesson .callout-title {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  font-family: var(--sr-font-display);
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--sr-violet);
+  margin-bottom: 10px;
+}
+body.lesson .callout-rule  { border-left-color: var(--sr-amber); }
+body.lesson .callout-rule  .callout-title { color: var(--sr-amber); }
+body.lesson .callout-warn  { border-left-color: var(--sr-red); }
+body.lesson .callout-warn  .callout-title { color: var(--sr-red); }
+body.lesson .callout-tip   { border-left-color: var(--sr-green); }
+body.lesson .callout-tip   .callout-title { color: var(--sr-green); }
+body.lesson .comment-block {
+  max-width: var(--sr-measure);
+  margin: 22px auto;
+  padding: 14px 20px;
+  background: var(--sr-surface);
+  border-left: 4px solid var(--sr-cyan);
+  border-radius: 0 var(--sr-radius) var(--sr-radius) 0;
 }
 
-/* For SVG elements within containers */
-.svg-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* --- mermaid ---------------------------------------------- */
+body.lesson .mermaid,
+body.lesson .mermaid_container,
+body.lesson .mermaid-diagram {
+  max-width: var(--sr-media);
+  margin: 28px auto;
+  padding: 22px;
+  background: var(--sr-surface);
+  color: var(--sr-text);
+  border: 1px solid var(--sr-line);
+  border-radius: var(--sr-radius);
+  text-align: center;
+  display: block;
 }
-table {
-  margin-left: auto;
-  margin-right: auto;
-  border-collapse: collapse; /* Optional: removes double borders */
+body.lesson .mermaid svg { margin: 0 auto; display: block; max-width: 100%; height: auto; }
+
+/* Mermaid hardcodes stateDiagram note boxes to a pale yellow (#fff5ad) that its own
+   themeVariables do not reach - and its general .nodeLabel rule then paints our light
+   label text on top of it, giving 1.13:1 contrast. This is the one place the diagram
+   colours genuinely have to be corrected from CSS. */
+body.lesson .mermaid .statediagram-note rect,
+body.lesson .mermaid .state-note {
+  fill: var(--sr-surface-2) !important;
+  stroke: var(--sr-line) !important;
+}
+body.lesson .mermaid .statediagram-note text,
+body.lesson .mermaid .state-note text { fill: var(--sr-text) !important; }
+body.lesson .mermaid .statediagram-note .nodeLabel { color: var(--sr-text) !important; }
+
+/* Colours come from mermaid-init.js themeVariables, NOT from here — overriding
+   the generated SVG in CSS is what made the labels unreadable before. */
+
+/* --- footer ----------------------------------------------- */
+body.lesson > footer {
+  max-width: var(--sr-media);
+  margin: 60px auto 0;
+  padding: 26px 24px;
+  border-top: 1px solid var(--sr-line);
+  text-align: center;
+  color: var(--sr-text-dim);
+  font-size: 0.92rem;
+}
+body.lesson > footer p { max-width: none; margin-bottom: 8px; }
+
+/* ===== 5. HUB (index.html) ================================= */
+body.hub {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(160, 107, 255, 0.16), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 88% 100%, rgba(63, 209, 139, 0.1), transparent 62%),
+    linear-gradient(180deg, var(--sr-bg) 0%, var(--sr-bg-2) 50%, var(--sr-bg) 100%);
+  background-attachment: fixed;
+  color: var(--sr-text);
+  font-family: var(--sr-font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  margin: 0;
+  padding: 0 0 60px;
+  min-height: 100vh;
+}
+.hub-wrap { max-width: 1240px; margin: 0 auto; padding: 0 22px; }
+.hub-header {
+  text-align: center;
+  padding: 60px 20px 44px;
+  border-bottom: 1px solid var(--sr-line);
+  margin-bottom: 44px;
+  background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(160, 107, 255, 0.12), transparent 70%);
+}
+.hub-title {
+  font-family: var(--sr-font-display);
+  font-size: clamp(2.1rem, 6vw, 3.6rem);
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--sr-violet);
+  text-shadow: 0 0 24px rgba(160, 107, 255, 0.55), 0 0 60px rgba(160, 107, 255, 0.25);
+  margin-bottom: 14px;
+}
+.hub-sub {
+  font-family: var(--sr-font-display);
+  font-size: 0.95rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--sr-green);
+  margin-bottom: 18px;
+}
+.hub-lede { max-width: 700px; margin: 0 auto; color: var(--sr-text-dim); }
+
+.hub-section-title {
+  font-family: var(--sr-font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--sr-cyan);
+  margin: 48px 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--sr-line);
+}
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+}
+/* a lone card in an auto-fill grid leaves a dead column — let it span */
+.hub-grid--feature { grid-template-columns: 1fr; }
+.hub-grid--feature .hub-card { padding: 28px 30px 26px; }
+.hub-grid--feature .hub-card h3 { font-size: 1.3rem; }
+.hub-grid--feature .hub-card p { max-width: 70ch; font-size: 0.98rem; }
+.hub-card {
+  display: block;
+  position: relative;
+  padding: 22px 22px 20px;
+  background: var(--sr-surface);
+  border: 1px solid var(--sr-line);
+  border-top: 3px solid var(--sr-violet);
+  border-radius: var(--sr-radius);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+}
+.hub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+  border-color: var(--sr-violet);
+}
+.hub-card-num {
+  font-family: var(--sr-font-mono);
+  font-size: 0.76rem;
+  color: var(--sr-text-dim);
+  letter-spacing: 1px;
+}
+.hub-card h3 {
+  font-family: var(--sr-font-display);
+  font-size: 1.06rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--sr-text-hi);
+  margin: 6px 0 9px;
+}
+.hub-card p { font-size: 0.92rem; color: var(--sr-text-dim); margin: 0; }
+.hub-card.is-magic  { border-top-color: var(--sr-violet); }
+.hub-card.is-matrix { border-top-color: var(--sr-green); }
+.hub-card.is-matrix:hover { border-color: var(--sr-green); }
+.hub-card.is-chrome { border-top-color: var(--sr-cyan); }
+.hub-card.is-chrome:hover { border-color: var(--sr-cyan); }
+.hub-card.is-street { border-top-color: var(--sr-red); }
+.hub-card.is-street:hover { border-color: var(--sr-red); }
+.hub-card.is-tool   { border-top-color: var(--sr-amber); }
+.hub-card.is-tool:hover { border-color: var(--sr-amber); }
+
+.hub-footer {
+  max-width: 1240px;
+  margin: 64px auto 0;
+  padding: 26px 22px 0;
+  border-top: 1px solid var(--sr-line);
+  text-align: center;
+  color: var(--sr-text-dim);
+  font-size: 0.9rem;
 }
 
-/* For responsive tables that might need a container */
-.table-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+/* ===== 6. UTILITIES ======================================== */
+.center { text-align: center; }
+.svg-container { display: flex; justify-content: center; align-items: center; }
+.table-container { display: flex; justify-content: center; width: 100%; }
+#sm-logo { width: 15%; height: 15%; }
+
+@media (max-width: 760px) {
+  body.lesson { font-size: 16px; }
+  body.lesson > header { padding: 36px 16px 28px; }
+  body.lesson main h2 { font-size: 1.36rem; margin-top: 44px; }
+  body.lesson p,
+  body.lesson main ul,
+  body.lesson main ol { padding-left: 16px; padding-right: 16px; }
+  body.lesson figure { padding: 12px; margin-left: 8px; margin-right: 8px; }
+  body.lesson table { font-size: 0.85rem; }
+  .hub-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.lesson *, body.lesson *::before, body.lesson *::after,
+  .hub-card { animation: none !important; transition: none !important; }
 }

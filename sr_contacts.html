@@ -6,10 +6,7 @@
     <title>Living in the Shadows - Community and Connections</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
-    </script>
+    <script type="module" src="/styles/mermaid-init.js"></script>
     <style>
         .lifestyle-grid {
             display: grid;
@@ -48,12 +45,12 @@
         }
         
         .lifestyle-high {
-            background: linear-gradient(135deg, #2d1b69, #11998e);
+            background: linear-gradient(135deg, rgba(45, 27, 105, 0.22), rgba(17, 153, 142, 0.13)), var(--sr-surface);
             border-color: #00d4aa;
         }
         
         .lifestyle-luxury {
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.22), rgba(255, 140, 0, 0.13)), var(--sr-surface);
             border-color: #ffd700;
             color: #000;
         }
@@ -221,7 +218,7 @@
     </style>
     <script src="/styles/site-nav.js" defer></script>
 </head>
-<body>
+<body class="lesson">
     <header>
         <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Living in the Shadows</h1>
         <p><em>Contacts, Lifestyle, and the Shadow Community</em></p>
@@ -237,7 +234,7 @@
 
         <section>
             <h2>Lifestyle: More Than Just Where You Sleep</h2>
-            <p>In Shadowrun, lifestyle isn't just flavor text - it's a mechanical system that affects your character's capabilities, social standing, and survival. Your lifestyle represents your monthly overhead costs, living conditions, and the resources available to you between runs.</p>
+            <p>In Shadowrun, lifestyle isn't just flavor text - it's a mechanical system that affects your character's capabilities, social standing, and survival. Your lifestyle represents your monthly overhead costs, living conditions, and the resources available to you between runs. (The costs below are the standard Seattle prices — a GM running elsewhere can and should shift them.)</p>
 
             <div class="lifestyle-grid">
                 <div class="lifestyle-card lifestyle-street">
@@ -256,6 +253,24 @@
                     
                     <h4>Real-World Analogy</h4>
                     <p>Like living rough in any major city - vulnerable, constantly moving, relying on shelters and charity. You're invisible to the system, which can be both a curse and a blessing.</p>
+                </div>
+
+                <div class="lifestyle-card lifestyle-squatter">
+                    <h3 style="color: #b07d3f;">Squatter Lifestyle</h3>
+                    <p><strong>Cost:</strong> 500&yen; per month</p>
+                    <p><strong>The Reality:</strong> A corner of a condemned building, a shipping container, a coffin motel by the week. You have somewhere to put your things and a door that closes, and that is genuinely the whole difference.</p>
+
+                    <h4>Living Conditions</h4>
+                    <ul>
+                        <li>An address, even if it is not a legal one</li>
+                        <li>Somewhere to leave gear you cannot carry</li>
+                        <li>Unreliable power and water</li>
+                        <li>Neighbours who are in the same situation</li>
+                        <li>No security worth the name</li>
+                    </ul>
+
+                    <h4>Why this tier matters most</h4>
+                    <p>This is where the overwhelming majority of starting runners actually live. Priority E Resources gives you 6,000&yen; total — a year of Squatter, or three months of Low with nothing left for a gun. Most new characters are one bad month away from Street, and that pressure is exactly what makes them take the job.</p>
                 </div>
 
                 <div class="lifestyle-card lifestyle-low">
@@ -608,10 +623,10 @@
                     A --> J[Dragon CEOs]
                     J --> A
                     
-                    style J fill:#9b59b6,color:#fff
-                    style A fill:#3498db,color:#fff
-                    style B fill:#e74c3c,color:#fff
-                    style I fill:#95a5a6,color:#fff
+                    style J stroke:#9b59b6,stroke-width:3px,color:#fff
+                    style A stroke:#3498db,stroke-width:3px,color:#fff
+                    style B stroke:#e74c3c,stroke-width:3px,color:#fff
+                    style I stroke:#95a5a6,stroke-width:3px,color:#fff
             </div>
 
             <h3>Respect and Recognition</h3>
@@ -696,8 +711,8 @@
                     H --> J
                     I --> J
                     
-                    style A fill:#e74c3c,color:#fff
-                    style J fill:#8b0000,color:#fff
+                    style A stroke:#e74c3c,stroke-width:3px,color:#fff
+                    style J stroke:#8b0000,stroke-width:3px,color:#fff
             </div>
         </section>
 
@@ -735,7 +750,7 @@
         <footer>
             <p><em>Trust is the only currency that matters when the chips are down, omae.</em></p>
             <p style="text-align: center; margin-top: 40px;">
-                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next:<a href="/shadowrun/sr_planning.html">Planning and Executing Shadowruns</a> ◊</span>
+                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next:<a href="/sr_planning.html">Planning and Executing Shadowruns</a> ◊</span>
             </p>
         </footer>
     </main>

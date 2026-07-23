@@ -6,10 +6,7 @@
     <title>Concrete Jungle - Urban Sprawl and Street Life</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
-    </script>
+    <script type="module" src="/styles/mermaid-init.js"></script>
     <style>
         .city-skyline {
             background: linear-gradient(180deg, #2c3e50 0%, #34495e 50%, #1a1a2e 100%);
@@ -51,7 +48,7 @@
             position: absolute;
             width: 2px;
             height: 100px;
-            background: linear-gradient(180deg, transparent, #00ffff, transparent);
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 255, 0.22), transparent), var(--sr-surface);
             animation: neonFall 3s linear infinite;
         }
         
@@ -96,12 +93,12 @@
             z-index: 10;
         }
         
-        .corporate { background: linear-gradient(135deg, #3498db, #2980b9); border-color: #3498db; }
-        .middle-class { background: linear-gradient(135deg, #27ae60, #2ecc71); border-color: #27ae60; }
+        .corporate { background: linear-gradient(135deg, rgba(52, 152, 219, 0.22), rgba(41, 128, 185, 0.13)), var(--sr-surface); border-color: #3498db; }
+        .middle-class { background: linear-gradient(135deg, rgba(39, 174, 96, 0.22), rgba(46, 204, 113, 0.13)), var(--sr-surface); border-color: #27ae60; }
         .barrens { background: linear-gradient(135deg, #e74c3c, #c0392b); border-color: #e74c3c; }
-        .underground { background: linear-gradient(135deg, #8e44ad, #9b59b6); border-color: #8e44ad; }
-        .industrial { background: linear-gradient(135deg, #95a5a6, #7f8c8d); border-color: #95a5a6; }
-        .sprawl { background: linear-gradient(135deg, #f39c12, #e67e22); border-color: #f39c12; }
+        .underground { background: linear-gradient(135deg, rgba(142, 68, 173, 0.22), rgba(155, 89, 182, 0.13)), var(--sr-surface); border-color: #8e44ad; }
+        .industrial { background: linear-gradient(135deg, rgba(149, 165, 166, 0.22), rgba(127, 140, 141, 0.13)), var(--sr-surface); border-color: #95a5a6; }
+        .sprawl { background: linear-gradient(135deg, rgba(243, 156, 18, 0.22), rgba(230, 126, 34, 0.13)), var(--sr-surface); border-color: #f39c12; }
         
         .street-level {
             background: linear-gradient(45deg, #1a1a2e, #16213e);
@@ -151,7 +148,7 @@
         .humanis { border-color: #f39c12; }
         
         .social-strata {
-            background: linear-gradient(180deg, #f1c40f 0%, #f39c12 25%, #e67e22 50%, #d35400 75%, #2c3e50 100%);
+            background: linear-gradient(180deg, rgba(241, 196, 15, 0.22) 0%, rgba(243, 156, 18, 0.13) 25%, rgba(230, 126, 34, 0.13) 50%, rgba(211, 84, 0, 0.13) 75%, rgba(44, 62, 80, 0.13) 100%), var(--sr-surface);
             border: 3px solid #00ffff;
             border-radius: 15px;
             padding: 30px;
@@ -203,10 +200,10 @@
                 linear-gradient(-45deg, transparent 75%, #000 75%);
         }
         
-        .aaa-zone { background: linear-gradient(135deg, #3498db, #2980b9); border-color: #3498db; color: white; }
-        .aa-zone { background: linear-gradient(135deg, #27ae60, #2ecc71); border-color: #27ae60; color: white; }
-        .a-zone { background: linear-gradient(135deg, #f39c12, #e67e22); border-color: #f39c12; color: white; }
-        .z-zone { background: linear-gradient(135deg, #e74c3c, #c0392b); border-color: #e74c3c; color: white; }
+        .aaa-zone { background: linear-gradient(135deg, rgba(52, 152, 219, 0.22), rgba(41, 128, 185, 0.13)), var(--sr-surface); border-color: #3498db; color: white; }
+        .aa-zone { background: linear-gradient(135deg, rgba(39, 174, 96, 0.22), rgba(46, 204, 113, 0.13)), var(--sr-surface); border-color: #27ae60; color: white; }
+        .a-zone { background: linear-gradient(135deg, rgba(243, 156, 18, 0.22), rgba(230, 126, 34, 0.13)), var(--sr-surface); border-color: #f39c12; color: white; }
+        .z-zone { background: linear-gradient(135deg, rgba(231, 76, 60, 0.22), rgba(192, 57, 43, 0.13)), var(--sr-surface); border-color: #e74c3c; color: white; }
         
         .lifestyle-impact {
             background: rgba(52, 152, 219, 0.2);
@@ -217,7 +214,7 @@
         }
         
         .transport-network {
-            background: linear-gradient(45deg, #2d1b69, #11998e);
+            background: linear-gradient(45deg, rgba(45, 27, 105, 0.22), rgba(17, 153, 142, 0.13)), var(--sr-surface);
             border: 2px solid #00d4aa;
             border-radius: 15px;
             padding: 25px;
@@ -246,7 +243,7 @@
         }
         
         .crime-stats th {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.22), rgba(192, 57, 43, 0.13)), var(--sr-surface);
         }
         
         .survival-guide {
@@ -324,7 +321,7 @@
     </style>
     <script src="/styles/site-nav.js" defer></script>
 </head>
-<body>
+<body class="lesson">
     <div class="city-skyline">
         <!-- City buildings -->
         <div class="building" style="left: 5%; bottom: 0; width: 60px; height: 300px;"></div>
@@ -690,10 +687,10 @@
                         N[Economic Refugees] --> I
                         O[Political Dissidents] --> I
                         
-                        style A fill:#3498db
-                        style G fill:#e74c3c
-                        style H fill:#f39c12
-                        style I fill:#8e44ad
+                        style A stroke:#3498db,stroke-width:3px
+                        style G stroke:#e74c3c,stroke-width:3px
+                        style H stroke:#f39c12,stroke-width:3px
+                        style I stroke:#8e44ad,stroke-width:3px
                 </div>
 
                 <h4>Daily Survival Challenges</h4>
@@ -992,7 +989,7 @@
         <footer>
             <p><em>The city never sleeps, and neither should your vigilance. Stay sharp in the concrete jungle, runner.</em></p>
             <p style="text-align: center; margin-top: 40px;">
-                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next:<a href="/shadowrun/sr_adv.html">Advanced Campaigns and Character Development</a> ◊</span>
+                <span style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">◊ Next:<a href="/sr_adv.html">Advanced Campaigns and Character Development</a> ◊</span>
             </p>
         </footer>
     </main>

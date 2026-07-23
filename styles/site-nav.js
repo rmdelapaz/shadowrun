@@ -20,16 +20,19 @@
   const isIndex = path === '/' || path === '/index.html';
 
   // --- Dark mode ---
+  // The Sixth World is dark by default; light is an explicit opt-in. The
+  // attribute is always set so the stylesheet never has to guess.
   const saved = localStorage.getItem('sr-theme');
-  if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
+  document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
 
   function toggleTheme() {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
     localStorage.setItem('sr-theme', isDark ? 'light' : 'dark');
     updateToggleBtn();
+    // Mermaid bakes its colours into the generated SVG at render time, so the
+    // diagrams have to be redrawn for the new palette.
+    if (typeof window.srRenderMermaid === 'function') window.srRenderMermaid();
   }
 
   function updateToggleBtn() {

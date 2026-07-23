@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jacking In - The Matrix and Digital Warfare</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723m2">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723"></script>
+    <script type="module" src="/styles/mermaid-init.js?v=20260723m2"></script>
     <style>
         .matrix-grid {
             background: 
@@ -224,16 +224,6 @@
             border-color: #ff4444;
         }
         
-        .matrix-topology {
-            position: relative;
-            height: 400px;
-            background: radial-gradient(circle at center, rgba(0,255,255,0.1) 0%, transparent 70%);
-            border: 2px solid #00ffff;
-            border-radius: 20px;
-            margin: 30px 0;
-            overflow: hidden;
-        }
-        
         .node {
             position: absolute;
             width: 60px;
@@ -253,13 +243,6 @@
         .node:hover {
             transform: scale(1.3);
             z-index: 10;
-        }
-        
-        .connection-line {
-            position: absolute;
-            height: 3px;
-            background: linear-gradient(90deg, #00ffff, transparent, #00ffff);
-            transform-origin: left center;
         }
         
         .security-rating {
@@ -334,14 +317,60 @@
             margin: 20px 0;
             border-radius: 0 10px 10px 0;
         }
-    </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    
+        /* ============================================================
+           CONTRAST: pin the cards that paint their own background
+           ------------------------------------------------------------
+           Same split as the rest of the site:
+             theme-FOLLOWING  (bg is var(--sr-surface) or a tint of it)
+                              -> the ink must follow the theme too, so the
+                                 hardcoded `color: white` has to go.
+             theme-INDEPENDENT (bg is an opaque hardcoded colour)
+                              -> the ink must be pinned to match it.
+           ============================================================ */
+
+        /* -- theme-independent: opaque cards, ink pinned light -- */
+        body.lesson :is(.persona-card, .cyberdeck-simulator, .cybercombat-arena,
+                        .matrix-action-menu, .ic-type, .node),
+        body.lesson :is(.persona-card, .cyberdeck-simulator, .cybercombat-arena,
+                        .matrix-action-menu, .ic-type, .node) * {
+            color: #f3f0ff !important;
+        }
+        /* a diagram nested in a pinned card keeps the themed surface */
+        body.lesson .mermaid,
+        body.lesson .mermaid * { color: var(--sr-text) !important; }
+
+        /* the IC cards were a mid-red that cyan headings could not sit on */
+        .ic-type { background: linear-gradient(135deg, #3d0b0b, #5c1220); border-color: #e0554f; }
+        body.lesson .ic-type h4 { color: #f6938a !important; }
+
+        /* -- theme-following: let the themed ink apply -- */
+        body.lesson :is(.action-button, .technomancer-highlight,
+                        .decker-avatar, .ic-avatar),
+        body.lesson :is(.action-button, .technomancer-highlight,
+                        .decker-avatar, .ic-avatar) * {
+            color: var(--sr-text) !important;
+        }
+
+        /* the Matrix map is drawn in fixed colours, so its surface is pinned
+           dark in both themes rather than following var(--sr-surface) */
+        body.lesson figure.matrix-map {
+            background: #0f0b1e;
+            border-color: #362b5e;
+        }
+        body.lesson figure.matrix-map figcaption {
+            color: #cfc9e6;
+            border-top-color: #362b5e;
+        }
+        body.lesson figure.matrix-map figcaption strong { color: #c6a4ff; }
+</style>
+    <script src="/styles/site-nav.js?v=20260723m2" defer></script>
 </head>
 <body class="lesson">
     <div class="matrix-grid"></div>
     
     <header>
-        <h1 style="color: #00ff00; text-shadow: 0 0 20px #00ff00;">Jacking In</h1>
+        <h1>Jacking In</h1>
         <p><em>The Matrix and Digital Warfare</em></p>
     </header>
 
@@ -363,43 +392,81 @@
             <h2>Matrix Architecture: The Digital Ecosystem</h2>
             <p>The Matrix isn't chaotic - it has structure, geography, and rules. Understanding this architecture is crucial for navigation and survival:</p>
 
-            <div class="matrix-topology">
-                <!-- Public Grid Nodes -->
-                <div class="node" style="background: linear-gradient(135deg, #27ae60, #2ecc71); top: 50px; left: 100px;">
-                    PUBLIC<br>GRID
-                </div>
-                
-                <!-- Corporate Hosts -->
-                <div class="node" style="background: linear-gradient(135deg, #3498db, #2980b9); top: 100px; right: 100px;">
-                    CORP<br>HOST
-                </div>
-                
-                <!-- Government Systems -->
-                <div class="node" style="background: linear-gradient(135deg, #e74c3c, #c0392b); top: 200px; left: 50px;">
-                    GOV<br>SYSTEM
-                </div>
-                
-                <!-- Data Havens -->
-                <div class="node" style="background: linear-gradient(135deg, #9b59b6, #8e44ad); bottom: 100px; right: 150px;">
-                    DATA<br>HAVEN
-                </div>
-                
-                <!-- Black IC -->
-                <div class="node" style="background: linear-gradient(135deg, #2c3e50, #34495e); top: 300px; left: 300px;">
-                    BLACK<br>IC
-                </div>
-                
-                <!-- Resonance Wells -->
-                <div class="node resonance-effect" style="background: linear-gradient(135deg, #f39c12, #e67e22); bottom: 50px; left: 200px;">
-                    RESONANCE<br>WELL
-                </div>
+            <figure class="matrix-map">
+                <svg viewBox="0 0 940 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mmTitle mmDesc">
+                    <title id="mmTitle">The shape of the Matrix</title>
+                    <desc id="mmDesc">The Public Grid runs across the top and everyone is on it. Two secured spines descend from it: the corporate spine of Host, Secure Subnet and Black IC, and the government spine of System, Classified Network and Military Network. Depth means better security and less survivability. Two regions sit off the spines and are reachable only across the Public Grid: Data Havens and Resonance Wells.</desc>
 
-                <!-- Connection lines -->
-                <div class="connection-line" style="top: 80px; left: 160px; width: 280px; transform: rotate(15deg);"></div>
-                <div class="connection-line" style="top: 230px; left: 110px; width: 200px; transform: rotate(45deg);"></div>
-                <div class="connection-line" style="top: 330px; left: 300px; width: 150px; transform: rotate(-30deg);"></div>
-                <div class="connection-line" style="bottom: 100px; left: 260px; width: 200px; transform: rotate(-15deg);"></div>
-            </div>
+                    <defs>
+                        <marker id="mmArrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+                            <path d="M0 0 L9 4.5 L0 9 z" fill="#6b5ca5"/>
+                        </marker>
+                    </defs>
+
+                    <!-- depth axis -->
+                    <line x1="26" y1="72" x2="26" y2="470" stroke="#5a4f85" stroke-width="1.5" marker-end="url(#mmArrow)"/>
+                    <text x="16" y="271" fill="#9a93b8" font-family="Orbitron, sans-serif" font-size="11"
+                          letter-spacing="2.5" text-anchor="middle" transform="rotate(-90 16 271)">DEEPER &#183; BETTER DEFENDED &#183; LESS SURVIVABLE</text>
+
+                    <!-- ===== the public grid ===== -->
+                    <rect x="58" y="44" width="852" height="62" rx="8" fill="#123528" stroke="#3fd18b" stroke-width="2"/>
+                    <text x="80" y="72" fill="#3fd18b" font-family="Orbitron, sans-serif" font-size="16" font-weight="700" letter-spacing="1.5">THE PUBLIC GRID</text>
+                    <text x="80" y="93" fill="#cfe8dc" font-family="Segoe UI, sans-serif" font-size="13">Everyone is on it, always. Free to enter, watched by everything.</text>
+                    <text x="890" y="80" fill="#8fd9b6" font-family="Share Tech Mono, monospace" font-size="12" text-anchor="end">you jack in here</text>
+
+                    <!-- ===== corporate spine ===== -->
+                    <g stroke="#37c6e0" stroke-width="2" fill="none" opacity="0.75">
+                        <path d="M250 106 L250 150"/><path d="M250 214 L250 258"/><path d="M250 322 L250 366"/>
+                    </g>
+                    <rect x="118" y="150" width="264" height="64" rx="8" fill="#102b38" stroke="#37c6e0" stroke-width="2"/>
+                    <text x="250" y="177" fill="#37c6e0" font-family="Orbitron, sans-serif" font-size="14" font-weight="700" text-anchor="middle">CORPORATE HOST</text>
+                    <text x="250" y="198" fill="#cfe4ec" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">where the paydata lives</text>
+
+                    <rect x="118" y="258" width="264" height="64" rx="8" fill="#0d2430" stroke="#37c6e0" stroke-width="2" stroke-opacity="0.7"/>
+                    <text x="250" y="285" fill="#37c6e0" font-family="Orbitron, sans-serif" font-size="14" font-weight="700" text-anchor="middle">SECURE SUBNET</text>
+                    <text x="250" y="306" fill="#cfe4ec" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">marks required to go further</text>
+
+                    <rect x="118" y="366" width="264" height="70" rx="8" fill="#2b0f18" stroke="#ff2e6a" stroke-width="2"/>
+                    <text x="250" y="393" fill="#ff6b8f" font-family="Orbitron, sans-serif" font-size="14" font-weight="700" text-anchor="middle">BLACK IC ZONE</text>
+                    <text x="250" y="414" fill="#f0c6d2" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">it does not eject you &#8212; it</text>
+                    <text x="250" y="430" fill="#f0c6d2" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">damages the person jacked in</text>
+
+                    <!-- ===== government spine ===== -->
+                    <g stroke="#ff4d6d" stroke-width="2" fill="none" opacity="0.7">
+                        <path d="M600 106 L600 150"/><path d="M600 214 L600 258"/><path d="M600 322 L600 366"/>
+                    </g>
+                    <rect x="468" y="150" width="264" height="64" rx="8" fill="#331119" stroke="#ff4d6d" stroke-width="2"/>
+                    <text x="600" y="177" fill="#ff8ba0" font-family="Orbitron, sans-serif" font-size="14" font-weight="700" text-anchor="middle">GOVERNMENT SYSTEM</text>
+                    <text x="600" y="198" fill="#f0ced5" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">records, warrants, licences</text>
+
+                    <rect x="468" y="258" width="264" height="64" rx="8" fill="#2b0e15" stroke="#ff4d6d" stroke-width="2" stroke-opacity="0.7"/>
+                    <text x="600" y="285" fill="#ff8ba0" font-family="Orbitron, sans-serif" font-size="14" font-weight="700" text-anchor="middle">CLASSIFIED NETWORK</text>
+                    <text x="600" y="306" fill="#f0ced5" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">the state notices intrusions</text>
+
+                    <rect x="468" y="366" width="264" height="70" rx="8" fill="#24101a" stroke="#ff2e6a" stroke-width="2"/>
+                    <text x="600" y="393" fill="#ff6b8f" font-family="Orbitron, sans-serif" font-size="14" font-weight="700" text-anchor="middle">MILITARY NETWORK</text>
+                    <text x="600" y="414" fill="#f0c6d2" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">assume a response team is</text>
+                    <text x="600" y="430" fill="#f0c6d2" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">already moving in meatspace</text>
+
+                    <!-- ===== off-spine regions ===== -->
+                    <g stroke="#6b5ca5" stroke-width="2" fill="none" stroke-dasharray="5 4">
+                        <path d="M846 106 L846 176"/>
+                        <path d="M846 240 L846 330"/>
+                    </g>
+                    <rect x="762" y="176" width="164" height="64" rx="8" fill="#241a3d" stroke="#a06bff" stroke-width="2"/>
+                    <text x="844" y="202" fill="#c6a4ff" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">DATA HAVEN</text>
+                    <text x="844" y="222" fill="#ded4f2" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">brokers, no flag</text>
+
+                    <rect x="762" y="330" width="164" height="70" rx="8" fill="#332405" stroke="#ffb700" stroke-width="2"/>
+                    <text x="844" y="356" fill="#ffd166" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">RESONANCE WELL</text>
+                    <text x="844" y="376" fill="#f4e3c0" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">technomancers only;</text>
+                    <text x="844" y="392" fill="#f4e3c0" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">no deck will get you in</text>
+
+                    <text x="58" y="470" fill="#9a93b8" font-family="Share Tech Mono, monospace" font-size="12">Solid lines = a route you can walk.  Dashed = only reachable back across the Public Grid.</text>
+                    <text x="58" y="492" fill="#9a93b8" font-family="Share Tech Mono, monospace" font-size="12">There is no shortcut from a corporate host to a government one. You go up and over.</text>
+                </svg>
+                <figcaption><strong>Figure &mdash; the Matrix is layered, not flat.</strong> Two things follow from this shape and they decide most runs. First, <strong>depth costs time</strong>: every floor down is another NET Action and another tick on your Overwatch Score, which is why "just go deeper" is rarely the plan. Second, <strong>there are no lateral shortcuts</strong> &mdash; a decker sitting inside an Arasaka host cannot slide sideways into a government system; they surface onto the Public Grid and start the descent again, paying the whole cost twice.</figcaption>
+            </figure>
 
             <div class="matrix-layers">
                 <h3>Matrix Layers and Regions</h3>
@@ -833,12 +900,12 @@
                 </div>
 
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 25%; background: linear-gradient(90deg, #e74c3c, #c0392b);" id="deckerHealth"></div>
+                    <div class="progress-fill" style="width: 25%; background: linear-gradient(90deg, #ad392d, #b13528);" id="deckerHealth"></div>
                 </div>
                 <p style="text-align: center; color: #fff;">Decker Persona Integrity</p>
 
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 60%; background: linear-gradient(90deg, #f39c12, #e67e22);" id="icHealth"></div>
+                    <div class="progress-fill" style="width: 60%; background: linear-gradient(90deg, #87570a, #935016);" id="icHealth"></div>
                 </div>
                 <p style="text-align: center; color: #fff;">Black IC Stability</p>
             </div>
@@ -982,9 +1049,9 @@
             <p>Remember: In the Matrix, you're not just visiting cyberspace - you're literally putting your mind on the line. Jack smart, jack safe, and always have an exit strategy.</p>
         </section>
 
+    </main>
         <footer>
             <p><em>The Matrix rewards the bold, punishes the careless, and never forgives the unprepared. Stay frosty in cyberspace, console cowboy.</em></p>
         </footer>
-    </main>
 </body>
 </html>

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rolling with the Punches - Shadowrun Game Mechanics</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723"></script>
+    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         .dice-container {
             display: flex;
@@ -180,12 +180,33 @@
             text-align: left;
         }
         .priority-table small { font-weight: 400; opacity: 0.75; font-size: 0.78em; }
+
+        /* ---- contrast pass: pin the interactive tool/diagram widgets dark ---- */
+        body.lesson :is(.dice-pool-calculator, .dice-container, .skill-tree,
+                        .character-sheet-preview) {
+            background-color: #13101c;
+            color: #f3f0ff;
+        }
+        body.lesson :is(.dice-pool-calculator, .dice-container, .skill-tree,
+                        .character-sheet-preview)
+                    :is(p, li, strong, em, small, span, div, td, th) {
+            color: #f3f0ff;
+        }
+        body.lesson :is(.dice-pool-calculator, .dice-container, .skill-tree,
+                        .character-sheet-preview)
+                    :is(h3, h4, h5) {
+            color: #7fe0ef;
+        }
+        /* the die face follows the theme (white in light, dark in dark), so its
+           pips must too; the roll button gets a darker red so its label passes */
+        body.lesson .dice-container .die { color: var(--sr-text); }
+        body.lesson .dice-pool-calculator button { background: #b3271b !important; }
     </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <header>
-        <h1 style="color: #e74c3c; text-shadow: 0 0 20px #e74c3c;">Rolling with the Punches</h1>
+        <h1 style="text-shadow: 0 0 18px rgba(231, 76, 60, 0.45);">Rolling with the Punches</h1>
         <p><em>Game Mechanics and Character Creation</em></p>
     </header>
 
@@ -636,9 +657,9 @@
             <p>Remember: The dice tell you what happens, but <em>you</em> decide what it means.</p>
         </section>
 
+    </main>
         <footer>
             <p><em>The numbers define capability, but the story defines the character. Roll well, omae.</em></p>
         </footer>
-    </main>
 </body>
 </html>

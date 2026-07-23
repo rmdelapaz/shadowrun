@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concrete Jungle - Urban Sprawl and Street Life</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723"></script>
+    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         .city-skyline {
             background: linear-gradient(180deg, #2c3e50 0%, #34495e 50%, #1a1a2e 100%);
@@ -318,8 +318,65 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
-    </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    
+        /* ============================================================
+           CONTRAST: components that paint their own background
+           ------------------------------------------------------------
+           Two kinds of card live on this page:
+
+             * theme-FOLLOWING  - background is var(--sr-surface) or a
+               low-alpha tint over it, so it lightens with the theme and
+               the themed ink stays correct. Left alone.
+
+             * theme-INDEPENDENT - background is opaque and hardcoded, so
+               it does NOT move with the theme. Its ink must be pinned to
+               match, or the theme flips the text off a background that
+               never moved. Those are the ones listed below.
+
+           !important is needed because main.css targets body.lesson p / h4
+           / strong directly, which outranks a plain class selector.
+           ============================================================ */
+        body.lesson :is(.strata-layer, .security-zone, .gang-card,
+                        .crime-stats, .barrens, .street-level, .hazard-card),
+        body.lesson :is(.strata-layer, .security-zone, .gang-card,
+                        .crime-stats, .barrens, .street-level, .hazard-card) * {
+            color: #f3f0ff !important;
+        }
+        /* the stats table header follows the theme but sits inside a pinned
+           dark card, so it has to be pinned too */
+        body.lesson .crime-stats th { background: #241c46 !important; }
+        /* a diagram nested inside a pinned card keeps the themed surface, so it
+           must NOT inherit the pinned ink or the labels land on white */
+        body.lesson .mermaid,
+        body.lesson .mermaid * { color: var(--sr-text) !important; }
+        body.lesson .crime-stats td { background: #12101f !important; border-bottom-color: #2c2350 !important; }
+        body.lesson .crime-stats table { background: #12101f !important; border-color: #2c2350 !important; }
+
+        /* social strata - hue moves from the fill to the left edge */
+        .strata-layer { background: #1a1533; border-left: 6px solid #6b5ca5; }
+        .corporate-elite      { background: #2b2410; border-left-color: #f1c40f; }
+        .wage-slaves          { background: #2a1e0d; border-left-color: #f39c12; }
+        .sinless              { background: #2b1413; border-left-color: #e74c3c; }
+        .underground-dwellers { background: #16202a; border-left-color: #5b7f9e; }
+        body.lesson .corporate-elite      h4 { color: #f7d774 !important; }
+        body.lesson .wage-slaves          h4 { color: #f6bf6b !important; }
+        body.lesson .sinless              h4 { color: #f6938a !important; }
+        body.lesson .underground-dwellers h4 { color: #9dc4e0 !important; }
+
+        /* security zones - opaque dark fill, hue kept on the border */
+        .security-zone { background: #151d31; }
+        body.lesson .aaa-zone h4 { color: #7fc3ee !important; }
+        body.lesson .aa-zone  h4 { color: #74d69b !important; }
+        body.lesson .a-zone   h4 { color: #f6c274 !important; }
+        body.lesson .z-zone   h4 { color: #f2938a !important; }
+
+        /* the barrens tile, the stats panel and the hazard cards */
+        .barrens     { background: #2b1413; border-color: #e74c3c; }
+        .crime-stats { background: #12101f; }
+        .hazard-card { background: linear-gradient(135deg, #3d0b0b, #5c1220); border-color: #e0554f; }
+        body.lesson .hazard-card h4 { color: #f6938a !important; }
+</style>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <div class="city-skyline">
@@ -342,7 +399,7 @@
     </div>
     
     <header>
-        <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Concrete Jungle</h1>
+        <h1>Concrete Jungle</h1>
         <p><em>Urban Sprawl and Street Life in 2080</em></p>
     </header>
 
@@ -986,9 +1043,9 @@
             <p>The sprawl is your classroom, your battlefield, and your home. Learn its lessons well, and it might just let you survive long enough to tell your story.</p>
         </section>
 
+    </main>
         <footer>
             <p><em>The city never sleeps, and neither should your vigilance. Stay sharp in the concrete jungle, runner.</em></p>
         </footer>
-    </main>
 </body>
 </html>

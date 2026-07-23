@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Art of the Run - Planning and Execution</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723"></script>
+    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         .run-phases {
             display: grid;
@@ -264,12 +264,43 @@
             font-size: 0.95rem; line-height: 1.6;
         }
         .facility-readout strong { color: var(--sr-violet); }
+
+        /* ---- contrast pass ----------------------------------------------
+           Neon planning cards paint tinted/opaque fills; pin them to dark
+           bases in BOTH themes with light ink + light-cyan headings. */
+        body.lesson :is(.phase-card, .approach-option, .security-layer,
+                        .security-type, .timeline-content, .threat-assessment,
+                        .sr-zone) {
+            background-color: #13101c;
+            color: #f3f0ff;
+        }
+        body.lesson :is(.phase-card, .approach-option, .security-layer,
+                        .security-type, .timeline-content, .threat-assessment,
+                        .sr-zone)
+                    :is(p, li, strong, em, small, span, div, td) {
+            color: #f3f0ff;
+        }
+        body.lesson :is(.phase-card, .approach-option, .security-layer,
+                        .security-type, .timeline-content, .threat-assessment,
+                        .sr-zone)
+                    :is(h3, h4, h5) {
+            color: #7fe0ef;
+        }
+        /* checklist items sit on the page surface; theme their hard-coded ink */
+        body.lesson .checklist-item,
+        body.lesson .checklist-item span { color: var(--sr-text); }
+        /* phase icons carry per-phase inline background colours (mid-tone);
+           overlay a dark wash so each keeps its hue as a dark chip and passes */
+        body.lesson .phase-icon {
+            background-image: linear-gradient(rgba(9, 7, 17, 0.55), rgba(9, 7, 17, 0.55)) !important;
+            color: #f3f0ff !important;
+        }
     </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <header>
-        <h1 style="color: #e74c3c; text-shadow: 0 0 20px #e74c3c;">The Art of the Run</h1>
+        <h1 style="text-shadow: 0 0 18px rgba(231, 76, 60, 0.45);">The Art of the Run</h1>
         <p><em>Planning and Executing Shadowruns</em></p>
     </header>
 
@@ -879,9 +910,9 @@
             <p>Remember: The shadows reward the prepared, punish the reckless, and never forgive the unprofessional.</p>
         </section>
 
+    </main>
         <footer>
             <p><em>Plan like your life depends on it, because it does. Stay frosty, choom.</em></p>
         </footer>
-    </main>
 </body>
 </html>

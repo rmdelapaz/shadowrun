@@ -68,6 +68,8 @@ sub { font-size: x-small; vertical-align: sub; }
 
   --sr-measure: 680px;   /* text column — headings and copy share it */
   --sr-media: 1000px;    /* diagrams, tables and figures sit wider */
+  /* ink for text sitting on a theme-driven surface; flips with the theme */
+  --sr-card-ink: #f3f0ff;
   --sr-radius: 10px;
 
   /* legacy names kept so site chrome and any stray page rules resolve */
@@ -85,6 +87,7 @@ sub { font-size: x-small; vertical-align: sub; }
 }
 
 [data-theme="light"] {
+  --sr-card-ink: #1c1733;
   --sr-bg:        #f4f2fa;
   --sr-bg-2:      #eae6f5;
   --sr-surface:   #ffffff;
@@ -96,8 +99,8 @@ sub { font-size: x-small; vertical-align: sub; }
   --sr-text-hi:   #150f2b;
 
   --sr-violet: #6d34c8;
-  --sr-green:  #0f7a52;
-  --sr-cyan:   #10708a;
+  --sr-green:  #0b5f40;
+  --sr-cyan:   #0c5c71;
   --sr-red:    #c22449;
   --sr-amber:  #8f6100;
 
@@ -129,7 +132,9 @@ sub { font-size: x-small; vertical-align: sub; }
 #theme-toggle {
   background: rgba(160, 107, 255, 0.12);
   border: 1px solid var(--sr-violet);
-  color: var(--sr-violet);
+  /* the token violet only reaches 4.18:1 on its own tinted background in dark
+     mode, so lift it there; light mode keeps the darker token. */
+  color: #c9adff;
   font-family: var(--sr-font-display);
   padding: 6px 14px;
   border-radius: 6px;
@@ -138,6 +143,7 @@ sub { font-size: x-small; vertical-align: sub; }
   transition: background 0.2s, box-shadow 0.2s;
 }
 #theme-toggle:hover { background: rgba(160, 107, 255, 0.24); box-shadow: 0 0 14px rgba(160, 107, 255, 0.3); }
+[data-theme="light"] #theme-toggle { color: var(--sr-violet); }
 
 .prev-next {
   display: flex;
@@ -146,9 +152,8 @@ sub { font-size: x-small; vertical-align: sub; }
   flex-wrap: wrap;
   gap: 10px;
   max-width: var(--sr-media);
-  margin: 56px auto 0;
-  padding: 20px 16px 0;
-  border-top: 1px solid var(--sr-line);
+  margin: 0 auto;
+  padding: 22px 0 4px;
   font-family: var(--sr-font-display);
 }
 .pn-link {
@@ -512,16 +517,39 @@ body.lesson .mermaid .statediagram-note .nodeLabel { color: var(--sr-text) !impo
    the generated SVG in CSS is what made the labels unreadable before. */
 
 /* --- footer ----------------------------------------------- */
-body.lesson > footer {
+/* Pages carry their own footer rules (3px blue borders, 36px padding, left
+   alignment...). These win on specificity so every page ends the same way, and
+   the prev/next bar is inserted directly above to form one closing block. */
+body.lesson > footer,
+.page-end > footer {
   max-width: var(--sr-media);
-  margin: 60px auto 0;
-  padding: 26px 24px;
-  border-top: 1px solid var(--sr-line);
+  margin: 0 auto;
+  padding: 22px 24px 0;
+  border-top: 0;
+  background: none;
   text-align: center;
   color: var(--sr-text-dim);
   font-size: 0.92rem;
 }
-body.lesson > footer p { max-width: none; margin-bottom: 8px; }
+.page-end > footer p,
+body.lesson > footer p {
+  max-width: none;
+  margin: 0 auto 8px;
+  text-align: center;
+  color: inherit;
+}
+
+/* The closing block: navigation, then the colophon, always identical. Not
+   scoped to .lesson because the dice roller has no .lesson class but still
+   needs the same page ending. */
+.page-end {
+  max-width: var(--sr-media);
+  margin: 64px auto 0;
+  padding: 0 26px 10px;
+  border-top: 1px solid var(--sr-line);
+}
+/* a couple of pages give their footer its own top margin, which reopens the gap */
+.page-end > footer { margin-top: 0 !important; }
 
 /* ===== 5. HUB (index.html) ================================= */
 body.hub {

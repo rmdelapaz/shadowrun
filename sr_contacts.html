@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Living in the Shadows - Community and Connections</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723"></script>
+    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         .lifestyle-grid {
             display: grid;
@@ -52,64 +52,29 @@
         .lifestyle-luxury {
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.22), rgba(255, 140, 0, 0.13)), var(--sr-surface);
             border-color: #ffd700;
-            color: #000;
+            /* luxury/high follow the theme (surface is var(--sr-surface)); ink follows too */
+            color: var(--sr-text);
         }
         
-        .contact-network {
-            position: relative;
-            height: 500px;
-            background: radial-gradient(circle at center, rgba(0,255,255,0.1) 0%, transparent 70%);
-            border: 2px solid #00ffff;
-            border-radius: 20px;
+        /* the contact map is drawn in fixed colours, so its surface is pinned
+           dark in both themes rather than following var(--sr-surface) */
+        body.lesson figure.contact-map {
+            background: #0c1420;
+            border: 2px solid #2a3a4a;
+            border-radius: 16px;
+            padding: 20px;
             margin: 30px 0;
-            overflow: hidden;
         }
-        
-        .contact-node {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: bold;
-            color: white;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 3px solid #fff;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        body.lesson figure.contact-map svg { width: 100%; height: auto; display: block; }
+        body.lesson figure.contact-map figcaption {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #2a3a4a;
+            color: #c3ccd6;
+            font-size: 0.95rem;
+            line-height: 1.55;
         }
-        
-        .contact-node:hover {
-            transform: scale(1.3);
-            z-index: 10;
-        }
-        
-        .player-node {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            top: 210px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 100px;
-            font-size: 14px;
-        }
-        
-        .fixer-node {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            top: 50px;
-            left: 45%;
-        }
-        
-        .contact-line {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, #00ffff, transparent, #00ffff);
-            transform-origin: left center;
-        }
+        body.lesson figure.contact-map figcaption strong { color: #5fd0e0; }
         
         .rep-meter {
             display: flex;
@@ -191,7 +156,7 @@
         .loyalty-6 { background: #9b59b6; }
         
         .lifestyle-costs {
-            background: rgba(0,0,0,0.8);
+            background: var(--sr-surface);
             border: 2px solid #00ffff;
             border-radius: 10px;
             padding: 20px;
@@ -208,19 +173,46 @@
             border: 1px solid #00ffff;
             padding: 12px;
             text-align: center;
-            color: white;
+            /* ink follows the site theme (the table is not pinned dark) */
         }
-        
+
         .lifestyle-costs th {
             background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: #00ffff;
         }
+
+        /* ---- contrast pass ----------------------------------------------
+           The six lifestyle tier cards and the neon side-cards are painted in
+           fixed colours, so they are pinned to opaque dark surfaces in BOTH
+           themes and their body ink is kept light. Inline accent headings
+           (per-tier hues) stay as authored and read fine on the dark base.
+           The lifestyle-cost TABLE is intentionally left to follow the site
+           theme (its hard-coded ink was removed above). */
+        body.lesson :is(.lifestyle-street, .lifestyle-squatter, .lifestyle-low,
+                        .lifestyle-middle, .lifestyle-high, .lifestyle-luxury,
+                        .social-layer, .economy-card, .rep-meter, .survival-tip) {
+            color: #f3f0ff;
+        }
+        /* opaque dark bases for the cards that were transparent or theme-following */
+        body.lesson .lifestyle-squatter { background: linear-gradient(135deg, #241a10, #17110a); }
+        body.lesson .lifestyle-high     { background: linear-gradient(135deg, rgba(45,27,105,0.22), rgba(17,153,142,0.13)), #12101c; }
+        body.lesson .lifestyle-luxury   { background: linear-gradient(135deg, rgba(255,215,0,0.18), rgba(255,140,0,0.11)), #16130b; }
+        body.lesson .rep-meter    { background: #14101f; }
+        body.lesson .survival-tip { background: #241018; }
+        /* descendant text inherits the pinned light ink; inline accent headings
+           win via inline specificity, so their hues survive */
+        body.lesson :is(.lifestyle-street, .lifestyle-squatter, .lifestyle-low,
+                        .lifestyle-middle, .lifestyle-high, .lifestyle-luxury,
+                        .social-layer, .economy-card, .survival-tip)
+                    :is(p, li, h3, h4, h5, strong, em, small, span, div) {
+            color: #f3f0ff;
+        }
+        body.lesson .rep-label { color: #34d6e6; }
     </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <header>
-        <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Living in the Shadows</h1>
+        <h1 style="text-shadow: 0 0 18px rgba(0, 255, 255, 0.45);">Living in the Shadows</h1>
         <p><em>Contacts, Lifestyle, and the Shadow Community</em></p>
     </header>
 
@@ -403,45 +395,78 @@
             <h2>The Contact Network: Your Lifeline in the Shadows</h2>
             <p>In Shadowrun, your contacts are arguably more valuable than your gear. They provide information, services, jobs, and sometimes your only way out of a bad situation. Think of your contact network as your character's social media, but where every "friend" could save your life or sell you out.</p>
 
-            <div class="contact-network">
-                <div class="contact-node player-node">YOU</div>
-                
-                <div class="contact-node fixer-node" style="background: linear-gradient(135deg, #f39c12, #e67e22); top: 50px; left: 40%;">
-                    FIXER<br><small>Jobs & Info</small>
-                </div>
-                
-                <div class="contact-node" style="background: linear-gradient(135deg, #e74c3c, #c0392b); top: 80px; right: 15%;">
-                    STREET<br>DOC<br><small>Medical</small>
-                </div>
-                
-                <div class="contact-node" style="background: linear-gradient(135deg, #27ae60, #2ecc71); top: 150px; left: 10%;">
-                    CORP<br>CONTACT<br><small>Inside Info</small>
-                </div>
-                
-                <div class="contact-node" style="background: linear-gradient(135deg, #8e44ad, #9b59b6); bottom: 150px; left: 15%;">
-                    TALISMONGER<br><small>Magic Gear</small>
-                </div>
-                
-                <div class="contact-node" style="background: linear-gradient(135deg, #34495e, #2c3e50); bottom: 100px; right: 20%;">
-                    FENCE<br><small>Hot Goods</small>
-                </div>
-                
-                <div class="contact-node" style="background: linear-gradient(135deg, #16a085, #1abc9c); top: 180px; right: 40%;">
-                    HACKER<br><small>Matrix Help</small>
-                </div>
-                
-                <div class="contact-node" style="background: linear-gradient(135deg, #d35400, #e67e22); bottom: 80px; left: 45%;">
-                    GANG<br>MEMBER<br><small>Muscle</small>
-                </div>
+            <figure class="contact-map">
+                <svg viewBox="0 0 940 528" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cnTitle cnDesc">
+                    <title id="cnTitle">Your contact network</title>
+                    <desc id="cnDesc">You sit at the centre with a direct line to seven contacts: a Fixer, a Hacker, a Street Doc, a Corp Contact, a Talismonger, a Fence and a Gang Member. Solid lines are your own relationships with each. Dashed lines show how the contacts know one another: the Fixer, Hacker and Corp Contact trade information as a group, and the Fence and Gang Member move goods between them.</desc>
 
-                <!-- Connection lines -->
-                <div class="contact-line" style="top: 260px; left: 50%; width: 150px; transform: rotate(-25deg);"></div>
-                <div class="contact-line" style="top: 260px; left: 51%; width: 200px; transform: rotate(15deg);"></div>
-                <div class="contact-line" style="top: 260px; left: 25%; width: 200px; transform: rotate(-45deg);"></div>
-                <div class="contact-line" style="top: 300px; left: 35%; width: 150px; transform: rotate(35deg);"></div>
-                <div class="contact-line" style="top: 300px; left: 55%; width: 180px; transform: rotate(-35deg);"></div>
-                <div class="contact-line" style="top: 280px; left: 55%; width: 120px; transform: rotate(5deg);"></div>
-            </div>
+                    <!-- ===== YOUR direct lines (drawn first, nodes sit on top) ===== -->
+                    <g stroke="#3fb6c9" stroke-width="2" opacity="0.55">
+                        <line x1="470" y1="285" x2="470" y2="72"/>
+                        <line x1="470" y1="285" x2="742" y2="150"/>
+                        <line x1="470" y1="285" x2="800" y2="292"/>
+                        <line x1="470" y1="285" x2="700" y2="455"/>
+                        <line x1="470" y1="285" x2="240" y2="455"/>
+                        <line x1="470" y1="285" x2="140" y2="292"/>
+                        <line x1="470" y1="285" x2="198" y2="150"/>
+                    </g>
+
+                    <!-- ===== how the contacts know EACH OTHER ===== -->
+                    <g stroke="#9a8fc0" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.85" fill="none">
+                        <line x1="470" y1="72"  x2="742" y2="150"/>
+                        <line x1="470" y1="72"  x2="198" y2="150"/>
+                        <line x1="742" y1="150" x2="198" y2="150"/>
+                        <line x1="700" y1="455" x2="240" y2="455"/>
+                    </g>
+
+                    <!-- ===== YOU (centre) ===== -->
+                    <rect x="380" y="248" width="180" height="74" rx="12" fill="#3a1418" stroke="#ff6b6b" stroke-width="3"/>
+                    <text x="470" y="282" fill="#ff8f8f" font-family="Orbitron, sans-serif" font-size="18" font-weight="700" text-anchor="middle" letter-spacing="1">YOU</text>
+                    <text x="470" y="304" fill="#f0d6d6" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">the runner</text>
+
+                    <!-- ===== FIXER ===== -->
+                    <rect x="395" y="43" width="150" height="58" rx="10" fill="#3a2410" stroke="#f39c12" stroke-width="2"/>
+                    <text x="470" y="70" fill="#f6b64a" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">FIXER</text>
+                    <text x="470" y="89" fill="#ecdcc4" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">Jobs &amp; Info</text>
+
+                    <!-- ===== HACKER ===== -->
+                    <rect x="667" y="121" width="150" height="58" rx="10" fill="#0d2b28" stroke="#1abc9c" stroke-width="2"/>
+                    <text x="742" y="148" fill="#4fe0c4" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">HACKER</text>
+                    <text x="742" y="167" fill="#cfeee7" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">Matrix Help</text>
+
+                    <!-- ===== STREET DOC ===== -->
+                    <rect x="725" y="263" width="150" height="58" rx="10" fill="#331014" stroke="#e74c3c" stroke-width="2"/>
+                    <text x="800" y="290" fill="#f68b7c" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">STREET DOC</text>
+                    <text x="800" y="309" fill="#f2d3ce" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">Medical &amp; Bioware</text>
+
+                    <!-- ===== FENCE ===== -->
+                    <rect x="625" y="426" width="150" height="58" rx="10" fill="#1a222b" stroke="#8fa3b8" stroke-width="2"/>
+                    <text x="700" y="453" fill="#b9cbdd" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">FENCE</text>
+                    <text x="700" y="472" fill="#dbe4ee" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">Moves Hot Goods</text>
+
+                    <!-- ===== GANG MEMBER ===== -->
+                    <rect x="165" y="426" width="150" height="58" rx="10" fill="#331a08" stroke="#e67e22" stroke-width="2"/>
+                    <text x="240" y="453" fill="#f4a25a" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">GANG MEMBER</text>
+                    <text x="240" y="472" fill="#f0dcc6" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">Muscle &amp; Turf</text>
+
+                    <!-- ===== TALISMONGER ===== -->
+                    <rect x="65" y="263" width="150" height="58" rx="10" fill="#241733" stroke="#a06bff" stroke-width="2"/>
+                    <text x="140" y="290" fill="#c6a4ff" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">TALISMONGER</text>
+                    <text x="140" y="309" fill="#e2d6f4" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">Magic Gear</text>
+
+                    <!-- ===== CORP CONTACT ===== -->
+                    <rect x="123" y="121" width="150" height="58" rx="10" fill="#0f2b1a" stroke="#2ecc71" stroke-width="2"/>
+                    <text x="198" y="148" fill="#5fe08f" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">CORP CONTACT</text>
+                    <text x="198" y="167" fill="#cfeeda" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">Inside Info</text>
+
+                    <!-- ===== legend ===== -->
+                    <line x1="60" y1="508" x2="96" y2="508" stroke="#3fb6c9" stroke-width="2"/>
+                    <text x="104" y="512" fill="#b9c4cf" font-family="Share Tech Mono, monospace" font-size="12">solid = your direct contacts (Loyalty)</text>
+                    <line x1="470" y1="508" x2="506" y2="508" stroke="#9a8fc0" stroke-width="1.8" stroke-dasharray="6 5"/>
+                    <text x="514" y="512" fill="#b9c4cf" font-family="Share Tech Mono, monospace" font-size="12">dashed = how your contacts know each other</text>
+                </svg>
+                <figcaption><strong>Figure &mdash; a network, not a contact list.</strong> Two things follow from the shape. First, the <strong>Fixer is a super-connector</strong> &mdash; most of your other contacts trace back through them, so burning that one relationship can quietly cut several lines at once. Second, the dashed links are <strong>leverage you don't control</strong>: because your contacts know each other, a favour (or a betrayal) travels along those edges &mdash; lean on the Gang and the Fence hears about it, cross the Corp Contact and the Hacker may too.</figcaption>
+            </figure>
 
             <h3>Contact Ratings: Connection and Loyalty</h3>
             <p>Every contact has two ratings that determine their usefulness and reliability:</p>
@@ -747,9 +772,9 @@
             <p>Remember: In the shadows, your network is your net worth. Invest in relationships like your life depends on it - because it does.</p>
         </section>
 
+    </main>
         <footer>
             <p><em>Trust is the only currency that matters when the chips are down, omae.</em></p>
         </footer>
-    </main>
 </body>
 </html>

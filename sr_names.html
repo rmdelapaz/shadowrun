@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shadow Registry - Names for the Sixth World</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
     <style>
         .names-background {
@@ -238,14 +238,34 @@
         .hidden {
             display: none !important;
         }
+
+        /* ---- contrast pass ---- */
+        body.lesson .random-generator { background-color: #13101c; color: #f3f0ff; }
+        body.lesson .random-generator :is(p, li, span, div, strong, em, td) { color: #f3f0ff; }
+        body.lesson .random-generator :is(h2, h3, h4, h5) { color: #7fe0ef !important; }
+        /* the section-header banner is a translucent slate gradient that
+           lightens in light mode; pin it to an opaque dark banner so its light
+           ink and per-gender title accents read in both themes */
+        body.lesson .section-header {
+            background: #13101c;
+            color: #f3f0ff;
+            border-radius: 12px;
+            padding: 16px;
+        }
+        body.lesson .section-header p { color: #cfc9e6; }
+        /* generator buttons are opaque white; give them a solid dark fill.
+           the active filter button gets a solid darker blue. */
+        body.lesson .random-generator button,
+        body.lesson .random-generator .generator-btn { background: #2a2340 !important; color: #f3f0ff !important; }
+        body.lesson .filter-btn.active { background: #1f6aa5 !important; color: #f3f0ff !important; }
     </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <div class="names-background"></div>
     
     <header>
-        <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Shadow Registry</h1>
+        <h1 style="text-shadow: 0 0 18px rgba(0, 255, 255, 0.45);">Shadow Registry</h1>
         <p><em>Names for the Sixth World - 150 Runners Ready for Action</em></p>
     </header>
 
@@ -2050,9 +2070,9 @@
             window.generateRandom = generateRandom;
         </script>
 
+    </main>
         <footer style="text-align: center; margin-top: 40px; color: #95a5a6;">
             <p><em>150 names for 150 stories. Every runner has a history, every name carries weight. Choose wisely in the shadows.</em></p>
         </footer>
-    </main>
 </body>
 </html>

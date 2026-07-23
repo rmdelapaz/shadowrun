@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Shadow Registry - 100+ Shadowrunners</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
     <style>
         .registry-background {
@@ -242,15 +242,46 @@
             padding: 20px;
             margin: 20px 0;
         }
+
+        /* ---- contrast pass ----------------------------------------------
+           The registry groups 100+ character cards into tinted section
+           wrappers. Pin those (and the card blocks) to opaque dark bases in
+           BOTH themes; the per-character accent colours (gold/blue/grey)
+           already read on dark, so only the inheriting text needs light ink. */
+        body.lesson :is(.solo-section, .specialty-teams, .npc-section, .enemy-section,
+                        .legend-item, .char-header, .char-info, .character-mini,
+                        .team-header) {
+            background-color: #13101c;
+            color: #f3f0ff;
+        }
+        body.lesson :is(.solo-section, .specialty-teams, .npc-section, .enemy-section,
+                        .char-header, .char-info, .character-mini, .team-header)
+                    :is(p, li, td, th) {
+            color: #f3f0ff;
+        }
+        body.lesson :is(.solo-section, .specialty-teams, .npc-section, .enemy-section,
+                        .char-header, .char-info, .character-mini, .team-header)
+                    :is(h2, h3, h4, h5) {
+            color: #7fe0ef;
+        }
+        /* section titles use a mid purple that can't hold on dark; lighten it */
+        body.lesson .section-title { color: #c6a4ff; }
+        /* character avatars carry per-character inline background colours;
+           dark-wash overlay keeps the hue while the glyph stays legible */
+        body.lesson .char-avatar {
+            background-image: linear-gradient(rgba(9, 7, 17, 0.5), rgba(9, 7, 17, 0.5)) !important;
+            color: #f3f0ff !important;
+        }
+        body.lesson .team-counter { background: #17324a; color: #f3f0ff; }
     </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <div class="registry-background"></div>
     <div class="team-counter" id="characterCounter">Characters: 0</div>
     
     <header>
-        <h1 style="color: #3498db; text-shadow: 0 0 20px #3498db;">The Shadow Registry</h1>
+        <h1 style="text-shadow: 0 0 18px rgba(52, 152, 219, 0.5);">The Shadow Registry</h1>
         <p><em>100+ Shadowrunners Ready for Action</em></p>
         
         <div class="legend-grid">
@@ -1774,9 +1805,9 @@
             <p>Remember: The best Shadowrun characters are shaped by the world's unique blend of cyberpunk technology and fantasy magic, corporate power and street-level desperation. Let these contradictions create interesting internal conflicts and external challenges for every character you create.</p>
         </section>
 
+    </main>
         <footer style="text-align: center; margin-top: 40px; color: #95a5a6;">
             <p><em>Every runner has a story. Every story changes the world. What legend will you create in the shadows?</em></p>
         </footer>
-    </main>
 </body>
 </html>

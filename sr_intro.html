@@ -4,17 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introduction to Shadowrun RPG - The Cyberpunk Fantasy World</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723"></script>
+    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         .world-timeline { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 20px; border-radius: 10px; margin: 20px 0; }
         .matrix-text { color: #00ff00; font-family: 'Courier New', monospace; }
         .corp-box { border-left: 4px solid #ff6b6b; padding: 15px; margin: 10px 0; background: rgba(255,107,107,0.1); }
         .magic-glow { text-shadow: 0 0 10px #9370db; color: #9370db; }
         .cyber-enhancement { background: linear-gradient(45deg, rgba(51, 51, 51, 0.22), rgba(85, 85, 85, 0.13)), var(--sr-surface); padding: 10px; border-radius: 5px; margin: 5px 0; }
+
+        /* ---- contrast pass ----------------------------------------------
+           SVG diagram figures carry light-fill text with no backdrop of their
+           own, so pin them dark in both themes (text stays legible in light). */
+        body.lesson figure:has(svg) {
+            background: #0f0b1a; border: 1px solid #2f2a45;
+            border-radius: 12px; padding: 16px;
+        }
+        body.lesson figure:has(svg) figcaption,
+        body.lesson figure:has(svg) figcaption :is(strong, em) { color: #cfc9e6; }
+        /* the world timeline sits on a FIXED dark gradient → pin its ink light */
+        body.lesson .world-timeline :is(p, li, strong, em, small, span, div, td) { color: #e8e2f5; }
+        body.lesson .world-timeline :is(h2, h3, h4, h5) { color: #7fe0ef; }
+        /* the matrix-green and magic-violet accents can't hold a single hue on
+           both a light and dark surface, so theme their ink (the mono font and
+           the violet glow keep the flavour) */
+        body.lesson .matrix-text,
+        body.lesson .magic-glow { color: var(--sr-text); }
+        /* footer end-marker → themed ink */
+        body.lesson .page-end,
+        body.lesson .page-end a,
+        body.lesson .page-end p { color: var(--sr-text); }
     </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <header>

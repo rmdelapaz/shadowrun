@@ -70,12 +70,26 @@
         const next = idx < pages.length - 1 ? pages[idx + 1] : null;
         const pnNav = document.createElement('nav');
         pnNav.className = 'prev-next';
+        pnNav.setAttribute('aria-label', 'Lesson navigation');
         pnNav.innerHTML = `
           ${prev ? `<a href="${prev.href}" class="pn-link pn-prev">← ${prev.label}</a>` : '<span></span>'}
           <a href="/index.html" class="pn-link pn-home">Table of Contents</a>
           ${next ? `<a href="${next.href}" class="pn-link pn-next">${next.label} →</a>` : '<span></span>'}
         `;
-        document.body.appendChild(pnNav);
+
+        // Wrap the nav and the page's own footer in one closing block so every
+        // page ends identically, whether or not it has a footer of its own.
+        const end = document.createElement('div');
+        end.className = 'page-end';
+        end.appendChild(pnNav);
+
+        const foot = document.querySelector('body > footer');
+        if (foot) {
+          foot.parentNode.insertBefore(end, foot);
+          end.appendChild(foot);
+        } else {
+          document.body.appendChild(end);
+        }
       }
     }
   });

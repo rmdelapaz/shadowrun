@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Living Legends - Advanced Campaigns and Character Development</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723"></script>
+    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         .legendary-background {
             background: 
@@ -135,51 +135,25 @@
             100% { transform: translateX(100%); }
         }
         
-        .story-web {
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
-            border: 3px solid #e74c3c;
-            border-radius: 20px;
-            padding: 30px;
+        /* the story web is drawn in fixed colours, so its surface is pinned
+           dark in both themes rather than following var(--sr-surface) */
+        body.lesson figure.story-map {
+            background: #0f0b1a;
+            border: 2px solid #3a2b4e;
+            border-radius: 16px;
+            padding: 20px;
             margin: 30px 0;
-            position: relative;
-            min-height: 400px;
         }
-        
-        .story-node {
-            position: absolute;
-            width: 100px;
-            height: 80px;
-            border: 3px solid #fff;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-            color: white;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        body.lesson figure.story-map svg { width: 100%; height: auto; display: block; }
+        body.lesson figure.story-map figcaption {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #3a2b4e;
+            color: #cbc4dc;
+            font-size: 0.95rem;
+            line-height: 1.55;
         }
-        
-        .story-node:hover {
-            transform: scale(1.2);
-            z-index: 10;
-        }
-        
-        .story-connection {
-            position: absolute;
-            height: 3px;
-            background: linear-gradient(90deg, #e74c3c, transparent, #e74c3c);
-            transform-origin: left center;
-            animation: storyFlow 4s linear infinite;
-        }
-        
-        @keyframes storyFlow {
-            0% { opacity: 0.3; }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
+        body.lesson figure.story-map figcaption strong { color: #ffce5a; }
         
         .plot-thread {
             background: rgba(231, 76, 60, 0.2);
@@ -416,14 +390,64 @@
             0%, 100% { opacity: 0.3; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.2); }
         }
+
+        /* ---- contrast pass ----------------------------------------------
+           The campaign/neon cards paint translucent or tinted fills over the
+           page, so their themed ink collapses in light mode. They are pinned
+           to opaque dark bases in BOTH themes (their tint overlays keep the
+           hue) with light body ink and a light-cyan heading accent. */
+        body.lesson :is(.arc-stage, .contact-stage, .consequence-level,
+                        .milestone-celebration, .framework-layer, .reputation-tracker,
+                        .plot-thread, .advancement-track, .theme-card,
+                        .campaign-framework, .campaign-themes) {
+            background-color: #13101c;
+            color: #f3f0ff;
+        }
+        body.lesson :is(.arc-stage, .contact-stage, .consequence-level,
+                        .milestone-celebration, .framework-layer, .reputation-tracker,
+                        .plot-thread, .advancement-track, .theme-card,
+                        .campaign-framework, .campaign-themes)
+                    :is(p, li, strong, em, small, span, div, td) {
+            color: #f3f0ff;
+        }
+        body.lesson :is(.arc-stage, .contact-stage, .consequence-level,
+                        .milestone-celebration, .framework-layer, .reputation-tracker,
+                        .plot-thread, .advancement-track, .theme-card,
+                        .campaign-framework, .campaign-themes)
+                    :is(h3, h4, h5) {
+            color: #7fe0ef;
+        }
+        /* the rest of the campaign / GM-toolkit components, same treatment */
+        body.lesson :is(.consequence-chain, .session-tracker, .session-entry,
+                        .gm-toolkit, .toolkit-section, .legacy-element) {
+            background-color: #13101c;
+            color: #f3f0ff;
+        }
+        body.lesson :is(.consequence-chain, .session-tracker, .session-entry,
+                        .gm-toolkit, .toolkit-section, .legacy-element)
+                    :is(p, li, strong, em, small, span, div, td) {
+            color: #f3f0ff;
+        }
+        body.lesson :is(.consequence-chain, .session-tracker, .session-entry,
+                        .gm-toolkit, .toolkit-section, .legacy-element)
+                    :is(h3, h4, h5) {
+            color: #7fe0ef;
+        }
+        /* number / severity badges carry per-stage inline colours that are too
+           mid-tone to hold light ink. Overlay a dark wash (composes over the
+           inline colour) so each keeps its hue as a dark-tinted chip and passes. */
+        body.lesson :is(.stage-indicator, .level-icon) {
+            background-image: linear-gradient(rgba(9, 7, 17, 0.58), rgba(9, 7, 17, 0.58)) !important;
+            color: #f3f0ff !important;
+        }
     </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <div class="legendary-background"></div>
     
     <header>
-        <h1 style="color: #f39c12; text-shadow: 0 0 20px #f39c12;">Living Legends</h1>
+        <h1 style="text-shadow: 0 0 18px rgba(243, 156, 18, 0.45);">Living Legends</h1>
         <p><em>Advanced Campaigns and Character Development</em></p>
     </header>
 
@@ -579,40 +603,66 @@
             <h2>Building Story Webs: Interconnected Narratives</h2>
             <p>Great Shadowrun campaigns create webs of interconnected stories where every NPC, every location, and every plot thread connects to multiple other elements. This creates a living world that feels real and reactive:</p>
 
-            <div class="story-web">
-                <h3>Narrative Connection Example</h3>
-                
-                <!-- Story nodes -->
-                <div class="story-node" style="background: #3498db; top: 10%; left: 10%;">
-                    CORP<br>JOHNSON
-                </div>
-                
-                <div class="story-node" style="background: #e74c3c; top: 20%; right: 15%;">
-                    BETRAYED<br>CONTACT
-                </div>
-                
-                <div class="story-node" style="background: #27ae60; bottom: 30%; left: 20%;">
-                    GANG<br>LEADER
-                </div>
-                
-                <div class="story-node" style="background: #f39c12; top: 60%; right: 30%;">
-                    FAMILY<br>MEMBER
-                </div>
-                
-                <div class="story-node" style="background: #9b59b6; bottom: 20%; right: 10%;">
-                    RIVAL<br>TEAM
-                </div>
-                
-                <div class="story-node" style="background: #8b4513; top: 40%; left: 45%;">
-                    CURRENT<br>JOB
-                </div>
+            <figure class="story-map">
+                <svg viewBox="0 0 940 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="swTitle swDesc">
+                    <title id="swTitle">A narrative connection web</title>
+                    <desc id="swDesc">The current job sits at the centre. Five story elements ring it — the Corp Johnson, a Rival Team, a Gang Leader, a Family Member and a Betrayed Contact — each with a solid line tying it into the run. Dashed lines run around the ring showing the same five are also tangled with each other, so every element connects to three others.</desc>
 
-                <!-- Story connections -->
-                <div class="story-connection" style="top: 15%; left: 20%; width: 200px; transform: rotate(25deg);"></div>
-                <div class="story-connection" style="top: 45%; left: 35%; width: 150px; transform: rotate(-30deg);"></div>
-                <div class="story-connection" style="bottom: 25%; left: 30%; width: 180px; transform: rotate(15deg);"></div>
-                <div class="story-connection" style="top: 65%; right: 25%; width: 120px; transform: rotate(-45deg);"></div>
-            </div>
+                    <!-- solid: each element ties into the current run -->
+                    <g stroke="#ffb03a" stroke-width="2" opacity="0.5">
+                        <line x1="470" y1="285" x2="470" y2="72"/>
+                        <line x1="470" y1="285" x2="788" y2="182"/>
+                        <line x1="470" y1="285" x2="712" y2="470"/>
+                        <line x1="470" y1="285" x2="228" y2="470"/>
+                        <line x1="470" y1="285" x2="152" y2="182"/>
+                    </g>
+                    <!-- dashed: the elements are tangled with each other -->
+                    <g stroke="#8f86b8" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.85" fill="none">
+                        <line x1="470" y1="72"  x2="788" y2="182"/>
+                        <line x1="470" y1="72"  x2="152" y2="182"/>
+                        <line x1="788" y1="182" x2="712" y2="470"/>
+                        <line x1="152" y1="182" x2="228" y2="470"/>
+                        <line x1="712" y1="470" x2="228" y2="470"/>
+                    </g>
+
+                    <!-- CURRENT JOB (centre) -->
+                    <rect x="378" y="248" width="184" height="74" rx="12" fill="#2b2410" stroke="#ffb700" stroke-width="3"/>
+                    <text x="470" y="282" fill="#ffce5a" font-family="Orbitron, sans-serif" font-size="16" font-weight="700" text-anchor="middle" letter-spacing="0.5">CURRENT JOB</text>
+                    <text x="470" y="304" fill="#efe3c6" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">the run in play</text>
+
+                    <!-- CORP JOHNSON -->
+                    <rect x="392" y="43" width="156" height="58" rx="10" fill="#0e2233" stroke="#4aa3e0" stroke-width="2"/>
+                    <text x="470" y="70" fill="#6fbdf0" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">CORP JOHNSON</text>
+                    <text x="470" y="89" fill="#cfe4f2" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">your employer</text>
+
+                    <!-- RIVAL TEAM -->
+                    <rect x="710" y="153" width="156" height="58" rx="10" fill="#241733" stroke="#b072d6" stroke-width="2"/>
+                    <text x="788" y="180" fill="#c88fe6" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">RIVAL TEAM</text>
+                    <text x="788" y="199" fill="#e2d6f2" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">the competition</text>
+
+                    <!-- GANG LEADER -->
+                    <rect x="634" y="441" width="156" height="58" rx="10" fill="#0f2b1a" stroke="#2ecc71" stroke-width="2"/>
+                    <text x="712" y="468" fill="#5fe08f" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">GANG LEADER</text>
+                    <text x="712" y="487" fill="#cfeeda" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">owns the turf</text>
+
+                    <!-- FAMILY MEMBER -->
+                    <rect x="150" y="441" width="156" height="58" rx="10" fill="#2e2109" stroke="#f0a830" stroke-width="2"/>
+                    <text x="228" y="468" fill="#f4bb5a" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">FAMILY MEMBER</text>
+                    <text x="228" y="487" fill="#f0e2c6" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">personal stake</text>
+
+                    <!-- BETRAYED CONTACT -->
+                    <rect x="74" y="153" width="156" height="58" rx="10" fill="#2e1210" stroke="#ef6a5a" stroke-width="2"/>
+                    <text x="152" y="180" fill="#f68b7c" font-family="Orbitron, sans-serif" font-size="13" font-weight="700" text-anchor="middle">BETRAYED CONTACT</text>
+                    <text x="152" y="199" fill="#f2d3ce" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle">a loose thread</text>
+
+                    <!-- legend -->
+                    <line x1="60" y1="540" x2="96" y2="540" stroke="#ffb03a" stroke-width="2"/>
+                    <text x="104" y="544" fill="#b9c0cf" font-family="Share Tech Mono, monospace" font-size="12">solid = ties into the current run</text>
+                    <line x1="470" y1="540" x2="506" y2="540" stroke="#8f86b8" stroke-width="1.8" stroke-dasharray="6 5"/>
+                    <text x="514" y="544" fill="#b9c0cf" font-family="Share Tech Mono, monospace" font-size="12">dashed = the elements are tangled with each other</text>
+                </svg>
+                <figcaption><strong>Figure &mdash; every thread is tied to three others.</strong> That is what makes the world feel reactive: there is no such thing as touching one element in isolation. Lean on the <strong>Gang Leader</strong> and you also move the <strong>Family Member</strong> who owes them and the <strong>Betrayed Contact</strong> feeding them intel &mdash; and the fallout rolls back up the solid line into the <strong>current job</strong>. Build the web first, and consequences write themselves.</figcaption>
+            </figure>
 
             <div class="plot-thread">
                 <h4>🕸️ Story Web Principles</h4>
@@ -1045,12 +1095,12 @@
             <p>Welcome to the shadows, runner. Your legend starts now.</p>
         </section>
 
+    </main>
         <footer>
             <p><em>May your run be smooth, your extraction clean, and your legend eternal. The shadows are calling, and history is waiting to be written.</em></p>
             <p style="text-align: center; margin-top: 40px;">
-                <span style="color: #f39c12; text-shadow: 0 0 10px #f39c12;">◊ End of Tutorial Series - Begin Your Legend ◊</span>
+                <span style="color: var(--sr-text); text-shadow: 0 0 12px rgba(243, 156, 18, 0.4);">◊ End of Tutorial Series - Begin Your Legend ◊</span>
             </p>
         </footer>
-    </main>
 </body>
 </html>

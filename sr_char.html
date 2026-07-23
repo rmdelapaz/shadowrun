@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choose Your Shadow - Character Archetypes and Roles</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723"></script>
+    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         /* Base styles with professional neutral colors */
         body {
@@ -283,12 +283,44 @@
             background: #f39c12;
             color: #ffffff !important;
         }
+
+        /* ---- contrast pass ----------------------------------------------
+           This page was authored for a light background only (white surfaces,
+           #333 ink). Make its surfaces and ink FOLLOW the site theme so it
+           works in both — these are the main content sections, not decorative
+           neon cards, so theme-following (not dark-pinning) is correct here. */
+        body.lesson section,
+        body.lesson .archetype-card,
+        body.lesson .team-dynamics,
+        body.lesson .mermaid,
+        body.lesson canvas { background: var(--sr-surface); }
+        body.lesson .archetype-card,
+        body.lesson :is(.archetype-card, .team-dynamics)
+                    :is(h2, h3, h4, h5, p, li, strong, em, span),
+        body.lesson ul li, body.lesson ol li { color: var(--sr-text); }
+        /* role icons carry per-archetype background colours; dark-wash overlay
+           keeps the hue while the light glyph stays legible */
+        body.lesson .role-icon {
+            background-image: linear-gradient(rgba(9, 7, 17, 0.5), rgba(9, 7, 17, 0.5)) !important;
+        }
+        /* the SVG diagram figure has light-fill text and no backdrop of its own,
+           so pin it dark in both themes (its text stays legible in light mode) */
+        body.lesson figure:has(svg) {
+            background: #0f0b1a;
+            border: 1px solid #2f2a45;
+            border-radius: 12px;
+            padding: 16px;
+        }
+        body.lesson figure:has(svg) figcaption,
+        body.lesson figure:has(svg) figcaption :is(strong, em) {
+            color: #cfc9e6;
+        }
     </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <header>
-        <h1 style="color: #00ffff; text-shadow: 0 0 20px #00ffff;">Choose Your Shadow</h1>
+        <h1 style="text-shadow: 0 0 18px rgba(0, 255, 255, 0.45);">Choose Your Shadow</h1>
         <p><em>Character Archetypes and Team Roles</em></p>
     </header>
 
@@ -623,9 +655,9 @@
             <p><strong>Think about this:</strong> Which archetype called to you? What kind of problems do you want to solve? How do you want to change the Sixth World? Your answers to these questions will guide everything that follows.</p>
         </section>
 
+    </main>
         <footer>
             <p><em>The shadows need specialists, but legends need depth. Choose wisely, omae.</em></p>
         </footer>
-    </main>
 </body>
 </html>

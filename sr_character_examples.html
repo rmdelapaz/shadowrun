@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content-width, initial-scale=1.0">
     <title>Shadow Profiles - Character Examples</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723">
+    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723"></script>
+    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         .character-showcase {
             background: linear-gradient(135deg, #2c3e50, #34495e);
@@ -337,14 +337,49 @@
             color: #2ecc71;
             font-weight: bold;
         }
+
+        /* ---- contrast pass: pin the character-profile cards dark in both
+           themes with light ink + light-cyan headings ---- */
+        body.lesson :is(.character-info, .character-header, .augmentation-display,
+                        .aug-item, .skills-section, .character-relationships,
+                        .team-role, .gear-category, .background-story, .motivations) {
+            background-color: #13101c;
+            color: #f3f0ff;
+        }
+        body.lesson :is(.character-info, .character-header, .augmentation-display,
+                        .aug-item, .skills-section, .character-relationships,
+                        .team-role, .gear-category, .background-story, .motivations)
+                    :is(p, li, strong, em, small, span, div, td, th) {
+            color: #f3f0ff;
+        }
+        body.lesson :is(.character-info, .character-header, .augmentation-display,
+                        .aug-item, .skills-section, .character-relationships,
+                        .team-role, .gear-category, .background-story, .motivations)
+                    :is(h2, h3, h4, h5) {
+            color: #7fe0ef;
+        }
+        /* inline mid-tone accent headings (red/purple) can't hold on the dark
+           card; override them to the light-cyan accent */
+        body.lesson :is(.character-info, .character-header, .augmentation-display,
+                        .aug-item, .skills-section, .character-relationships,
+                        .team-role, .gear-category, .background-story, .motivations)
+                    :is(h2, h3, h4, h5)[style] {
+            color: #7fe0ef !important;
+        }
+        /* lifestyle pills & character avatars carry inline background colours;
+           dark-wash overlay keeps the hue while the light glyph stays legible */
+        body.lesson :is(.lifestyle-indicator, .character-avatar) {
+            background-image: linear-gradient(rgba(9, 7, 17, 0.55), rgba(9, 7, 17, 0.55)) !important;
+            color: #f3f0ff !important;
+        }
     </style>
-    <script src="/styles/site-nav.js?v=20260723" defer></script>
+    <script src="/styles/site-nav.js?v=20260723u6" defer></script>
 </head>
 <body class="lesson">
     <div class="character-showcase"></div>
     
     <header>
-        <h1 style="color: #3498db; text-shadow: 0 0 20px #3498db;">Shadow Profiles</h1>
+        <h1 style="text-shadow: 0 0 18px rgba(52, 152, 219, 0.5);">Shadow Profiles</h1>
         <p><em>Character Examples from the Sixth World</em></p>
     </header>
 
@@ -1322,9 +1357,9 @@
             <p>Remember: The best Shadowrun characters are shaped by the unique combination of high technology and ancient magic, corporate power and street-level desperation, that defines the Sixth World. Let these contradictions create interesting internal conflicts and external challenges for your characters.</p>
         </section>
 
+    </main>
         <footer>
             <p><em>Every legend starts with a choice to step into the shadows. What story will your character write?</em></p>
         </footer>
-    </main>
 </body>
 </html>

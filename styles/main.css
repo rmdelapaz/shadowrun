@@ -28,6 +28,11 @@ summary, time, mark, audio, video {
 }
 article, aside, details, figcaption, figure, footer,
 header, hgroup, menu, nav, section { display: block; }
+
+/* Without this, padding and borders are ADDED to max-width, so a heading with
+   18px padding ends up wider than a paragraph with the same max-width and the
+   two no longer share a left edge. This is what made the margins look ragged. */
+*, *::before, *::after { box-sizing: border-box; }
 body { line-height: 1; }
 ol, ul { list-style: none; }
 blockquote, q { quotes: none; }
@@ -181,6 +186,13 @@ body.lesson {
   -webkit-font-smoothing: antialiased;
 }
 
+/* One gutter for the whole content area. Everything inside centres within it,
+   so the text column and the wider card column share the same outer margin
+   instead of the cards bleeding to the viewport edge. */
+body.lesson main { padding-left: 26px; padding-right: 26px; }
+/* auto margins only centre block-level boxes */
+body.lesson main > input { display: block; }
+
 /* --- header ----------------------------------------------- */
 body.lesson > header {
   max-width: 1080px;
@@ -219,23 +231,37 @@ body.lesson h1 {
   margin-bottom: 14px;
 }
 body.lesson main h2 {
+  position: relative;
   font-size: 1.68rem;
   letter-spacing: 1px;
   margin: 62px auto 22px;
-  padding: 0 0 12px 18px;
+  padding: 0 0 12px;
   max-width: var(--sr-measure);
-  border-left: 4px solid var(--sr-violet);
   border-bottom: 1px solid var(--sr-line);
   color: var(--sr-violet);
   text-shadow: 0 0 20px rgba(160, 107, 255, 0.28);
 }
+/* the accent rule hangs in the left gutter rather than indenting the text */
+body.lesson main h2::before {
+  content: '';
+  position: absolute;
+  left: -22px; top: 3px; bottom: 12px;
+  width: 4px; border-radius: 2px;
+  background: var(--sr-violet);
+}
 body.lesson main h3 {
+  position: relative;
   font-size: 1.2rem;
   margin: 38px auto 13px;
-  padding-left: 18px;
   max-width: var(--sr-measure);
   color: var(--sr-green);
-  border-left: 3px solid rgba(63, 209, 139, 0.45);
+}
+body.lesson main h3::before {
+  content: '';
+  position: absolute;
+  left: -22px; top: 4px; bottom: 2px;
+  width: 3px; border-radius: 2px;
+  background: rgba(63, 209, 139, 0.55);
 }
 body.lesson main h4 {
   font-size: 1.02rem;
@@ -294,12 +320,30 @@ body.lesson dd { margin-left: 22px; padding-bottom: 10px; color: var(--sr-text-d
    Pages build cards out of plain <div>s inside a <section>;
    their inner text must sit flush rather than be re-centred
    into the page text column.                                */
+/* Pages define ~240 card classes of their own and almost none set a width, so
+   they used to span the whole viewport while the prose sat in a 680px column.
+   Cap them at the media width: the page then has exactly two measures, the text
+   column and the wider media column, instead of an unbounded third. */
+body.lesson main > div,
+body.lesson main > input,
+body.lesson main > table,
+body.lesson main > footer,
+body.lesson main section > div:not(.mermaid):not(.mermaid_container) {
+  max-width: var(--sr-media);
+  /* !important because ~240 page-local card classes set their own `margin: N 0`,
+     which otherwise wins and pins the card to the left edge. Also covers
+     sr_names.html, which has no <section> wrapper at all. */
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
 body.lesson main section > div:not(.mermaid):not(.mermaid_container) :is(h3, h4, h5, p, ul, ol, dl) {
   max-width: none; margin-left: 0; margin-right: 0;
 }
 body.lesson main section > div:not(.mermaid):not(.mermaid_container) :is(h3, h4) {
   padding-left: 0; border-left: 0; margin-top: 0;
 }
+/* inner headings keep no gutter rule — the card edge already frames them */
+body.lesson main section > div :is(h2, h3)::before { display: none; }
 body.lesson main section > div:not(.mermaid):not(.mermaid_container) > :last-child { margin-bottom: 0; }
 
 /* --- tables ----------------------------------------------- */
@@ -605,9 +649,10 @@ body.hub {
   body.lesson { font-size: 16px; }
   body.lesson > header { padding: 36px 16px 28px; }
   body.lesson main h2 { font-size: 1.36rem; margin-top: 44px; }
-  body.lesson p,
-  body.lesson main ul,
-  body.lesson main ol { padding-left: 16px; padding-right: 16px; }
+  body.lesson main { padding-left: 18px; padding-right: 18px; }
+  /* not enough room for the accent to hang outside — bring it inline */
+  body.lesson main :is(h2, h3) { padding-left: 14px; }
+  body.lesson main :is(h2, h3)::before { left: 0; }
   body.lesson figure { padding: 12px; margin-left: 8px; margin-right: 8px; }
   body.lesson table { font-size: 0.85rem; }
   .hub-grid { grid-template-columns: 1fr; }

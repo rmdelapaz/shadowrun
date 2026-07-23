@@ -1,19 +1,22 @@
 (function() {
   // Page order for prev/next navigation
   const pages = [
-    { href: '/sr_intro.html', label: 'Introduction' },
-    { href: '/sr_char.html', label: 'Characters' },
-    { href: '/sr_mechanics.html', label: 'Game Mechanics' },
-    { href: '/sr_dice_roller.html', label: 'Dice Roller' },
+    // Canonical reading order. This is the SINGLE source of truth for prev/next
+    // and it must stay in step with the card order in index.html. Pages used to
+    // carry their own hardcoded "Next:" links as well, which drifted out of sync.
+    { href: '/sr_intro.html',              label: 'Introduction' },
+    { href: '/sr_char.html',               label: 'Characters' },
+    { href: '/sr_mechanics.html',          label: 'Game Mechanics' },
     { href: '/sr_character_examples.html', label: 'Character Examples' },
-    { href: '/sr_100.html', label: '100 Characters' },
-    { href: '/sr_names.html', label: 'Character Names' },
-    { href: '/sr_contacts.html', label: 'Contacts & Lifestyle' },
-    { href: '/sr_planning.html', label: 'Planning' },
-    { href: '/sr_matrix.html', label: 'The Matrix' },
-    { href: '/sr_magic.html', label: 'Magic' },
-    { href: '/sr_urban.html', label: 'Urban Sprawl' },
-    { href: '/sr_adv.html', label: 'Advanced Campaigns' }
+    { href: '/sr_100.html',                label: '100 Characters' },
+    { href: '/sr_names.html',              label: 'Character Names' },
+    { href: '/sr_contacts.html',           label: 'Contacts & Lifestyle' },
+    { href: '/sr_planning.html',           label: 'Planning' },
+    { href: '/sr_urban.html',              label: 'Urban Sprawl' },
+    { href: '/sr_matrix.html',             label: 'The Matrix' },
+    { href: '/sr_magic.html',              label: 'Magic' },
+    { href: '/sr_adv.html',                label: 'Advanced Campaigns' },
+    { href: '/sr_dice_roller.html',        label: 'Dice Roller' }
   ];
 
   const path = window.location.pathname;

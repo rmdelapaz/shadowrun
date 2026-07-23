@@ -20,7 +20,10 @@
   ];
 
   const path = window.location.pathname;
-  const isIndex = path === '/' || path === '/index.html';
+  // Netlify serves "pretty" URLs (/sr_char) while a local static server serves
+  // the real file (/sr_char.html). Strip the extension so matching works in both.
+  const bare = path.replace(/\.html$/, '');
+  const isIndex = bare === '/' || bare === '/index' || bare === '';
 
   // --- Dark mode ---
   // The Sixth World is dark by default; light is an explicit opt-in. The
@@ -64,7 +67,10 @@
 
     // --- Prev / Next (non-index pages only) ---
     if (!isIndex) {
-      const idx = pages.findIndex(p => path.endsWith(p.href) || path === p.href);
+      const idx = pages.findIndex(p => {
+        const h = p.href.replace(/\.html$/, '');
+        return bare === h || bare.endsWith(h);
+      });
       if (idx !== -1) {
         const prev = idx > 0 ? pages[idx - 1] : null;
         const next = idx < pages.length - 1 ? pages[idx + 1] : null;

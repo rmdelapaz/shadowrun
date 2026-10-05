@@ -63,20 +63,19 @@
         
         .district-map {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
-            grid-template-rows: repeat(3, 1fr);
-            gap: 15px;
-            height: 500px;
+            grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr));
+            grid-auto-rows: 1fr;
+            gap: 12px;
             border: 3px solid var(--border);
             border-radius: 15px;
-            padding: 20px;
+            padding: 16px;
             margin: 30px 0;
         }
         
         .district {
             border: 2px solid;
             border-radius: 10px;
-            padding: 15px;
+            padding: 12px 10px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -88,6 +87,10 @@
             transition: all 0.3s ease;
         }
         
+        .district h4 { margin: 0 0 6px; font-size: 1rem; line-height: 1.2; }
+        .district p { margin: 0; font-size: 0.88rem; line-height: 1.35; }
+        .district:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
         .district:hover {
             transform: scale(1.05);
             z-index: 10;
@@ -583,47 +586,47 @@
             <p>The Seattle Metroplex has ten official districts: <strong>Auburn, Bellevue, Downtown, Everett, Fort Lewis, Puyallup, Redmond, Renton, Snohomish</strong> and <strong>Tacoma</strong>. Downtown is the corporate core. Redmond is so far gone that everyone calls it the <strong>Redmond Barrens</strong>; Touristville, the neighbourhood where outsiders go slumming, is part of it. <strong>Council Island</strong> is not a Metroplex district at all: it was ceded to the Salish-Shidhe Council. The cards below are the kinds of neighbourhood you will find across those districts. Click one for a run-planner's view:</p>
 
             <div class="district-map">
-                <div class="district corporate" onclick="showDistrictInfo('corporate')">
+                <div role="button" tabindex="0" class="district corporate" onclick="showDistrictInfo('corporate')">
                     <h4>Corporate Zone</h4>
                     <p>Gleaming towers, perfect security, sterile perfection</p>
                 </div>
 
-                <div class="district middle-class" onclick="showDistrictInfo('middle')">
+                <div role="button" tabindex="0" class="district middle-class" onclick="showDistrictInfo('middle')">
                     <h4>Residential Sector</h4>
                     <p>Suburban sprawl, wage slave housing, corporate surveillance</p>
                 </div>
 
-                <div class="district industrial" onclick="showDistrictInfo('industrial')">
+                <div role="button" tabindex="0" class="district industrial" onclick="showDistrictInfo('industrial')">
                     <h4>Industrial District</h4>
                     <p>Factories, warehouses, heavy pollution, worker housing</p>
                 </div>
 
-                <div class="district sprawl" onclick="showDistrictInfo('sprawl')">
+                <div role="button" tabindex="0" class="district sprawl" onclick="showDistrictInfo('sprawl')">
                     <h4>Commercial Strip</h4>
                     <p>Shopping centers, entertainment, middle-class amenities</p>
                 </div>
 
-                <div class="district barrens" onclick="showDistrictInfo('barrens')">
+                <div role="button" tabindex="0" class="district barrens" onclick="showDistrictInfo('barrens')">
                     <h4>The Barrens</h4>
                     <p>Abandoned areas, gang territory, urban decay</p>
                 </div>
 
-                <div class="district underground" onclick="showDistrictInfo('underground')">
+                <div role="button" tabindex="0" class="district underground" onclick="showDistrictInfo('underground')">
                     <h4>Underground</h4>
                     <p>Hidden communities, black markets, forgotten places</p>
                 </div>
 
-                <div class="district sprawl" onclick="showDistrictInfo('entertainment')">
+                <div role="button" tabindex="0" class="district sprawl" onclick="showDistrictInfo('entertainment')">
                     <h4>Entertainment District</h4>
                     <p>Clubs, bars, vice, shadowrunner hangouts</p>
                 </div>
 
-                <div class="district middle-class" onclick="showDistrictInfo('transport')">
+                <div role="button" tabindex="0" class="district middle-class" onclick="showDistrictInfo('transport')">
                     <h4>Transport Hub</h4>
                     <p>Mass transit, cargo handling, smuggling routes</p>
                 </div>
 
-                <div class="district corporate" onclick="showDistrictInfo('research')">
+                <div role="button" tabindex="0" class="district corporate" onclick="showDistrictInfo('research')">
                     <h4>Research Complex</h4>
                     <p>Labs, universities, corporate R&D, heavy security</p>
                 </div>
@@ -634,6 +637,11 @@
             </div>
 
             <script>
+                document.querySelectorAll('.district[role="button"]').forEach(function (d) {
+                    d.addEventListener('keydown', function (e) {
+                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); d.click(); }
+                    });
+                });
                 function showDistrictInfo(district) {
                     const info = document.getElementById('districtInfo');
                     const districts = {

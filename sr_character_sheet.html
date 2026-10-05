@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Sheets - The Shadowrun Guide</title>
+    <meta name="description" content="Fillable Shadowrun Fifth Edition runner sheets: limits, initiatives, condition monitors, Essence and derived pools worked out, every active skill with its dice pool, gear, magic and contacts.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="/js/site.js?v=1"></script>
+    <link rel="stylesheet" href="/styles/main.css?v=1">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <style>
+        /* ===== Controls (themed) ===== */
+        main .sheet-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; margin: 20px auto 6px; max-width: 860px; }
+        main .sheet-controls select {
+            min-height: 40px; padding: 6px 10px; border-radius: 8px; min-width: 200px; width: auto;
+            background: var(--surface); color: var(--text); border: 1px solid var(--border-strong); font: inherit; font-size: 0.95rem;
+        }
+        main .sheet-controls button, main .tabs button {
+            min-height: 40px; padding: 7px 14px; margin: 0; border-radius: 8px; font: inherit; font-size: 0.92rem; font-weight: 600; cursor: pointer;
+            background: var(--surface); color: var(--heading); border: 1px solid var(--border-strong); width: auto;
+        }
+        main .sheet-controls button:hover, main .tabs button:hover { border-color: var(--accent); color: var(--accent); background: var(--surface); }
+        main .sheet-controls button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+        main .sheet-controls button.primary:hover { color: var(--accent-ink); background: var(--accent); filter: brightness(1.08); }
+        main .sheet-controls button.armed { background: #a3161a; border-color: #a3161a; color: #fff; }
+        main .tabs { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin: 12px auto 0; background: none; border: 0; box-shadow: none; padding: 0; }
+        html body > main > div.tabs[role="tablist"][aria-label] { background: none; border: 0; box-shadow: none; padding: 0; border-radius: 0; margin: 12px auto 0; }
+        main .tabs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+        #importFile { display: none; }
+        .sheet-status { text-align: center; min-height: 1.6em; margin: 4px 0 0; color: var(--muted); font-weight: 600; }
+        .sheet-help { max-width: 860px; margin: 10px auto 0; color: var(--muted); font-size: 0.95rem; }
+
+        /* ===== The sheet: a light page in both themes ===== */
+        .sr-sheet {
+            --ink: #161b22; --soft: #48505c; --line: #aab3c0; --blue: #24496a; --mag: #8e1452; --paper: #fafbfc;
+            width: min(8.5in, 100%); margin: 14px auto; padding: 14px 16px;
+            background: var(--paper); color: var(--ink); border: 2px solid #1b2836; border-radius: 4px;
+            font-family: "Source Sans 3", "Segoe UI", sans-serif; font-size: 14px; line-height: 1.3; box-shadow: var(--shadow);
+            color-scheme: light;
+        }
+        .sr-sheet b, .sr-sheet strong { color: var(--ink); }
+        .sr-sheet .page + .page { display: none; }
+        .sr-sheet[data-page="skills"] .page, .sr-sheet[data-page="gear"] .page { display: none; }
+        .sr-sheet[data-page="skills"] .page.p-skills { display: block; }
+        .sr-sheet[data-page="gear"] .page.p-gear { display: block; }
+        .sr-sheet .lbl { display: block; font: 700 13px/1.15 "Oxanium", "Segoe UI", sans-serif; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue); margin: 0 0 2px; }
+        .sr-sheet .box { border: 1.5px solid var(--line); border-radius: 4px; padding: 6px 8px; }
+        .sr-sheet input[type="text"], .sr-sheet select, .sr-sheet textarea, .sr-sheet .val {
+            width: 100%; max-width: none; min-height: 0; margin: 0; background: transparent; color: var(--ink);
+            border: 0; border-bottom: 1px dotted var(--line); border-radius: 0; padding: 2px; font: inherit; box-shadow: none;
+        }
+        .sr-sheet textarea { border-bottom: 0; resize: vertical; min-height: 54px; line-height: 1.35; }
+        .sr-sheet .val { display: block; min-height: 1.35em; white-space: pre-wrap; }
+        .sr-sheet .tx.val { min-height: 3.4em; border-bottom: 0; }
+        .sr-sheet input::placeholder, .sr-sheet textarea::placeholder { color: #5b6370; opacity: 1; font-style: italic; font-weight: 400; }
+        .sr-sheet input:focus, .sr-sheet select:focus, .sr-sheet textarea:focus { outline: 2px solid var(--blue); outline-offset: 1px; background: rgba(36, 73, 106, 0.07); }
+        .sr-sheet select option { background: #fafbfc; color: #161b22; }
+        .sr-sheet .out { display: inline-block; min-width: 2em; text-align: center; font-weight: 700; color: var(--ink); }
+        .sr-sheet small.k { display: block; font-size: 10px; color: var(--soft); text-transform: uppercase; letter-spacing: 0.05em; }
+        .sr-sheet .stack > * + * { margin-top: 8px; }
+
+        .sr-sheet .head { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 4px 12px; border-bottom: 2px solid var(--blue); padding-bottom: 6px; margin-bottom: 10px; }
+        .sr-sheet .head .name { grid-row: span 3; align-self: end; }
+        .sr-sheet .head .name input, .sr-sheet .head .name .val { font: 700 1.6rem "Oxanium", "Segoe UI", sans-serif; }
+        .sr-sheet .attrs { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; margin-bottom: 10px; }
+        .sr-sheet .at { display: block; border: 1.5px solid var(--ink); border-radius: 4px; text-align: center; padding: 3px 1px 4px; }
+        .sr-sheet .at.spc { border-color: var(--mag); }
+        .sr-sheet .at .lbl { color: var(--ink); margin: 0; font-size: 12px; }
+        .sr-sheet .at.spc .lbl { color: var(--mag); }
+        .sr-sheet .at input, .sr-sheet .at .val, .sr-sheet .at > .out { text-align: center; font: 700 1.25rem "Oxanium", sans-serif; border-bottom: 0; padding: 0; display: block; }
+        .sr-sheet .at .cur { font-size: 10px; color: var(--soft); display: flex; gap: 2px; align-items: center; justify-content: center; }
+        .sr-sheet .at .cur input, .sr-sheet .at .cur .val { width: 2.2em; font: 700 12px "Source Sans 3", sans-serif; border-bottom: 1px dotted var(--line); }
+        .sr-sheet .derived { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        .sr-sheet .dv { border: 1.5px solid var(--line); border-radius: 4px; padding: 3px 6px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; }
+        .sr-sheet .dv span:first-child { color: var(--soft); }
+        .sr-sheet .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .sr-sheet .track { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; margin: 3px 0; }
+        .sr-sheet .track b { width: 100%; font-size: 12px; display: flex; justify-content: space-between; }
+        .sr-sheet .slot { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; margin: 0; border: 2px solid var(--ink); border-radius: 2px; background: #fff; cursor: pointer; }
+        .sr-sheet .slot:nth-child(3n+1) { margin-right: 4px; }
+        .sr-sheet .slot:checked { background: var(--ink); }
+        .sr-sheet .slot:disabled { display: none; }
+        .sr-sheet .mark { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--ink); border-radius: 2px; text-align: center; line-height: 14px; font-size: 12px; font-weight: 700; }
+        .sr-sheet .mark.off { display: none; }
+        .sr-sheet table.t { width: 100%; border-collapse: collapse; display: table; margin: 0; font-size: 12.5px; }
+        .sr-sheet table.t th { font: 700 11px "Oxanium", sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: var(--blue); text-align: left; border: 0; border-bottom: 1.5px solid var(--ink); background: none; padding: 1px 3px; }
+        .sr-sheet table.t td { border: 0; border-bottom: 1px solid #e3e7ec; padding: 1px 3px; background: none; color: var(--ink); vertical-align: middle; }
+        .sr-sheet table.t td.c, .sr-sheet table.t th.c { text-align: center; }
+        .sr-sheet table.t td.c input, .sr-sheet table.t td.c select, .sr-sheet table.t td.c .val { text-align: center; text-align-last: center; padding: 0; }
+        .sr-sheet .scroll { overflow-x: auto; }
+        .sr-sheet .skills { columns: 3 210px; column-gap: 12px; }
+        .sr-sheet .sgroup { break-inside: avoid; margin-bottom: 6px; }
+        .sr-sheet .sgroup h4 { font: 700 12px "Oxanium", sans-serif; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; background: var(--blue); margin: 0 0 2px; padding: 1px 6px; }
+        .sr-sheet .sk { display: grid; grid-template-columns: 1fr 2.5em 2.1em 2.5em; gap: 3px; align-items: center; font-size: 12.5px; padding: 1px 0; border-bottom: 1px solid #eceff3; }
+        .sr-sheet .sk.head-row { font: 700 10px "Oxanium", sans-serif; color: var(--soft); text-transform: uppercase; letter-spacing: 0; white-space: nowrap; border: 0; }
+        .sr-sheet .sk.head-row span { text-align: center; }
+        .sr-sheet .sk.head-row span:first-child { text-align: left; }
+        .sr-sheet .sk .nm small { color: var(--soft); font-size: 9.5px; }
+        .sr-sheet .sk > input, .sr-sheet .sk > .val { text-align: center; padding: 0; font-weight: 600; }
+        .sr-sheet .sk .attr { text-align: center; font-size: 10.5px; color: var(--soft); }
+
+        @media (max-width: 760px) {
+            .sr-sheet { padding: 12px; }
+            .sr-sheet .head { grid-template-columns: 1fr 1fr; }
+            .sr-sheet .head .name { grid-column: 1 / -1; grid-row: auto; }
+            .sr-sheet .attrs { grid-template-columns: repeat(4, 1fr); }
+            .sr-sheet .derived { grid-template-columns: 1fr 1fr; }
+            .sr-sheet .cols { grid-template-columns: 1fr; }
+            .sr-sheet table.t.wide { min-width: 620px; }
+        }
+
+        /* ===== Print: three US Letter pages per character ===== */
+        .print-container { display: none; }
+        @media print {
+            @page { size: letter portrait; margin: 0.35in; }
+            .site-nav, .skip-link, body > header, .sheet-controls, .tabs, .sheet-status, .sheet-help, #sheet, footer, .site-footer { display: none !important; }
+            html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
+            main { margin: 0 !important; padding: 0 !important; width: auto !important; max-width: none !important; }
+            .print-container { display: block !important; border: 0 !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; background: none !important; border-radius: 0 !important; }
+            .print-container .sr-sheet { width: 7.8in !important; margin: 0 auto !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; font-size: 10.5px; line-height: 1.15; }
+            .print-container .sr-sheet .page { display: flex !important; flex-direction: column; height: 10.25in; box-sizing: border-box; overflow: hidden;
+                border: 1.5pt solid #1b2836; border-radius: 4px; padding: 0.12in 0.14in; page-break-after: always; break-after: page; }
+            .print-container .sr-sheet:last-child .page:last-child { page-break-after: auto; break-after: auto; }
+            .print-container .sr-sheet .val { min-height: 1.15em; padding: 0 2px; }
+            .print-container .sr-sheet .tx.val { min-height: 2.2em; }
+            .print-container .sr-sheet .box { padding: 3px 6px; }
+            .print-container .sr-sheet .stack > * + * { margin-top: 5px; }
+            .print-container .sr-sheet table.t { font-size: 10px; min-width: 0; }
+            .print-container .sr-sheet table.t td .val { min-height: 1.45em; }
+            .print-container .sr-sheet .sk { font-size: 10px; padding: 2px 0; }
+            .print-container .sr-sheet .cols { flex: 1; min-height: 0; }
+            .print-container .sr-sheet .cols > .stack { display: flex; flex-direction: column; }
+            .print-container .sr-sheet .grow { flex: 1; display: flex; flex-direction: column; }
+            .print-container .sr-sheet .grow .tx.val { flex: 1; }
+            .print-container .sr-sheet .sgroup h4 { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav">
+    <a href="https://rays-home.netlify.app/">Ray's House of Fun</a>
+    <a href="/index.html">Home</a>
+    <a href="https://rays-home.netlify.app/contact">Contact</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+</nav>
+    <header>
+        <h1>Character Sheets</h1>
+        <p>Fill in, save and print Shadowrun Fifth Edition runners, with limits, initiatives, condition monitors and dice pools worked out for you.</p>
+    </header>
+
+    <main id="main">
+        <div class="sheet-controls">
+            <select id="sheetSelect" aria-label="Saved sheets"><option value="">— Select Sheet —</option></select>
+            <button type="button" class="primary" id="newBtn">✨ New</button>
+            <button type="button" id="saveBtn">💾 Save</button>
+            <button type="button" id="copyBtn">📋 Copy</button>
+            <button type="button" id="deleteBtn">🗑️ Delete</button>
+            <button type="button" id="printBtn">🖨️ Print</button>
+            <button type="button" id="printAllBtn">🖨️ Print All</button>
+            <button type="button" id="blankBtn">📄 Print Blank</button>
+            <button type="button" id="exportBtn">📤 Export</button>
+            <button type="button" id="importBtn">📥 Import</button>
+            <input type="file" id="importFile" accept=".json,application/json">
+        </div>
+        <p class="sheet-status" id="status" role="status" aria-live="polite"></p>
+        <div class="tabs" role="tablist" aria-label="Sheet pages">
+            <button type="button" role="tab" id="tab-main" aria-controls="sheet" aria-selected="true" data-page="main">🕶️ Runner</button>
+            <button type="button" role="tab" id="tab-skills" aria-controls="sheet" aria-selected="false" data-page="skills">🎯 Skills &amp; Qualities</button>
+            <button type="button" role="tab" id="tab-gear" aria-controls="sheet" aria-selected="false" data-page="gear">🔫 Gear, Magic &amp; Contacts</button>
+        </div>
+
+        <form class="sr-sheet" id="sheet" data-page="main" autocomplete="off" onsubmit="return false">
+            <!-- ===================== PAGE 1: RUNNER ===================== -->
+            <div class="page p-main">
+                <div class="head">
+                    <label class="name"><span class="lbl">Street Name</span><input type="text" name="name" maxlength="60" placeholder="Ghostwire"></label>
+                    <label><small class="k">Real Name</small><input type="text" name="realName"></label>
+                    <label><small class="k">Metatype</small><input type="text" name="metatype" list="metatypes" placeholder="Human"></label>
+                    <label><small class="k">Ethnicity / Age / Sex</small><input type="text" name="ethnicity"></label>
+                    <label><small class="k">Height / Weight</small><input type="text" name="size"></label>
+                    <label><small class="k">Street Cred</small><input type="text" name="cred"></label>
+                    <label><small class="k">Notoriety</small><input type="text" name="notoriety"></label>
+                    <label><small class="k">Public Awareness</small><input type="text" name="awareness"></label>
+                    <label><small class="k">Karma (total / now)</small><input type="text" name="karma"></label>
+                    <label><small class="k">Nuyen</small><input type="text" name="nuyen" placeholder="¥"></label>
+                    <label><small class="k">Lifestyle</small><input type="text" name="lifestyle" placeholder="Low"></label>
+                    <label><small class="k">Fake SIN (rating)</small><input type="text" name="sin"></label>
+                </div>
+
+                <div class="attrs" id="attrs"></div>
+
+                <div class="box">
+                    <span class="lbl">Limits, Initiative &amp; Derived Pools</span>
+                    <div class="derived">
+                        <div class="dv"><span>Physical limit</span><span class="out" data-out="limPhys">—</span></div>
+                        <div class="dv"><span>Mental limit</span><span class="out" data-out="limMent">—</span></div>
+                        <div class="dv"><span>Social limit</span><span class="out" data-out="limSoc">—</span></div>
+                        <div class="dv"><span>Initiative</span><span class="out" data-out="init">—</span></div>
+                        <div class="dv"><span>Astral init.</span><span class="out" data-out="initAstral">—</span></div>
+                        <div class="dv"><span>Matrix AR init.</span><span class="out" data-out="initAR">—</span></div>
+                        <div class="dv"><span>Composure</span><span class="out" data-out="composure">—</span></div>
+                        <div class="dv"><span>Judge Intentions</span><span class="out" data-out="judge">—</span></div>
+                        <div class="dv"><span>Memory</span><span class="out" data-out="memory">—</span></div>
+                        <div class="dv"><span>Lift / Carry</span><span class="out" data-out="lift">—</span></div>
+                        <div class="dv"><span>Walk / Run (m)</span><span class="out" data-out="move">—</span></div>
+                        <div class="dv"><span>Wound modifier</span><span class="out" data-out="wound">0</span></div>
+                    </div>
+                </div>
+
+                <div class="cols" style="margin-top:8px">
+                    <div class="stack">
+                        <div class="box">
+                            <span class="lbl">Condition Monitors</span>
+                            <div class="track" id="trPhys"><b><span>Physical</span><span class="out" data-out="cmPhysLbl" style="font-weight:400;color:var(--soft)"></span></b></div>
+                            <div class="track" id="trStun"><b><span>Stun</span><span class="out" data-out="cmStunLbl" style="font-weight:400;color:var(--soft)"></span></b></div>
+                            <div class="track" id="trOver"><b><span>Overflow</span><span class="out" data-out="cmOverLbl" style="font-weight:400;color:var(--soft)"></span></b></div>
+                            <p style="font-size:11px;color:var(--soft);margin:2px 0 0">Every 3 boxes filled on a track gives −1 to your dice pools (the tracks add up).</p>
+                        </div>
+                        <div class="box">
+                            <span class="lbl">Armor</span>
+                            <div class="derived" style="grid-template-columns: 2fr 1fr">
+                                <label><small class="k">Armor worn</small><input type="text" name="armorName" placeholder="Armor jacket"></label>
+                                <label><small class="k">Armor value</small><input type="text" name="armor" placeholder="12"></label>
+                            </div>
+                        </div>
+                        <div class="box grow"><span class="lbl">Qualities</span><textarea name="qualities" rows="4" placeholder="Positive and negative qualities"></textarea></div>
+                    </div>
+                    <div class="stack">
+                        <div class="box grow"><span class="lbl">Karma &amp; Advancement Log</span><textarea name="karmaLog" rows="4" placeholder="+5 Karma (Bug City run); Pistols 5 → 6 (−12)"></textarea></div>
+                        <div class="box grow"><span class="lbl">Notes</span><textarea name="notes" rows="4" placeholder="Conditions, debts, run notes"></textarea></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===================== PAGE 2: SKILLS ===================== -->
+            <div class="page p-skills">
+                <div class="head" style="grid-template-columns: 1.5fr repeat(4, 1fr)">
+                    <div class="name" style="grid-row:auto"><span class="lbl">Street Name</span><span class="val" data-mirror="name"></span></div>
+                </div>
+                <div class="skills" id="skills"></div>
+                <div class="cols" style="margin-top:6px">
+                    <div class="box">
+                        <span class="lbl">Knowledge Skills &amp; Languages</span>
+                        <table class="t"><thead><tr><th>Skill</th><th class="c">Type</th><th class="c">Rtg</th><th class="c">Pool</th></tr></thead><tbody id="know"></tbody></table>
+                    </div>
+                    <div class="box grow"><span class="lbl">Specializations &amp; Skill Groups</span><textarea name="specs" rows="6" placeholder="Pistols (Semi-automatics) +2, Firearms group 3…"></textarea></div>
+                </div>
+            </div>
+
+            <!-- ===================== PAGE 3: GEAR, MAGIC & CONTACTS ===================== -->
+            <div class="page p-gear">
+                <div class="head" style="grid-template-columns: 1.5fr repeat(4, 1fr)">
+                    <div class="name" style="grid-row:auto"><span class="lbl">Street Name</span><span class="val" data-mirror="name"></span></div>
+                </div>
+                <div class="box">
+                    <span class="lbl">Weapons</span>
+                    <div class="scroll"><table class="t wide"><thead><tr><th>Weapon</th><th class="c">Acc</th><th class="c">DV</th><th class="c">AP</th><th class="c">Mode / Reach</th><th class="c">RC</th><th class="c">Ammo</th><th>Notes</th></tr></thead><tbody id="weapons"></tbody></table></div>
+                </div>
+                <div class="cols" style="margin-top:8px">
+                    <div class="stack">
+                        <div class="box">
+                            <span class="lbl">Augmentations</span>
+                            <table class="t"><thead><tr><th>Cyberware / bioware</th><th class="c">Rtg</th><th class="c">Essence</th></tr></thead><tbody id="ware"></tbody></table>
+                            <p style="font-size:11px;color:var(--soft);margin:3px 0 0">Essence left: <span class="out" data-out="essence2">6</span> (6 minus the Essence of your augmentations)</p>
+                        </div>
+                        <div class="box">
+                            <span class="lbl">Matrix Device</span>
+                            <div class="derived" style="grid-template-columns: 2fr repeat(5, 1fr)">
+                                <label><small class="k">Commlink / deck</small><input type="text" name="deck"></label>
+                                <label><small class="k">Rating</small><input type="text" name="deckR"></label>
+                                <label><small class="k">Attack</small><input type="text" name="deckA"></label>
+                                <label><small class="k">Sleaze</small><input type="text" name="deckS"></label>
+                                <label><small class="k">Data P.</small><input type="text" name="deckD"></label>
+                                <label><small class="k">Firewall</small><input type="text" name="deckF"></label>
+                            </div>
+                        </div>
+                        <div class="box grow"><span class="lbl">Gear, Vehicles &amp; Drones</span><textarea name="gear" rows="5"></textarea></div>
+                    </div>
+                    <div class="stack">
+                        <div class="box">
+                            <span class="lbl">Spells, Powers &amp; Complex Forms</span>
+                            <table class="t"><thead><tr><th>Name</th><th class="c">Type / Range / Dur.</th><th class="c">Drain / Fading</th></tr></thead><tbody id="spells"></tbody></table>
+                            <div class="derived" style="grid-template-columns: 1fr 1fr; margin-top:4px">
+                                <label><small class="k">Tradition / Stream</small><input type="text" name="tradition" placeholder="Hermetic"></label>
+                                <label><small class="k">Initiate / submersion grade</small><input type="text" name="grade"></label>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <span class="lbl">Contacts</span>
+                            <table class="t"><thead><tr><th>Contact</th><th class="c">Conn.</th><th class="c">Loyalty</th></tr></thead><tbody id="contacts"></tbody></table>
+                        </div>
+                        <div class="box grow"><span class="lbl">Lifestyle, IDs &amp; Licenses</span><textarea name="ids" rows="3"></textarea></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <datalist id="metatypes"><option>Human</option><option>Elf</option><option>Dwarf</option><option>Ork</option><option>Troll</option></datalist>
+
+        <div class="sheet-help">
+            <p><strong>How it works.</strong> A sheet auto-saves in this browser once it has a street name. Renaming a sheet renames its save. Use the tabs to move between the three pages. <strong>Print</strong> prints all three pages of the current runner, one per US Letter sheet, and <strong>Print Blank</strong> prints an empty set. <strong>Export</strong> downloads every sheet as a JSON file and <strong>Import</strong> merges a file like that back in (a sheet with the same street name is replaced). Nothing leaves your browser.</p>
+            <p><strong>Worked out for you.</strong> Physical limit is [(STR × 2) + BOD + REA] ÷ 3, Mental [(LOG × 2) + INT + WIL] ÷ 3 and Social [(CHA × 2) + WIL + Essence] ÷ 3, each rounded up. Initiative is REA + INT + 1D6, astral INT × 2 + 2D6 and AR Matrix REA + INT + 1D6. Composure is CHA + WIL, Judge Intentions CHA + INT, Memory LOG + WIL and Lift/Carry BOD + STR; you walk AGI × 2 and run AGI × 4 metres. The Physical monitor has 8 + half BOD boxes and the Stun monitor 8 + half WIL (rounded up), with BOD boxes of overflow. Essence is 6 minus your augmentations. A skill's dice pool is its rating + linked attribute (add +2 for a specialization). Knowledge skills use LOG (academic, professional) or INT (street, interests, languages). See <a href="/sr_char.html">Character Creation</a> and the <a href="/sr_dice_roller.html">Dice Roller</a>.</p>
+        </div>
+
+        <div class="print-container" id="printContainer"></div>
+    </main>
+
+    <footer>
+<div class="page-nav">
+    <a class="prev" href="/sr_dice_roller.html">Dice Roller</a>
+    <a class="next" href="/index.html">Guide Home</a>
+</div>
+    </footer>
+
+    <script>
+    (function () {
+        'use strict';
+        var KEY = 'sr5-character-sheets';
+        var sheet = document.getElementById('sheet');
+        var select = document.getElementById('sheetSelect');
+        var $ = function (id) { return document.getElementById(id); };
+
+        var ATTRS = [['bod', 'BOD'], ['agi', 'AGI'], ['rea', 'REA'], ['str', 'STR'], ['wil', 'WIL'], ['log', 'LOG'], ['int', 'INT'], ['cha', 'CHA']];
+        // SR5 core active skills: [name, linked attribute, group]
+        var SKILLS = [
+            ['Combat', [['Archery', 'agi'], ['Automatics', 'agi', 'Firearms'], ['Blades', 'agi', 'Close Combat'], ['Clubs', 'agi', 'Close Combat'], ['Exotic Melee Weapon', 'agi'],
+                ['Exotic Ranged Weapon', 'agi'], ['Heavy Weapons', 'agi'], ['Longarms', 'agi', 'Firearms'], ['Pistols', 'agi', 'Firearms'], ['Throwing Weapons', 'agi'], ['Unarmed Combat', 'agi', 'Close Combat']]],
+            ['Physical', [['Disguise', 'int', 'Stealth'], ['Diving', 'bod'], ['Escape Artist', 'agi'], ['Free-Fall', 'bod'], ['Gymnastics', 'agi', 'Athletics'], ['Palming', 'agi', 'Stealth'],
+                ['Perception', 'int'], ['Running', 'str', 'Athletics'], ['Sneaking', 'agi', 'Stealth'], ['Survival', 'wil', 'Outdoors'], ['Swimming', 'str', 'Athletics'], ['Tracking', 'int', 'Outdoors']]],
+            ['Social', [['Con', 'cha', 'Acting'], ['Etiquette', 'cha', 'Influence'], ['Impersonation', 'cha', 'Acting'], ['Instruction', 'cha'], ['Intimidation', 'cha'],
+                ['Leadership', 'cha', 'Influence'], ['Negotiation', 'cha', 'Influence'], ['Performance', 'cha', 'Acting']]],
+            ['Magical', [['Alchemy', 'mag', 'Enchanting'], ['Arcana', 'log'], ['Artificing', 'mag', 'Enchanting'], ['Assensing', 'int'], ['Astral Combat', 'wil'], ['Banishing', 'mag', 'Conjuring'],
+                ['Binding', 'mag', 'Conjuring'], ['Counterspelling', 'mag', 'Sorcery'], ['Disenchanting', 'mag', 'Enchanting'], ['Ritual Spellcasting', 'mag', 'Sorcery'], ['Spellcasting', 'mag', 'Sorcery'], ['Summoning', 'mag', 'Conjuring']]],
+            ['Resonance', [['Compiling', 'res', 'Tasking'], ['Decompiling', 'res', 'Tasking'], ['Registering', 'res', 'Tasking']]],
+            ['Technical', [['Aeronautics Mechanic', 'log', 'Engineering'], ['Animal Handling', 'cha'], ['Armorer', 'log'], ['Artisan', 'int'], ['Automotive Mechanic', 'log', 'Engineering'],
+                ['Biotechnology', 'log', 'Biotech'], ['Chemistry', 'log'], ['Computer', 'log', 'Electronics'], ['Cybercombat', 'log', 'Cracking'], ['Cybertechnology', 'log', 'Biotech'],
+                ['Demolitions', 'log'], ['Electronic Warfare', 'log', 'Cracking'], ['First Aid', 'log', 'Biotech'], ['Forgery', 'log'], ['Hacking', 'log', 'Cracking'], ['Hardware', 'log', 'Electronics'],
+                ['Industrial Mechanic', 'log', 'Engineering'], ['Locksmith', 'agi'], ['Medicine', 'log', 'Biotech'], ['Nautical Mechanic', 'log', 'Engineering'], ['Navigation', 'int', 'Outdoors'], ['Software', 'log', 'Electronics']]],
+            ['Vehicle', [['Gunnery', 'agi'], ['Pilot Aerospace', 'rea'], ['Pilot Aircraft', 'rea'], ['Pilot Exotic Vehicle', 'rea'], ['Pilot Ground Craft', 'rea'], ['Pilot Walker', 'rea'], ['Pilot Watercraft', 'rea']]]
+        ];
+        var KTYPES = [['acad', 'Academic', 'log'], ['prof', 'Professional', 'log'], ['street', 'Street', 'int'], ['inter', 'Interests', 'int'], ['lang', 'Language', 'int']];
+        var FIELDS = ['name', 'realName', 'metatype', 'ethnicity', 'size', 'cred', 'notoriety', 'awareness', 'karma', 'nuyen', 'lifestyle', 'sin', 'edgeCur',
+            'armorName', 'armor', 'qualities', 'karmaLog', 'notes', 'specs', 'deck', 'deckR', 'deckA', 'deckS', 'deckD', 'deckF', 'gear', 'tradition', 'grade', 'ids', 'mag', 'res', 'edg'];
+        var BOOLS = {}, SK = [];
+
+        ATTRS.forEach(function (a) {
+            FIELDS.push(a[0]);
+            $('attrs').insertAdjacentHTML('beforeend', '<label class="at"><span class="lbl">' + a[1] + '</span><input type="text" name="' + a[0] + '" maxlength="2" inputmode="numeric" placeholder="3" aria-label="' + a[1] + '"></label>');
+        });
+        $('attrs').insertAdjacentHTML('beforeend',
+            '<label class="at spc"><span class="lbl">EDG</span><input type="text" name="edg" maxlength="2" inputmode="numeric" placeholder="2" aria-label="Edge"><span class="cur">now<input type="text" name="edgeCur" maxlength="2" aria-label="Edge points left"></span></label>' +
+            '<div class="at spc"><span class="lbl">ESS</span><span class="out" data-out="essence">6</span></div>' +
+            '<label class="at spc"><span class="lbl">MAG</span><input type="text" name="mag" maxlength="2" inputmode="numeric" aria-label="Magic"></label>' +
+            '<label class="at spc"><span class="lbl">RES</span><input type="text" name="res" maxlength="2" inputmode="numeric" aria-label="Resonance"></label>');
+        var n = 0;
+        SKILLS.forEach(function (g) {
+            var h = '<h4>' + g[0] + '</h4><div class="sk head-row"><span>Skill</span><span>Attr</span><span>Rtg</span><span>Pool</span></div>';
+            g[1].forEach(function (s) {
+                var id = 'sk' + (++n); FIELDS.push(id); SK.push([id, s[1]]);
+                h += '<div class="sk"><span class="nm">' + s[0] + (s[2] ? ' <small>' + s[2] + '</small>' : '') + '</span><span class="attr">' + s[1].toUpperCase() + '</span>' +
+                    '<input type="text" name="' + id + '" maxlength="2" inputmode="numeric" aria-label="' + s[0] + ' rating"><span class="out" data-out="' + id + '"></span></div>';
+            });
+            $('skills').insertAdjacentHTML('beforeend', '<div class="sgroup">' + h + '</div>');
+        });
+        var kOpts = '<option value=""></option>' + KTYPES.map(function (k) { return '<option value="' + k[0] + '">' + k[1] + '</option>'; }).join('');
+        for (var k = 1; k <= 8; k++) {
+            FIELDS.push('k' + k + 'n', 'k' + k + 't', 'k' + k + 'r');
+            $('know').insertAdjacentHTML('beforeend', '<tr><td><input type="text" name="k' + k + 'n" placeholder="' + (k === 1 ? 'English' : k === 2 ? 'Seattle Gangs' : '') + '" aria-label="Knowledge skill ' + k + '"></td>' +
+                '<td class="c"><select name="k' + k + 't" aria-label="Knowledge skill ' + k + ' type">' + kOpts + '</select></td>' +
+                '<td class="c"><input type="text" name="k' + k + 'r" maxlength="2" placeholder="' + (k === 1 ? 'N' : '') + '" aria-label="Knowledge skill ' + k + ' rating"></td><td class="c"><span class="out" data-out="k' + k + '"></span></td></tr>');
+        }
+        function rows(tbody, prefix, label, count, cols) {
+            var h = '';
+            for (var i = 1; i <= count; i++) {
+                h += '<tr>';
+                cols.forEach(function (c) { var nm = prefix + i + c[0]; FIELDS.push(nm); h += '<td' + (c[2] ? ' class="c"' : '') + '><input type="text" name="' + nm + '" aria-label="' + label + ' ' + i + ' ' + c[1] + '"></td>'; });
+                h += '</tr>';
+            }
+            $(tbody).innerHTML = h;
+        }
+        rows('weapons', 'w', 'Weapon', 5, [['n', 'weapon'], ['a', 'accuracy', 1], ['d', 'damage value', 1], ['p', 'armor penetration', 1], ['m', 'mode or reach', 1], ['r', 'recoil compensation', 1], ['o', 'ammo', 1], ['x', 'notes']]);
+        rows('ware', 'cw', 'Augmentation', 7, [['n', 'augmentation'], ['r', 'rating', 1], ['e', 'essence cost', 1]]);
+        rows('spells', 'mg', 'Spell or power', 8, [['n', 'name'], ['t', 'type, range and duration', 1], ['d', 'drain or fading', 1]]);
+        rows('contacts', 'ct', 'Contact', 6, [['n', 'contact'], ['c', 'connection', 1], ['l', 'loyalty', 1]]);
+        [['phys', 'trPhys', 18, 'Physical'], ['stun', 'trStun', 18, 'Stun'], ['over', 'trOver', 15, 'Overflow']].forEach(function (t) {
+            var h = '';
+            for (var i = 1; i <= t[2]; i++) { var nm = t[0] + i; FIELDS.push(nm); BOOLS[nm] = 1; h += '<input type="checkbox" class="slot" name="' + nm + '" aria-label="' + t[3] + ' box ' + i + '">'; }
+            $(t[1]).insertAdjacentHTML('beforeend', h);
+        });
+
+        // ----- rules -----
+        var num = function (v) { var x = parseFloat(String(v == null ? '' : v).replace(',', '.').replace('−', '-')); return isNaN(x) ? 0 : x; };
+        var has = function (get, k) { return String(get(k) == null ? '' : get(k)).trim() !== ''; };
+        function essence(get) { var e = 6; for (var i = 1; i <= 7; i++) e -= num(get('cw' + i + 'e')); return Math.round(e * 100) / 100; }
+        function boxes(get) {
+            return { phys: has(get, 'bod') ? 8 + Math.ceil(num(get('bod')) / 2) : 0, stun: has(get, 'wil') ? 8 + Math.ceil(num(get('wil')) / 2) : 0, over: has(get, 'bod') ? Math.min(15, num(get('bod'))) : 0 };
+        }
+        function derive(get) {
+            var o = {}, v = function (k) { return num(get(k)); }, all = function () { for (var i = 0; i < arguments.length; i++) if (!has(get, arguments[i])) return false; return true; };
+            var ess = essence(get);
+            o.essence = o.essence2 = String(ess);
+            o.limPhys = all('str', 'bod', 'rea') ? String(Math.ceil((v('str') * 2 + v('bod') + v('rea')) / 3)) : '—';
+            o.limMent = all('log', 'int', 'wil') ? String(Math.ceil((v('log') * 2 + v('int') + v('wil')) / 3)) : '—';
+            o.limSoc = all('cha', 'wil') ? String(Math.ceil((v('cha') * 2 + v('wil') + ess) / 3)) : '—';
+            o.init = all('rea', 'int') ? (v('rea') + v('int')) + ' + 1D6' : '—';
+            o.initAR = o.init;
+            o.initAstral = all('int') ? (v('int') * 2) + ' + 2D6' : '—';
+            o.composure = all('cha', 'wil') ? String(v('cha') + v('wil')) : '—';
+            o.judge = all('cha', 'int') ? String(v('cha') + v('int')) : '—';
+            o.memory = all('log', 'wil') ? String(v('log') + v('wil')) : '—';
+            o.lift = all('bod', 'str') ? String(v('bod') + v('str')) : '—';
+            o.move = all('agi') ? (v('agi') * 2) + ' / ' + (v('agi') * 4) : '—';
+            var b = boxes(get), marked = function (t) { var c = 0; for (var i = 1; i <= 18; i++) if (get(t + i) === true) c++; return c; };
+            o.cmPhysLbl = b.phys ? b.phys + ' boxes' : ''; o.cmStunLbl = b.stun ? b.stun + ' boxes' : ''; o.cmOverLbl = b.over ? b.over + ' boxes' : '';
+            var wm = Math.floor(marked('phys') / 3) + Math.floor(marked('stun') / 3);
+            o.wound = wm ? '−' + wm : '0';
+            SK.forEach(function (s) { o[s[0]] = has(get, s[0]) && num(get(s[0])) > 0 ? String(num(get(s[0])) + v(s[1])) : ''; });
+            for (var k = 1; k <= 8; k++) {
+                var t = KTYPES.filter(function (x) { return x[0] === get('k' + k + 't'); })[0], r = String(get('k' + k + 'r') || '').trim();
+                o['k' + k] = t && r && /^\d+$/.test(r) ? String(num(r) + v(t[2])) : (r.toUpperCase() === 'N' ? 'N' : '');
+            }
+            return o;
+        }
+        function paint(root, get, live) {
+            var o = derive(get);
+            root.querySelectorAll('[data-out]').forEach(function (el) { var k = el.getAttribute('data-out'); if (o[k] != null) el.textContent = o[k]; });
+            root.querySelectorAll('[data-mirror]').forEach(function (el) { el.textContent = get(el.getAttribute('data-mirror')) || ''; });
+            if (live) {
+                var b = boxes(get);
+                [['phys', 18], ['stun', 18], ['over', 15]].forEach(function (t) {
+                    var m = b[t[0]] || (t[0] === 'over' ? 0 : 8);
+                    for (var i = 1; i <= t[1]; i++) { var el = root.querySelector('[name="' + t[0] + i + '"]'); el.disabled = i > m; if (i > m) el.checked = false; }
+                });
+            }
+        }
+
+        // ----- form plumbing -----
+        function field(nm) { return sheet.querySelector('[name="' + nm + '"]'); }
+        function getVal(nm) { var el = field(nm); return !el ? '' : el.type === 'checkbox' ? el.checked : el.value; }
+        function setVal(nm, v) { var el = field(nm); if (!el) return; if (el.type === 'checkbox') el.checked = v === true || v === 'true'; else el.value = v == null ? '' : String(v); }
+        function currentName() { return String(getVal('name')).trim(); }
+        function say(m) { $('status').textContent = m; }
+        function sanitize(raw) {
+            if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+            var out = {};
+            FIELDS.forEach(function (f) { var v = raw[f]; out[f] = BOOLS[f] ? (v === true || v === 'true') : ((typeof v === 'string' || typeof v === 'number') ? String(v).slice(0, 6000) : ''); });
+            return out;
+        }
+        function safeName(x) { return typeof x === 'string' && x.trim() !== '' && ['__proto__', 'constructor', 'prototype'].indexOf(x) < 0; }
+        function load() {
+            var out = {};
+            try {
+                var p = JSON.parse(localStorage.getItem(KEY));
+                if (p && typeof p === 'object' && !Array.isArray(p)) Object.keys(p).forEach(function (k) { var d = sanitize(p[k]); if (safeName(k) && d) out[k] = d; });
+            } catch (err) { /* storage blocked or corrupt */ }
+            return out;
+        }
+        function store(all) { try { localStorage.setItem(KEY, JSON.stringify(all)); return true; } catch (err) { say('Could not save: browser storage is unavailable or full.'); return false; } }
+        function read() { var d = {}; FIELDS.forEach(function (f) { d[f] = getVal(f); }); return d; }
+        function repaint() { paint(sheet, getVal, true); }
+        function clearAll() { FIELDS.forEach(function (f) { setVal(f, BOOLS[f] ? false : ''); }); repaint(); }
+        function fill(d) {
+            clearAll();
+            FIELDS.forEach(function (f) { if (!BOOLS[f]) setVal(f, d[f]); });
+            repaint();
+            FIELDS.forEach(function (f) { if (BOOLS[f] && !field(f).disabled) setVal(f, d[f]); });
+            repaint();
+        }
+        function refreshSelect(sel) {
+            var all = load();
+            select.innerHTML = '<option value="">— Select Sheet —</option>';
+            Object.keys(all).sort().forEach(function (k) { var o = document.createElement('option'); o.value = k; o.textContent = k; if (k === sel) o.selected = true; select.appendChild(o); });
+        }
+        var currentKey = null, timer = null, armed = false;
+        function disarm() { armed = false; $('deleteBtn').classList.remove('armed'); $('deleteBtn').textContent = '🗑️ Delete'; }
+        function storeCurrent(name) {
+            var all = load();
+            if (currentKey && currentKey !== name) delete all[currentKey];
+            all[name] = read();
+            if (!store(all)) return false;
+            currentKey = name; refreshSelect(name); return true;
+        }
+        function autoSave() {
+            timer = null;
+            var name = currentName();
+            if (!safeName(name)) return;
+            var all = load();
+            if (all[name] && name !== currentKey) { say('A sheet named “' + name + '” already exists. Rename this one, or press Save to replace it.'); return; }
+            if (storeCurrent(name)) say('Saved “' + name + '”.');
+        }
+        function flush() { if (timer) { clearTimeout(timer); autoSave(); } }
+        function onEdit() { disarm(); repaint(); clearTimeout(timer); timer = setTimeout(autoSave, 800); }
+        sheet.addEventListener('input', onEdit);
+        sheet.addEventListener('change', onEdit);
+
+        var tabs = document.querySelectorAll('.tabs [role="tab"]');
+        function show(page) {
+            sheet.setAttribute('data-page', page);
+            tabs.forEach(function (t) { var on = t.getAttribute('data-page') === page; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+        }
+        tabs.forEach(function (t, i) {
+            t.addEventListener('click', function () { show(t.getAttribute('data-page')); });
+            t.addEventListener('keydown', function (ev) {
+                if (ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft') return;
+                var nx = tabs[(i + (ev.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; nx.focus(); show(nx.getAttribute('data-page'));
+            });
+        });
+
+        $('newBtn').addEventListener('click', function () { flush(); clearAll(); currentKey = null; select.value = ''; disarm(); show('main'); field('name').focus(); say('New blank sheet.'); });
+        $('saveBtn').addEventListener('click', function () {
+            clearTimeout(timer); timer = null;
+            var name = currentName();
+            if (!safeName(name)) { say('Give the runner a street name first.'); show('main'); field('name').focus(); return; }
+            if (storeCurrent(name)) say('Saved “' + name + '”.');
+        });
+        $('copyBtn').addEventListener('click', function () {
+            flush();
+            var base = currentName();
+            if (!base) { say('Give the runner a street name first.'); return; }
+            var all = load(), name = base + ' (copy)', i = 2;
+            while (all[name]) name = base + ' (copy ' + (i++) + ')';
+            var d = read(); d.name = name; all[name] = d;
+            if (!store(all)) return;
+            fill(d); currentKey = name; refreshSelect(name); say('Copied as “' + name + '”.');
+        });
+        $('deleteBtn').addEventListener('click', function () {
+            var name = select.value;
+            if (!name) { say('Choose a saved sheet to delete.'); return; }
+            if (!armed) { armed = true; this.classList.add('armed'); this.textContent = '🗑️ Click again to delete'; say('Click Delete again to remove “' + name + '”.'); return; }
+            clearTimeout(timer); timer = null;
+            var all = load(); delete all[name];
+            if (!store(all)) return;
+            clearAll(); currentKey = null; refreshSelect(''); disarm(); say('Deleted “' + name + '”.');
+        });
+        select.addEventListener('change', function () {
+            flush(); disarm();
+            var name = select.value, all = load();
+            if (!name || !all[name]) { clearAll(); currentKey = null; return; }
+            fill(all[name]); currentKey = name; refreshSelect(name); say('Loaded “' + name + '”.');
+        });
+
+        // ----- print: clone the form and turn every field into plain text -----
+        function staticSheet(d) {
+            var cl = sheet.cloneNode(true), get = function (k) { return d[k] == null ? '' : d[k]; }, b = boxes(get);
+            cl.removeAttribute('id'); cl.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+            cl.querySelectorAll('input, select, textarea').forEach(function (el) {
+                var nm = el.getAttribute('name'), v = d[nm];
+                if (el.classList.contains('slot')) {
+                    var m = nm.match(/^([a-z]+)(\d+)$/), s = document.createElement('span'), cap = b[m[1]] || (m[1] === 'over' ? 0 : 8), off = +m[2] > cap;
+                    s.className = 'mark' + (off ? ' off' : ''); s.textContent = !off && v === true ? '✕' : ''; el.replaceWith(s); return;
+                }
+                var span = document.createElement('span');
+                span.className = 'val' + (el.tagName === 'TEXTAREA' ? ' tx' : '');
+                if (el.tagName === 'SELECT') { var opt = [].filter.call(el.options, function (o) { return o.value === String(v == null ? '' : v); })[0]; span.textContent = opt && opt.value !== '' ? opt.textContent : ''; }
+                else span.textContent = v == null ? '' : String(v);
+                el.replaceWith(span);
+            });
+            paint(cl, get, false);
+            return cl;
+        }
+        function doPrint(list) {
+            var box = $('printContainer'); box.innerHTML = '';
+            list.forEach(function (d) { box.appendChild(staticSheet(d)); });
+            window.print();
+        }
+        window.addEventListener('afterprint', function () { $('printContainer').innerHTML = ''; });
+        $('printBtn').addEventListener('click', function () { if (!currentName()) { say('Give the runner a street name first.'); return; } doPrint([read()]); });
+        $('printAllBtn').addEventListener('click', function () {
+            var all = load(), names = Object.keys(all).sort();
+            if (!names.length) { say('No saved sheets to print yet.'); return; }
+            doPrint(names.map(function (k) { return all[k]; }));
+        });
+        $('blankBtn').addEventListener('click', function () { doPrint([{}]); });
+
+        // ----- export / import (local JSON files) -----
+        $('exportBtn').addEventListener('click', function () {
+            flush();
+            var all = load(), cnt = Object.keys(all).length;
+            if (!cnt) { say('No sheets to export yet.'); return; }
+            var url = URL.createObjectURL(new Blob([JSON.stringify(all, null, 2)], { type: 'application/json' }));
+            var a = document.createElement('a'); a.href = url; a.download = 'shadowrun-character-sheets.json';
+            document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+            say('Exported ' + cnt + (cnt === 1 ? ' sheet.' : ' sheets.'));
+        });
+        $('importBtn').addEventListener('click', function () { $('importFile').click(); });
+        $('importFile').addEventListener('change', function (ev) {
+            var file = ev.target.files && ev.target.files[0];
+            ev.target.value = '';
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) { say('That file is too large to be a sheet file.'); return; }
+            flush();
+            var r = new FileReader();
+            r.onload = function () {
+                try {
+                    var data = JSON.parse(r.result);
+                    if (!data || typeof data !== 'object' || Array.isArray(data)) { say('That is not a sheet file.'); return; }
+                    var all = load(), count = 0;
+                    Object.keys(data).forEach(function (k) {
+                        var d = sanitize(data[k]); if (!d) return;
+                        var name = String(d.name || '').trim().slice(0, 200);
+                        if (!safeName(name)) return;
+                        all[name] = d; count++;
+                    });
+                    if (!count) { say('No valid sheets found in that file.'); return; }
+                    if (!store(all)) return;
+                    refreshSelect(currentKey || ''); say('Imported ' + count + (count === 1 ? ' sheet.' : ' sheets.'));
+                } catch (err) { say('Could not read that file.'); }
+            };
+            r.onerror = function () { say('Could not read that file.'); };
+            r.readAsText(file);
+        });
+
+        window.srSheet = { derive: derive, skills: SK };
+        clearAll(); refreshSelect('');
+    })();
+    </script>
+<div class="site-footer">&copy; 2026 Ray de la Paz. The Shadowrun Guide. All rights reserved. &middot; <a href="https://rays-home.netlify.app/">Ray's House of Fun</a><br>Shadowrun is a registered trademark of The Topps Company, Inc., published by Catalyst Game Labs. This guide is an unofficial fan resource.</div>
+</body>
+</html>

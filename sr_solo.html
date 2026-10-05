@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing Shadowrun Solo - The Shadowrun Guide</title>
+    <meta name="description" content="Play Shadowrun Fifth Edition with no gamemaster: a d6 dice-pool oracle with exact odds, glitches as twists, scene checks, contact attitudes, sparks, a heat clock and a session log, plus a first session and a worked example.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="/js/site.js?v=1"></script>
+    <link rel="stylesheet" href="/styles/main.css?v=1">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <style>
+        main .solo-tool { border-left: 5px solid var(--gold); }
+        .tool-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 10px; }
+        main .tool-row button { width: auto; margin: 0; }
+        main .tool-row input[type="text"] { flex: 1 1 260px; width: auto; }
+        main .tool-row select { width: auto; }
+        main .tool-row input[type="number"] { width: 5em; }
+        .verdict { font-size: 1.2rem; font-weight: 700; color: var(--heading); margin: 6px 0 2px; min-height: 1.5em; }
+        .verdict-note { color: var(--muted); margin: 0 0 8px; min-height: 1.3em; }
+        .heat-line { font-weight: 700; color: var(--heading); }
+        .log { list-style: none; padding: 0; margin: 8px 0 10px; max-height: 320px; overflow-y: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2); }
+        .log li { margin: 0; padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+        .log li:last-child { border-bottom: 0; }
+        .log:empty::before { content: "Nothing logged yet."; display: block; padding: 8px 12px; color: var(--muted); }
+        .odds td:not(:first-child), .odds th:not(:first-child) { text-align: right; white-space: nowrap; }
+        .roll-line { font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; font-size: 0.92em; }
+        .table-wrap { overflow-x: auto; }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav">
+    <a href="https://rays-home.netlify.app/">Ray's House of Fun</a>
+    <a href="/index.html">Home</a>
+    <a href="https://rays-home.netlify.app/contact">Contact</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+</nav>
+    <header>
+        <h1>Playing Shadowrun Solo</h1>
+        <p>No gamemaster, no crew: a d6 oracle built from Shadowrun's own dice pools, and the tools to run the shadows alone.</p>
+    </header>
+
+    <main id="main">
+        <section>
+            <h2>Why Shadowrun Works Alone</h2>
+            <p>A shadowrun already has the shape of a solo story. There is a job, a Johnson who may be lying, legwork to find out what you're walking into, a plan, and the moment the plan meets reality. Alone, you play your runner and let the dice answer the questions a gamemaster would. The tool for that is the one you already know: a pool of six-sided dice where 5s and 6s are hits and too many 1s mean something has gone wrong.</p>
+            <p>Everything on this page except the rules of Shadowrun itself is a <strong>house rule</strong>: the oracle, the scene check, the attitude roll, the sparks and the heat clock are tools for solo play, not part of the Fifth Edition rulebook.</p>
+            <h3>What you need</h3>
+            <ul>
+                <li>A runner built with the normal rules (or one of the <a href="/sr_character_examples.html">Character Examples</a>).</li>
+                <li>About ten six-sided dice, or the <a href="#solo-tool">Solo Tool</a> below.</li>
+                <li>Somewhere to write: a notebook, or the session log built into the tool.</li>
+                <li>A job. One line will do: who wants what, for how much, by when.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>The Oracle</h2>
+            <p>When you want to know something a gamemaster would tell you ("Is the loading dock guarded?"), phrase it as a yes-or-no question, decide how likely a "yes" is, and roll that many dice. Then count hits, as for any test with a threshold of 2.</p>
+            <div class="table-wrap">
+            <table>
+                <thead><tr><th>How likely is "yes"?</th><th>Dice</th></tr></thead>
+                <tbody>
+                    <tr><td>Nearly impossible</td><td>2</td></tr>
+                    <tr><td>Unlikely</td><td>3</td></tr>
+                    <tr><td>Even odds</td><td>5</td></tr>
+                    <tr><td>Likely</td><td>7</td></tr>
+                    <tr><td>Almost certain</td><td>9</td></tr>
+                </tbody>
+            </table>
+            </div>
+            <ul>
+                <li><strong>0 hits: No.</strong></li>
+                <li><strong>1 hit: No, but…</strong> Not what you asked for, but something close or useful.</li>
+                <li><strong>2 or 3 hits: Yes.</strong></li>
+                <li><strong>4 or more hits: Yes, and…</strong> Better than you hoped.</li>
+                <li><strong>Glitch</strong> (more than half the dice show 1): whatever the answer, add a twist that works against you, and mark 1 heat.</li>
+                <li><strong>Critical glitch</strong> (a glitch with no hits): <strong>No, and…</strong> something goes badly wrong. Mark 2 heat.</li>
+            </ul>
+            <p>Don't spend Edge on oracle rolls. Edge is your runner's luck, and the oracle is the world's.</p>
+            <h3>Exact odds</h3>
+            <p>Worked out from every way the dice can land. Glitches overlap the other columns: a "Yes" can also be a glitch.</p>
+            <div class="table-wrap">
+            <table class="odds">
+                <thead><tr><th>Likelihood</th><th>No</th><th>No, but</th><th>Yes</th><th>Yes, and</th><th>Any yes</th><th>Glitch</th><th>Critical</th></tr></thead>
+                <tbody id="oddsBody"></tbody>
+            </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>Scenes, People and Sparks</h2>
+            <h3>Scene check</h3>
+            <p>At the start of each scene, say in one line what you expect to find, then roll one die. If it is <strong>equal to or under your current heat</strong>, the heat has caught up with you: the scene is interrupted by the people you have crossed (corporate security, a gang, a rival team, the police). Otherwise a <strong>6</strong> means the scene is <strong>altered</strong>: one important detail is different. Anything else and the scene is as you expected. With heat 0 that is 1 in 6 altered and 5 in 6 as expected; every point of heat adds a 1-in-6 chance of interruption.</p>
+            <h3>Contact and NPC attitude</h3>
+            <p>When you meet someone and their mood matters, roll 3 dice. For one of your own contacts, add a die for each point of Loyalty above 1.</p>
+            <div class="table-wrap">
+            <table class="odds">
+                <thead><tr><th>Dice</th><th>0 hits: hostile</th><th>1: wary</th><th>2: helpful</th><th>3+: eager</th></tr></thead>
+                <tbody id="attBody"></tbody>
+            </table>
+            </div>
+            <p>Attitude is a starting point, not a verdict. A wary fixer can still be bargained with: that is a real Negotiation test, with a real dice pool and limit.</p>
+            <h3 id="sparks">Sparks</h3>
+            <p>When the oracle says "but" or "and", or a scene is interrupted, and nothing comes to mind, roll two dice and read them together: an action and a subject.</p>
+            <div class="table-wrap">
+            <table>
+                <thead><tr><th>Die</th><th>Action</th><th>Subject</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td>Betray</td><td>a fixer or contact</td></tr>
+                    <tr><td>2</td><td>Steal</td><td>a paydata file</td></tr>
+                    <tr><td>3</td><td>Protect</td><td>a corp asset</td></tr>
+                    <tr><td>4</td><td>Hunt</td><td>a spirit or something astral</td></tr>
+                    <tr><td>5</td><td>Expose</td><td>a gang or rival team</td></tr>
+                    <tr><td>6</td><td>Bargain for</td><td>a host in the Matrix</td></tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>Playing the GM's Part</h2>
+            <h3>Tests and fights</h3>
+            <p>Anything your runner does that could fail is a real test: skill + attribute [limit] against a threshold, or opposed by an NPC's pool. Set the threshold or the opposing pool <em>before</em> you roll, using the rulebook's guide (Easy 1, Average 2, Hard 4, Very Hard 6). Guards, drones and spirits roll their own pools; the <a href="/sr_dice_roller.html">Dice Roller</a> handles opposed tests, damage resistance and Condition Monitors.</p>
+            <h3>The heat clock</h3>
+            <p>Heat measures how much attention you have drawn, from 0 to 6. Mark 1 for every glitch (yours or the oracle's), 2 for a critical glitch, and 1 by hand whenever you do something loud: gunfire, a tripped alarm, a failed Attack or Sleaze action in the Matrix. Heat makes scene checks more dangerous. When a scene is interrupted by the heat, play it out, then clear the clock to 0. When a job ends, clear it too, unless you left witnesses.</p>
+            <h3>A crew of one</h3>
+            <p>A single runner can't do everything a team can, so pick jobs that suit them, or give them a contact or two who can handle what they can't. Contacts are already characters with ratings: roll their attitude, then decide what they will do for the price you can pay. Keep Edge for the moments that matter, and remember how it comes back in Fifth Edition: 1 point after a good meal and a full night's sleep, or when you (as your own gamemaster) award it for a great moment.</p>
+        </section>
+
+        <section id="solo-tool">
+            <h2>Solo Tool</h2>
+            <div class="solo-tool">
+                <div class="tool-row">
+                    <label for="question" style="flex-basis:100%">Your question</label>
+                    <input type="text" id="question" placeholder="Is the loading dock guarded?">
+                    <select id="likely" aria-label="Likelihood">
+                        <option value="9">Almost certain (9 dice)</option>
+                        <option value="7">Likely (7 dice)</option>
+                        <option value="5" selected>Even odds (5 dice)</option>
+                        <option value="3">Unlikely (3 dice)</option>
+                        <option value="2">Nearly impossible (2 dice)</option>
+                    </select>
+                    <button type="button" id="ask">Ask the oracle</button>
+                </div>
+                <p class="verdict" id="verdict" aria-live="polite"></p>
+                <p class="verdict-note" id="verdictNote"></p>
+
+                <div class="tool-row">
+                    <button type="button" id="sceneBtn">Scene check</button>
+                    <label for="loyal">Loyalty</label>
+                    <input type="number" id="loyal" min="1" max="6" value="1">
+                    <button type="button" id="attBtn">Attitude</button>
+                    <button type="button" id="sparkBtn">Spark</button>
+                </div>
+
+                <p class="heat-line" id="heatLine">Heat: 0 of 6</p>
+                <div class="tool-row">
+                    <button type="button" id="heatAdd">Mark heat</button>
+                    <button type="button" id="heatClear">Clear heat</button>
+                </div>
+
+                <h3>Session log</h3>
+                <ol class="log" id="log" aria-live="polite"></ol>
+                <div class="tool-row">
+                    <label for="note" style="flex-basis:100%">Add a note</label>
+                    <input type="text" id="note" placeholder="Kite slips past the guard post…">
+                    <button type="button" id="addNote">Add note</button>
+                </div>
+                <div class="tool-row">
+                    <button type="button" id="copyLog">Copy log</button>
+                    <button type="button" id="clearLog">Clear log</button>
+                </div>
+                <p class="verdict-note">The log and the heat are kept in this browser only.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Your First Solo Session</h2>
+            <ol>
+                <li><strong>Make a runner and a job.</strong> One runner, one fixer, one Johnson, one job with a payout and a deadline.</li>
+                <li><strong>Do the legwork.</strong> Ask the oracle what your contacts know, and roll their attitude first. Every answer is a fact you can plan around.</li>
+                <li><strong>Make a plan.</strong> Write it in three lines: the way in, the objective, the way out.</li>
+                <li><strong>Frame each scene.</strong> One line of what you expect, then a scene check.</li>
+                <li><strong>Play it.</strong> Ask the oracle what a gamemaster would tell you. Make real tests, with thresholds or opposing pools set first, for anything your runner does that could fail.</li>
+                <li><strong>Watch the heat.</strong> Every glitch and every loud move makes the next scene more likely to go sideways.</li>
+                <li><strong>Get paid, or don't.</strong> End the session when the job resolves. Whether the Johnson pays in full is a good first question next time.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>An Example of Play</h2>
+            <div class="info-box">
+                <p><strong>Kite</strong> is an ork infiltrator: Agility 5, Body 4, Reaction 5, Strength 4, Willpower 3, Sneaking 5. Her Physical limit is [(4 × 2) + 4 + 5] ÷ 3 = 5.67, rounded up to 6. A fixer has a job: get into a warehouse and photograph a shipping manifest. Heat 0.</p>
+                <p><strong>Scene 1: the warehouse fence.</strong> I expect a quiet back lot. Scene check: the die shows <span class="roll-line">6</span>, and heat is 0, so the scene is altered: there's a delivery truck idling at the dock.</p>
+                <p><strong>Oracle: "Is the loading dock guarded?"</strong> With the truck there, likely: 7 dice. They show <span class="roll-line">2 5 3 6 1 4 2</span>. Two hits, so <strong>Yes.</strong> One 1 out of seven is no glitch.</p>
+                <p><strong>A real test.</strong> Kite creeps past the guard: Sneaking 5 + Agility 5 = 10 dice, limit 6, opposed by the guard's Intuition 3 + Perception 3 = 6 dice. Before rolling, she has about a 67% chance of getting more hits. Kite rolls <span class="roll-line">6 5 5 2 1 3 6 4 5 2</span>: five hits, under her limit. The guard rolls <span class="roll-line">5 1 1 3 1 2</span>: one hit. Three 1s out of six is exactly half, which is <em>not</em> a glitch. Kite wins with 4 net hits and is inside.</p>
+                <p><strong>Oracle: "Is the manifest on the office terminal?"</strong> Even odds: 5 dice. <span class="roll-line">1 1 1 4 5</span>: one hit, so <strong>No, but…</strong>. Three 1s out of five is more than half, so it's a glitch too: a twist, and heat goes to 1. The manifest is on paper in the foreman's desk (the "but"), and the twist is that the foreman is still at that desk.</p>
+                <p><strong>A fight.</strong> It goes loud: mark 1 more heat, now 2. The foreman draws a pistol and hits with 1 net hit. In this example the pistol's DV is 7, so the modified DV is 8. Kite's armor is 12, more than 8, so the damage is Stun. She resists with Body 4 + Armor 12 = 16 dice and gets 5 hits: 8 − 5 = 3 boxes of Stun. Her Stun track is 8 + (Willpower 3 ÷ 2, rounded up to 2) = 10 boxes. Three filled boxes is one full row, so −1 to her dice pools from now on.</p>
+                <p><strong>Scene 2: the way out.</strong> Heat is 2. The scene check die shows <span class="roll-line">2</span>, equal to the heat: interrupted. Spark: <span class="roll-line">3</span> and <span class="roll-line">3</span>, "Protect a corp asset". The truck at the dock wasn't a delivery; it's corporate security, here to move the same shipment. After that scene, the heat clears to 0.</p>
+                <p>That's the loop: ask, roll, interpret, write a line, move on. Whether Kite tells the fixer that a corp is moving the shipment is a question only you can answer.</p>
+            </div>
+        </section>
+
+        <section class="further-exploration">
+            <h2>Where to Go Next</h2>
+            <ul>
+                <li><strong><a href="/sr_dice_roller.html">Dice Roller</a>:</strong> Pools, limits, glitches and Edge with exact odds, plus damage resistance and Condition Monitors.</li>
+                <li><strong><a href="/sr_planning.html">Planning a Run</a>:</strong> Legwork and plans to give your solo jobs shape.</li>
+                <li><strong><a href="/sr_contacts.html">Contacts &amp; Lifestyle</a>:</strong> The people your runner leans on when there's no crew.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+<div class="page-nav">
+    <a class="prev" href="/sr_adv.html">Advanced Campaigns</a>
+    <a class="next" href="/sr_dice_roller.html">Dice Roller</a>
+</div>
+    </footer>
+<div class="site-footer">&copy; 2026 Ray de la Paz. The Shadowrun Guide. All rights reserved. &middot; <a href="https://rays-home.netlify.app/">Ray's House of Fun</a><br>Shadowrun is a registered trademark of The Topps Company, Inc., published by Catalyst Game Labs. This guide is an unofficial fan resource.</div>
+
+<script>
+(function () {
+    var LEVELS = [['Almost certain', 9], ['Likely', 7], ['Even odds', 5], ['Unlikely', 3], ['Nearly impossible', 2]];
+    var KEYS = ['no', 'noBut', 'yes', 'yesAnd'];
+    var LABEL = { no: 'No.', noBut: 'No, but…', yes: 'Yes.', yesAnd: 'Yes, and…', crit: 'No, and…' };
+    function answer(hits) { return hits === 0 ? 'no' : hits === 1 ? 'noBut' : hits < 4 ? 'yes' : 'yesAnd'; }
+    // joint[ones][hits] for n plain d6: hits on 5-6, ones counted for glitches
+    function joint(n) {
+        var st = [[1]];
+        for (var i = 0; i < n; i++) {
+            var nx = [];
+            for (var o = 0; o < st.length; o++) for (var h = 0; h < (st[o] || []).length; h++) {
+                var p = st[o][h]; if (!p) continue;
+                [[o + 1, h, 1 / 6], [o, h, 3 / 6], [o, h + 1, 2 / 6]].forEach(function (t) { nx[t[0]] = nx[t[0]] || []; nx[t[0]][t[1]] = (nx[t[0]][t[1]] || 0) + p * t[2]; });
+            }
+            st = nx;
+        }
+        return st;
+    }
+    // Exact oracle table for n dice: answer shares plus glitch and critical glitch
+    function table(n) {
+        var r = { no: 0, noBut: 0, yes: 0, yesAnd: 0, anyYes: 0, glitch: 0, crit: 0 }, J = joint(n);
+        for (var o = 0; o < J.length; o++) for (var h = 0; h < (J[o] || []).length; h++) {
+            var p = J[o][h]; if (!p) continue;
+            var k = answer(h); r[k] += p; if (h >= 2) r.anyYes += p;
+            if (2 * o > n) { r.glitch += p; if (h === 0) r.crit += p; }
+        }
+        return r;
+    }
+    function hitShares(n) { var d = [], J = joint(n); for (var o = 0; o < J.length; o++) for (var h = 0; h < (J[o] || []).length; h++) if (J[o][h]) d[h] = (d[h] || 0) + J[o][h]; return d; }
+    function pct(x) { return (x * 100).toFixed(1) + '%'; }
+    document.getElementById('oddsBody').innerHTML = LEVELS.map(function (L) {
+        var t = table(L[1]);
+        return '<tr><td>' + L[0] + ' (' + L[1] + ')</td>' + KEYS.map(function (k) { return '<td>' + pct(t[k]) + '</td>'; }).join('') + '<td>' + pct(t.anyYes) + '</td><td>' + pct(t.glitch) + '</td><td>' + pct(t.crit) + '</td></tr>';
+    }).join('');
+    document.getElementById('attBody').innerHTML = [3, 4, 5, 6].map(function (n) {
+        var d = hitShares(n), rest = 0; for (var i = 3; i < d.length; i++) rest += d[i] || 0;
+        return '<tr><td>' + n + (n > 3 ? ' (Loyalty ' + (n - 2) + ')' : '') + '</td><td>' + pct(d[0]) + '</td><td>' + pct(d[1]) + '</td><td>' + pct(d[2]) + '</td><td>' + pct(rest) + '</td></tr>';
+    }).join('');
+
+    function die() { return Math.floor(Math.random() * 6) + 1; }
+    function roll(n) { var a = []; for (var i = 0; i < n; i++) a.push(die()); return a; }
+    function hitsOf(a) { return a.filter(function (v) { return v >= 5; }).length; }
+    var ACTIONS = ['Betray', 'Steal', 'Protect', 'Hunt', 'Expose', 'Bargain for'];
+    var SUBJECTS = ['a fixer or contact', 'a paydata file', 'a corp asset', 'a spirit or something astral', 'a gang or rival team', 'a host in the Matrix'];
+    function spark() { var a = die(), b = die(); return a + ' and ' + b + ': ' + ACTIONS[a - 1] + ' ' + SUBJECTS[b - 1]; }
+
+    // ---------- session log and heat (this browser only) ----------
+    var LOGKEY = 'shadowrun-solo-log', HEATKEY = 'shadowrun-solo-heat', entries = [], heat = 0;
+    try { entries = JSON.parse(localStorage.getItem(LOGKEY) || '[]') || []; heat = Math.max(0, Math.min(6, Number(localStorage.getItem(HEATKEY)) || 0)); } catch (e) { entries = []; heat = 0; }
+    var logEl = document.getElementById('log');
+    function drawLog() {
+        logEl.innerHTML = '';
+        entries.forEach(function (t) { var li = document.createElement('li'); li.textContent = t; logEl.appendChild(li); });
+        logEl.scrollTop = logEl.scrollHeight;
+    }
+    function save() { try { localStorage.setItem(LOGKEY, JSON.stringify(entries)); localStorage.setItem(HEATKEY, String(heat)); } catch (e) { /* storage blocked: still works this visit */ } }
+    function log(t) { entries.push(t); if (entries.length > 300) entries.shift(); save(); drawLog(); }
+    function drawHeat() { document.getElementById('heatLine').textContent = 'Heat: ' + heat + ' of 6'; }
+    function addHeat(n, why) { heat = Math.min(6, heat + n); save(); drawHeat(); log('Heat +' + n + ' (' + why + '): ' + heat + ' of 6'); }
+    function show(v, n) { document.getElementById('verdict').textContent = v; document.getElementById('verdictNote').textContent = n; }
+    drawLog(); drawHeat();
+
+    document.getElementById('ask').addEventListener('click', function () {
+        var n = Number(document.getElementById('likely').value), d = roll(n), h = hitsOf(d), ones = d.filter(function (v) { return v === 1; }).length,
+            glitch = 2 * ones > n, crit = glitch && h === 0, a = answer(h), q = document.getElementById('question').value.trim(),
+            lvl = LEVELS.filter(function (L) { return L[1] === n; })[0][0];
+        var verdict = crit ? LABEL.crit + ' Critical glitch!' : LABEL[a] + (glitch ? ' Glitch: add a twist.' : '');
+        show(verdict, n + ' dice: ' + d.join(' ') + ' = ' + h + ' hit' + (h === 1 ? '' : 's') + (glitch ? ', and ' + ones + ' ones out of ' + n + ' (more than half).' : '.'));
+        log((q ? 'Q: ' + q + ' ' : 'Oracle ') + '(' + lvl + ') ' + d.join(' ') + ' → ' + verdict);
+        if (crit) addHeat(2, 'critical glitch'); else if (glitch) addHeat(1, 'glitch');
+    });
+    document.getElementById('sceneBtn').addEventListener('click', function () {
+        var d = die(), t;
+        if (d <= heat) { t = 'Interrupted: the heat catches up with you. Spark: ' + spark() + '. Clear the heat after this scene.'; }
+        else if (d === 6) t = 'Altered: one important detail is different.';
+        else t = 'As expected.';
+        show('Scene check', 'Die ' + d + ' (heat ' + heat + '): ' + t); log('Scene check (' + d + ', heat ' + heat + '): ' + t);
+    });
+    document.getElementById('attBtn').addEventListener('click', function () {
+        var L = Math.max(1, Math.min(6, Math.round(Number(document.getElementById('loyal').value)) || 1)), n = 3 + (L - 1), d = roll(n), h = hitsOf(d),
+            t = h === 0 ? 'Hostile' : h === 1 ? 'Wary' : h === 2 ? 'Helpful' : 'Eager';
+        show('Attitude: ' + t, n + ' dice' + (L > 1 ? ' (Loyalty ' + L + ')' : '') + ': ' + d.join(' ') + ' = ' + h + ' hit' + (h === 1 ? '' : 's') + '.');
+        log('Attitude (' + d.join(' ') + '): ' + t);
+    });
+    document.getElementById('sparkBtn').addEventListener('click', function () { var s = spark(); show('Spark', s); log('Spark ' + s); });
+    document.getElementById('heatAdd').addEventListener('click', function () { addHeat(1, 'marked by hand'); });
+    document.getElementById('heatClear').addEventListener('click', function () { heat = 0; save(); drawHeat(); log('Heat cleared'); });
+    document.getElementById('addNote').addEventListener('click', function () {
+        var n = document.getElementById('note'); if (!n.value.trim()) return; log('Note: ' + n.value.trim()); n.value = '';
+    });
+    document.getElementById('copyLog').addEventListener('click', function () {
+        var btn = this;
+        if (navigator.clipboard) navigator.clipboard.writeText(entries.join('\n')).then(function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy log'; }, 1500); }, function () {});
+    });
+    document.getElementById('clearLog').addEventListener('click', function () {
+        entries = []; try { localStorage.removeItem(LOGKEY); } catch (e) { /* ignore */ } drawLog();
+    });
+    window.srOracle = { table: table, hitShares: hitShares, answer: answer, LEVELS: LEVELS };
+})();
+</script>
+</body>
+</html>

@@ -3,890 +3,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shadowrun RPG Dice Roller</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
+    <title>Dice Roller - The Shadowrun Guide</title>
+    <meta name="description" content="A Shadowrun Fifth Edition dice roller: d6 pools with hits, limits, thresholds, glitches and critical glitches, Push the Limit and Second Chance, opposed tests and exact odds, plus damage resistance, Condition Monitors and Initiative.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="/js/site.js?v=1"></script>
+    <link rel="stylesheet" href="/styles/main.css?v=1">
     <link rel="icon" href="/favicon.png" type="image/png">
     <style>
-        body {
-            font-family: 'Courier New', 'Consolas', monospace;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
-            color: #00ff00;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 255, 0, 0.03) 2px,
-                rgba(0, 255, 0, 0.03) 4px
-            ),
-            repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 100px,
-                rgba(0, 255, 255, 0.02) 100px,
-                rgba(0, 255, 255, 0.02) 101px
-            );
-            z-index: -1;
-            animation: matrix-scroll 10s linear infinite;
-        }
-        
-        @keyframes matrix-scroll {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100px); }
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-        
-        h1 {
-            font-size: 3.5em;
-            margin-bottom: 5px;
-            color: #00ffff;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
-            animation: neon-flicker 3s ease-in-out infinite alternate;
-        }
-        
-        @keyframes neon-flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-        
-        .subtitle {
-            font-size: 1.4em;
-            color: #ff6b35;
-            margin-bottom: 30px;
-            font-weight: bold;
-            text-shadow: 0 0 10px #ff6b35;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .dice-section {
-            background: rgba(0, 20, 40, 0.8);
-            border-radius: 10px;
-            padding: 25px;
-            margin: 20px 0;
-            border: 2px solid #00ffff;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-        }
-        
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .quick-btn {
-            background: linear-gradient(45deg, #0f3460, #16213e);
-            border: 2px solid #00ff00;
-            border-radius: 8px;
-            color: #00ff00;
-            padding: 12px 18px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            text-shadow: 0 0 5px #00ff00;
-            text-transform: uppercase;
-            font-family: inherit;
-        }
-        
-        .quick-btn:hover {
-            background: linear-gradient(45deg, #16213e, #1a1a2e);
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-            border-color: #00ffff;
-            color: #00ffff;
-            text-shadow: 0 0 5px #00ffff;
-        }
-        
-        .dice-pool-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin: 25px 0;
-        }
-        
-        .main-pool {
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-            padding: 20px;
-            border: 2px solid #00ff00;
-        }
-        
-        .edge-section {
-            background: rgba(20, 0, 0, 0.6);
-            border-radius: 10px;
-            padding: 20px;
-            border: 2px solid #ff6b35;
-        }
-        
-        .pool-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .main-pool .pool-title {
-            color: #00ff00;
-            text-shadow: 0 0 5px #00ff00;
-        }
-        
-        .edge-section .pool-title {
-            color: #ff6b35;
-            text-shadow: 0 0 5px #ff6b35;
-        }
-        
-        .dice-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-        
-        .dice-count {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #00ffff;
-            border-radius: 6px;
-            padding: 10px 15px;
-            color: #00ffff;
-            text-align: center;
-            width: 80px;
-            font-size: 1.3em;
-            font-weight: bold;
-            font-family: inherit;
-        }
-        
-        .dice-btn {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #00ff00;
-            border-radius: 6px;
-            color: #00ff00;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            font-size: 1.2em;
-            font-family: inherit;
-        }
-        
-        .dice-btn:hover {
-            background: rgba(0, 255, 0, 0.1);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-        }
-        
-        .threshold-section {
-            background: rgba(40, 0, 40, 0.6);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid #9370db;
-        }
-        
-        .threshold-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin: 15px 0;
-        }
-        
-        .threshold-label {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #9370db;
-            text-transform: uppercase;
-            text-shadow: 0 0 5px #9370db;
-        }
-        
-        .threshold-input {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #9370db;
-            border-radius: 6px;
-            padding: 8px 12px;
-            color: #9370db;
-            text-align: center;
-            width: 80px;
-            font-size: 1.2em;
-            font-weight: bold;
-            font-family: inherit;
-        }
-        
-        .threshold-btn {
-            background: rgba(147, 112, 219, 0.2);
-            border: 2px solid #9370db;
-            border-radius: 6px;
-            color: #9370db;
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9em;
-            font-family: inherit;
-        }
-        
-        .threshold-btn:hover {
-            background: rgba(147, 112, 219, 0.4);
-            box-shadow: 0 0 10px rgba(147, 112, 219, 0.3);
-        }
-        
-        .edge-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 15px 0;
-        }
-        
-        .edge-btn {
-            background: rgba(255, 107, 53, 0.2);
-            border: 2px solid #ff6b35;
-            border-radius: 6px;
-            color: #ff6b35;
-            padding: 8px 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            font-family: inherit;
-        }
-        
-        .edge-btn.active {
-            background: rgba(255, 107, 53, 0.5);
-            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
-        }
-        
-        .roll-btn {
-            background: linear-gradient(45deg, #00ffff, #0080ff);
-            border: 3px solid #00ff00;
-            border-radius: 12px;
-            color: #000020;
-            padding: 20px 50px;
-            font-size: 2em;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 30px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: inherit;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-        }
-        
-        .roll-btn:hover {
-            background: linear-gradient(45deg, #00ff00, #00ffff);
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
-        }
-        
-        .clear-btn {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #666;
-            border-radius: 8px;
-            color: #ccc;
-            padding: 12px 25px;
-            cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-family: inherit;
-        }
-        
-        .clear-btn:hover {
-            border-color: #999;
-            color: #fff;
-        }
-        
-        .results {
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            border: 3px solid #00ffff;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-        }
-        
-        .result-summary {
-            font-size: 2.2em;
-            font-weight: bold;
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .success-summary {
-            background: rgba(0, 255, 0, 0.2);
-            border: 2px solid #00ff00;
-            color: #00ff00;
-            text-shadow: 0 0 10px #00ff00;
-        }
-        
-        .failure-summary {
-            background: rgba(255, 0, 0, 0.2);
-            border: 2px solid #ff4444;
-            color: #ff4444;
-            text-shadow: 0 0 10px #ff4444;
-        }
-        
-        .glitch-summary {
-            background: rgba(255, 165, 0, 0.2);
-            border: 2px solid #ffa500;
-            color: #ffa500;
-            text-shadow: 0 0 10px #ffa500;
-            animation: glitch-flash 0.5s infinite alternate;
-        }
-        
-        .critical-glitch-summary {
-            background: rgba(255, 0, 255, 0.2);
-            border: 2px solid #ff00ff;
-            color: #ff00ff;
-            text-shadow: 0 0 10px #ff00ff;
-            animation: critical-glitch 0.3s infinite alternate;
-        }
-        
-        @keyframes glitch-flash {
-            0% { opacity: 1; }
-            100% { opacity: 0.7; }
-        }
-        
-        @keyframes critical-glitch {
-            0% { 
-                opacity: 1; 
-                transform: scale(1);
-            }
-            100% { 
-                opacity: 0.8; 
-                transform: scale(1.02);
-            }
-        }
-        
-        .result-breakdown {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .breakdown-item {
-            background: rgba(0, 20, 40, 0.8);
-            border-radius: 8px;
-            padding: 15px;
-            border: 1px solid #00ffff;
-        }
-        
-        .breakdown-label {
-            font-size: 0.9em;
-            color: #ccc;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-        
-        .breakdown-value {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #00ffff;
-            text-shadow: 0 0 5px #00ffff;
-        }
-        
-        .dice-results {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 25px 0;
-            flex-wrap: wrap;
-        }
-        
-        .result-die {
-            width: 45px;
-            height: 45px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #000;
-            border: 2px solid;
-            position: relative;
-            font-family: inherit;
-        }
-        
-        .normal-die {
-            background: #404040;
-            border-color: #666;
-            color: #fff;
-        }
-        
-        .hit-die {
-            background: #00ff00;
-            border-color: #00cc00;
-            color: #000;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-        }
-        
-        .ones-die {
-            background: #ff4444;
-            border-color: #cc0000;
-            color: #fff;
-            animation: ones-pulse 1s infinite alternate;
-        }
-        
-        .edge-die {
-            background: #ff6b35;
-            border-color: #e55a31;
-            color: #000;
-            box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
-        }
-        
-        @keyframes ones-pulse {
-            0% { box-shadow: 0 0 5px rgba(255, 68, 68, 0.5); }
-            100% { box-shadow: 0 0 15px rgba(255, 68, 68, 0.8); }
-        }
-        
-        .glitch-warning {
-            background: rgba(255, 165, 0, 0.2);
-            border: 2px solid #ffa500;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            color: #ffa500;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        
-        .edge-result {
-            background: rgba(255, 107, 53, 0.2);
-            border: 2px solid #ff6b35;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            color: #ff6b35;
-            font-weight: bold;
-        }
+        main .roll-panel { border-left: 5px solid var(--gold); }
+        .verdict { font-size: 1.25rem; font-weight: 700; color: var(--heading); margin: 0 0 4px; min-height: 1.6em; }
+        .verdict .ok { color: var(--success); }
+        .verdict .bad { color: var(--danger); }
+        .detail { color: var(--muted); margin: 0 0 10px; min-height: 1.4em; }
+        .row { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: flex-end; margin: 0 0 12px; }
+        .row label[hidden] { display: none; }
+        .row label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 0.95rem; }
+        main .row input[type="number"], main .row select { width: 6.5em; }
+        main .row select.wide { width: auto; max-width: 100%; }
+        main .row button { width: auto; margin: 0; }
+        .note { font-size: 0.93rem; color: var(--muted); margin: 0.4rem 0 0; }
+        .odds td:last-child, .odds th:last-child { text-align: right; white-space: nowrap; }
+        .dice { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; min-height: 8px; }
+        .die { width: 34px; height: 34px; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.05rem; background: var(--surface-2); color: var(--text); border: 1px solid var(--border-strong); }
+        .die.hit { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+        .die.one { background: var(--surface); color: var(--danger); border: 2px solid var(--danger); }
+        .die.extra { outline: 2px dashed var(--gold); outline-offset: 2px; }
+        .track { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: 10px; margin: 0 0 12px; }
+        .track div { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+        .track b { display: block; font-size: 1.4rem; color: var(--heading); }
+        .track span { color: var(--muted); font-size: 0.9rem; }
+        .boxes { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 12px; }
+        .boxes i { width: 22px; height: 22px; border: 2px solid var(--border-strong); border-radius: 4px; background: var(--surface); }
+        .boxes i.full { background: var(--danger); border-color: var(--danger); }
+        .boxes i.over { background: var(--gold); border-color: var(--gold); }
+        .boxes i.row-end { margin-right: 8px; }
+        .th-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+        main .th-list button { width: auto; margin: 0; padding: 6px 10px; min-height: 34px; font-size: 0.88rem; background: var(--surface-2); color: var(--heading); border-color: var(--border-strong); }
+        @media (max-width: 600px) { main .row input[type="number"], main .row select { width: 5.5em; } main .row select.wide { width: 100%; } .die { width: 30px; height: 30px; } }
     </style>
-    <script src="/styles/site-nav.js?v=20260723u7" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>SHADOWRUN</h1>
-        <div class="subtitle">6TH WORLD DICE ROLLER</div>
-        
-        <div class="dice-section">
-            <h2>🎯 QUICK ACTIONS</h2>
-            <div class="quick-actions">
-                <button class="quick-btn" onclick="quickRoll('agility')">🏃 Agility</button>
-                <button class="quick-btn" onclick="quickRoll('body')">💪 Body</button>
-                <button class="quick-btn" onclick="quickRoll('reaction')">⚡ Reaction</button>
-                <button class="quick-btn" onclick="quickRoll('strength')">🔨 Strength</button>
-                <button class="quick-btn" onclick="quickRoll('willpower')">🧠 Willpower</button>
-                <button class="quick-btn" onclick="quickRoll('logic')">🤖 Logic</button>
-                <button class="quick-btn" onclick="quickRoll('intuition')">👁️ Intuition</button>
-                <button class="quick-btn" onclick="quickRoll('charisma')">💬 Charisma</button>
-                <button class="quick-btn" onclick="quickRoll('firearms')">🔫 Firearms</button>
-                <button class="quick-btn" onclick="quickRoll('hacking')">💻 Hacking</button>
-                <button class="quick-btn" onclick="quickRoll('spellcasting')">✨ Spellcasting</button>
-                <button class="quick-btn" onclick="quickRoll('initiative')">⚡ Initiative</button>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav">
+    <a href="https://rays-home.netlify.app/">Ray's House of Fun</a>
+    <a href="/index.html">Home</a>
+    <a href="https://rays-home.netlify.app/contact">Contact</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+</nav>
+    <header>
+        <h1>Dice Roller</h1>
+        <p>Roll any d6 pool with hits, limits, glitches and Edge, see the exact odds, then resist the damage and track it.</p>
+    </header>
+
+    <main id="main">
+        <section>
+            <div class="roll-panel" role="region" aria-label="Dice pool test">
+                <p class="verdict" id="verdict" aria-live="polite">Set your pool, then roll.</p>
+                <div class="dice" id="dice" aria-hidden="true"></div>
+                <p class="detail" id="detail"></p>
+                <div class="row">
+                    <button type="button" id="rollBtn">Roll</button>
+                    <button type="button" id="secondBtn" disabled>Second Chance</button>
+                </div>
+                <div class="row">
+                    <label>Dice pool <input type="number" id="pool" min="0" max="40" value="10"></label>
+                    <label>Limit (0 = none) <input type="number" id="limit" min="0" max="20" value="5"></label>
+                    <label>Test
+                        <select id="mode" class="wide">
+                            <option value="th">vs a threshold</option>
+                            <option value="opp">vs an opponent</option>
+                        </select>
+                    </label>
+                    <label id="thWrap">Threshold <input type="number" id="th" min="0" max="30" value="2"></label>
+                    <label id="oppWrap" hidden>Opponent's pool <input type="number" id="opp" min="0" max="40" value="8"></label>
+                </div>
+                <div class="th-list" id="thList" aria-label="Thresholds">
+                    <button type="button" data-th="1">Easy 1</button>
+                    <button type="button" data-th="2">Average 2</button>
+                    <button type="button" data-th="4">Hard 4</button>
+                    <button type="button" data-th="6">Very Hard 6</button>
+                    <button type="button" data-th="8">Extreme 8</button>
+                </div>
+                <div class="row">
+                    <label>Edge rating <input type="number" id="edge" min="1" max="7" value="3"></label>
+                    <label>Before the roll
+                        <select id="edgeMode" class="wide">
+                            <option value="none">No Edge</option>
+                            <option value="push">Push the Limit (+Edge dice, 6s explode, no limit)</option>
+                        </select>
+                    </label>
+                </div>
+                <p class="note" id="rule"></p>
             </div>
-        </div>
-        
-        <div class="dice-section">
-            <h2>🎲 DICE POOLS</h2>
-            <div class="dice-pool-section">
-                <div class="main-pool">
-                    <div class="pool-title">Main Pool</div>
-                    <div class="dice-controls">
-                        <button class="dice-btn" onclick="changeDiceCount('main', -1)">-</button>
-                        <input type="number" class="dice-count" id="main-count" value="6" min="0" max="30" />
-                        <button class="dice-btn" onclick="changeDiceCount('main', 1)">+</button>
-                    </div>
-                    <div style="font-size: 0.9em; color: #ccc; margin-top: 10px;">
-                        Attribute + Skill + Modifiers
-                    </div>
+        </section>
+
+        <section>
+            <h2>Exact Odds</h2>
+            <p>Worked out from every way the dice can land, not by simulation. Each die is a hit one time in three, so a pool averages a third of its size in hits before the limit bites.</p>
+            <table class="odds" aria-live="polite">
+                <thead><tr><th>Result</th><th>Chance</th></tr></thead>
+                <tbody id="oddsBody"></tbody>
+            </table>
+            <p class="note">Glitch: more than half the dice show 1 (exactly half is not a glitch). Critical glitch: a glitch with no hits. With Push the Limit the 1s are counted on the dice you first roll, Edge dice included, not on the extra dice from exploding 6s. Second Chance rerolls every die that missed once; it cannot undo a glitch, so the glitch odds are those of the first roll.</p>
+        </section>
+
+        <section>
+            <h2>Resist Damage</h2>
+            <div class="damage-panel">
+                <div class="row">
+                    <label>Weapon DV <input type="number" id="dv" min="0" max="30" value="8"></label>
+                    <label>Attacker's net hits <input type="number" id="net" min="0" max="20" value="2"></label>
+                    <label>AP <input type="number" id="ap" min="-20" max="10" value="-1"></label>
+                    <label>Armor <input type="number" id="armor" min="0" max="30" value="12"></label>
+                    <label>Body <input type="number" id="bodyR" min="1" max="15" value="4"></label>
+                    <button type="button" id="dmgRoll">Roll to resist</button>
                 </div>
-                
-                <div class="edge-section">
-                    <div class="pool-title">Edge</div>
-                    <div class="edge-controls">
-                        <button class="edge-btn" id="no-edge" onclick="setEdge('none')">No Edge</button>
-                        <button class="edge-btn active" id="use-edge" onclick="setEdge('use')">Use Edge</button>
-                        <button class="edge-btn" id="push-limit" onclick="setEdge('push')">Push Limit</button>
-                    </div>
-                    <div style="font-size: 0.8em; color: #ccc; margin-top: 10px;">
-                        Edge adds exploding 6s
-                    </div>
-                </div>
+                <div class="dice" id="dmgDice" aria-hidden="true"></div>
+                <p class="verdict" id="dmgOut" aria-live="polite"></p>
+                <p class="detail" id="dmgDetail"></p>
+                <p class="note">Modified DV = weapon DV + the attacker's net hits. Armor is modified by AP (AP −1 takes 1 off Armor). If the modified DV is less than the modified Armor the damage is Stun instead of Physical. You roll Body + modified Armor, and every hit takes 1 off the DV. If modified Armor is 0 or less, you roll Body alone. Damage resistance has no limit.</p>
             </div>
-            
-            <div class="threshold-section">
-                <h3>🎯 THRESHOLD</h3>
-                <div class="threshold-controls">
-                    <span class="threshold-label">Target:</span>
-                    <input type="number" class="threshold-input" id="threshold" value="1" placeholder="1" />
-                    <button class="threshold-btn" onclick="setThreshold(1)">Easy (1)</button>
-                    <button class="threshold-btn" onclick="setThreshold(2)">Average (2)</button>
-                    <button class="threshold-btn" onclick="setThreshold(3)">Hard (3)</button>
-                    <button class="threshold-btn" onclick="setThreshold(4)">Extreme (4)</button>
-                    <button class="threshold-btn" onclick="setThreshold(0)">Opposed</button>
+        </section>
+
+        <section>
+            <h2>Condition Monitors</h2>
+            <div class="health-panel">
+                <div class="row">
+                    <label>Body <input type="number" id="bod" min="1" max="15" value="4"></label>
+                    <label>Willpower <input type="number" id="wil" min="1" max="15" value="3"></label>
+                    <button type="button" id="resetH">Reset to unhurt</button>
                 </div>
+                <p><strong>Physical</strong> <span id="physLbl"></span></p>
+                <div class="boxes" id="physBoxes" aria-hidden="true"></div>
+                <p><strong>Stun</strong> <span id="stunLbl"></span></p>
+                <div class="boxes" id="stunBoxes" aria-hidden="true"></div>
+                <div class="track" aria-live="polite">
+                    <div><span>Wound modifier</span><b id="woundMod">0</b></div>
+                    <div><span>Status</span><b id="status">Unhurt</b></div>
+                </div>
+                <div class="row">
+                    <label>Boxes <input type="number" id="hit" min="0" max="40" value="4"></label>
+                    <label>Type
+                        <select id="hitType"><option value="P">Physical</option><option value="S">Stun</option></select>
+                    </label>
+                    <button type="button" id="applyHit">Take damage</button>
+                </div>
+                <p class="detail" id="healthOut" aria-live="polite"></p>
+                <p class="note">Physical boxes = 8 + half your Body, rounded up; Stun boxes = 8 + half your Willpower, rounded up. Every full row of 3 filled boxes is −1 die to your tests and −1 to Initiative, and the two tracks add together. A full Stun track knocks you out, and extra Stun spills onto the Physical track at 1 box for every 2. A full Physical track means you are dying; overflow beyond your Body in boxes means death.</p>
             </div>
-            
-            <button class="roll-btn" onclick="rollDice()">>>> JACK IN <<<</button>
-            <button class="clear-btn" onclick="clearAll()">CLEAR</button>
-        </div>
-        
-        <div id="results" class="results" style="display: none;">
-            <div id="result-summary" class="result-summary"></div>
-            
-            <div class="result-breakdown">
-                <div class="breakdown-item">
-                    <div class="breakdown-label">Hits</div>
-                    <div class="breakdown-value" id="total-hits">0</div>
+        </section>
+
+        <section>
+            <h2>Initiative</h2>
+            <div class="init-panel">
+                <div class="row">
+                    <label>Reaction + Intuition <input type="number" id="initAttr" min="2" max="20" value="7"></label>
+                    <label>Initiative Dice <input type="number" id="initDice" min="1" max="5" value="1"></label>
+                    <button type="button" id="initRoll">Roll Initiative</button>
                 </div>
-                <div class="breakdown-item">
-                    <div class="breakdown-label">Ones</div>
-                    <div class="breakdown-value" id="total-ones">0</div>
-                </div>
-                <div class="breakdown-item">
-                    <div class="breakdown-label">Dice Pool</div>
-                    <div class="breakdown-value" id="pool-size">0</div>
-                </div>
-                <div class="breakdown-item">
-                    <div class="breakdown-label">Threshold</div>
-                    <div class="breakdown-value" id="threshold-display">1</div>
-                </div>
+                <p class="verdict" id="initOut" aria-live="polite"></p>
+                <p class="detail" id="initDetail"></p>
+                <p class="note">Initiative Score = Reaction + Intuition + 1D6, plus up to four more dice from augmentations, spells or hot-sim (5D6 at most). The highest score acts first. When everyone has acted, every score drops by 10, and anyone still above 0 acts again in the next pass. Wound modifiers come off the score.</p>
             </div>
-            
-            <div class="dice-results" id="dice-display"></div>
-            
-            <div id="glitch-text" class="glitch-warning" style="display: none;"></div>
-            <div id="edge-text" class="edge-result" style="display: none;"></div>
-        </div>
-    </div>
-    
-    <script>
-        let currentEdge = 'use';
-        let lastRollType = '';
-        
-        function changeDiceCount(type, change) {
-            const input = document.getElementById(type + '-count');
-            const newValue = Math.max(0, Math.min(30, parseInt(input.value) + change));
-            input.value = newValue;
-        }
-        
-        function setEdge(type) {
-            currentEdge = type;
-            document.querySelectorAll('.edge-btn').forEach(btn => btn.classList.remove('active'));
-            const btnId = type === 'none' ? 'no-edge' : (type === 'push' ? 'push-limit' : 'use-edge');
-            document.getElementById(btnId).classList.add('active');
-        }
-        
-        function setThreshold(value) {
-            document.getElementById('threshold').value = value;
-        }
-        
-        function quickRoll(type) {
-            clearAll();
-            lastRollType = type;
-            
-            // Set typical dice pools for different actions
-            switch (type) {
-                case 'agility':
-                case 'body':
-                case 'reaction':
-                case 'strength':
-                    document.getElementById('main-count').value = 8;
-                    setThreshold(2);
-                    break;
-                case 'willpower':
-                case 'logic':
-                case 'intuition':
-                case 'charisma':
-                    document.getElementById('main-count').value = 10;
-                    setThreshold(2);
-                    break;
-                case 'firearms':
-                    document.getElementById('main-count').value = 12;
-                    setThreshold(3);
-                    break;
-                case 'hacking':
-                    document.getElementById('main-count').value = 14;
-                    setThreshold(3);
-                    break;
-                case 'spellcasting':
-                    document.getElementById('main-count').value = 16;
-                    setThreshold(4);
-                    break;
-                case 'initiative':
-                    document.getElementById('main-count').value = 4;
-                    setThreshold(0); // Initiative is opposed
-                    setEdge('none');
-                    break;
-            }
-            
-            rollDice();
-        }
-        
-        function rollDice() {
-            const mainPool = parseInt(document.getElementById('main-count').value) || 0;
-            const threshold = parseInt(document.getElementById('threshold').value) || 0;
-            
-            let allRolls = [];
-            let hits = 0;
-            let ones = 0;
-            let edgeRolls = 0;
-            
-            // Roll main pool
-            for (let i = 0; i < mainPool; i++) {
-                const roll = Math.floor(Math.random() * 6) + 1;
-                const isHit = roll >= 5;
-                const isOne = roll === 1;
-                const isEdgeExplode = roll === 6 && currentEdge !== 'none';
-                
-                allRolls.push({
-                    value: roll,
-                    type: 'main',
-                    isHit: isHit,
-                    isOne: isOne,
-                    isEdgeExplode: isEdgeExplode
-                });
-                
-                if (isHit) hits++;
-                if (isOne) ones++;
-                
-                // Edge: exploding 6s
-                if (isEdgeExplode) {
-                    let explodeRoll = roll;
-                    while (explodeRoll === 6) {
-                        explodeRoll = Math.floor(Math.random() * 6) + 1;
-                        edgeRolls++;
-                        
-                        const explodeHit = explodeRoll >= 5;
-                        const explodeOne = explodeRoll === 1;
-                        
-                        allRolls.push({
-                            value: explodeRoll,
-                            type: 'edge',
-                            isHit: explodeHit,
-                            isOne: explodeOne,
-                            isEdgeExplode: explodeRoll === 6
-                        });
-                        
-                        if (explodeHit) hits++;
-                        if (explodeOne) ones++;
-                    }
-                }
-            }
-            
-            // Push the Limit adds Edge dice
-            if (currentEdge === 'push') {
-                const edgeDice = Math.max(1, Math.floor(mainPool / 4));
-                for (let i = 0; i < edgeDice; i++) {
-                    const roll = Math.floor(Math.random() * 6) + 1;
-                    const isHit = roll >= 5;
-                    const isOne = roll === 1;
-                    
-                    allRolls.push({
-                        value: roll,
-                        type: 'edge',
-                        isHit: isHit,
-                        isOne: isOne
-                    });
-                    
-                    if (isHit) hits++;
-                    if (isOne) ones++;
-                }
-            }
-            
-            displayResults(allRolls, hits, ones, threshold, edgeRolls);
-        }
-        
-        function calculateGlitch(ones, totalDice) {
-            const halfDice = Math.floor(totalDice / 2);
-            return ones >= halfDice;
-        }
-        
-        function displayResults(rolls, hits, ones, threshold, edgeRolls) {
-            const resultsDiv = document.getElementById('results');
-            const summaryDiv = document.getElementById('result-summary');
-            const diceDisplay = document.getElementById('dice-display');
-            const glitchDiv = document.getElementById('glitch-text');
-            const edgeDiv = document.getElementById('edge-text');
-            
-            const totalDice = rolls.length;
-            const isGlitch = calculateGlitch(ones, totalDice);
-            const isCriticalGlitch = isGlitch && hits === 0;
-            const isSuccess = threshold === 0 ? hits > 0 : hits >= threshold;
-            
-            // Update breakdown displays
-            document.getElementById('total-hits').textContent = hits;
-            document.getElementById('total-ones').textContent = ones;
-            document.getElementById('pool-size').textContent = parseInt(document.getElementById('main-count').value) || 0;
-            document.getElementById('threshold-display').textContent = threshold || 'Opposed';
-            
-            // Determine result type and message
-            if (isCriticalGlitch) {
-                summaryDiv.className = 'result-summary critical-glitch-summary';
-                summaryDiv.textContent = 'CRITICAL GLITCH!';
-            } else if (isGlitch) {
-                summaryDiv.className = 'result-summary glitch-summary';
-                summaryDiv.textContent = isSuccess ? 'GLITCH SUCCESS' : 'GLITCH FAILURE';
-            } else if (isSuccess) {
-                summaryDiv.className = 'result-summary success-summary';
-                summaryDiv.textContent = 'SUCCESS!';
-            } else {
-                summaryDiv.className = 'result-summary failure-summary';
-                summaryDiv.textContent = 'FAILURE';
-            }
-            
-            // Display individual dice
-            diceDisplay.innerHTML = '';
-            rolls.forEach(roll => {
-                const die = document.createElement('div');
-                die.className = 'result-die';
-                die.textContent = roll.value;
-                
-                if (roll.type === 'edge') {
-                    die.classList.add('edge-die');
-                } else if (roll.isHit) {
-                    die.classList.add('hit-die');
-                } else if (roll.isOne) {
-                    die.classList.add('ones-die');
-                } else {
-                    die.classList.add('normal-die');
-                }
-                
-                diceDisplay.appendChild(die);
-            });
-            
-            // Glitch warnings
-            if (isCriticalGlitch) {
-                glitchDiv.style.display = 'block';
-                glitchDiv.innerHTML = '💀 CRITICAL GLITCH!<br><small>Something goes very wrong! No successes and massive complications!</small>';
-            } else if (isGlitch) {
-                glitchDiv.style.display = 'block';
-                glitchDiv.innerHTML = '⚠️ GLITCH!<br><small>Something goes wrong or has unexpected complications.</small>';
-            } else {
-                glitchDiv.style.display = 'none';
-            }
-            
-            // Edge effects
-            if (currentEdge !== 'none' || edgeRolls > 0) {
-                edgeDiv.style.display = 'block';
-                if (currentEdge === 'push') {
-                    edgeDiv.innerHTML = '🔥 PUSHING THE LIMIT!<br><small>Added Edge dice to the pool. Burn Edge point.</small>';
-                } else if (edgeRolls > 0) {
-                    edgeDiv.innerHTML = `⚡ EDGE EXPLODED!<br><small>Rolled ${edgeRolls} extra dice from exploding 6s!</small>`;
-                } else {
-                    edgeDiv.innerHTML = '⚡ EDGE ACTIVE<br><small>6s explode into additional dice!</small>';
-                }
-            } else {
-                edgeDiv.style.display = 'none';
-            }
-            
-            resultsDiv.style.display = 'block';
-        }
-        
-        function clearAll() {
-            document.getElementById('main-count').value = 6;
-            document.getElementById('threshold').value = 1;
-            setEdge('use');
-            lastRollType = '';
-            document.getElementById('results').style.display = 'none';
-        }
-        
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                rollDice();
-            } else if (e.key === 'Escape') {
-                clearAll();
-            } else if (e.key === 'e' || e.key === 'E') {
-                setEdge(currentEdge === 'use' ? 'none' : 'use');
-            } else if (e.key === 'f' || e.key === 'F') {
-                quickRoll('firearms');
-            } else if (e.key === 'h' || e.key === 'H') {
-                quickRoll('hacking');
-            }
-        });
-        
-        // Add cyberpunk matrix effects
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('roll-btn')) {
-                createMatrixEffect(e.target);
-            }
-        });
-        
-        function createMatrixEffect(element) {
-            for (let i = 0; i < 12; i++) {
-                const digit = document.createElement('div');
-                digit.style.position = 'absolute';
-                digit.style.color = Math.random() > 0.5 ? '#00ff00' : '#00ffff';
-                digit.style.fontSize = '12px';
-                digit.style.fontFamily = 'Courier New';
-                digit.style.pointerEvents = 'none';
-                digit.style.zIndex = '1000';
-                digit.textContent = Math.random() > 0.5 ? '1' : '0';
-                
-                const rect = element.getBoundingClientRect();
-                digit.style.left = rect.left + Math.random() * rect.width + 'px';
-                digit.style.top = rect.top + rect.height / 2 + 'px';
-                
-                document.body.appendChild(digit);
-                
-                let y = 0;
-                let opacity = 1;
-                
-                const animate = () => {
-                    y += 2;
-                    opacity -= 0.02;
-                    
-                    digit.style.transform = `translateY(${y}px)`;
-                    digit.style.opacity = opacity;
-                    
-                    if (opacity > 0) {
-                        requestAnimationFrame(animate);
+        </section>
+
+        <section class="further-exploration">
+            <h2>Where to Go Next</h2>
+            <ul>
+                <li><strong><a href="/sr_mechanics.html">Game Mechanics</a>:</strong> Dice pools, limits, thresholds and Edge in full.</li>
+                <li><strong><a href="/sr_char.html">Archetypes &amp; Roles</a>:</strong> Where the pools come from.</li>
+                <li><strong><a href="/sr_solo.html">Playing Shadowrun Solo</a>:</strong> The same d6 pool turned into a yes/no oracle.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+<div class="page-nav">
+    <a class="prev" href="/sr_solo.html">Playing Shadowrun Solo</a>
+    <a class="next" href="/index.html">Guide Home</a>
+</div>
+    </footer>
+<div class="site-footer">&copy; 2026 Ray de la Paz. The Shadowrun Guide. All rights reserved. &middot; <a href="https://rays-home.netlify.app/">Ray's House of Fun</a><br>Shadowrun is a registered trademark of The Topps Company, Inc., published by Catalyst Game Labs. This guide is an unofficial fan resource.</div>
+
+<script>
+(function () {
+    // ---------- exact maths for a Shadowrun 5e d6 pool ----------
+    // hits = 5s and 6s; glitch = more than half the first-rolled dice show 1; critical glitch = glitch + no hits
+    var CAP = 80;
+    function chain() { // hits from one exploding die after its first 6 (truncated at CAP)
+        var d = [4 / 6];
+        for (var k = 1; k <= CAP; k++) d[k] = (k === 1 ? 1 / 6 : 0) + d[k - 1] / 6;
+        return d;
+    }
+    var CHAIN = chain();
+    // joint[ones][hits] for n dice; mode 'none' | 'push' (6s explode) | 'second' (reroll misses once)
+    function joint(n, mode) {
+        var st = [[1]];
+        for (var i = 0; i < n; i++) {
+            var nx = [];
+            for (var o = 0; o < st.length; o++) {
+                var row = st[o] || [];
+                for (var h = 0; h < row.length; h++) {
+                    var p = row[h]; if (!p) continue;
+                    var add = function (oo, hh, q) { if (hh > CAP) return; nx[oo] = nx[oo] || []; nx[oo][hh] = (nx[oo][hh] || 0) + q; };
+                    if (mode === 'second') {
+                        add(o + 1, h, p / 6 * 4 / 6); add(o + 1, h + 1, p / 6 * 2 / 6);
+                        add(o, h, p * 3 / 6 * 4 / 6); add(o, h + 1, p * 3 / 6 * 2 / 6);
+                        add(o, h + 1, p * 2 / 6);
+                    } else if (mode === 'push') {
+                        add(o + 1, h, p / 6); add(o, h, p * 3 / 6); add(o, h + 1, p / 6);
+                        for (var k = 0; k < CHAIN.length; k++) add(o, h + 1 + k, p / 6 * CHAIN[k]);
                     } else {
-                        document.body.removeChild(digit);
+                        add(o + 1, h, p / 6); add(o, h, p * 3 / 6); add(o, h + 1, p * 2 / 6);
                     }
-                };
-                
-                requestAnimationFrame(animate);
+                }
             }
+            st = nx;
         }
-    </script>
+        return st;
+    }
+    function each(J, f) { for (var o = 0; o < J.length; o++) { var r = J[o] || []; for (var h = 0; h < r.length; h++) if (r[h]) f(o, h, r[h]); } }
+    // summary(pool, limit, threshold, edge, mode) -> [P(hits >= threshold), P(glitch), P(critical glitch), expected hits]
+    function summary(n, limit, th, edge, mode) {
+        if (mode === 'push') n += edge;
+        var J = joint(n, mode), cap = function (h) { return (mode === 'push' || limit <= 0) ? h : Math.min(h, limit); };
+        var s = 0, g = 0, cg = 0, eh = 0;
+        each(J, function (o, h, p) { if (cap(h) >= th) s += p; if (2 * o > n) g += p; eh += p * cap(h); if (mode !== 'second' && 2 * o > n && h === 0) cg += p; });
+        if (mode === 'second') each(joint(n, 'none'), function (o, h, p) { if (2 * o > n && h === 0) cg += p; });
+        return [s, g, cg, eh];
+    }
+    function hitDist(n, limit) { var d = []; each(joint(n, 'none'), function (o, h, p) { var x = limit > 0 ? Math.min(h, limit) : h; d[x] = (d[x] || 0) + p; }); return d; }
+    // opposed(a, b, la, lb) -> P(a gets strictly more hits than b)
+    function opposed(a, b, la, lb) {
+        var A = hitDist(a, la || 0), B = hitDist(b, lb || 0), s = 0;
+        for (var x = 0; x < A.length; x++) for (var y = 0; y < B.length; y++) if (x > y && A[x] && B[y]) s += A[x] * B[y];
+        return s;
+    }
+    function tie(a, b, la, lb) {
+        var A = hitDist(a, la || 0), B = hitDist(b, lb || 0), s = 0;
+        for (var x = 0; x < Math.min(A.length, B.length); x++) if (A[x] && B[x]) s += A[x] * B[x];
+        return s;
+    }
+    window.srDice = { summary: summary, opposed: opposed, tie: tie };
+
+    function $(id) { return document.getElementById(id); }
+    function num(id, def, lo, hi) { var v = Math.round(Number($(id).value)); if (isNaN(v)) v = def; return Math.max(lo, Math.min(hi, v)); }
+    function d6() { return Math.floor(Math.random() * 6) + 1; }
+    function pct(x) { return x > 0 && x < 0.0005 ? 'under 0.1%' : (x * 100).toFixed(1) + '%'; }
+    function dieHtml(v, extra) { return '<span class="die' + (v >= 5 ? ' hit' : v === 1 ? ' one' : '') + (extra ? ' extra' : '') + '">' + v + '</span>'; }
+
+    function refresh() {
+        var opp = $('mode').value === 'opp', n = num('pool', 0, 0, 40), lim = num('limit', 0, 0, 20), th = num('th', 1, 0, 30),
+            e = num('edge', 1, 1, 7), m = $('edgeMode').value;
+        $('thWrap').hidden = opp; $('oppWrap').hidden = !opp; $('thList').style.display = opp ? 'none' : '';
+        var rows = [];
+        if (opp) {
+            var o = num('opp', 0, 0, 40), w = opposed(n, o, lim, 0), t = tie(n, o, lim, 0);
+            rows.push(['You get more hits (you win)', w], ['Same hits (a tie: the defender wins; in combat, a grazing hit)', t], ['They get more hits', 1 - w - t]);
+            var s0 = summary(n, lim, 1, e, 'none');
+            rows.push(['You glitch', s0[1]], ['You critically glitch', s0[2]]);
+            $('rule').textContent = 'Opposed: both sides roll and compare hits. Odds here are for plain rolls with your limit; the opponent has none.';
+        } else {
+            var lab = (m === 'push' ? ' with Push the Limit' : '');
+            var s = summary(n, lim, th, e, m);
+            rows.push(['Reach threshold ' + th + lab, s[0]], ['Glitch', s[1]], ['Critical glitch', s[2]]);
+            rows.push(['Average hits counted' + (m === 'push' || !lim ? '' : ' (after limit ' + lim + ')'), s[3], true]);
+            if (m === 'none') rows.push(['Reach threshold ' + th + ' if you spend Second Chance after a miss', summary(n, lim, th, e, 'second')[0]]);
+            $('rule').textContent = m === 'push' ? 'Push the Limit: roll ' + (n + e) + ' dice, every 6 is rerolled and can hit again, and no limit applies.' : 'Hits above the limit don’t count. Second Chance (after the roll) rerolls every die that missed.';
+        }
+        $('oddsBody').innerHTML = rows.map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + (r[2] ? r[1].toFixed(2) : pct(r[1])) + '</td></tr>'; }).join('');
+    }
+    ['pool', 'limit', 'th', 'edge', 'mode', 'edgeMode', 'opp'].forEach(function (id) { $(id).addEventListener('input', refresh); $(id).addEventListener('change', refresh); });
+    $('thList').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; $('th').value = b.dataset.th; refresh(); });
+
+    var last = null;
+    function rollPool(n, explode) {
+        var dice = [];
+        for (var i = 0; i < n; i++) { var v = d6(); dice.push({ v: v }); if (explode) while (v === 6) { v = d6(); dice.push({ v: v, extra: true }); } }
+        return dice;
+    }
+    function judge(r) {
+        var raw = r.dice.filter(function (d) { return d.v >= 5; }).length,
+            ones = r.dice.filter(function (d) { return !d.extra && d.v === 1; }).length,
+            hits = r.push || !r.lim ? raw : Math.min(raw, r.lim);
+        if (r.first1s === undefined) { r.first1s = ones; r.firstHits = raw; } // glitch status is set by the first roll
+        r.raw = raw; r.hits = hits; r.glitch = 2 * r.first1s > r.n; r.crit = r.glitch && r.firstHits === 0;
+        return r;
+    }
+    function render(r) {
+        $('dice').innerHTML = r.dice.map(function (d) { return dieHtml(d.v, d.extra); }).join('');
+        var notes = [], txt;
+        if (r.raw > r.hits) notes.push(r.raw + ' hits rolled, but the limit of ' + r.lim + ' only lets ' + r.hits + ' count.');
+        if (r.push) notes.push('Pushed the Limit: ' + r.n + ' dice, 6s exploded (dashed dice), no limit.');
+        if (r.second) notes.push('Second Chance spent: the misses were rerolled.');
+        if (r.opp !== undefined) {
+            var o = r.oppHits, win = r.hits > o;
+            txt = r.hits + ' hits vs their ' + o + ': <span class="' + (win ? 'ok' : 'bad') + '">' + (win ? 'you win by ' + (r.hits - o) + ' net hit' + (r.hits - o === 1 ? '' : 's') : r.hits === o ? 'tie, the defender wins' : 'they win by ' + (o - r.hits)) + '</span>';
+            notes.push('Their dice: ' + r.oppDice.join(' ') + '.');
+        } else {
+            var ok = r.hits >= r.th;
+            txt = r.hits + ' hit' + (r.hits === 1 ? '' : 's') + ' vs threshold ' + r.th + ': <span class="' + (ok ? 'ok' : 'bad') + '">' + (ok ? 'success' + (r.hits > r.th ? ', ' + (r.hits - r.th) + ' net hit' + (r.hits - r.th === 1 ? '' : 's') : '') : 'failure') + '</span>';
+        }
+        if (r.crit) txt += ' <span class="bad">Critical glitch!</span>';
+        else if (r.glitch) txt += ' <span class="bad">Glitch.</span>';
+        if (r.glitch) notes.push('More than half of the ' + r.n + ' dice showed 1' + (r.second ? ' on the first roll; Second Chance cannot undo that' : '') + '. Close Call (1 Edge) would ' + (r.crit ? 'turn it into a plain glitch' : 'cancel it') + (r.push || r.second ? ', but not on a test you already spent Edge on' : '') + '.');
+        $('verdict').innerHTML = txt;
+        $('detail').textContent = notes.join(' ');
+        $('secondBtn').disabled = r.push || r.second || r.raw === r.dice.length;
+    }
+    $('rollBtn').addEventListener('click', function () {
+        var opp = $('mode').value === 'opp', push = $('edgeMode').value === 'push', e = num('edge', 1, 1, 7),
+            n = num('pool', 0, 0, 40) + (push ? e : 0);
+        last = judge({ n: n, lim: num('limit', 0, 0, 20), th: num('th', 1, 0, 30), push: push, dice: rollPool(n, push) });
+        if (opp) {
+            var od = rollPool(num('opp', 0, 0, 40), false).map(function (d) { return d.v; });
+            last.opp = true; last.oppDice = od.length ? od : ['none']; last.oppHits = od.filter(function (v) { return v >= 5; }).length;
+        }
+        render(last);
+    });
+    $('secondBtn').addEventListener('click', function () {
+        if (!last || last.push || last.second) return;
+        last.dice = last.dice.map(function (d) { return d.v >= 5 ? d : { v: d6() }; });
+        last.second = true;
+        judge(last); render(last);
+    });
+    refresh();
+
+    // ---------- damage resistance ----------
+    $('dmgRoll').addEventListener('click', function () {
+        var dv = num('dv', 0, 0, 30) + num('net', 0, 0, 20), arm = Math.max(0, num('armor', 0, 0, 30) + num('ap', 0, -20, 10)),
+            bod = num('bodyR', 1, 1, 15), stun = dv < arm, n = bod + arm, dice = [];
+        for (var i = 0; i < n; i++) dice.push(d6());
+        var hits = dice.filter(function (v) { return v >= 5; }).length, left = Math.max(0, dv - hits);
+        $('dmgDice').innerHTML = dice.map(function (v) { return dieHtml(v); }).join('');
+        $('dmgOut').innerHTML = left ? left + ' boxes of ' + (stun ? 'Stun' : 'Physical') + ' damage' : '<span class="ok">No damage</span>';
+        $('dmgDetail').textContent = 'Modified DV ' + dv + ' vs modified Armor ' + arm + (stun ? ' (DV is lower, so Stun)' : ' (Physical)') + '. Rolled Body ' + bod + ' + Armor ' + arm + ' = ' + n + ' dice for ' + hits + ' hit' + (hits === 1 ? '' : 's') + '.';
+        $('hit').value = left; $('hitType').value = stun ? 'S' : 'P';
+    });
+
+    // ---------- Condition Monitors ----------
+    var h = { p: 0, s: 0 };
+    function maxP() { return 8 + Math.ceil(num('bod', 1, 1, 15) / 2); }
+    function maxS() { return 8 + Math.ceil(num('wil', 1, 1, 15) / 2); }
+    function boxes(id, filled, max, extra) {
+        var out = '';
+        for (var i = 0; i < max + extra; i++) out += '<i class="' + (i < filled ? (i < max ? 'full' : 'over') : '') + ((i + 1) % 3 === 0 ? ' row-end' : '') + '"></i>';
+        $(id).innerHTML = out;
+    }
+    function draw() {
+        var mp = maxP(), ms = maxS(), bod = num('bod', 1, 1, 15);
+        boxes('physBoxes', h.p, mp, h.p > mp ? bod : 0); boxes('stunBoxes', h.s, ms, 0);
+        $('physLbl').textContent = Math.min(h.p, mp) + ' / ' + mp + (h.p > mp ? ' + ' + (h.p - mp) + ' overflow (of ' + bod + ')' : '');
+        $('stunLbl').textContent = h.s + ' / ' + ms;
+        var wm = -(Math.floor(Math.min(h.p, mp) / 3) + Math.floor(h.s / 3));
+        $('woundMod').textContent = wm === 0 ? '0' : '−' + (-wm);
+        $('status').textContent = h.p > mp + bod ? 'Dead' : h.p >= mp ? 'Dying' : h.s >= ms ? 'Unconscious' : (h.p || h.s) ? 'Wounded' : 'Unhurt';
+    }
+    function reset() { h = { p: 0, s: 0 }; draw(); $('healthOut').textContent = 'Physical track ' + maxP() + ' boxes, Stun track ' + maxS() + ' boxes.'; }
+    $('resetH').addEventListener('click', reset);
+    ['bod', 'wil'].forEach(function (id) { $(id).addEventListener('change', reset); });
+    $('applyHit').addEventListener('click', function () {
+        var n = num('hit', 0, 0, 40), msg = 'Took ' + n + ' ' + ($('hitType').value === 'P' ? 'Physical' : 'Stun') + '.';
+        if ($('hitType').value === 'S') {
+            var room = maxS() - h.s, spill = Math.max(0, n - room);
+            h.s = Math.min(maxS(), h.s + n);
+            if (spill) { var pb = Math.floor((spill + (h.carry || 0)) / 2); h.carry = (spill + (h.carry || 0)) % 2; h.p += pb; msg += ' The Stun track is full: ' + spill + ' extra Stun becomes ' + pb + ' Physical.'; }
+        } else h.p += n;
+        draw();
+        $('healthOut').textContent = msg + ' Status: ' + $('status').textContent + '.';
+    });
+    reset();
+
+    // ---------- Initiative ----------
+    $('initRoll').addEventListener('click', function () {
+        var a = num('initAttr', 2, 2, 20), k = num('initDice', 1, 1, 5), d = [], wm = $('woundMod').textContent === '0' ? 0 : -Number($('woundMod').textContent.replace('−', ''));
+        for (var i = 0; i < k; i++) d.push(d6());
+        var score = a + d.reduce(function (x, y) { return x + y; }, 0) + wm, passes = [];
+        for (var s = score; s > 0; s -= 10) passes.push(s);
+        $('initOut').textContent = 'Initiative Score ' + score;
+        $('initDetail').textContent = a + ' + ' + d.join(' + ') + (wm ? ' − ' + (-wm) + ' (wounds)' : '') + ' = ' + score + '. ' + (passes.length ? 'You act at ' + passes.join(', then ') + ' (' + passes.length + ' pass' + (passes.length === 1 ? '' : 'es') + ').' : 'Your score is 0 or less: you don’t act this Combat Turn.');
+    });
+})();
+</script>
 </body>
 </html>

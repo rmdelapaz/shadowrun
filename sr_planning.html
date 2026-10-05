@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Art of the Run - Planning and Execution</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
+    <title>Planning a Run - The Shadowrun Guide</title>
+    <meta name="description" content="How a shadowrun is structured: the meet with Mr. Johnson, legwork and contacts, casing the target, the plan, contingencies, the job itself and getting paid.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="/js/site.js?v=1"></script>
+    <script type="module" src="/js/diagrams.js?v=1"></script>
+    <link rel="stylesheet" href="/styles/main.css?v=1">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         .run-phases {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
             gap: 20px;
             margin: 30px 0;
         }
         
         .phase-card {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
             border: 3px solid;
             border-radius: 15px;
             padding: 25px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            color: white;
         }
         
         .phase-card:hover {
@@ -31,12 +34,24 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
         
-        .phase-meet { border-color: #f39c12; }
-        .phase-plan { border-color: #3498db; }
-        .phase-prep { border-color: #e67e22; }
-        .phase-execute { border-color: #e74c3c; }
-        .phase-escape { border-color: #27ae60; }
-        .phase-payoff { border-color: #9b59b6; }
+        .phase-meet {
+            border-color: #f39c12;
+        }
+        .phase-plan {
+            border-color: #3498db;
+        }
+        .phase-prep {
+            border-color: #e67e22;
+        }
+        .phase-execute {
+            border-color: #e74c3c;
+        }
+        .phase-escape {
+            border-color: #27ae60;
+        }
+        .phase-payoff {
+            border-color: #9b59b6;
+        }
         
         .phase-icon {
             width: 60px;
@@ -47,11 +62,11 @@
             justify-content: center;
             font-size: 24px;
             margin: 0 auto 15px;
-            border: 3px solid white;
+            border: 3px solid var(--border);
+            flex-wrap: wrap;
         }
         
         .security-layer {
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
             border: 2px solid #e74c3c;
             border-radius: 15px;
             padding: 25px;
@@ -61,7 +76,7 @@
         
         .security-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
             gap: 15px;
             margin: 20px 0;
         }
@@ -76,7 +91,7 @@
         
         .approach-selector {
             background: rgba(0, 255, 255, 0.1);
-            border: 2px solid #00ffff;
+            border: 2px solid var(--border);
             border-radius: 15px;
             padding: 25px;
             margin: 25px 0;
@@ -109,8 +124,9 @@
             top: 0;
             bottom: 0;
             width: 4px;
-            background: linear-gradient(180deg, #e74c3c, #f39c12, #27ae60);
+            background: linear-gradient(180deg, #cb4234, #a2680c, #1d8448) !important;
             transform: translateX(-50%);
+            color: #fff;
         }
         
         .timeline-event {
@@ -118,6 +134,7 @@
             margin: 30px 0;
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
         }
         
         .timeline-event:nth-child(odd) .timeline-content {
@@ -131,11 +148,9 @@
         }
         
         .timeline-content {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
             border: 2px solid #3498db;
             border-radius: 10px;
             padding: 20px;
-            color: white;
         }
         
         .timeline-marker {
@@ -143,16 +158,16 @@
             left: 50%;
             width: 20px;
             height: 20px;
-            background: #e74c3c;
-            border: 3px solid white;
+            background: #cb4234 !important;
+            border: 3px solid var(--border);
             border-radius: 50%;
             transform: translateX(-50%);
             z-index: 2;
+            color: #fff;
         }
         
         .plan-canvas {
-            border: 2px solid #00ffff;
-            background: #000;
+            border: 2px solid var(--border);
             margin: 20px 0;
             cursor: crosshair;
         }
@@ -186,9 +201,9 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: white;
             margin: 0 auto 10px;
             position: relative;
+            flex-wrap: wrap;
         }
         
         .contingency-tree {
@@ -213,6 +228,7 @@
             margin: 10px 0;
             cursor: pointer;
             transition: all 0.3s ease;
+            flex-wrap: wrap;
         }
         
         .checklist-item:hover {
@@ -230,13 +246,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #27ae60;
+            color: var(--success);
             font-weight: bold;
+            flex-wrap: wrap;
         }
         
         .team-role-matrix {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
             gap: 15px;
             margin: 20px 0;
         }
@@ -247,23 +264,46 @@
             border-radius: 10px;
             padding: 15px;
             text-align: center;
-            color: white;
         }
-        #facilityMap { max-width: 620px; width: 100%; height: auto; display: block; margin: 0 auto;
-            border: 1px solid var(--sr-line); border-radius: var(--sr-radius); }
-        #facilityMap .sr-zone { cursor: pointer; }
-        #facilityMap .sr-zone:hover rect { fill-opacity: 0.36; }
-        #facilityMap .sr-zone:focus { outline: none; }
-        #facilityMap .sr-zone:focus rect { stroke-width: 3; }
-        #facilityMap .sr-zone.is-active rect { fill-opacity: 0.46; stroke-width: 3; }
+        #facilityMap {
+            max-width: 620px;
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid var(--sr-line);
+            border-radius: var(--sr-radius);
+        }
+        #facilityMap .sr-zone {
+            cursor: pointer;
+        }
+        #facilityMap .sr-zone:hover rect {
+            fill-opacity: 0.36;
+        }
+        #facilityMap .sr-zone:focus {
+            outline: none;
+        }
+        #facilityMap .sr-zone:focus rect {
+            stroke-width: 3;
+        }
+        #facilityMap .sr-zone.is-active rect {
+            fill-opacity: 0.46;
+            stroke-width: 3;
+        }
         .facility-readout {
-            max-width: 620px; margin: 14px auto 0; padding: 16px 18px;
-            background: var(--sr-surface); border: 1px solid var(--sr-line);
+            max-width: 620px;
+            margin: 14px auto 0;
+            padding: 16px 18px;
+            background: var(--sr-surface);
+            border: 1px solid var(--sr-line);
             border-left: 4px solid var(--sr-violet);
             border-radius: 0 var(--sr-radius) var(--sr-radius) 0;
-            font-size: 0.95rem; line-height: 1.6;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
-        .facility-readout strong { color: var(--sr-violet); }
+        .facility-readout strong {
+            color: var(--sr-violet);
+        }
 
         /* ---- contrast pass ----------------------------------------------
            Neon planning cards paint tinted/opaque fills; pin them to dark
@@ -271,40 +311,48 @@
         body.lesson :is(.phase-card, .approach-option, .security-layer,
                         .security-type, .timeline-content, .threat-assessment,
                         .sr-zone) {
-            background-color: #13101c;
-            color: #f3f0ff;
+            border-left: 5px solid var(--gold) !important;
         }
         body.lesson :is(.phase-card, .approach-option, .security-layer,
                         .security-type, .timeline-content, .threat-assessment,
                         .sr-zone)
                     :is(p, li, strong, em, small, span, div, td) {
-            color: #f3f0ff;
+            
         }
         body.lesson :is(.phase-card, .approach-option, .security-layer,
                         .security-type, .timeline-content, .threat-assessment,
                         .sr-zone)
                     :is(h3, h4, h5) {
-            color: #7fe0ef;
+            
         }
         /* checklist items sit on the page surface; theme their hard-coded ink */
         body.lesson .checklist-item,
-        body.lesson .checklist-item span { color: var(--sr-text); }
+        body.lesson .checklist-item span {
+            color: var(--sr-text);
+        }
         /* phase icons carry per-phase inline background colours (mid-tone);
            overlay a dark wash so each keeps its hue as a dark chip and passes */
         body.lesson .phase-icon {
-            background-image: linear-gradient(rgba(9, 7, 17, 0.55), rgba(9, 7, 17, 0.55)) !important;
+            background-image: linear-gradient(#090711, #090711) !important;
             color: #f3f0ff !important;
         }
     </style>
-    <script src="/styles/site-nav.js?v=20260723u7" defer></script>
 </head>
-<body class="lesson">
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav">
+    <a href="https://rays-home.netlify.app/">Ray's House of Fun</a>
+    <a href="/index.html">Home</a>
+    <a href="https://rays-home.netlify.app/contact">Contact</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+</nav>
     <header>
-        <h1 style="text-shadow: 0 0 18px rgba(231, 76, 60, 0.45);">The Art of the Run</h1>
-        <p><em>Planning and Executing Shadowruns</em></p>
+        <h1>Planning a Run</h1>
+        <p>How a shadowrun is structured, from the meet and the legwork through the job itself to getting paid.</p>
     </header>
 
-    <main>
+    <main id="main">
+
         <section>
             <h2>The Anatomy of a Perfect Shadowrun</h2>
             <p>A shadowrun isn't just a mission - it's a carefully orchestrated dance between preparation and improvisation, teamwork and individual expertise, risk and reward. Think of it like directing a heist movie where you're also the star, and failure means more than just bad reviews - it means death, imprisonment, or worse.</p>
@@ -316,7 +364,7 @@
             <h2>The Six Phases of Every Shadowrun</h2>
             <div class="run-phases">
                 <div class="phase-card phase-meet">
-                    <div class="phase-icon" style="background: #f39c12;">🤝</div>
+                    <div class="phase-icon" style="border-left: 5px solid var(--accent) !important;">🤝</div>
                     <h3>The Meet</h3>
                     <p><strong>First Contact:</strong> Where you learn what the job actually is, negotiate payment, and try to figure out what the Johnson isn't telling you.</p>
                     
@@ -333,7 +381,7 @@
                 </div>
 
                 <div class="phase-card phase-plan">
-                    <div class="phase-icon" style="background: #3498db;">🎯</div>
+                    <div class="phase-icon" style="border-left: 5px solid var(--gold) !important;">🎯</div>
                     <h3>Legwork & Planning</h3>
                     <p><strong>Information Warfare:</strong> Gathering intelligence, identifying threats, and developing strategies. This phase often determines success or failure before you even begin.</p>
                     
@@ -350,7 +398,7 @@
                 </div>
 
                 <div class="phase-card phase-prep">
-                    <div class="phase-icon" style="background: #e67e22;">⚙️</div>
+                    <div class="phase-icon" style="border-left: 5px solid var(--accent) !important;">⚙️</div>
                     <h3>Preparation</h3>
                     <p><strong>Gear Up:</strong> Acquiring specialized equipment, establishing covers, and positioning assets. The difference between the right tool and the wrong tool is survival.</p>
                     
@@ -367,7 +415,7 @@
                 </div>
 
                 <div class="phase-card phase-execute">
-                    <div class="phase-icon" style="background: #e74c3c;">⚡</div>
+                    <div class="phase-icon" style="border-left: 5px solid var(--danger) !important;">⚡</div>
                     <h3>Execution</h3>
                     <p><strong>Game Time:</strong> When all the planning meets reality. No plan survives contact with the enemy, but good plans adapt and survive.</p>
                     
@@ -384,7 +432,7 @@
                 </div>
 
                 <div class="phase-card phase-escape">
-                    <div class="phase-icon" style="background: #27ae60;">🏃</div>
+                    <div class="phase-icon" style="border-left: 5px solid var(--success) !important;">🏃</div>
                     <h3>Extraction</h3>
                     <p><strong>Getting Out Alive:</strong> The mission isn't over until you're safe. Many successful operations fail at the extraction phase.</p>
                     
@@ -401,7 +449,7 @@
                 </div>
 
                 <div class="phase-card phase-payoff">
-                    <div class="phase-icon" style="background: #9b59b6;">💰</div>
+                    <div class="phase-icon" style="border-left: 5px solid var(--gold) !important;">💰</div>
                     <h3>Payoff</h3>
                     <p><strong>Collecting Rewards:</strong> Delivery, payment, and managing the aftermath. The job isn't done until the credstick clears.</p>
                     
@@ -438,10 +486,6 @@
                     C --> K[Corporate Analysis]
                     C --> L[Threat Assessment]
                     
-                    style A stroke:#f39c12,stroke-width:3px
-                    style G stroke:#e74c3c,stroke-width:3px
-                    style H stroke:#27ae60,stroke-width:3px
-                    style I stroke:#95a5a6,stroke-width:3px
             </div>
 
             <h3>Johnson Types and What They Mean</h3>
@@ -498,6 +542,7 @@
         <section>
             <h2>Legwork: The Foundation of Success</h2>
             <p>Professional shadowrunners spend more time researching than running. The legwork phase is where you transform from blind hired guns into informed operators with actual chances of survival.</p>
+            <p>At the table, most legwork runs through your contacts. Each contact has a Connection rating (how far their reach goes) and a Loyalty rating (how much they will risk for you); a high-Connection fixer can find almost anything, but only a high-Loyalty friend will keep quiet about who was asking. Your decker can dig through the Matrix at the same time, and the GM decides how much each source turns up.</p>
 
             <div class="security-layer">
                 <h3>Target Analysis Framework</h3>
@@ -527,7 +572,7 @@
                     <div class="security-type">
                         <h4>Magical Security</h4>
                         <ul>
-                            <li>Ward spells</li>
+                            <li>Wards (astral barriers)</li>
                             <li>Spirit guardians</li>
                             <li>Mage security</li>
                             <li>Astral surveillance</li>
@@ -548,44 +593,20 @@
 
             <h3>Intelligence Gathering Methods</h3>
             <div class="mermaid">
-                mindmap
-                  root((Intel Sources))
-                    [Human Intelligence]
-                      Contacts
-                        Insiders
-                        Former employees
-                        Service providers
-                      Social Engineering
-                        Phone calls
-                        In-person cons
-                        Online manipulation
-                    [Signals Intelligence]
-                      Matrix Research
-                        Public databases
-                        Social media
-                        Corporate records
-                      Electronic Surveillance
-                        Communication intercepts
-                        Camera feeds
-                        Sensor data
-                    [Physical Intelligence]
-                      Direct Observation
-                        Surveillance
-                        Photography
-                        Pattern analysis
-                      Site Reconnaissance
-                        Building layouts
-                        Security measures
-                        Personnel behavior
-                    [Magical Intelligence]
-                      Astral Scouting
-                        Astral projection
-                        Spirit reconnaissance
-                        Magical aura reading
-                      Divination
-                        Augury spells
-                        Psychometry
-                        Future glimpses
+                flowchart LR
+                    R((Intel Sources))
+                    R --> C0[Human Intelligence]
+                    C0 --> C0S0["Contacts:&lt;br/&gt;Insiders&lt;br/&gt;Former employees&lt;br/&gt;Service providers"]
+                    C0 --> C0S1["Social Engineering:&lt;br/&gt;Phone calls&lt;br/&gt;In-person cons&lt;br/&gt;Online manipulation"]
+                    R --> C1[Signals Intelligence]
+                    C1 --> C1S0["Matrix Research:&lt;br/&gt;Public databases&lt;br/&gt;Social media&lt;br/&gt;Corporate records"]
+                    C1 --> C1S1["Electronic Surveillance:&lt;br/&gt;Communication intercepts&lt;br/&gt;Camera feeds&lt;br/&gt;Sensor data"]
+                    R --> C2[Physical Intelligence]
+                    C2 --> C2S0["Direct Observation:&lt;br/&gt;Surveillance&lt;br/&gt;Photography&lt;br/&gt;Pattern analysis"]
+                    C2 --> C2S1["Site Reconnaissance:&lt;br/&gt;Building layouts&lt;br/&gt;Security measures&lt;br/&gt;Personnel behavior"]
+                    R --> C3[Magical Intelligence]
+                    C3 --> C3S0["Astral Scouting:&lt;br/&gt;Astral projection&lt;br/&gt;Spirit reconnaissance&lt;br/&gt;Assensing auras"]
+                    C3 --> C3S1["Detection Spells:&lt;br/&gt;Clairvoyance&lt;br/&gt;Detect Life&lt;br/&gt;Analyze Truth"]
             </div>
         </section>
 
@@ -619,7 +640,7 @@
                     <p><strong>Philosophy:</strong> "Why break down the door when you can hack the lock?"</p>
                     <p><strong>Requirements:</strong> Skilled decker, Matrix support, time</p>
                     <p><strong>Pros:</strong> Remote operation, system control, data access</p>
-                    <p><strong>Cons:</strong> IC resistance, trace programs, spider detection</p>
+                    <p><strong>Cons:</strong> IC, spiders, and an Overwatch Score that climbs with every illegal action</p>
                     <p><strong>Best For:</strong> Electronic systems, data networks, automated security</p>
                 </div>
 
@@ -702,7 +723,7 @@
                 </div>
 
                 <div class="timeline-event">
-                    <div class="timeline-marker" style="background: #f39c12;"></div>
+                    <div class="timeline-marker" style="border-left: 5px solid var(--accent) !important;"></div>
                     <div class="timeline-content">
                         <h4>Phase 1: Penetration</h4>
                         <p>Overcome perimeter security. Establish overwatch. Begin electronic warfare. Maintain stealth posture.</p>
@@ -710,7 +731,7 @@
                 </div>
 
                 <div class="timeline-event">
-                    <div class="timeline-marker" style="background: #3498db;"></div>
+                    <div class="timeline-marker" style="border-left: 5px solid var(--gold) !important;"></div>
                     <div class="timeline-content">
                         <h4>Phase 2: Objective Approach</h4>
                         <p>Navigate internal security. Adapt to discovered threats. Maintain team coordination and communication.</p>
@@ -718,7 +739,7 @@
                 </div>
 
                 <div class="timeline-event">
-                    <div class="timeline-marker" style="background: #9b59b6;"></div>
+                    <div class="timeline-marker" style="border-left: 5px solid var(--gold) !important;"></div>
                     <div class="timeline-content">
                         <h4>Phase 3: Objective Completion</h4>
                         <p>Execute primary mission. Handle complications. Prepare for extraction while maintaining security.</p>
@@ -726,7 +747,7 @@
                 </div>
 
                 <div class="timeline-event">
-                    <div class="timeline-marker" style="background: #27ae60;"></div>
+                    <div class="timeline-marker" style="border-left: 5px solid var(--success) !important;"></div>
                     <div class="timeline-content">
                         <h4>Phase 4: Extraction</h4>
                         <p>Execute escape plan. Evade pursuit. Clean evidence. Reach safety with objective complete.</p>
@@ -754,17 +775,13 @@
                         H -->|No| J[Salvage Mission]
                         I --> K[Abort and Escape]
                         
-                        style A stroke:#27ae60,stroke-width:3px
-                        style C stroke:#f39c12,stroke-width:3px
-                        style F stroke:#e74c3c,stroke-width:3px
-                        style I stroke:#8b0000,stroke-width:3px
                 </div>
 
                 <h4>Common Contingency Scenarios</h4>
                 <ul>
                     <li><strong>Blown Cover:</strong> Social infiltration discovered</li>
                     <li><strong>Security Alert:</strong> Stealth operation compromised</li>
-                    <li><strong>Matrix Trace:</strong> Decker located and hunted</li>
+                    <li><strong>Convergence:</strong> The decker's Overwatch Score hits 40 and GOD reports their physical location</li>
                     <li><strong>Team Separation:</strong> Members cut off from each other</li>
                     <li><strong>Extraction Compromise:</strong> Escape route blocked</li>
                     <li><strong>Unexpected Opposition:</strong> Threats not identified in planning</li>
@@ -774,29 +791,29 @@
 
         <section>
             <h2>Success Factors: What Makes or Breaks a Run</h2>
-            <p>Shadowrun success isn't just about individual skill - it's about team performance across multiple dimensions:</p>
+            <p>Shadowrun success isn't just about individual skill - it's about team performance on four fronts. A crew that is weak on any one of them is the crew that gets geeked:</p>
 
             <div class="success-factors">
                 <div class="factor-gauge">
-                    <div class="gauge-circle" style="background: conic-gradient(#27ae60 0deg 270deg, #333 270deg 360deg);">75%</div>
+                    <div class="gauge-circle" style="border-left: 5px solid var(--success) !important;">🔍</div>
                     <h4>Preparation</h4>
                     <p>Intelligence quality and planning depth</p>
                 </div>
 
                 <div class="factor-gauge">
-                    <div class="gauge-circle" style="background: conic-gradient(#3498db 0deg 216deg, #333 216deg 360deg);">60%</div>
+                    <div class="gauge-circle" style="border-left: 5px solid var(--gold) !important;">📡</div>
                     <h4>Coordination</h4>
                     <p>Team communication and synchronization</p>
                 </div>
 
                 <div class="factor-gauge">
-                    <div class="gauge-circle" style="background: conic-gradient(#f39c12 0deg 324deg, #333 324deg 360deg);">90%</div>
+                    <div class="gauge-circle" style="border-left: 5px solid var(--accent) !important;">🔄</div>
                     <h4>Adaptability</h4>
                     <p>Response to unexpected situations</p>
                 </div>
 
                 <div class="factor-gauge">
-                    <div class="gauge-circle" style="background: conic-gradient(#e74c3c 0deg 180deg, #333 180deg 360deg);">50%</div>
+                    <div class="gauge-circle" style="border-left: 5px solid var(--danger) !important;">🧰</div>
                     <h4>Equipment</h4>
                     <p>Right tools for the job</p>
                 </div>
@@ -821,45 +838,45 @@
         </section>
 
         <section>
-            <h2>Interactive Planning Exercise</h2>
-            <p>Let's practice with a sample mission. Click on the building below to identify security challenges:</p>
+            <h2>Try It at the Table: Case the Building</h2>
+            <p>Here is a sample target. Click an area of the floorplan to read what your legwork turned up about it:</p>
 
             <svg id="facilityMap" viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Clickable floorplan of a target facility">
-                <rect width="620" height="420" fill="#0d0a1c"/>
-                <g stroke="rgba(160,107,255,0.07)" stroke-width="1">
+                <rect width="620" height="420" fill="#f8f7fc"/>
+                <g stroke="rgba(75,63,138,0.10)" stroke-width="1">
                     <path d="M31 0V420M62 0V420M93 0V420M124 0V420M155 0V420M186 0V420M217 0V420M248 0V420M279 0V420M310 0V420M341 0V420M372 0V420M403 0V420M434 0V420M465 0V420M496 0V420M527 0V420M558 0V420M589 0V420"/>
                     <path d="M0 31H620M0 62H620M0 93H620M0 124H620M0 155H620M0 186H620M0 217H620M0 248H620M0 279H620M0 310H620M0 341H620M0 372H620M0 403H620"/>
                 </g>
-                <rect x="46" y="46" width="528" height="304" fill="rgba(160,107,255,0.04)" stroke="#6b5ca5" stroke-width="2"/>
+                <rect x="46" y="46" width="528" height="304" fill="#ffffff" stroke="#4b3f8a" stroke-width="2"/>
 
                 <g class="sr-zone" data-zone="Security Office" tabindex="0" role="button" aria-label="Security Office">
-                    <rect x="66" y="66" width="118" height="76" rx="4" fill="#ffb700" fill-opacity="0.16" stroke="#ffb700" stroke-width="2"/>
-                    <text x="125" y="110" fill="#ffb700" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SECURITY</text>
+                    <rect x="66" y="66" width="118" height="76" rx="4" fill="#f0a500" fill-opacity="0.16" stroke="#b07800" stroke-width="2"/>
+                    <text x="125" y="110" fill="#5c3b00" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SECURITY</text>
                 </g>
                 <g class="sr-zone" data-zone="Executive Wing" tabindex="0" role="button" aria-label="Executive Wing">
-                    <rect x="214" y="66" width="182" height="76" rx="4" fill="#a06bff" fill-opacity="0.16" stroke="#a06bff" stroke-width="2"/>
-                    <text x="305" y="104" fill="#a06bff" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">EXECUTIVE</text>
-                    <text x="305" y="122" fill="#a06bff" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">WING</text>
+                    <rect x="214" y="66" width="182" height="76" rx="4" fill="#8a5cf0" fill-opacity="0.16" stroke="#6a3fc7" stroke-width="2"/>
+                    <text x="305" y="104" fill="#3b1f80" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">EXECUTIVE</text>
+                    <text x="305" y="122" fill="#3b1f80" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">WING</text>
                 </g>
                 <g class="sr-zone" data-zone="Server Room" tabindex="0" role="button" aria-label="Server Room">
-                    <rect x="440" y="196" width="112" height="98" rx="4" fill="#3fd18b" fill-opacity="0.18" stroke="#3fd18b" stroke-width="2"/>
-                    <text x="496" y="240" fill="#3fd18b" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SERVERS</text>
-                    <text x="496" y="258" fill="#3fd18b" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="middle">objective</text>
+                    <rect x="440" y="196" width="112" height="98" rx="4" fill="#2fbf7a" fill-opacity="0.16" stroke="#1d8a55" stroke-width="2"/>
+                    <text x="496" y="240" fill="#0b4d2d" font-family="Orbitron, sans-serif" font-size="12" font-weight="700" text-anchor="middle">SERVERS</text>
+                    <text x="496" y="258" fill="#0b4d2d" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="middle">objective</text>
                 </g>
                 <g class="sr-zone" data-zone="Emergency Exit" tabindex="0" role="button" aria-label="Emergency Exit">
-                    <rect x="566" y="150" width="16" height="42" rx="2" fill="#3fd18b" fill-opacity="0.5" stroke="#3fd18b" stroke-width="2"/>
-                    <text x="558" y="142" fill="#3fd18b" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="end">emergency exit</text>
+                    <rect x="566" y="150" width="16" height="42" rx="2" fill="#2fbf7a" fill-opacity="0.5" stroke="#1d8a55" stroke-width="2"/>
+                    <text x="558" y="142" fill="#0b4d2d" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="end">emergency exit</text>
                 </g>
                 <g class="sr-zone" data-zone="Main Entrance" tabindex="0" role="button" aria-label="Main Entrance">
-                    <rect x="282" y="342" width="60" height="16" rx="2" fill="#ff4d6d" fill-opacity="0.5" stroke="#ff4d6d" stroke-width="2"/>
-                    <text x="312" y="378" fill="#ff4d6d" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="middle">main entrance</text>
+                    <rect x="282" y="342" width="60" height="16" rx="2" fill="#e8506e" fill-opacity="0.5" stroke="#b81f42" stroke-width="2"/>
+                    <text x="312" y="378" fill="#9a1835" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="middle">main entrance</text>
                 </g>
                 <g class="sr-zone" data-zone="Parking Garage" tabindex="0" role="button" aria-label="Parking Garage">
-                    <rect x="70" y="342" width="54" height="16" rx="2" fill="#37c6e0" fill-opacity="0.5" stroke="#37c6e0" stroke-width="2"/>
-                    <text x="97" y="378" fill="#37c6e0" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="middle">garage</text>
+                    <rect x="70" y="342" width="54" height="16" rx="2" fill="#37b6d0" fill-opacity="0.5" stroke="#137590" stroke-width="2"/>
+                    <text x="97" y="378" fill="#0b5468" font-family="Share Tech Mono, monospace" font-size="11" text-anchor="middle">garage</text>
                 </g>
 
-                <text x="46" y="406" fill="#7d739f" font-family="Share Tech Mono, monospace" font-size="11">Select an area to read the security assessment</text>
+                <text x="46" y="406" fill="#4a4560" font-family="Share Tech Mono, monospace" font-size="11">Select an area to read the security assessment</text>
             </svg>
             <div id="facilityInfo" class="facility-readout" role="status" aria-live="polite">
                 <strong>Pick an area of the floorplan.</strong> Legwork is the part of a run you do before anyone is shooting at you — and the part that decides whether anyone will be.
@@ -896,7 +913,7 @@
                 <li><strong>Stay flexible:</strong> Adaptation beats perfection</li>
                 <li><strong>Trust your team:</strong> But verify everything important</li>
                 <li><strong>Know when to fold:</strong> Some jobs aren't worth your life</li>
-                <li><strong>Learn from everything:</strong> Every run teaches valuable lessons</li>
+                <li><strong>Learn from everything:</strong> Every run teaches you something about the next one</li>
                 <li><strong>Maintain professionalism:</strong> Your reputation is your livelihood</li>
             </ul>
         </section>
@@ -905,14 +922,20 @@
             <h2>Your Next Steps</h2>
             <p>You now understand the fundamental structure of shadowruns and the professional approach needed for survival. But the Sixth World is more than just corporate espionage - it's a place where magic and technology collide in ways that can make or break your carefully laid plans.</p>
 
-            <p>In our next tutorial, we'll explore the Matrix in detail - the digital realm where deckers wage war against corporate security, information flows like water, and a single line of code can mean the difference between success and digital death.</p>
+            <p>The next part of this guide, Urban Sprawl &amp; Street Life, looks at the city your runs happen in: Seattle's districts, the megacorps that own them, the SINless who live in their shadow, and the lifestyles runners pay for between jobs.</p>
 
             <p>Remember: The shadows reward the prepared, punish the reckless, and never forgive the unprofessional.</p>
         </section>
 
     </main>
-        <footer>
-            <p><em>Plan like your life depends on it, because it does. Stay frosty, choom.</em></p>
-        </footer>
+
+    <footer>
+<div class="page-nav">
+    <a class="prev" href="/sr_names.html">150 Runner Names</a>
+    <a class="next" href="/sr_urban.html">Urban Sprawl &amp; Street Life</a>
+</div>
+        <p class="closing-quote">Plan like your life depends on it, because it does. Stay frosty, chummer.</p>
+    </footer>
+<div class="site-footer">&copy; 2026 Ray de la Paz. The Shadowrun Guide. All rights reserved. &middot; <a href="https://rays-home.netlify.app/">Ray's House of Fun</a><br>Shadowrun is a registered trademark of The Topps Company, Inc., published by Catalyst Game Labs. This guide is an unofficial fan resource.</div>
 </body>
 </html>

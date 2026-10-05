@@ -3,60 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introduction to Shadowrun RPG - The Cyberpunk Fantasy World</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
+    <title>Welcome to the Sixth World - The Shadowrun Guide</title>
+    <meta name="description" content="Welcome to Shadowrun's Sixth World in 2075: magic's return in 2011, Goblinization, the Crashes, the megacorps of the Corporate Court and what shadowrunners actually do.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="/js/site.js?v=1"></script>
+    <script type="module" src="/js/diagrams.js?v=1"></script>
+    <link rel="stylesheet" href="/styles/main.css?v=1">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
-        .world-timeline { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 20px; border-radius: 10px; margin: 20px 0; }
-        .matrix-text { color: #00ff00; font-family: 'Courier New', monospace; }
-        .corp-box { border-left: 4px solid #ff6b6b; padding: 15px; margin: 10px 0; background: rgba(255,107,107,0.1); }
-        .magic-glow { text-shadow: 0 0 10px #9370db; color: #9370db; }
-        .cyber-enhancement { background: linear-gradient(45deg, rgba(51, 51, 51, 0.22), rgba(85, 85, 85, 0.13)), var(--sr-surface); padding: 10px; border-radius: 5px; margin: 5px 0; }
+        .world-timeline {
+            border-left: 5px solid var(--gold) !important;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .matrix-text {
+            font-family: 'Courier New', monospace;
+        }
+        .corp-box {
+            border-left: 4px solid #ff6b6b;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255,107,107,0.1);
+        }
+        .magic-glow {
+            text-shadow: 0 0 10px #9370db;
+        }
+        .cyber-enhancement {
+            background: linear-gradient(45deg, rgba(51, 51, 51, 0.22), rgba(85, 85, 85, 0.13)), var(--sr-surface);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
 
         /* ---- contrast pass ----------------------------------------------
            SVG diagram figures carry light-fill text with no backdrop of their
            own, so pin them dark in both themes (text stays legible in light). */
         body.lesson figure:has(svg) {
-            background: #0f0b1a; border: 1px solid #2f2a45;
-            border-radius: 12px; padding: 16px;
+            background: #0f0b1a !important;
+            border: 1px solid #2f2a45;
+            border-radius: 12px;
+            padding: 16px;
+            color: #fff;
         }
         body.lesson figure:has(svg) figcaption,
-        body.lesson figure:has(svg) figcaption :is(strong, em) { color: #cfc9e6; }
+        body.lesson figure:has(svg) figcaption :is(strong, em) {
+            
+        }
         /* the world timeline sits on a FIXED dark gradient → pin its ink light */
-        body.lesson .world-timeline :is(p, li, strong, em, small, span, div, td) { color: #e8e2f5; }
-        body.lesson .world-timeline :is(h2, h3, h4, h5) { color: #7fe0ef; }
+        body.lesson .world-timeline :is(p, li, strong, em, small, span, div, td) {
+            
+        }
+        body.lesson .world-timeline :is(h2, h3, h4, h5) {
+            
+        }
         /* the matrix-green and magic-violet accents can't hold a single hue on
            both a light and dark surface, so theme their ink (the mono font and
            the violet glow keep the flavour) */
         body.lesson .matrix-text,
-        body.lesson .magic-glow { color: var(--sr-text); }
+        body.lesson .magic-glow {
+            color: var(--sr-text);
+        }
         /* footer end-marker → themed ink */
         body.lesson .page-end,
         body.lesson .page-end a,
-        body.lesson .page-end p { color: var(--sr-text); }
+        body.lesson .page-end p {
+            color: var(--sr-text);
+        }
     </style>
-    <script src="/styles/site-nav.js?v=20260723u7" defer></script>
 </head>
-<body class="lesson">
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav">
+    <a href="https://rays-home.netlify.app/">Ray's House of Fun</a>
+    <a href="/index.html">Home</a>
+    <a href="https://rays-home.netlify.app/contact">Contact</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+</nav>
     <header>
-        <h1>Welcome to the Shadows, Choom</h1>
-        <p class="subtitle">Your First dive into the Shadowrun Universe</p>
+        <h1>Welcome to the Sixth World</h1>
+        <p>A first look at the world of Shadowrun: magic, megacorps and the people who run between them.</p>
     </header>
 
-    <main>
+    <main id="main">
+
         <section class="intro">
             <h2>What is Shadowrun?</h2>
             <p>Imagine if <strong>Blade Runner</strong> had a baby with <strong>Lord of the Rings</strong>, and that baby grew up in a world where corporations rule everything. That's Shadowrun! It's a tabletop role-playing game that brilliantly combines high-tech cyberpunk with urban fantasy magic.</p>
             
             <div class="world-timeline">
-                <h3>The World of 2080</h3>
+                <h3>The World of 2075</h3>
                 <p>Picture this: You're living in a world where...</p>
                 <ul>
                     <li><strong>Elves and orks</strong> work as corporate executives and street gangers</li>
                     <li><strong>Dragons</strong> run multinational corporations</li>
                     <li><strong>Hackers</strong> dive into a virtual reality called the Matrix</li>
-                    <li><strong>Mages</strong> cast spells while talking on their smartphones</li>
+                    <li><strong>Mages</strong> cast spells while taking calls on their commlinks</li>
                     <li><strong>Corporations</strong> have replaced governments as the real power</li>
                 </ul>
             </div>
@@ -66,7 +110,7 @@
             <h2>The Perfect Storm of Genre Fusion</h2>
             
             <div class="mermaid">
-                graph TD
+                flowchart LR
                     A[Shadowrun Universe] --> B[Cyberpunk Technology]
                     A --> C[Urban Fantasy Magic]
                     A --> D[Corporate Dystopia]
@@ -104,72 +148,78 @@
 
             <figure>
                 <svg viewBox="0 0 940 402" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tlTitle tlDesc">
-                    <title id="tlTitle">Key events of the Sixth World, 2011 to 2080</title>
-                    <desc id="tlDesc">Seven turning points in order: 2011 the Awakening and UGE, 2017 the Great Ghost Dance, 2018 the Treaty of Denver, 2021 Goblinization, 2029 the Crash of 29, 2039 the Night of Rage, and 2080 the present day. Events are evenly spaced for legibility rather than drawn to scale.</desc>
+                    <title id="tlTitle">Key events of the Sixth World, 2011 to 2075</title>
+                    <desc id="tlDesc">Eight turning points in order: 2011 the Awakening and the first elves, dwarves born, 2017 the Great Ghost Dance, 2018 the Treaty of Denver, 2021 Goblinization, 2029 the Crash of 29, 2039 the Night of Rage, 2064 Crash 2.0 and the wireless Matrix, and 2075, the present day. Events are evenly spaced for legibility rather than drawn to scale.</desc>
 
-                    <line x1="40" y1="201" x2="900" y2="201" stroke="#6b5ca5" stroke-width="3"/>
+                    <line x1="30" y1="201" x2="910" y2="201" stroke="#6b5ca5" stroke-width="3"/>
 
-                    <g font-family="Orbitron, sans-serif" font-weight="700">
-                        <circle cx="70"  cy="201" r="9" fill="#0f0a1e" stroke="#a06bff" stroke-width="3"/>
-                        <circle cx="208" cy="201" r="9" fill="#0f0a1e" stroke="#3fd18b" stroke-width="3"/>
-                        <circle cx="346" cy="201" r="9" fill="#0f0a1e" stroke="#3fd18b" stroke-width="3"/>
-                        <circle cx="484" cy="201" r="9" fill="#0f0a1e" stroke="#a06bff" stroke-width="3"/>
-                        <circle cx="622" cy="201" r="9" fill="#0f0a1e" stroke="#37c6e0" stroke-width="3"/>
-                        <circle cx="760" cy="201" r="9" fill="#0f0a1e" stroke="#ff4d6d" stroke-width="3"/>
-                        <circle cx="880" cy="201" r="9" fill="#ffb700" stroke="#ffb700" stroke-width="3"/>
+                    <g>
+                        <circle cx="78" cy="201" r="9" fill="#0f0a1e" stroke="#a06bff" stroke-width="3"/>
+                        <circle cx="189" cy="201" r="9" fill="#0f0a1e" stroke="#3fd18b" stroke-width="3"/>
+                        <circle cx="300" cy="201" r="9" fill="#0f0a1e" stroke="#3fd18b" stroke-width="3"/>
+                        <circle cx="411" cy="201" r="9" fill="#0f0a1e" stroke="#a06bff" stroke-width="3"/>
+                        <circle cx="522" cy="201" r="9" fill="#0f0a1e" stroke="#37c6e0" stroke-width="3"/>
+                        <circle cx="633" cy="201" r="9" fill="#0f0a1e" stroke="#ff4d6d" stroke-width="3"/>
+                        <circle cx="744" cy="201" r="9" fill="#0f0a1e" stroke="#37c6e0" stroke-width="3"/>
+                        <circle cx="855" cy="201" r="9" fill="#ffb700" stroke="#ffb700" stroke-width="3"/>
                     </g>
 
-                    <g font-family="Segoe UI, sans-serif" font-size="13" fill="#c9c2e0">
-                        <line x1="70" y1="192" x2="70" y2="150" stroke="#a06bff"/>
-                        <text x="70" y="70"  fill="#a06bff" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2011</text>
-                        <text x="70" y="96"  text-anchor="middle">The Awakening</text>
-                        <text x="70" y="116" text-anchor="middle">Elf and dwarf babies</text>
-                        <text x="70" y="134" text-anchor="middle">born (UGE); Ryumyo</text>
-                        <text x="70" y="146" text-anchor="middle">appears, Dec 24</text>
+                    <g font-family="Segoe UI, sans-serif" font-size="13" fill="#2e2848">
+                        <line x1="78" y1="192" x2="78" y2="150" stroke="#a06bff"/>
+                        <text x="78" y="70" fill="#6d4fc0" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2011</text>
+                        <text x="78" y="96" text-anchor="middle">The Awakening</text>
+                        <text x="78" y="116" text-anchor="middle">Ryumyo rises, Dec 24;</text>
+                        <text x="78" y="134" text-anchor="middle">elves, dwarves born</text>
 
-                        <line x1="208" y1="210" x2="208" y2="252" stroke="#3fd18b"/>
-                        <text x="208" y="284" fill="#3fd18b" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2017</text>
-                        <text x="208" y="308" text-anchor="middle">Great Ghost Dance</text>
-                        <text x="208" y="328" text-anchor="middle">A magical ritual breaks</text>
-                        <text x="208" y="346" text-anchor="middle">the United States</text>
+                        <line x1="189" y1="210" x2="189" y2="252" stroke="#3fd18b"/>
+                        <text x="189" y="284" fill="#1f6b47" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2017</text>
+                        <text x="189" y="308" text-anchor="middle">Great Ghost Dance</text>
+                        <text x="189" y="328" text-anchor="middle">A magical ritual breaks</text>
+                        <text x="189" y="346" text-anchor="middle">the United States</text>
 
-                        <line x1="346" y1="192" x2="346" y2="150" stroke="#3fd18b"/>
-                        <text x="346" y="70"  fill="#3fd18b" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2018</text>
-                        <text x="346" y="96"  text-anchor="middle">Treaty of Denver</text>
-                        <text x="346" y="116" text-anchor="middle">Native American Nations</text>
-                        <text x="346" y="134" text-anchor="middle">take back the continent</text>
+                        <line x1="300" y1="192" x2="300" y2="150" stroke="#3fd18b"/>
+                        <text x="300" y="70" fill="#1f6b47" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2018</text>
+                        <text x="300" y="96" text-anchor="middle">Treaty of Denver</text>
+                        <text x="300" y="116" text-anchor="middle">Native American Nations</text>
+                        <text x="300" y="134" text-anchor="middle">take back the West</text>
 
-                        <line x1="484" y1="210" x2="484" y2="252" stroke="#a06bff"/>
-                        <text x="484" y="284" fill="#a06bff" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2021</text>
-                        <text x="484" y="308" text-anchor="middle">Goblinization</text>
-                        <text x="484" y="328" text-anchor="middle">10% of people become</text>
-                        <text x="484" y="346" text-anchor="middle">orks and trolls overnight</text>
+                        <line x1="411" y1="210" x2="411" y2="252" stroke="#a06bff"/>
+                        <text x="411" y="284" fill="#6d4fc0" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2021</text>
+                        <text x="411" y="308" text-anchor="middle">Goblinization</text>
+                        <text x="411" y="328" text-anchor="middle">Millions of people turn</text>
+                        <text x="411" y="346" text-anchor="middle">into orks and trolls</text>
 
-                        <line x1="622" y1="192" x2="622" y2="150" stroke="#37c6e0"/>
-                        <text x="622" y="70"  fill="#37c6e0" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2029</text>
-                        <text x="622" y="96"  text-anchor="middle">Crash of &#8217;29</text>
-                        <text x="622" y="116" text-anchor="middle">A virus eats the net;</text>
-                        <text x="622" y="134" text-anchor="middle">the corps rebuild it</text>
+                        <line x1="522" y1="192" x2="522" y2="150" stroke="#37c6e0"/>
+                        <text x="522" y="70" fill="#1c6a78" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2029</text>
+                        <text x="522" y="96" text-anchor="middle">Crash of &#8217;29</text>
+                        <text x="522" y="116" text-anchor="middle">A virus eats the net;</text>
+                        <text x="522" y="134" text-anchor="middle">the Matrix is built</text>
 
-                        <line x1="760" y1="210" x2="760" y2="252" stroke="#ff4d6d"/>
-                        <text x="760" y="284" fill="#ff4d6d" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2039</text>
-                        <text x="760" y="308" text-anchor="middle">Night of Rage</text>
-                        <text x="760" y="328" text-anchor="middle">Anti-metahuman pogroms</text>
+                        <line x1="633" y1="210" x2="633" y2="252" stroke="#ff4d6d"/>
+                        <text x="633" y="284" fill="#bf3a52" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2039</text>
+                        <text x="633" y="308" text-anchor="middle">Night of Rage</text>
+                        <text x="633" y="328" text-anchor="middle">Anti-metahuman pogroms</text>
 
-                        <text x="880" y="70"  fill="#ffb700" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2080</text>
-                        <line x1="880" y1="192" x2="880" y2="150" stroke="#ffb700"/>
-                        <text x="880" y="96"  text-anchor="middle">You are here</text>
+                        <line x1="744" y1="192" x2="744" y2="150" stroke="#37c6e0"/>
+                        <text x="744" y="70" fill="#1c6a78" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2064</text>
+                        <text x="744" y="96" text-anchor="middle">Crash 2.0</text>
+                        <text x="744" y="116" text-anchor="middle">The Matrix goes</text>
+                        <text x="744" y="134" text-anchor="middle">wireless</text>
+
+                        <line x1="855" y1="210" x2="855" y2="252" stroke="#ffb700"/>
+                        <text x="855" y="284" fill="#7a5a00" font-family="Orbitron, sans-serif" font-size="17" font-weight="700" text-anchor="middle">2075</text>
+                        <text x="855" y="308" text-anchor="middle">You are here</text>
                     </g>
 
-                    <text x="40" y="392" fill="#8c85a8" font-family="Share Tech Mono, monospace" font-size="12">Evenly spaced for legibility — the gaps are not to scale.</text>
+                    <text x="30" y="392" fill="#5f5975" font-family="Share Tech Mono, monospace" font-size="12">Evenly spaced for legibility — the gaps are not to scale.</text>
                 </svg>
-                <figcaption><strong>Figure 1 — the Sixth World arrived in instalments.</strong> This ordering matters more than the dates. Magic came back first, and the political map was redrawn <em>before</em> Goblinization; so the orks and trolls who appeared in 2021 were born into a world that had already decided who counted as a person. Anyone at your table over sixty remembers being human. That is the wound the setting keeps pressing on.</figcaption>
+                <figcaption><strong>Figure 1 — the Sixth World arrived in instalments.</strong> This ordering matters more than the dates. Magic came back first, and the political map was redrawn <em>before</em> Goblinization; so the orks and trolls who appeared in 2021 arrived in a world that had already decided who counted as a person. In 2075, any ork or troll past their mid-fifties remembers being human. That is the wound the setting keeps pressing on.</figcaption>
             </figure>
 
             <ul>
                 <li>Some people can now cast spells (they're called <strong>mages</strong>)</li>
                 <li>Mythical creatures like dragons are real and <em>very much alive</em></li>
-                <li>Elves and dwarves were <strong>born</strong> in 2011 — but the orks and trolls came a decade later, when roughly 10% of the adult population changed shape in a single day</li>
+                <li>Elves and dwarves were <strong>born</strong>, starting in 2011 — but the orks and trolls came a decade later, when Goblinization (beginning on 30 April 2021) changed millions of people who had been born human</li>
                 <li>Ancient spirits awakened and began interacting with the modern world</li>
             </ul>
 
@@ -187,28 +237,28 @@
                 <p>These aren't just big businesses - they're <strong>sovereign nations</strong> with their own laws, armies, and territories. Think Amazon, Google, and Apple, but with the power to declare war on countries.</p>
             </div>
 
-            <p>Above the Big Ten sits the <strong>Corporate Court</strong> — think of it as a UN Security Council whose members are companies. It arbitrates disputes between megacorps, and its rulings carry more weight than any nation's law.</p>
+            <p>Above the Big Ten sits the <strong>Corporate Court</strong> — think of it as a UN Security Council whose members are companies. Its seats belong to the ten AAA megacorps, it meets in orbit at Zurich-Orbital, it grants corporations their extraterritorial status, and it arbitrates disputes between them. Its rulings carry more weight than any nation's law. The chart lists the Ten in their 2075 Court ranking.</p>
 
             <div class="mermaid">
-                graph TD
-                    CC[Corporate Court] --> A[Ares Macrotechnology<br/>weapons and security]
-                    CC --> B[Aztechnology<br/>consumer goods, blood magic]
-                    CC --> C[Evo Corporation<br/>metahuman augmentation]
-                    CC --> D[Horizon Group<br/>media and PR, Los Angeles]
-                    CC --> E[Mitsuhama Computer Technologies<br/>robotics and the Matrix]
-                    CC --> F[NeoNET<br/>Matrix infrastructure]
-                    CC --> G[Renraku Computer Systems<br/>computing and AI]
-                    CC --> H[Saeder-Krupp<br/>heavy industry]
-                    CC --> I[Shiawase Corporation<br/>energy and nucleonics]
-                    CC --> J[Wuxing Incorporated<br/>shipping and finance]
+                flowchart LR
+                    CC[Corporate Court] --> H[1. Saeder-Krupp&lt;br/&gt;heavy industry]
+                    CC --> F[2. NeoNET&lt;br/&gt;Matrix infrastructure]
+                    CC --> E[3. Mitsuhama Computer Technologies&lt;br/&gt;robotics and the Matrix]
+                    CC --> B[4. Aztechnology&lt;br/&gt;consumer goods, blood magic]
+                    CC --> G[5. Renraku Computer Systems&lt;br/&gt;computing and AI]
+                    CC --> C[6. Evo Corporation&lt;br/&gt;metahuman augmentation]
+                    CC --> A[7. Ares Macrotechnology&lt;br/&gt;weapons and security]
+                    CC --> I[8. Shiawase Corporation&lt;br/&gt;energy and nucleonics]
+                    CC --> J[9. Wuxing Incorporated&lt;br/&gt;shipping and finance]
+                    CC --> D[10. Horizon Group&lt;br/&gt;media and PR, Los Angeles]
 
-                    H --> H1[Owned outright by Lofwyr,<br/>a great dragon]
+                    H --> H1[Owned outright by Lofwyr,&lt;br/&gt;a great dragon]
 
                     style CC stroke:#7a2450,stroke-width:3px
                     style H1 stroke:#4a3070,stroke-width:3px
             </div>
 
-            <p>Two of those entries deserve a second look. <strong>Saeder-Krupp</strong> is not merely influenced by a dragon — Lofwyr owns a controlling interest and runs it personally. And <strong>Horizon</strong> is the newest and strangest of the Ten: it sells attention rather than product, and it is very good at making you want what it is already selling.</p>
+            <p>Two of those entries deserve a second look. <strong>Saeder-Krupp</strong>, ranked first, is not merely influenced by a dragon — Lofwyr owns it outright and runs it personally. And <strong>Horizon</strong>, ranked tenth, is the strangest of the Ten: it sells attention rather than product, and it is very good at making you want what it is already selling.</p>
 
             <h3>Life Under Corporate Rule</h3>
             <p>Imagine if your employer also:</p>
@@ -258,13 +308,13 @@
             <p>Plenty of settings put magic and technology in the same room. Shadowrun is unusual in letting them <em>touch</em> — and the friction between them is where most of the interesting character concepts live.</p>
 
             <h3>Technomancers</h3>
-            <p>Some people interface with the Matrix using nothing but their minds — no cyberdeck, no hardware. They are, functionally, mages whose tradition happens to be made of data. The corps find them terrifying, largely because you cannot confiscate what someone <em>is</em>.</p>
+            <p>Some people interface with the Matrix using nothing but their minds — no cyberdeck, no hardware. Their power comes from Resonance rather than Magic, but they are, functionally, mages whose tradition happens to be made of data. The corps find them terrifying, largely because you cannot confiscate what someone <em>is</em>.</p>
 
             <h3>Awakened Hackers</h3>
-            <p>A mage who also understands technology can ward a server room against hostile spirits, enchant gear for better performance, or send a spirit along on a Matrix run as backup. Magic doesn't replace the tech — it covers the tech's blind spots.</p>
+            <p>A mage who also understands technology can ward a server room against hostile spirits, enchant gear for better performance, or leave a spirit standing guard over the decker's motionless body. Magic doesn't replace the tech — it covers the tech's blind spots.</p>
 
             <h3>Cyber-Shamans</h3>
-            <p>Street shamans who take augmentation anyway, finding power in the marriage of flesh, steel and spirit. This is the setting's central bargain in one character: every implant costs Essence, and Essence is the same resource your magic is drawn from. Chrome literally makes you less able to cast.</p>
+            <p>Street shamans who take augmentation anyway, finding power in the marriage of flesh, steel and spirit. This is the setting's central bargain in one character: every implant costs Essence, and every point of Essence lost, even a fraction of one, costs a point of Magic. Chrome literally makes you less able to cast.</p>
 
             <div class="corp-box">
                 <p>That last point is worth holding onto, because it drives more character-build decisions than any other rule in the game: <strong>in Shadowrun you cannot max out both chrome and magic.</strong> The setting's two coolest toys are mounted on opposite ends of the same seesaw.</p>
@@ -311,7 +361,7 @@
         </section>
 
         <section class="activities">
-            <h2>Practice Activities</h2>
+            <h2>Try It at the Table</h2>
             
             <div class="activity-box">
                 <h3>Activity 1: Build Your First Shadowrunner Concept</h3>
@@ -319,7 +369,7 @@
                 <ul>
                     <li>What drove them to the shadows? (Corporate betrayal? Family tragedy? Born into it?)</li>
                     <li>What's their specialty? (Combat? Hacking? Magic? Social manipulation?)</li>
-                    <li>What do they look like in 2080? (Cybernetic modifications? Magical tattoos? Designer clothes or street gear?)</li>
+                    <li>What do they look like in 2075? (Cybernetic modifications? Magical tattoos? Designer clothes or street gear?)</li>
                 </ul>
             </div>
 
@@ -347,22 +397,25 @@
 
         <section class="next-steps">
             <h2>What's Next?</h2>
-            <p>Now that you understand the world of Shadowrun, you're ready to dive deeper into:</p>
+            <p>With the world in view, the rest of this guide turns to how you play in it:</p>
             <ul>
-                <li><strong>Character Creation:</strong> Building your first shadowrunner</li>
-                <li><strong>The Matrix:</strong> Understanding how hacking works</li>
-                <li><strong>Magic Systems:</strong> Spells, spirits, and summoning</li>
-                <li><strong>Combat Systems:</strong> From street fights to corporate raids</li>
-                <li><strong>The Corporate Landscape:</strong> Detailed look at the megacorps</li>
-                <li><strong>Running the Shadows:</strong> How to plan and execute shadowruns</li>
+                <li><strong><a href="/sr_mechanics.html">Game Mechanics</a>:</strong> dice pools, hits, limits, Edge and the Priority system</li>
+                <li><strong><a href="/sr_char.html">Archetypes &amp; Roles</a>:</strong> what each member of a runner team does</li>
+                <li><strong><a href="/sr_magic.html">Magic</a>:</strong> spells, spirits and the cost of Drain</li>
+                <li><strong><a href="/sr_matrix.html">The Matrix</a>:</strong> how deckers and technomancers work</li>
+                <li><strong><a href="/sr_contacts.html">Contacts &amp; Lifestyle</a>:</strong> the people you know and the life you can afford</li>
+                <li><strong><a href="/sr_planning.html">Planning a Run</a>:</strong> how to plan and execute a shadowrun</li>
             </ul>
         </section>
     </main>
 
     <footer>
-        <p>Remember, choom: <em>"Never deal with a dragon, never cut a deal with a dragon, and never trust a dragon. Especially if it's running a corporation."</em></p>
-        <p><strong>Estimated Reading Time:</strong> 15-20 minutes | <strong>Activities:</strong> 30-45 minutes</p>
+<div class="page-nav">
+    <a class="prev" href="/index.html">Guide Home</a>
+    <a class="next" href="/sr_mechanics.html">Game Mechanics</a>
+</div>
+        <p class="closing-quote">Remember the oldest rule on the street, chummer: never deal with a dragon. Especially one that runs a corporation.</p>
     </footer>
-
+<div class="site-footer">&copy; 2026 Ray de la Paz. The Shadowrun Guide. All rights reserved. &middot; <a href="https://rays-home.netlify.app/">Ray's House of Fun</a><br>Shadowrun is a registered trademark of The Topps Company, Inc., published by Catalyst Game Labs. This guide is an unofficial fan resource.</div>
 </body>
 </html>

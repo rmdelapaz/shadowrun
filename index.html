@@ -3,131 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shadowrun: The Sixth World — A Beginner's Course</title>
-    <meta name="description" content="A structured course in Shadowrun 5th Edition: the setting, character creation, the Matrix, magic, and how to actually run a job.">
-    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
+    <title>The Shadowrun Guide</title>
+    <meta name="description" content="An unofficial guide to Shadowrun, Fifth Edition: dice pools and limits, Edge, character creation, magic, the Matrix, contacts, sample runners, planning runs, solo play and a dice roller.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="/js/site.js?v=1"></script>
+    <link rel="stylesheet" href="/styles/main.css?v=1">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script src="/styles/site-nav.js?v=20260723u7" defer></script>
-</head>
-<body class="hub">
+    <style>
+        .home { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding-bottom: 24px; }
+        .hero {
+            margin-top: 28px;
+            padding: clamp(36px, 7vw, 72px) clamp(20px, 5vw, 56px);
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(255, 142, 196, 0.18), transparent 45%),
+                linear-gradient(135deg, var(--hero-1), var(--hero-2));
+            color: #fff;
+            box-shadow: var(--shadow);
+        }
+        .hero h1 { color: #fff; font-size: clamp(2.1rem, 6vw, 3.4rem); margin: 0 0 14px; }
+        .hero p { color: rgba(255, 255, 255, 0.93); font-size: clamp(1.05rem, 2.2vw, 1.22rem); max-width: 64ch; margin: 0 0 24px; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+        .btn-hero { display: inline-block; padding: 12px 22px; border-radius: 999px; font-weight: 700; text-decoration: none; background: #fff; color: #121411; border: 2px solid #fff; }
+        .btn-hero:hover { background: #e7ebf2; color: #121411; }
+        .btn-hero.ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.7); }
+        .btn-hero.ghost:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+        .turn-card {
+            display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px; padding: 10px 16px; font-weight: 700; color: #fff;
+        }
+        .turn-card .pips { font-size: 1.3rem; letter-spacing: 2px; color: #ffb3d8; }
+        .turn-card .lbl { font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.9); }
 
-    <header class="hub-header">
-        <h1 class="hub-title">Welcome to the Shadows</h1>
-        <p class="hub-sub">/// Shadowrun · Fifth Edition ///</p>
-        <p class="hub-lede">
-            Magic came back in 2011. The corporations took over shortly after. You are one of the
-            deniable people they hire when something needs doing that cannot be traced back to a
-            boardroom. Start at the top and work down — each lesson assumes the ones before it.
-        </p>
+        .section-head { margin: 52px 0 16px; }
+        .section-head h2 { margin: 0 0 8px; }
+        .section-head p { color: var(--muted); max-width: 70ch; margin: 0; }
+        .group-label { font-family: "Oxanium", "Segoe UI", sans-serif; font-weight: 700; color: var(--gold); letter-spacing: 0.04em; text-transform: uppercase; margin: 26px 0 10px; font-size: 0.95rem; }
+        .part-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 14px; }
+        .part-card {
+            display: flex; flex-direction: column; gap: 6px;
+            background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+            padding: 18px 20px; box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+            border-left: 4px solid var(--accent); transition: transform 0.15s, border-color 0.15s;
+        }
+        .part-card:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--text); }
+        .part-card .num { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+        .part-card h3 { margin: 0; font-size: 1.12rem; color: var(--heading); }
+        .part-card h3 .icon { margin-right: 6px; }
+        .part-card p { margin: 0; color: var(--muted); font-size: 0.97rem; line-height: 1.55; }
+        .part-card.tool { border-left-color: var(--gold); }
+        .quick { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: 12px; }
+        .quick div { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+        .quick h3 { margin: 0 0 4px; font-size: 1.02rem; color: var(--heading); }
+        .quick p { margin: 0; color: var(--text); font-size: 0.95rem; line-height: 1.55; }
+        .home-footer { text-align: center; color: var(--muted); margin-top: 36px; }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav">
+    <a href="https://rays-home.netlify.app/">Ray's House of Fun</a>
+    <a href="/index.html">Home</a>
+    <a href="https://rays-home.netlify.app/contact">Contact</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+</nav>
+
+<div class="home">
+    <header class="hero">
+        <h1>The Shadowrun Guide</h1>
+        <p>Shadowrun, from Catalyst Game Labs, is set in the Sixth World: magic has come back, dragons sit on corporate boards, and the megacorps own almost everything. You play shadowrunners, deniable professionals who take the jobs nobody else will. This guide covers Shadowrun, Fifth Edition, from dice pools and character creation through magic and the Matrix to planning runs and running a campaign, or playing alone.</p>
+        <div class="hero-actions">
+            <a class="btn-hero" href="/sr_intro.html">Start Reading →</a>
+            <a class="btn-hero ghost" href="/sr_dice_roller.html">Roll the Dice</a>
+        </div>
+        <div class="turn-card" aria-label="The core roll: a pool of six-sided dice, each 5 or 6 is a hit">
+            <span class="lbl">The core roll</span><span class="pips" aria-hidden="true">pool of d6 · 5 or 6 = hit</span><span class="lbl">limited by your Limit</span>
+        </div>
     </header>
 
-    <div class="hub-wrap">
+    <main id="main">
+        <section>
+            <div class="section-head">
+                <h2>Shadowrun at a Glance</h2>
+                <p>Four ideas carry most of the game. Each part of the guide builds on them.</p>
+            </div>
+            <div class="quick">
+                <div><h3>Dice Pools</h3><p>Roll a handful of d6s, attribute plus skill. Every 5 or 6 is a hit; more than half 1s is a glitch.</p></div>
+                <div><h3>Limits</h3><p>Your Physical, Mental and Social limits cap how many hits count, unless you spend Edge to push past them.</p></div>
+                <div><h3>Magic and the Matrix</h3><p>Mages and adepts draw on the Awakened world; deckers and technomancers fight in the wireless Matrix.</p></div>
+                <div><h3>The Run</h3><p>Meet the Johnson, do the legwork, make a plan, and survive it when the plan falls apart.</p></div>
+            </div>
+        </section>
 
-        <h2 class="hub-section-title">Start here</h2>
-        <div class="hub-grid hub-grid--feature">
-            <a class="hub-card is-magic" href="/sr_intro.html">
-                <span class="hub-card-num">01</span>
-                <h3>Welcome to the Shadows</h3>
-                <p>The Sixth World in one sitting: the Awakening, the Big Ten megacorps, and why anyone
-                   would take a job that pays this badly. Includes the timeline of how it all went wrong.</p>
-            </a>
-        </div>
+        <section>
+            <div class="section-head">
+                <h2>The Guide</h2>
+                <p>The rules first, then sample runners, then the GM pages and playing solo.</p>
+            </div>
 
-        <h2 class="hub-section-title">Building a runner</h2>
-        <div class="hub-grid">
-            <a class="hub-card is-chrome" href="/sr_char.html">
-                <span class="hub-card-num">02</span>
-                <h3>Characters &amp; Archetypes</h3>
-                <p>Street samurai, decker, mage, rigger, face, adept — what each one actually does on a
-                   job, and which gaps a team cannot afford to leave open.</p>
-            </a>
-            <a class="hub-card is-chrome" href="/sr_mechanics.html">
-                <span class="hub-card-num">03</span>
-                <h3>Game Mechanics &amp; Character Creation</h3>
-                <p>Dice pools, hits, thresholds and glitches, then the Priority system that turns a
-                   concept into a character sheet.</p>
-            </a>
-            <a class="hub-card is-chrome" href="/sr_character_examples.html">
-                <span class="hub-card-num">04</span>
-                <h3>Worked Character Examples</h3>
-                <p>Complete builds walked through decision by decision, so you can see where the
-                   points actually went.</p>
-            </a>
-            <a class="hub-card is-chrome" href="/sr_100.html">
-                <span class="hub-card-num">05</span>
-                <h3>100 Ready-Made Runners</h3>
-                <p>A hundred character concepts to steal outright, whether you need a PC in a hurry or
-                   an NPC with a reason to exist.</p>
-            </a>
-            <a class="hub-card is-chrome" href="/sr_names.html">
-                <span class="hub-card-num">06</span>
-                <h3>The Shadow Registry</h3>
-                <p>150 street names with the profession and speciality attached — because "Bob the
-                   decker" has never once sounded right.</p>
-            </a>
-        </div>
+            <p class="group-label">Getting Started</p>
+            <div class="part-grid">
+                <a class="part-card" href="/sr_intro.html"><h3><span class="icon" aria-hidden="true">🌆</span>Welcome to the Sixth World</h3><p>What Shadowrun is, the world of 2075 where magic returned and megacorps rule, and what a run looks like.</p></a>
+            </div>
 
-        <h2 class="hub-section-title">Running the shadows</h2>
-        <div class="hub-grid">
-            <a class="hub-card is-street" href="/sr_contacts.html">
-                <span class="hub-card-num">07</span>
-                <h3>Contacts, Lifestyle &amp; the Shadow Community</h3>
-                <p>Your fixer, your doc, your lifestyle costs. The social infrastructure that decides
-                   whether you get work and whether you survive between jobs.</p>
-            </a>
-            <a class="hub-card is-street" href="/sr_planning.html">
-                <span class="hub-card-num">08</span>
-                <h3>Planning &amp; Preparing a Run</h3>
-                <p>Legwork, casing the site, and building a plan that survives contact with the
-                   opposition. This is the part of Shadowrun most tables skip and shouldn't.</p>
-            </a>
-            <a class="hub-card is-street" href="/sr_urban.html">
-                <span class="hub-card-num">09</span>
-                <h3>Concrete Jungle</h3>
-                <p>Urban sprawl and street life: the neighbourhoods, the gangs, and what the city does
-                   to people who have no corporate address.</p>
-            </a>
-        </div>
+            <p class="group-label">The Rules</p>
+            <div class="part-grid">
+                <a class="part-card" href="/sr_mechanics.html"><h3><span class="icon" aria-hidden="true">🎲</span>Game Mechanics</h3><p>Dice pools of d6s, hits on 5 and 6, limits, glitches, Edge, and building a runner with the Priority system.</p></a>
+                <a class="part-card" href="/sr_char.html"><h3><span class="icon" aria-hidden="true">🧑‍🎤</span>Archetypes &amp; Roles</h3><p>Street samurai, deckers, mages, faces, riggers and more: what each brings to the team.</p></a>
+                <a class="part-card" href="/sr_magic.html"><h3><span class="icon" aria-hidden="true">🔮</span>Magic</h3><p>Spellcasting and Drain, traditions, adepts, the astral plane and spirits.</p></a>
+                <a class="part-card" href="/sr_matrix.html"><h3><span class="icon" aria-hidden="true">💻</span>The Matrix</h3><p>Deckers and technomancers, cyberdecks, marks, hosts, IC and the Overwatch Score.</p></a>
+                <a class="part-card" href="/sr_contacts.html"><h3><span class="icon" aria-hidden="true">🤝</span>Contacts &amp; Lifestyle</h3><p>Connection and Loyalty, fixers, lifestyles, SINs and life in the shadows.</p></a>
+            </div>
 
-        <h2 class="hub-section-title">The two great powers</h2>
-        <div class="hub-grid">
-            <a class="hub-card is-matrix" href="/sr_matrix.html">
-                <span class="hub-card-num">10</span>
-                <h3>The Matrix</h3>
-                <p>Digital warfare, hosts and ICE, and what your decker is actually doing during the
-                   twenty minutes everyone else is waiting.</p>
-            </a>
-            <a class="hub-card is-magic" href="/sr_magic.html">
-                <span class="hub-card-num">11</span>
-                <h3>Magic &amp; the Awakened Arts</h3>
-                <p>Spellcasting, summoning, astral space and Drain. The other half of the setting, and
-                   the half that ignores most of your armour.</p>
-            </a>
-        </div>
+            <p class="group-label">Runners</p>
+            <div class="part-grid">
+                <a class="part-card" href="/sr_character_examples.html"><h3><span class="icon" aria-hidden="true">📋</span>Character Examples</h3><p>Worked runners and how a balanced team fits together.</p></a>
+                <a class="part-card" href="/sr_100.html"><h3><span class="icon" aria-hidden="true">👥</span>84 Sample Runners</h3><p>Ready-made runners for every role, to play as written or borrow ideas from.</p></a>
+                <a class="part-card" href="/sr_names.html"><h3><span class="icon" aria-hidden="true">🏷️</span>150 Runner Names</h3><p>Street names and real names for every metatype, plus how runners pick their handles.</p></a>
+            </div>
 
-        <h2 class="hub-section-title">Going deeper</h2>
-        <div class="hub-grid">
-            <a class="hub-card is-street" href="/sr_adv.html">
-                <span class="hub-card-num">12</span>
-                <h3>Living Legends</h3>
-                <p>Advanced campaigns and long-term character development — Karma, reputation, and what
-                   happens to runners who live long enough to have a past.</p>
-            </a>
-            <a class="hub-card is-tool" href="/sr_dice_roller.html">
-                <span class="hub-card-num">TOOL</span>
-                <h3>Dice Roller</h3>
-                <p>A Shadowrun dice-pool roller: counts hits, flags glitches, and handles Edge. Built
-                   for use at the table.</p>
-            </a>
-        </div>
+            <p class="group-label">For the GM</p>
+            <div class="part-grid">
+                <a class="part-card" href="/sr_planning.html"><h3><span class="icon" aria-hidden="true">🗺️</span>Planning a Run</h3><p>The shape of a run: the meet, legwork, the plan, the run itself and the fallout.</p></a>
+                <a class="part-card" href="/sr_urban.html"><h3><span class="icon" aria-hidden="true">🏙️</span>Urban Sprawl &amp; Street Life</h3><p>The Seattle sprawl, its districts, gangs and the people who live in its shadows.</p></a>
+                <a class="part-card" href="/sr_adv.html"><h3><span class="icon" aria-hidden="true">🐉</span>Advanced Campaigns</h3><p>Long campaigns, reputation, dragons and megacorp politics, and runners who become legends.</p></a>
+            </div>
 
-    </div>
+            <p class="group-label">Playing Solo</p>
+            <div class="part-grid">
+                <a class="part-card" href="/sr_solo.html"><h3><span class="icon" aria-hidden="true">📓</span>Playing Shadowrun Solo</h3><p>No GM needed: a d6 pool oracle with exact odds, scene checks, sparks, a heat clock and a session log.</p></a>
+            </div>
 
-    <footer class="hub-footer">
-        <p>Shadowrun is a registered trademark of The Topps Company, Inc. This is an unofficial fan-made
-           study guide, written for people learning the game.</p>
-        <p style="margin-top: 10px;"><em>"Never make a deal with a dragon."</em></p>
+        </section>
+
+        <section>
+            <div class="section-head">
+                <h2>Tools</h2>
+                <p>Use this at the table.</p>
+            </div>
+            <div class="part-grid">
+                <a class="part-card tool" href="/sr_dice_roller.html"><h3><span class="icon" aria-hidden="true">🎲</span>Dice Roller</h3><p>Roll any d6 pool with hits, glitches and limits, Edge rerolls and exploding sixes, and see the exact odds.</p></a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="home-footer">
+        <p>Shadowrun is published by Catalyst Game Labs.</p>
     </footer>
-
+</div>
+<div class="site-footer">&copy; 2026 Ray de la Paz. The Shadowrun Guide. All rights reserved. &middot; <a href="https://rays-home.netlify.app/">Ray's House of Fun</a><br>Shadowrun is a registered trademark of The Topps Company, Inc., published by Catalyst Game Labs. This guide is an unofficial fan resource.</div>
 </body>
 </html>

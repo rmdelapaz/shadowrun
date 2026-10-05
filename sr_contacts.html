@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Living in the Shadows - Community and Connections</title>
-    <link rel="stylesheet" href="/styles/main.css?v=20260723u6">
+    <title>Contacts &amp; Lifestyle - The Shadowrun Guide</title>
+    <meta name="description" content="Contacts, lifestyles and SINs in Shadowrun Fifth Edition: Connection and Loyalty, what a contact will do for you, monthly lifestyle costs and fake SINs.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="/js/site.js?v=1"></script>
+    <script type="module" src="/js/diagrams.js?v=1"></script>
+    <link rel="stylesheet" href="/styles/main.css?v=1">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <script type="module" src="/styles/mermaid-init.js?v=20260723u6"></script>
     <style>
         .lifestyle-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
             gap: 20px;
             margin: 30px 0;
         }
@@ -30,17 +35,17 @@
         }
         
         .lifestyle-street {
-            background: linear-gradient(135deg, #2c1810, #4a2c2c);
+            border-left: 5px solid var(--danger) !important;
             border-color: #8b4513;
         }
         
         .lifestyle-low {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-left: 5px solid var(--gold) !important;
             border-color: #4a4a6a;
         }
         
         .lifestyle-middle {
-            background: linear-gradient(135deg, #0f3460, #0a2e4a);
+            border-left: 5px solid var(--gold) !important;
             border-color: #2980b9;
         }
         
@@ -51,30 +56,34 @@
         
         .lifestyle-luxury {
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.22), rgba(255, 140, 0, 0.13)), var(--sr-surface);
-            border-color: #ffd700;
-            /* luxury/high follow the theme (surface is var(--sr-surface)); ink follows too */
+            border-color: var(--border);
+            ink follows too */
             color: var(--sr-text);
         }
         
         /* the contact map is drawn in fixed colours, so its surface is pinned
            dark in both themes rather than following var(--sr-surface) */
         body.lesson figure.contact-map {
-            background: #0c1420;
             border: 2px solid #2a3a4a;
             border-radius: 16px;
             padding: 20px;
             margin: 30px 0;
         }
-        body.lesson figure.contact-map svg { width: 100%; height: auto; display: block; }
+        body.lesson figure.contact-map svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
         body.lesson figure.contact-map figcaption {
             margin-top: 14px;
             padding-top: 14px;
             border-top: 1px solid #2a3a4a;
-            color: #c3ccd6;
             font-size: 0.95rem;
             line-height: 1.55;
         }
-        body.lesson figure.contact-map figcaption strong { color: #5fd0e0; }
+        body.lesson figure.contact-map figcaption strong {
+            
+        }
         
         .rep-meter {
             display: flex;
@@ -83,22 +92,23 @@
             background: rgba(0,0,0,0.3);
             padding: 10px;
             border-radius: 10px;
+            flex-wrap: wrap;
         }
         
         .rep-label {
             width: 150px;
             font-weight: bold;
-            color: #00ffff;
         }
         
         .rep-bar {
             flex: 1;
             height: 20px;
-            background: #333;
+            background: #333333 !important;
             border-radius: 10px;
             overflow: hidden;
             margin: 0 15px;
             border: 2px solid #555;
+            color: #fff;
         }
         
         .rep-fill {
@@ -108,7 +118,6 @@
         }
         
         .social-layer {
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
             border: 2px solid #8e44ad;
             border-radius: 15px;
             padding: 25px;
@@ -117,18 +126,16 @@
         
         .shadow-economy {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
             gap: 20px;
             margin: 20px 0;
         }
         
         .economy-card {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
             border: 2px solid #3498db;
             border-radius: 10px;
             padding: 20px;
             text-align: center;
-            color: white;
         }
         
         .survival-tip {
@@ -145,19 +152,31 @@
             height: 20px;
             border-radius: 50%;
             margin: 0 5px;
-            border: 2px solid #fff;
+            border: 2px solid var(--border);
         }
         
-        .loyalty-1 { background: #e74c3c; }
-        .loyalty-2 { background: #f39c12; }
-        .loyalty-3 { background: #f1c40f; }
-        .loyalty-4 { background: #2ecc71; }
-        .loyalty-5 { background: #3498db; }
-        .loyalty-6 { background: #9b59b6; }
+        .loyalty-1 {
+            border-left: 5px solid var(--danger) !important;
+        }
+        .loyalty-2 {
+            border-left: 5px solid var(--accent) !important;
+        }
+        .loyalty-3 {
+            
+        }
+        .loyalty-4 {
+            border-left: 5px solid var(--success) !important;
+        }
+        .loyalty-5 {
+            border-left: 5px solid var(--gold) !important;
+        }
+        .loyalty-6 {
+            border-left: 5px solid var(--gold) !important;
+        }
         
         .lifestyle-costs {
             background: var(--sr-surface);
-            border: 2px solid #00ffff;
+            border: 2px solid var(--border);
             border-radius: 10px;
             padding: 20px;
             margin: 20px 0;
@@ -170,14 +189,13 @@
         
         .lifestyle-costs th,
         .lifestyle-costs td {
-            border: 1px solid #00ffff;
+            border: 1px solid var(--border);
             padding: 12px;
             text-align: center;
-            /* ink follows the site theme (the table is not pinned dark) */
         }
 
         .lifestyle-costs th {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border-left: 5px solid var(--gold) !important;
         }
 
         /* ---- contrast pass ----------------------------------------------
@@ -190,33 +208,54 @@
         body.lesson :is(.lifestyle-street, .lifestyle-squatter, .lifestyle-low,
                         .lifestyle-middle, .lifestyle-high, .lifestyle-luxury,
                         .social-layer, .economy-card, .rep-meter, .survival-tip) {
-            color: #f3f0ff;
+            
         }
         /* opaque dark bases for the cards that were transparent or theme-following */
-        body.lesson .lifestyle-squatter { background: linear-gradient(135deg, #241a10, #17110a); }
-        body.lesson .lifestyle-high     { background: linear-gradient(135deg, rgba(45,27,105,0.22), rgba(17,153,142,0.13)), #12101c; }
-        body.lesson .lifestyle-luxury   { background: linear-gradient(135deg, rgba(255,215,0,0.18), rgba(255,140,0,0.11)), #16130b; }
-        body.lesson .rep-meter    { background: #14101f; }
-        body.lesson .survival-tip { background: #241018; }
+        body.lesson .lifestyle-squatter {
+            border-left: 5px solid var(--accent) !important;
+        }
+        body.lesson .lifestyle-high     {
+            border-left: 5px solid var(--gold) !important;
+        }
+        body.lesson .lifestyle-luxury   {
+            border-left: 5px solid var(--accent) !important;
+        }
+        body.lesson .rep-meter    {
+            background: #14101f !important;
+            color: #fff;
+        }
+        body.lesson .survival-tip {
+            border-left: 5px solid var(--danger) !important;
+        }
         /* descendant text inherits the pinned light ink; inline accent headings
            win via inline specificity, so their hues survive */
         body.lesson :is(.lifestyle-street, .lifestyle-squatter, .lifestyle-low,
                         .lifestyle-middle, .lifestyle-high, .lifestyle-luxury,
                         .social-layer, .economy-card, .survival-tip)
                     :is(p, li, h3, h4, h5, strong, em, small, span, div) {
-            color: #f3f0ff;
+            
         }
-        body.lesson .rep-label { color: #34d6e6; }
-    </style>
-    <script src="/styles/site-nav.js?v=20260723u7" defer></script>
+        body.lesson .rep-label {
+            
+        }
+    
+</style>
 </head>
-<body class="lesson">
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav">
+    <a href="https://rays-home.netlify.app/">Ray's House of Fun</a>
+    <a href="/index.html">Home</a>
+    <a href="https://rays-home.netlify.app/contact">Contact</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+</nav>
     <header>
-        <h1 style="text-shadow: 0 0 18px rgba(0, 255, 255, 0.45);">Living in the Shadows</h1>
-        <p><em>Contacts, Lifestyle, and the Shadow Community</em></p>
+        <h1>Contacts &amp; Lifestyle</h1>
+        <p>Who your runner knows, how they live and what it costs each month, and the identity they hide behind.</p>
     </header>
 
-    <main>
+    <main id="main">
+
         <section>
             <h2>Beyond the Character Sheet: Your Social Ecosystem</h2>
             <p>In the corporate-dominated Sixth World, survival isn't just about having the best cyberware or knowing the most potent spells. It's about <em>who you know</em>, <em>where you live</em>, and <em>how you fit into the shadow community</em>. Your character exists within a complex web of relationships, obligations, and social structures that can make the difference between a successful run and a one-way trip to a corporate black site.</p>
@@ -226,11 +265,11 @@
 
         <section>
             <h2>Lifestyle: More Than Just Where You Sleep</h2>
-            <p>In Shadowrun, lifestyle isn't just flavor text - it's a mechanical system that affects your character's capabilities, social standing, and survival. Your lifestyle represents your monthly overhead costs, living conditions, and the resources available to you between runs. (The costs below are the standard Seattle prices — a GM running elsewhere can and should shift them.)</p>
+            <p>In Shadowrun, lifestyle isn't just flavor text - it's a mechanical system that affects your character's capabilities, social standing, and survival. Your lifestyle represents your monthly overhead costs, living conditions, and the resources available to you between runs. (The costs below are the standard monthly costs from the core rulebook; trolls pay 50% more for lifestyle, and a GM can adjust prices for their own city.)</p>
 
             <div class="lifestyle-grid">
                 <div class="lifestyle-card lifestyle-street">
-                    <h3 style="color: #cd853f;">Street Lifestyle</h3>
+                    <h3 style="color: var(--accent);">Street Lifestyle</h3>
                     <p><strong>Cost:</strong> 0¥ per month</p>
                     <p><strong>The Reality:</strong> You're homeless, squatting in abandoned buildings, sleeping in doorways, or crashing on friends' couches. Every day is a struggle for basic survival.</p>
                     
@@ -248,7 +287,7 @@
                 </div>
 
                 <div class="lifestyle-card lifestyle-squatter">
-                    <h3 style="color: #b07d3f;">Squatter Lifestyle</h3>
+                    <h3 style="color: var(--accent);">Squatter Lifestyle</h3>
                     <p><strong>Cost:</strong> 500&yen; per month</p>
                     <p><strong>The Reality:</strong> A corner of a condemned building, a shipping container, a coffin motel by the week. You have somewhere to put your things and a door that closes, and that is genuinely the whole difference.</p>
 
@@ -262,11 +301,11 @@
                     </ul>
 
                     <h4>Why this tier matters most</h4>
-                    <p>This is where the overwhelming majority of starting runners actually live. Priority E Resources gives you 6,000&yen; total — a year of Squatter, or three months of Low with nothing left for a gun. Most new characters are one bad month away from Street, and that pressure is exactly what makes them take the job.</p>
+                    <p>This is where a lot of starting runners actually live. Priority E Resources gives you 6,000&yen; total — a year of Squatter, or three months of Low with nothing left for a gun. Most new characters are one bad month away from Street, and that pressure is exactly what makes them take the job.</p>
                 </div>
 
                 <div class="lifestyle-card lifestyle-low">
-                    <h3 style="color: #87ceeb;">Low Lifestyle</h3>
+                    <h3 >Low Lifestyle</h3>
                     <p><strong>Cost:</strong> 2,000¥ per month</p>
                     <p><strong>The Reality:</strong> A one-room apartment in the barrens or underground. Thin walls, unreliable utilities, and neighbors who mind their own business.</p>
                     
@@ -284,7 +323,7 @@
                 </div>
 
                 <div class="lifestyle-card lifestyle-middle">
-                    <h3 style="color: #4fc3f7;">Middle Lifestyle</h3>
+                    <h3 >Middle Lifestyle</h3>
                     <p><strong>Cost:</strong> 5,000¥ per month</p>
                     <p><strong>The Reality:</strong> A decent apartment in a safe neighborhood. This is what most corporate wage slaves aspire to - comfort without luxury.</p>
                     
@@ -302,7 +341,7 @@
                 </div>
 
                 <div class="lifestyle-card lifestyle-high">
-                    <h3 style="color: #26a69a;">High Lifestyle</h3>
+                    <h3 >High Lifestyle</h3>
                     <p><strong>Cost:</strong> 10,000¥ per month</p>
                     <p><strong>The Reality:</strong> A luxury apartment or small house in an upscale area. You have disposable income and social status.</p>
                     
@@ -339,12 +378,13 @@
             </div>
 
             <div class="lifestyle-costs">
-                <h3>Lifestyle Impact on Gameplay</h3>
+                <h3>Lifestyles at a Glance</h3>
+                <p>The monthly cost is the rule. The other columns are typical colour for describing where your runner lives; your GM decides how much a lifestyle matters in a given scene.</p>
                 <table>
                     <thead>
                         <tr>
                             <th>Lifestyle</th>
-                            <th>Social Dice Pool Modifier</th>
+                            <th>Cost per Month</th>
                             <th>Matrix Access</th>
                             <th>Medical Care</th>
                             <th>Security Level</th>
@@ -353,35 +393,42 @@
                     <tbody>
                         <tr>
                             <td>Street</td>
-                            <td>-2 dice (most situations)</td>
-                            <td>Public terminals only</td>
+                            <td>Free</td>
+                            <td>Whatever signal you can find</td>
                             <td>Street docs/charity</td>
                             <td>None</td>
                         </tr>
                         <tr>
+                            <td>Squatter</td>
+                            <td>500&yen;</td>
+                            <td>Spotty</td>
+                            <td>Street docs</td>
+                            <td>None worth the name</td>
+                        </tr>
+                        <tr>
                             <td>Low</td>
-                            <td>-1 die (formal situations)</td>
+                            <td>2,000&yen;</td>
                             <td>Basic home access</td>
                             <td>Walk-in clinics</td>
                             <td>Minimal</td>
                         </tr>
                         <tr>
                             <td>Middle</td>
-                            <td>No modifier</td>
-                            <td>Standard broadband</td>
-                            <td>DocWagon Basic</td>
+                            <td>5,000&yen;</td>
+                            <td>Reliable</td>
+                            <td>A proper clinic or a DocWagon contract</td>
                             <td>Standard</td>
                         </tr>
                         <tr>
                             <td>High</td>
-                            <td>+1 die (most situations)</td>
-                            <td>High-speed access</td>
-                            <td>DocWagon Gold</td>
+                            <td>10,000&yen;</td>
+                            <td>Fast and reliable</td>
+                            <td>Private clinics</td>
                             <td>Good</td>
                         </tr>
                         <tr>
                             <td>Luxury</td>
-                            <td>+2 dice (all situations)</td>
+                            <td>100,000&yen;</td>
                             <td>Corporate-grade</td>
                             <td>Private physicians</td>
                             <td>Excellent</td>
@@ -389,6 +436,17 @@
                     </tbody>
                 </table>
             </div>
+        </section>
+
+        <section>
+            <h2>SINs: Who the System Thinks You Are</h2>
+            <p>A <strong>SIN</strong> (System Identification Number) is your official identity: the record that lets you rent an apartment, buy a gun legally, cross a border or see a licensed doctor. Many runners are <strong>SINless</strong>, either born outside the system or erased from it, and that makes everyday life hard.</p>
+            <ul>
+                <li><strong>Fake SINs:</strong> Rated 1 to 6. A higher rating holds up better when someone checks it. The cost is <strong>Rating &times; 2,500&yen;</strong>, so a Rating 4 fake runs 10,000&yen;.</li>
+                <li><strong>Licenses:</strong> Carrying a gun or driving a car legally needs a license, and fake licenses are tied to a fake SIN.</li>
+                <li><strong>Burning a SIN:</strong> When a fake SIN fails a check, it's compromised. Everything tied to it, including licenses and anything paid for under that name, goes with it.</li>
+            </ul>
+            <p>Most runners keep at least one fake SIN for daily life and treat it as disposable. Paying for a lifestyle under a fake SIN is normal; just don't use the same identity on the job.</p>
         </section>
 
         <section>
@@ -461,9 +519,9 @@
 
                     <!-- ===== legend ===== -->
                     <line x1="60" y1="508" x2="96" y2="508" stroke="#3fb6c9" stroke-width="2"/>
-                    <text x="104" y="512" fill="#b9c4cf" font-family="Share Tech Mono, monospace" font-size="12">solid = your direct contacts (Loyalty)</text>
+                    <text x="104" y="512" fill="#686e74" font-family="Share Tech Mono, monospace" font-size="12">solid = your direct contacts (Loyalty)</text>
                     <line x1="470" y1="508" x2="506" y2="508" stroke="#9a8fc0" stroke-width="1.8" stroke-dasharray="6 5"/>
-                    <text x="514" y="512" fill="#b9c4cf" font-family="Share Tech Mono, monospace" font-size="12">dashed = how your contacts know each other</text>
+                    <text x="514" y="512" fill="#686e74" font-family="Share Tech Mono, monospace" font-size="12">dashed = how your contacts know each other</text>
                 </svg>
                 <figcaption><strong>Figure &mdash; a network, not a contact list.</strong> Two things follow from the shape. First, the <strong>Fixer is a super-connector</strong> &mdash; most of your other contacts trace back through them, so burning that one relationship can quietly cut several lines at once. Second, the dashed links are <strong>leverage you don't control</strong>: because your contacts know each other, a favour (or a betrayal) travels along those edges &mdash; lean on the Gang and the Fence hears about it, cross the Corp Contact and the Hacker may too.</figcaption>
             </figure>
@@ -472,18 +530,18 @@
             <p>Every contact has two ratings that determine their usefulness and reliability:</p>
 
             <div class="social-layer">
-                <h4>Connection Rating (1-6)</h4>
+                <h4>Connection Rating</h4>
                 <p>How well-connected and influential your contact is:</p>
                 <ul>
                     <li><strong>1-2:</strong> Street level - gangers, small-time dealers, wage slaves</li>
                     <li><strong>3-4:</strong> Professional level - mid-management, specialists, established criminals</li>
-                    <li><strong>5-6:</strong> Elite level - corporate executives, crime bosses, government officials</li>
+                    <li><strong>5 and up:</strong> Elite level - corporate executives, crime bosses, government officials</li>
                 </ul>
 
                 <div class="rep-meter">
                     <span class="rep-label">Street Ganger</span>
                     <div class="rep-bar">
-                        <div class="rep-fill" style="width: 33%; background: linear-gradient(90deg, #e74c3c, #c0392b);"></div>
+                        <div class="rep-fill" style="width: 33%; border-left: 5px solid var(--danger) !important;"></div>
                     </div>
                     <span>Connection 2</span>
                 </div>
@@ -491,7 +549,7 @@
                 <div class="rep-meter">
                     <span class="rep-label">Corporate Manager</span>
                     <div class="rep-bar">
-                        <div class="rep-fill" style="width: 66%; background: linear-gradient(90deg, #f39c12, #e67e22);"></div>
+                        <div class="rep-fill" style="width: 66%; border-left: 5px solid var(--accent) !important;"></div>
                     </div>
                     <span>Connection 4</span>
                 </div>
@@ -499,7 +557,7 @@
                 <div class="rep-meter">
                     <span class="rep-label">Mob Boss</span>
                     <div class="rep-bar">
-                        <div class="rep-fill" style="width: 100%; background: linear-gradient(90deg, #8e44ad, #9b59b6);"></div>
+                        <div class="rep-fill" style="width: 50%; border-left: 5px solid var(--gold) !important;"></div>
                     </div>
                     <span>Connection 6</span>
                 </div>
@@ -507,11 +565,13 @@
                 <h4>Loyalty Rating (1-6)</h4>
                 <p>How much your contact trusts and likes you:</p>
                 <ul>
-                    <li><strong>1:</strong> Business only - they'll sell information, but won't stick their neck out</li>
-                    <li><strong>2-3:</strong> Professional relationship - reliable for standard services</li>
-                    <li><strong>4-5:</strong> Personal friendship - will take some risks for you</li>
+                    <li><strong>1-2:</strong> Business only - they'll sell information, but won't stick their neck out</li>
+                    <li><strong>3-4:</strong> Friendly - reliable, and will take small risks for you</li>
+                    <li><strong>5:</strong> Personal friendship - will take real risks for you</li>
                     <li><strong>6:</strong> Family loyalty - would die for you</li>
                 </ul>
+
+                <p><strong>At character creation</strong> you get <strong>Charisma &times; 3</strong> free Karma to spend on contacts. Each point of Connection or Loyalty costs 1 Karma, and both ratings start at 1, so the smallest contact costs 2.</p>
 
                 <p><strong>Loyalty Examples:</strong> 
                 <span class="connection-strength loyalty-1"></span> Reluctant cooperation
@@ -533,56 +593,20 @@
                   root((Contact Network))
                     [Information Brokers]
                       Fixers
-                        Job opportunities
-                        Team coordination
-                        Market intelligence
                       Journalists
-                        Corporate scandals
-                        Political movements
-                        Public records
                       Bartenders
-                        Street rumors
-                        Local gossip
-                        Safe meeting places
                     [Service Providers]
                       Street Docs
-                        Medical treatment
-                        Cyber installation
-                        No questions asked
                       Mechanics
-                        Vehicle repair
-                        Drone maintenance
-                        Gear modification
                       Hackers
-                        Matrix support
-                        System penetration
-                        Data recovery
                     [Suppliers]
                       Fences
-                        Stolen goods
-                        Untraceable equipment
-                        Money laundering
                       Weapon Dealers
-                        Firearms
-                        Ammunition
-                        Military hardware
                       Talismongers
-                        Magical supplies
-                        Spell formulas
-                        Enchanted items
                     [Insiders]
                       Corporate Contacts
-                        Company secrets
-                        Security schedules
-                        Executive gossip
                       Law Enforcement
-                        Investigation details
-                        Warrant warnings
-                        Legal loopholes
                       Gang Members
-                        Territory information
-                        Muscle for hire
-                        Street protection
             </div>
 
             <h3>The Fixer: Your Gateway to the Shadows</h3>
@@ -635,23 +659,16 @@
 
             <div class="mermaid">
                 graph TD
-                    A[Corporate Executives] --> B[Crime Bosses]
+                    J[Dragon CEOs] --> A[Corporate Executives]
+                    A --> B[Crime Bosses]
                     A --> C[Government Officials]
-                    B --> D[Lieutenant/Underboss]
+                    B --> D[Lieutenants and Underbosses]
                     C --> D
                     D --> E[Established Fixers]
                     E --> F[Veteran Shadowrunners]
                     F --> G[New Shadowrunners]
                     G --> H[Street Criminals]
-                    H --> I[Desperate/Burned Out]
-                    
-                    A --> J[Dragon CEOs]
-                    J --> A
-                    
-                    style J stroke:#9b59b6,stroke-width:3px,color:#fff
-                    style A stroke:#3498db,stroke-width:3px,color:#fff
-                    style B stroke:#e74c3c,stroke-width:3px,color:#fff
-                    style I stroke:#95a5a6,stroke-width:3px,color:#fff
+                    H --> I[Desperate and Burned Out]
             </div>
 
             <h3>Respect and Recognition</h3>
@@ -735,9 +752,7 @@
                     G --> J
                     H --> J
                     I --> J
-                    
-                    style A stroke:#e74c3c,stroke-width:3px,color:#fff
-                    style J stroke:#8b0000,stroke-width:3px,color:#fff
+
             </div>
         </section>
 
@@ -747,9 +762,9 @@
 
             <h3>Making Contact Rolls</h3>
             <ul>
-                <li><strong>Dice Pool:</strong> Charisma + Etiquette + Loyalty Rating</li>
-                <li><strong>Threshold:</strong> Based on difficulty of the request</li>
-                <li><strong>Time:</strong> More hits = faster response</li>
+                <li><strong>Who rolls:</strong> Usually the contact does the legwork, and a higher Connection means they can find out more; a higher Loyalty means they'll try harder and ask less of you</li>
+                <li><strong>Talking them into it:</strong> Your own social skills (Etiquette or Negotiation + Charisma [Social]) help when you're asking a lot</li>
+                <li><strong>Threshold:</strong> Set by the GM, based on how hard or dangerous the request is</li>
                 <li><strong>Cost:</strong> Bigger favors require payment or reciprocal favors</li>
             </ul>
 
@@ -764,17 +779,23 @@
         </section>
 
         <section>
-            <h2>Your Next Steps</h2>
-            <p>You now understand how shadowrunners exist within the complex social ecosystem of the Sixth World. Your character isn't just a collection of stats and gear - they're a person with relationships, obligations, and a place in the shadow community.</p>
+            <h2>Where to Go Next</h2>
+            <p>That's how shadowrunners exist within the complex social ecosystem of the Sixth World. Your character isn't just a collection of stats and gear - they're a person with relationships, obligations, and a place in the shadow community.</p>
 
-            <p>In our next tutorial, we'll dive into the beating heart of Shadowrun: planning and executing shadowruns themselves. We'll explore how teams come together, plan operations, and navigate the deadly dance between runners and their targets.</p>
+            <p>Next, <a href="/sr_character_examples.html">Character Examples</a> puts the rules from the earlier pages together into complete runners, contacts and all. When you're ready to send them out, <a href="/sr_planning.html">Planning a Run</a> covers how teams prepare and execute a job.</p>
 
             <p>Remember: In the shadows, your network is your net worth. Invest in relationships like your life depends on it - because it does.</p>
         </section>
 
     </main>
-        <footer>
-            <p><em>Trust is the only currency that matters when the chips are down, omae.</em></p>
-        </footer>
+
+    <footer>
+<div class="page-nav">
+    <a class="prev" href="/sr_matrix.html">The Matrix</a>
+    <a class="next" href="/sr_character_examples.html">Character Examples</a>
+</div>
+        <p class="closing-quote">Trust is the only currency that matters when the chips are down, omae.</p>
+    </footer>
+<div class="site-footer">&copy; 2026 Ray de la Paz. The Shadowrun Guide. All rights reserved. &middot; <a href="https://rays-home.netlify.app/">Ray's House of Fun</a><br>Shadowrun is a registered trademark of The Topps Company, Inc., published by Catalyst Game Labs. This guide is an unofficial fan resource.</div>
 </body>
 </html>

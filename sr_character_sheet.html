@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Sheets - The Shadowrun Guide</title>
-    <meta name="description" content="Fillable Shadowrun Fifth Edition runner sheets: limits, initiatives, condition monitors, Essence and derived pools worked out, every active skill with its dice pool, gear, magic and contacts.">
+    <meta name="description" content="Fillable Shadowrun Fifth Edition runner sheets: limits, initiatives, condition monitors, Essence and derived pools worked out, every active skill with its dice pool, gear, magic and contacts, with save, print, file import/export and one-click sample characters.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -164,6 +164,7 @@
             <button type="button" id="blankBtn">📄 Print Blank</button>
             <button type="button" id="exportBtn">📤 Export</button>
             <button type="button" id="importBtn">📥 Import</button>
+            <button type="button" id="sampleBtn">🗂️ Load sample characters</button>
             <input type="file" id="importFile" accept=".json,application/json">
         </div>
         <p class="sheet-status" id="status" role="status" aria-live="polite"></p>
@@ -303,6 +304,7 @@
 
         <div class="sheet-help">
             <p><strong>How it works.</strong> A sheet auto-saves in this browser once it has a street name. Renaming a sheet renames its save. Use the tabs to move between the three pages. <strong>Print</strong> prints all three pages of the current runner, one per US Letter sheet, and <strong>Print Blank</strong> prints an empty set. <strong>Export</strong> downloads every sheet as a JSON file and <strong>Import</strong> merges a file like that back in (a sheet with the same street name is replaced). Nothing leaves your browser.</p>
+            <p><strong>Sample sheets.</strong> <strong>Load sample characters</strong> adds all 84 runners from <a href="/sr_100.html">84 Sample Runners</a> (38 members of 8 teams, with each team's name and the rest of its roster under Notes, and 46 runners, contacts and rivals on their own), replacing any saved sheet with the same street name just as Import does and leaving your other sheets alone; you can also <a href="/sr_sample_sheets.json" download>download the sample sheet file</a> and import it yourself.</p>
             <p><strong>Worked out for you.</strong> Physical limit is [(STR × 2) + BOD + REA] ÷ 3, Mental [(LOG × 2) + INT + WIL] ÷ 3 and Social [(CHA × 2) + WIL + Essence] ÷ 3, each rounded up. Initiative is REA + INT + 1D6, astral INT × 2 + 2D6 and AR Matrix REA + INT + 1D6. Composure is CHA + WIL, Judge Intentions CHA + INT, Memory LOG + WIL and Lift/Carry BOD + STR; you walk AGI × 2 and run AGI × 4 metres. The Physical monitor has 8 + half BOD boxes and the Stun monitor 8 + half WIL (rounded up), with BOD boxes of overflow. Essence is 6 minus your augmentations. A skill's dice pool is its rating + linked attribute (add +2 for a specialization). Knowledge skills use LOG (academic, professional) or INT (street, interests, languages). See <a href="/sr_char.html">Character Creation</a> and the <a href="/sr_dice_roller.html">Dice Roller</a>.</p>
         </div>
 
@@ -587,7 +589,41 @@
             setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
             say('Exported ' + cnt + (cnt === 1 ? ' sheet.' : ' sheets.'));
         });
+        // Merge a {name: sheet} object into saved sheets; a sheet with the same name is replaced and other sheets are kept.
+        // Returns { count, added, replaced } (replaced = names already saved before the merge), or null if storage failed.
+        function mergeSheets(data) {
+            var all = load(), before = {}, seen = {}, count = 0, replaced = 0;
+            Object.keys(all).forEach(function (k) { before[k] = true; });
+            Object.keys(data).forEach(function (k) {
+                var d = sanitize(data[k]); if (!d) return;
+                var name = String(d.name || '').trim().slice(0, 200);
+                if (!safeName(name)) return;
+                d.name = name;
+                if (!seen[name]) { seen[name] = true; count++; if (before[name]) replaced++; }
+                all[name] = d;
+            });
+            if (!count) return { count: 0, added: 0, replaced: 0 };
+            if (!store(all)) return null;
+            if (currentKey && seen[currentKey] && all[currentKey]) fill(all[currentKey]);   // the open sheet was replaced: show the new copy
+            refreshSelect(currentKey || '');
+            return { count: count, added: count - replaced, replaced: replaced };
+        }
         $('importBtn').addEventListener('click', function () { $('importFile').click(); });
+        $('sampleBtn').addEventListener('click', function () {
+            var btn = this;
+            flush(); disarm(); btn.disabled = true; say('Loading the sample sheets…');
+            fetch('/sr_sample_sheets.json', { cache: 'no-cache' })
+                .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+                .then(function (data) {
+                    if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('bad file');
+                    var res = mergeSheets(data);
+                    if (!res) return;
+                    if (!res.count) { say('No valid sheets found in the sample file.'); return; }
+                    say('Loaded ' + res.count + ' sample sheets: ' + res.added + ' added, ' + res.replaced + ' replaced.');
+                })
+                .catch(function () { say('Could not load the sample sheets. Check your connection, or download the file and use Import.'); })
+                .then(function () { btn.disabled = false; });
+        });
         $('importFile').addEventListener('change', function (ev) {
             var file = ev.target.files && ev.target.files[0];
             ev.target.value = '';
@@ -599,23 +635,17 @@
                 try {
                     var data = JSON.parse(r.result);
                     if (!data || typeof data !== 'object' || Array.isArray(data)) { say('That is not a sheet file.'); return; }
-                    var all = load(), count = 0;
-                    Object.keys(data).forEach(function (k) {
-                        var d = sanitize(data[k]); if (!d) return;
-                        var name = String(d.name || '').trim().slice(0, 200);
-                        if (!safeName(name)) return;
-                        all[name] = d; count++;
-                    });
-                    if (!count) { say('No valid sheets found in that file.'); return; }
-                    if (!store(all)) return;
-                    refreshSelect(currentKey || ''); say('Imported ' + count + (count === 1 ? ' sheet.' : ' sheets.'));
+                    var res = mergeSheets(data);
+                    if (!res) return;
+                    if (!res.count) { say('No valid sheets found in that file.'); return; }
+                    say('Imported ' + res.count + (res.count === 1 ? ' sheet.' : ' sheets.'));
                 } catch (err) { say('Could not read that file.'); }
             };
             r.onerror = function () { say('Could not read that file.'); };
             r.readAsText(file);
         });
 
-        window.srSheet = { derive: derive, skills: SK };
+        window.srSheet = { derive: derive, skills: SK, sanitize: sanitize, fields: FIELDS, bools: BOOLS };
         clearAll(); refreshSelect('');
     })();
     </script>

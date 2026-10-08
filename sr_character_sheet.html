@@ -178,9 +178,9 @@
             <!-- ===================== PAGE 1: RUNNER ===================== -->
             <div class="page p-main">
                 <div class="head">
-                    <label class="name"><span class="lbl">Street Name</span><input type="text" name="name" maxlength="60" placeholder="Ghostwire"></label>
+                    <label class="name"><span class="lbl">Street Name</span><input type="text" name="name" maxlength="60"></label>
                     <label><small class="k">Real Name</small><input type="text" name="realName"></label>
-                    <label><small class="k">Metatype</small><input type="text" name="metatype" list="metatypes" placeholder="Human"></label>
+                    <label><small class="k">Metatype</small><input type="text" name="metatype" list="metatypes"></label>
                     <label><small class="k">Ethnicity / Age / Sex</small><input type="text" name="ethnicity"></label>
                     <label><small class="k">Height / Weight</small><input type="text" name="size"></label>
                     <label><small class="k">Street Cred</small><input type="text" name="cred"></label>
@@ -188,7 +188,7 @@
                     <label><small class="k">Public Awareness</small><input type="text" name="awareness"></label>
                     <label><small class="k">Karma (total / now)</small><input type="text" name="karma"></label>
                     <label><small class="k">Nuyen</small><input type="text" name="nuyen" placeholder="¥"></label>
-                    <label><small class="k">Lifestyle</small><input type="text" name="lifestyle" placeholder="Low"></label>
+                    <label><small class="k">Lifestyle</small><input type="text" name="lifestyle"></label>
                     <label><small class="k">Fake SIN (rating)</small><input type="text" name="sin"></label>
                 </div>
 
@@ -224,14 +224,14 @@
                         <div class="box">
                             <span class="lbl">Armor</span>
                             <div class="derived" style="grid-template-columns: 2fr 1fr">
-                                <label><small class="k">Armor worn</small><input type="text" name="armorName" placeholder="Armor jacket"></label>
-                                <label><small class="k">Armor value</small><input type="text" name="armor" placeholder="12"></label>
+                                <label><small class="k">Armor worn</small><input type="text" name="armorName"></label>
+                                <label><small class="k">Armor value</small><input type="text" name="armor"></label>
                             </div>
                         </div>
                         <div class="box grow"><span class="lbl">Qualities</span><textarea name="qualities" rows="4" placeholder="Positive and negative qualities"></textarea></div>
                     </div>
                     <div class="stack">
-                        <div class="box grow"><span class="lbl">Karma &amp; Advancement Log</span><textarea name="karmaLog" rows="4" placeholder="+5 Karma (Bug City run); Pistols 5 → 6 (−12)"></textarea></div>
+                        <div class="box grow"><span class="lbl">Karma &amp; Advancement Log</span><textarea name="karmaLog" rows="4"></textarea></div>
                         <div class="box grow"><span class="lbl">Notes</span><textarea name="notes" rows="4" placeholder="Conditions, debts, run notes"></textarea></div>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
                         <span class="lbl">Knowledge Skills &amp; Languages</span>
                         <table class="t"><thead><tr><th>Skill</th><th class="c">Type</th><th class="c">Rtg</th><th class="c">Pool</th></tr></thead><tbody id="know"></tbody></table>
                     </div>
-                    <div class="box grow"><span class="lbl">Specializations &amp; Skill Groups</span><textarea name="specs" rows="6" placeholder="Pistols (Semi-automatics) +2, Firearms group 3…"></textarea></div>
+                    <div class="box grow"><span class="lbl">Specializations &amp; Skill Groups</span><textarea name="specs" rows="6"></textarea></div>
                 </div>
             </div>
 
@@ -286,7 +286,7 @@
                             <span class="lbl">Spells, Powers &amp; Complex Forms</span>
                             <table class="t"><thead><tr><th>Name</th><th class="c">Type / Range / Dur.</th><th class="c">Drain / Fading</th></tr></thead><tbody id="spells"></tbody></table>
                             <div class="derived" style="grid-template-columns: 1fr 1fr; margin-top:4px">
-                                <label><small class="k">Tradition / Stream</small><input type="text" name="tradition" placeholder="Hermetic"></label>
+                                <label><small class="k">Tradition / Stream</small><input type="text" name="tradition"></label>
                                 <label><small class="k">Initiate / submersion grade</small><input type="text" name="grade"></label>
                             </div>
                         </div>
@@ -351,10 +351,10 @@
 
         ATTRS.forEach(function (a) {
             FIELDS.push(a[0]);
-            $('attrs').insertAdjacentHTML('beforeend', '<label class="at"><span class="lbl">' + a[1] + '</span><input type="text" name="' + a[0] + '" maxlength="2" inputmode="numeric" placeholder="3" aria-label="' + a[1] + '"></label>');
+            $('attrs').insertAdjacentHTML('beforeend', '<label class="at"><span class="lbl">' + a[1] + '</span><input type="text" name="' + a[0] + '" maxlength="2" inputmode="numeric" aria-label="' + a[1] + '"></label>');
         });
         $('attrs').insertAdjacentHTML('beforeend',
-            '<label class="at spc"><span class="lbl">EDG</span><input type="text" name="edg" maxlength="2" inputmode="numeric" placeholder="2" aria-label="Edge"><span class="cur">now<input type="text" name="edgeCur" maxlength="2" aria-label="Edge points left"></span></label>' +
+            '<label class="at spc"><span class="lbl">EDG</span><input type="text" name="edg" maxlength="2" inputmode="numeric" aria-label="Edge"><span class="cur">now<input type="text" name="edgeCur" maxlength="2" aria-label="Edge points left"></span></label>' +
             '<div class="at spc"><span class="lbl">ESS</span><span class="out" data-out="essence">6</span></div>' +
             '<label class="at spc"><span class="lbl">MAG</span><input type="text" name="mag" maxlength="2" inputmode="numeric" aria-label="Magic"></label>' +
             '<label class="at spc"><span class="lbl">RES</span><input type="text" name="res" maxlength="2" inputmode="numeric" aria-label="Resonance"></label>');
@@ -371,9 +371,9 @@
         var kOpts = '<option value=""></option>' + KTYPES.map(function (k) { return '<option value="' + k[0] + '">' + k[1] + '</option>'; }).join('');
         for (var k = 1; k <= 8; k++) {
             FIELDS.push('k' + k + 'n', 'k' + k + 't', 'k' + k + 'r');
-            $('know').insertAdjacentHTML('beforeend', '<tr><td><input type="text" name="k' + k + 'n" placeholder="' + (k === 1 ? 'English' : k === 2 ? 'Seattle Gangs' : '') + '" aria-label="Knowledge skill ' + k + '"></td>' +
+            $('know').insertAdjacentHTML('beforeend', '<tr><td><input type="text" name="k' + k + 'n" aria-label="Knowledge skill ' + k + '"></td>' +
                 '<td class="c"><select name="k' + k + 't" aria-label="Knowledge skill ' + k + ' type">' + kOpts + '</select></td>' +
-                '<td class="c"><input type="text" name="k' + k + 'r" maxlength="2" placeholder="' + (k === 1 ? 'N' : '') + '" aria-label="Knowledge skill ' + k + ' rating"></td><td class="c"><span class="out" data-out="k' + k + '"></span></td></tr>');
+                '<td class="c"><input type="text" name="k' + k + 'r" maxlength="2" aria-label="Knowledge skill ' + k + ' rating"></td><td class="c"><span class="out" data-out="k' + k + '"></span></td></tr>');
         }
         function rows(tbody, prefix, label, count, cols) {
             var h = '';
